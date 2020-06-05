@@ -1,2 +1,2 @@
 require "spec"
-require "../src/mongo-crystal-driver"
+require "../src/mongo"

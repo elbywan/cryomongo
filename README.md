@@ -6,7 +6,7 @@
 
 ![Working…](https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)
 
-**Already implemented:**
+**Implemented**
 
 - https://github.com/mongodb/specifications/tree/master/source/message
 - https://github.com/mongodb/specifications/tree/master/source/crud
@@ -16,20 +16,24 @@
 - https://github.com/mongodb/specifications/blob/master/source/enumerate-collections.rst
 - https://github.com/mongodb/specifications/blob/master/source/enumerate-databases.rst
 - https://github.com/mongodb/specifications/blob/master/source/enumerate-indexes.rst
+- https://github.com/mongodb/specifications/tree/master/source/connection-string
+- https://github.com/mongodb/specifications/tree/master/source/uri-options (except validation)
+- https://github.com/mongodb/specifications/tree/master/source/server-discovery-and-monitoring ("single-threaded" monitor/client for now, will be rewritten to async)
+- https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst
+- https://github.com/mongodb/specifications/blob/master/source/max-staleness/max-staleness.rst
 
-**To be implemented next:**
+**In the pipe**
+
+- https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst
 
 - https://github.com/mongodb/specifications/blob/master/source/index-management.rst
-- https://github.com/mongodb/specifications/tree/master/source/server-discovery-and-monitoring
 - https://github.com/mongodb/specifications/tree/master/source/connection-monitoring-and-pooling
-- https://github.com/mongodb/specifications/tree/master/source/connection-string
-- https://github.com/mongodb/specifications/tree/master/source/uri-options
 - https://github.com/mongodb/specifications/tree/master/source/command-monitoring
 - https://github.com/mongodb/specifications/tree/master/source/gridfs
 - https://github.com/mongodb/specifications/tree/master/source/change-streams
 - https://github.com/mongodb/specifications/tree/master/source/compression
-
-**And then the rest of the specs…**
+- https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst
+- https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst
 
 ## Installation
 
@@ -48,7 +52,7 @@
 ```crystal
 require "mongo"
 
-client = Mongo::Client.new("mongodb://localhost:27017)
+client = Mongo::Client.new("mongodb://localhost:27017")
 database = client["database_name"]
 collection = database["collection_name"]
 

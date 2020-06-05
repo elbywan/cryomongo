@@ -1,7 +1,7 @@
 require "log"
 require "bson"
-require "./messages/**"
-require "./client"
+require "./mongo/messages/**"
+require "./mongo/clients/**"
 
 module Mongo
   VERSION = "0.1.0"
