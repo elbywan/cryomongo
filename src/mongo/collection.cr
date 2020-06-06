@@ -51,7 +51,7 @@ class Mongo::Collection
   ) : Mongo::Cursor? forall H
     maybe_result = self.command(Commands::Aggregate, pipeline: pipeline, options: {
       allow_disk_use:             allow_disk_use,
-      cursor:                     batch_size.try { {batch_size: batch_size} },
+      cursor:                     batch_size.try { {batchSize: batch_size} },
       bypass_document_validation: bypass_document_validation,
       read_concern:               read_concern,
       collation:                  collation,
@@ -84,8 +84,6 @@ class Mongo::Collection
     limit.try { pipeline << BSON.new({"$limit": limit}) }
     pipeline << BSON.new({"$group": {"_id": 1, "n": {"$sum": 1}}})
     result = self.command(Commands::Aggregate, pipeline: pipeline, options: {
-      skip:            skip,
-      limit:           limit,
       collation:       collation,
       hint:            hint.is_a?(String) ? hint : BSON.new(hint),
       max_time_ms:     max_time_ms,
@@ -498,13 +496,15 @@ class Mongo::Collection
   end
 
   private def check_find_and_modify_result!(result)
-    if last_error_object = result["last_error_object"]
+    result = result.not_nil!
+    if last_error_object = result["last_error_object"]?
+      last_error_object = last_error_object.as(BSON)
       code = last_error_object["code"]?
       err_msg = last_error_object["errmsg"]?
       raise Mongo::CommandError.new(code, err_msg)
     end
 
-    result["value"]?
+    result["value"]?.try &.as(BSON)
   end
 
   # Finds a single document and deletes it, returning the original. The document to return may be null.
@@ -520,9 +520,9 @@ class Mongo::Collection
     bypass_document_validation : Bool? = nil,
     write_concern : WriteConcern? = nil,
     collation : Collation? = nil
-  ) : BSON
-    raise "Update argument is disallowed" if options.has_key "update"
-    self.command(Commands::FindAndModify, filter: filter, remove: true, options: {
+  ) : BSON?
+    result = self.command(Commands::FindAndModify, filter: filter, options: {
+      remove:                     true,
       sort:                       sort.try { BSON.new(sort) },
       new:                        new,
       fields:                     fields.try { BSON.new(fields) },
@@ -550,10 +550,10 @@ class Mongo::Collection
     write_concern : WriteConcern? = nil,
     collation : Collation? = nil,
     array_filters = nil
-  ) : BSON
-    raise "Remove argument is disallowed" if options.has_key "remove"
+  ) : BSON?
     replacement = validate_replacement!(replacement)
-    result = self.command(Commands::FindAndModify, filter: filter, update: replacement, options: {
+    result = self.command(Commands::FindAndModify, filter: filter, options: {
+      update:                     replacement,
       sort:                       sort.try { BSON.new(sort) },
       new:                        new,
       fields:                     fields.try { BSON.new(fields) },
@@ -583,10 +583,10 @@ class Mongo::Collection
     write_concern : WriteConcern? = nil,
     collation : Collation? = nil,
     array_filters = nil
-  ) : BSON
-    raise "Remove argument is disallowed" if options.has_key "remove"
+  ) : BSON?
     update = validate_update!(update)
-    result = self.command(Commands::FindAndModify, filter: filter, update: update, options: {
+    result = self.command(Commands::FindAndModify, filter: filter, options: {
+      update:                     update,
       sort:                       sort.try { BSON.new(sort) },
       new:                        new,
       fields:                     fields.try { BSON.new(fields) },

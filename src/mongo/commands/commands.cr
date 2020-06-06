@@ -44,7 +44,7 @@ module Mongo::Commands
 
     result(Upserted, root: false) {
       property index : Int32
-      property _id : BSON::ObjectId
+      property _id : BSON::Value
 
       def initialize(@index, @_id); end
     }
@@ -86,6 +86,8 @@ module Mongo::Commands
       if skip_key == false && (skip_nil == false || !value.nil?)
         if key.to_s == "read_preference"
           bson["$readPreference"] = value
+        elsif key.to_s == "max_time_ms"
+          bson["maxTimeMS"] = value
         else
           bson[key.to_s.camelcase(lower: true)] = value
         end

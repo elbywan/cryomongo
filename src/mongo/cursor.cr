@@ -4,7 +4,7 @@ require "./commands"
 class Mongo::Cursor
   include Iterator(BSON)
 
-  @@mutex = Mutex.new
+  @@lock = Mutex.new(:reentrant)
   @closed = false
   @database : String
   @collection : String
@@ -43,7 +43,7 @@ class Mongo::Cursor
   end
 
   def close
-    @@mutex.synchronize {
+    @@lock.synchronize {
       unless @closed || @cursor_id == 0
         @client.command(
           Commands::KillCursors,
@@ -55,6 +55,8 @@ class Mongo::Cursor
         @closed = true
       end
     }
+  rescue e
+    # Ignore - client might be dead
   end
 
   def finalize

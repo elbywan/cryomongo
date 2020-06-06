@@ -20,7 +20,7 @@ class Mongo::Client
   getter! topology : SDAM::TopologyDescription
   getter options : Options
 
-  @@lock = Mutex.new
+  @@lock = Mutex.new(:reentrant)
   @pools : Hash(SDAM::ServerDescription, DB::Pool(Mongo::Connection)) = Hash(SDAM::ServerDescription, DB::Pool(Mongo::Connection)).new
   @monitors : Array(SDAM::Monitor) = Array(SDAM::Monitor).new
   @socket_check_interval : Time::Span = 5.seconds

@@ -1,21 +1,26 @@
 require "bson"
 
 module Mongo
-  record WriteConcern,
-    j : Bool? = nil,
-    w : (Int32 | String)? = nil,
-    wtimeout : Int64? = nil {
+  struct WriteConcern
     include BSON::Serializable
 
-    def initialize(@j, @w, @wtimeout)
+    property j : Bool? = nil
+    property w : (Int32 | String)? = nil
+    property wtimeout : Int64? = nil
+
+    def initialize(@j = nil, @w = nil, @wtimeout = nil)
       raise "Invalid write concern" if @j == true && w == 0
     end
-  }
+  end
 
-  record ReadConcern,
-    level : String? = nil {
+  struct ReadConcern
     include BSON::Serializable
-  }
+
+    property level : String? = nil
+
+    def initialize(@level = nil)
+    end
+  end
 
   module WithWriteConcern
     macro included

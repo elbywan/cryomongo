@@ -1,8 +1,10 @@
-# mongo-crystal-driver
+# cryomongo
 
 ### A pure Crystal MongoDB driver.
 
-### DO NOT USE, work in progress!
+A dependencies-free MongoDB driver written in pure Crystal.
+
+### Work in progress!
 
 ![Working…](https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)
 
@@ -22,7 +24,7 @@
 - https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst
 - https://github.com/mongodb/specifications/blob/master/source/max-staleness/max-staleness.rst
 - https://github.com/mongodb/specifications/tree/master/source/connection-monitoring-and-pooling (loosely - using the crystal-db pool)
-- https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst (SHA1 / SHA256 only for the moment)
+- https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst (SHA1 / SHA256 only for the moment - no SASLprep)
 
 **In the pipe**
 
@@ -38,18 +40,18 @@
 
 1. Add the dependency to your `shard.yml`:
 
-   ```yaml
-   dependencies:
-     mongo:
-       github: elbywan/mongo-crystal-driver
-   ```
+```yaml
+dependencies:
+  mongo:
+    github: elbywan/cryomongo
+```
 
 2. Run `shards install`
 
 ## Usage
 
 ```crystal
-require "mongo"
+require "cryomongo"
 
 client = Mongo::Client.new("mongodb://localhost:27017")
 database = client["database_name"]
@@ -71,7 +73,7 @@ TODO: Write development instructions here
 
 ## Contributing
 
-1. Fork it (<https://github.com/your-github-user/mongo-crystal-driver/fork>)
+1. Fork it (<https://github.com/elbywan/cryomongo/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
@@ -79,4 +81,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [elbywan](https://github.com/your-github-user) - creator and maintainer
+- [elbywan](https://github.com/elbywan) - creator and maintainer

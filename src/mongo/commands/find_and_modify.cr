@@ -13,6 +13,7 @@ module Mongo::Commands::FindAndModify
   end
 
   def result(bson)
-    Common::QueryResult.from_bson bson
+    # Common::QueryResult.from_bson bson
+    bson
   end
 end

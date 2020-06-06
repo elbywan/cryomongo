@@ -37,7 +37,7 @@ struct Mongo::Bulk
 
   struct DeleteOne < WriteModel
     getter filter : BSON
-    getter collation : BSON?
+    getter collation : Collation?
     getter hint : (String | BSON)?
 
     def initialize(filter, @collation = nil, @hint = nil)
@@ -47,7 +47,7 @@ struct Mongo::Bulk
 
   struct DeleteMany < WriteModel
     getter filter : BSON
-    getter collation : BSON?
+    getter collation : Collation?
     getter hint : (String | BSON)?
 
     def initialize(filter, @collation = nil, @hint = nil)
@@ -58,7 +58,7 @@ struct Mongo::Bulk
   struct ReplaceOne < WriteModel
     getter filter : BSON
     getter replacement : BSON
-    getter collation : BSON?
+    getter collation : Collation?
     getter hint : (String | BSON)?
     getter upsert : Bool?
 
@@ -72,7 +72,7 @@ struct Mongo::Bulk
     getter filter : BSON
     getter update : BSON | Array(BSON)
     getter array_filters : Array(BSON)?
-    getter collation : BSON?
+    getter collation : Collation?
     getter hint : (String | BSON)?
     getter upsert : Bool?
 
@@ -86,7 +86,7 @@ struct Mongo::Bulk
     getter filter : BSON
     getter update : BSON | Array(BSON)
     getter array_filters : Array(BSON)?
-    getter collation : BSON?
+    getter collation : Collation?
     getter hint : (String | BSON)?
     getter upsert : Bool?
 
@@ -96,7 +96,7 @@ struct Mongo::Bulk
     end
   end
 
-  class BulkWriteResult
+  class WriteResult
     property n_inserted : Int32 = 0
     property n_matched : Int32 = 0
     property n_modified : Int32 = 0
@@ -241,10 +241,13 @@ struct Mongo::Bulk
     when Commands::Common::DeleteResult
       result.n.try { |n| results.n_removed += n }
     when Commands::Common::UpdateResult
-      result.n.try { |n| results.n_matched += n }
+      upserted_size = result.upserted.try(&.size) || 0
+      results.n_upserted += upserted_size
+      result.n.try { |n|
+        results.n_matched += (n - upserted_size)
+      }
       result.n_modified.try { |n| results.n_modified += n }
       if upserted = result.upserted
-        results.n_upserted += upserted.size
         upserted.each { |upsert|
           results.upserted << Commands::Common::Upserted.new(
             upsert.index + index_offset,
@@ -273,11 +276,12 @@ struct Mongo::Bulk
     @ordered && results.write_errors.size > 0
   end
 
-  def execute(write_concern : WriteConcern? = nil)
+  def execute(write_concern : WriteConcern? = nil, bypass_document_validation : Bool? = nil)
     _, not_executed = @executed.compare_and_set(0_u8, 1_u8)
     raise "Cannot execute a bulk operation more than once" unless not_executed
 
     options = {
+      bypass_document_validation: bypass_document_validation,
       write_concern: write_concern
     }
 
@@ -291,7 +295,7 @@ struct Mongo::Bulk
     group = [] of BSON
     group_bytesize = 0
     index_offset = 0
-    results = BulkWriteResult.new
+    results = WriteResult.new
 
     models.each { |model|
       if model.class != group_type

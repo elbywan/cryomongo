@@ -10,8 +10,8 @@ module Mongo::Commands::Aggregate
       "aggregate": collection,
       "pipeline":  pipeline.map { |elt| BSON.new(elt) },
       "$db":       database,
-    }, options) { |_, key, _|
-      need_cursor = false if key == "explain" || key == "cursor"
+    }, options) { |_, key, value|
+      need_cursor = false if (key.to_s == "explain" || key.to_s == "cursor") && !value.nil?
       false
     }
     body["cursor"] = BSON.new if need_cursor

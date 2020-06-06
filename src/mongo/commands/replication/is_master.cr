@@ -12,10 +12,10 @@ module Mongo::Commands::IsMaster
       "$db":    "admin",
       client:   {
         application: {
-          name: "mongo-crystal-driver",
+          name: "cryomongo",
         },
         driver: {
-          name:    "mongo-crystal-driver",
+          name:    "cryomongo",
           version: Mongo::VERSION,
         },
         os: {

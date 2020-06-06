@@ -92,10 +92,10 @@ class Mongo::SDAM::TopologyDescription
       unless new_description.type.unknown?
         if new_description.min_wire_version > Client::MAX_WIRE_VERSION
           @compatible = false
-          @compatibility_error = "Server at #{new_description.address} requires wire version #{new_description.min_wire_version}, but this version of mongo-crystal-driver only supports up to #{Client::MAX_WIRE_VERSION}."
+          @compatibility_error = "Server at #{new_description.address} requires wire version #{new_description.min_wire_version}, but this version of cryomongo only supports up to #{Client::MAX_WIRE_VERSION}."
         elsif new_description.max_wire_version < Client::MIN_WIRE_VERSION
           @compatible = false
-          @compatibility_error = "Server at #{new_description.address} requires wire version #{new_description.max_wire_version}, but this version of mongo-crystal-driver requires at least #{Client::MIN_WIRE_VERSION}."
+          @compatibility_error = "Server at #{new_description.address} requires wire version #{new_description.max_wire_version}, but this version of cryomongo requires at least #{Client::MIN_WIRE_VERSION}."
         else
           @compatible = true
         end
