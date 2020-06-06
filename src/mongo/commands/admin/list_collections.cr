@@ -7,7 +7,7 @@ module Mongo::Commands::ListCollections
   def command(database : String, options)
     Commands.make({
       listCollections: 1,
-      "$db": database
+      "$db":           database,
     }, options)
   end
 

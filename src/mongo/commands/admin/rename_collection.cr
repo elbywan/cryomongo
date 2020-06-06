@@ -7,8 +7,8 @@ module Mongo::Commands::RenameCollection
   def command(database : String, collection : Collection::CollectionKey, to : String, options)
     Commands.make({
       renameCollection: collection,
-      to: to,
-      "$db": database
+      to:               to,
+      "$db":            database,
     }, options)
   end
 

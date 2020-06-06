@@ -18,16 +18,15 @@
 - https://github.com/mongodb/specifications/blob/master/source/enumerate-indexes.rst
 - https://github.com/mongodb/specifications/tree/master/source/connection-string
 - https://github.com/mongodb/specifications/tree/master/source/uri-options (except validation)
-- https://github.com/mongodb/specifications/tree/master/source/server-discovery-and-monitoring ("single-threaded" monitor/client for now, will be rewritten to async)
+- https://github.com/mongodb/specifications/tree/master/source/server-discovery-and-monitoring
 - https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst
 - https://github.com/mongodb/specifications/blob/master/source/max-staleness/max-staleness.rst
+- https://github.com/mongodb/specifications/tree/master/source/connection-monitoring-and-pooling (loosely - using the crystal-db pool)
+- https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst (SHA1 / SHA256 only for the moment)
 
 **In the pipe**
 
-- https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst
-
 - https://github.com/mongodb/specifications/blob/master/source/index-management.rst
-- https://github.com/mongodb/specifications/tree/master/source/connection-monitoring-and-pooling
 - https://github.com/mongodb/specifications/tree/master/source/command-monitoring
 - https://github.com/mongodb/specifications/tree/master/source/gridfs
 - https://github.com/mongodb/specifications/tree/master/source/change-streams

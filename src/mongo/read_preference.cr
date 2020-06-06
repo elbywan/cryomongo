@@ -7,8 +7,8 @@ module Mongo
     tags : Array(BSON)? = nil,
     max_staleness_seconds : Int32? = nil,
     hedge : BSON? = nil {
-      include BSON::Serializable
-    }
+    include BSON::Serializable
+  }
 
   module WithReadPreference
     macro included
@@ -31,11 +31,11 @@ module Mongo
 
     def self.must_use_primary_command?(command, command_args)
       !MAY_USE_SECONDARY.includes?(command) ||
-      command == Commands::Aggregate && command_args["pipeline"]?.try { |pipeline|
-        pipeline.as(Array).map{ |elt| BSON.new(elt) }.any? { |stage|
-          stage["$out"]? || stage["$merge"]?
+        command == Commands::Aggregate && command_args["pipeline"]?.try { |pipeline|
+          pipeline.as(Array).map { |elt| BSON.new(elt) }.any? { |stage|
+            stage["$out"]? || stage["$merge"]?
+          }
         }
-      }
     end
 
     private def self.mix(args, read_preference)
@@ -45,8 +45,8 @@ module Mongo
         else
           args.merge({
             options: options.merge({
-              read_preference: read_preference
-            })
+              read_preference: read_preference,
+            }),
           })
         end
       else
@@ -70,12 +70,13 @@ module Mongo
             self.mix(args, ReadPreference.new(mode: "primaryPreferred"))
           end
         end
-      when .sharded?
+      # when .sharded?
+      else
         # see: https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst#topology-type-sharded
         self.mix(args, read_preference)
-      else
-        args
+      # else
+      #   args
       end
-  end
+    end
   end
 end

@@ -7,8 +7,8 @@ module Mongo::Commands::CreateIndexes
   def command(database : String, collection : Collection::CollectionKey, indexes : Array, options)
     Commands.make({
       createIndexes: collection,
-      indexes: indexes.map { |index| BSON.new(index) },
-      "$db": database
+      indexes:       indexes.map {   | index | BSON.new(index) },
+      "$db":         database,
     }, options)
   end
 

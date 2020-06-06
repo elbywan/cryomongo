@@ -7,7 +7,7 @@ module Mongo::Commands::SetFeatureCompatibilityVersion
   def command(version : String)
     Commands.make({
       setFeatureCompatibilityVersion: version,
-      "$db": "admin"
+      "$db":                          "admin",
     })
   end
 

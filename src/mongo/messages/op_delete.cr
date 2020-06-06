@@ -4,7 +4,6 @@ require "./op_code"
 
 # The OP_DELETE message is used to remove one or more documents from a collection.
 struct Mongo::Messages::OpDelete < Mongo::Messages::Part
-
   @[Field(ignore: true)]
   getter op_code : OpCode = OpCode::Delete
 

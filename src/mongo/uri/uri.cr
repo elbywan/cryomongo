@@ -11,7 +11,7 @@ module Mongo::URI
     '\\',
     ' ',
     '"',
-    "$"
+    "$",
   }
 
   def parse(uri : String) : Tuple(Array(Seed), Mongo::Options, Mongo::Credentials)
@@ -53,17 +53,21 @@ module Mongo::URI
     }
 
     options = Options.new(parsed_uri.query_params)
+    source = ::URI.decode(database[1..])
+    if source.empty?
+      source = options.auth_source
+    end
     credentials = Mongo::Credentials.new(
       username: parsed_uri.user,
       password: parsed_uri.password,
-      source: ::URI.decode(database[1..]),
+      source: source || "",
       mechanism: options.auth_mechanism,
       mechanism_properties: options.auth_mechanism_properties
     )
 
     raise "directConnection=true cannot be provided with multiple seeds" if options.direct_connection && seeds.size > 1
 
-    { seeds, options, credentials }
+    {seeds, options, credentials}
   rescue e
     raise "Invalid uri: #{uri}, #{e}"
   end

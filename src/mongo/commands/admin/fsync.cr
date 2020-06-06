@@ -7,7 +7,7 @@ module Mongo::Commands::Fsync
   def command(options)
     Commands.make({
       fsync: 1,
-      "$db": "admin"
+      "$db": "admin",
     }, options)
   end
 

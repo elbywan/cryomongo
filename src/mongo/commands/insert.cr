@@ -7,7 +7,7 @@ module Mongo::Commands::Insert
   def command(database : String, collection : Collection::CollectionKey, documents : Array, options)
     Commands.make({
       insert: collection,
-      "$db": database
+      "$db":  database,
     }, sequences: {
       documents: documents.map { |elt| BSON.new(elt) },
     }, options: options)

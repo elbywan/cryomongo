@@ -27,6 +27,15 @@ struct Mongo::Messages::OpMsg < Mongo::Messages::Part
   def initialize(@flag_bits : Flags, @sections, @checksum = nil)
   end
 
+  def initialize(body, *, flag_bits : Flags = :none)
+    initialize(
+      flag_bits: flag_bits,
+      sections: [
+        Messages::OpMsg::SectionBody.new(BSON.new(body)),
+      ].map(&.as(Messages::Part))
+    )
+  end
+
   def initialize(io : IO, header : Messages::Header)
     size = header.body_size
     msg_bytes = Bytes.new(size)
@@ -73,12 +82,14 @@ struct Mongo::Messages::OpMsg < Mongo::Messages::Part
   struct SectionBody < Part
     getter payload_type : UInt8 = 0_u8
     getter payload : BSON
+
     def initialize(@payload : BSON); end
   end
 
   struct SectionDocumentSequence < Part
     getter payload_type : UInt8 = 1_u8
     getter payload : SectionPayload
+
     def initialize(@payload : SectionPayload); end
 
     struct SectionPayload < Part

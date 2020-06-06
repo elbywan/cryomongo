@@ -4,7 +4,6 @@ require "./op_code"
 
 # The OP_INSERT message is used to insert one or more documents into a collection.
 struct Mongo::Messages::OpInsert < Mongo::Messages::Part
-
   @[Field(ignore: true)]
   getter op_code : OpCode = OpCode::Insert
 

@@ -7,7 +7,7 @@ module Mongo::Commands::Count
   def command(database : String, collection : Collection::CollectionKey, options)
     Commands.make({
       count: collection,
-      "$db": database
+      "$db": database,
     }, options) { |key|
       key == "query" && key.nil?
     }

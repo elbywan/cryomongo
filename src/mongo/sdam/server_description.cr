@@ -82,7 +82,6 @@ class Mongo::SDAM::ServerDescription
       null_logical_session_timeout_minutes
     ), is_master_result)
 
-
     @last_update_time = Time.utc
     @last_write_date = is_master_result.last_write.try &.["lastWriteDate"]?.try &.as(Time)
     @op_time = is_master_result.last_write.try &.["opTime"]?.try &.as(BSON)
@@ -108,21 +107,21 @@ class Mongo::SDAM::ServerDescription
 
   def ==(other : ServerDescription)
     other.address == @address &&
-    other.error == @error &&
-    other.type == @type &&
-    other.min_wire_version == @min_wire_version &&
-    other.max_wire_version == @max_wire_version &&
-    other.me == @me &&
-    other.hosts == @hosts &&
-    other.passives == @passives &&
-    other.arbiters == @arbiters &&
-    other.tags == @tags &&
-    other.set_name == @set_name &&
-    other.set_version == @set_version &&
-    other.election_id == @election_id &&
-    other.primary == @primary &&
-    other.logical_session_timeout_minutes == @logical_session_timeout_minutes &&
-    other.topology_version == @topology_version
+      other.error == @error &&
+      other.type == @type &&
+      other.min_wire_version == @min_wire_version &&
+      other.max_wire_version == @max_wire_version &&
+      other.me == @me &&
+      other.hosts == @hosts &&
+      other.passives == @passives &&
+      other.arbiters == @arbiters &&
+      other.tags == @tags &&
+      other.set_name == @set_name &&
+      other.set_version == @set_version &&
+      other.election_id == @election_id &&
+      other.primary == @primary &&
+      other.logical_session_timeout_minutes == @logical_session_timeout_minutes &&
+      other.topology_version == @topology_version
   end
 
   def !=(other : ServerDescription)

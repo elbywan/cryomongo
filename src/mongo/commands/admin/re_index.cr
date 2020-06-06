@@ -7,7 +7,7 @@ module Mongo::Commands::ReIndex
   def command(database : String, collection : Collection::CollectionKey)
     Commands.make({
       reIndex: collection,
-      "$db": database
+      "$db":   database,
     })
   end
 

@@ -7,8 +7,8 @@ module Mongo::Commands::KillOp
   def command(op : Int32)
     Commands.make({
       killOp: 1,
-      op: op,
-      "$db": "admin"
+      op:     op,
+      "$db":  "admin",
     })
   end
 

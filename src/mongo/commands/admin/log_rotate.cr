@@ -7,7 +7,7 @@ module Mongo::Commands::LogRotate
   def command
     Commands.make({
       logRotate: 1,
-      "$db": "admin"
+      "$db":     "admin",
     })
   end
 

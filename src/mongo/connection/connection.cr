@@ -1,9 +1,12 @@
+require "openssl"
 require "./credentials"
+require "./auth"
 
 struct Mongo::Connection
   getter server_description : SDAM::ServerDescription
   getter credentials : Mongo::Credentials
   getter socket : IO
+  @sasl_supported_mechs : Array(String)? = nil
 
   def initialize(@server_description : SDAM::ServerDescription, @credentials : Mongo::Credentials, @options : Mongo::Options)
     if @server_description.address.ends_with? ".sock"
@@ -18,6 +21,11 @@ struct Mongo::Connection
       if tls_ca_file = @options.tls_ca_file
         context.ca_certificates = tls_ca_file
       end
+      if tls_certificate_key_file = @options.tls_certificate_key_file
+        context.certificate_chain = tls_certificate_key_file
+        context.private_key = tls_certificate_key_file
+      end
+
       if @options.tls_insecure || @options.tls_allow_invalid_certificates
         context.verify_mode = OpenSSL::SSL::VerifyMode::NONE
       end
@@ -33,7 +41,121 @@ struct Mongo::Connection
     @socket = socket
   end
 
+  def handshake(*, send_metadata = false)
+    if send_metadata
+      body, _ = Commands::IsMaster.command
+    else
+      body = BSON.new({ isMaster: 1, "$db": "admin", })
+    end
+
+    if @credentials.username && !@credentials.mechanism
+      source = @credentials.source || ""
+      source = "admin" if source.empty?
+      body["saslSupportedMechs"] = "#{source}.#{@credentials.username}"
+    end
+
+    request = Messages::OpMsg.new(body)
+
+    response = uninitialized Mongo::Messages::OpMsg
+    round_trip_time = Time.measure {
+      send(request)
+      response = receive
+    }
+    result = Commands::IsMaster.result(response.body)
+
+    if result.sasl_supported_mechs
+      @sasl_supported_mechs = result.sasl_supported_mechs
+    end
+
+    { result, round_trip_time }
+  end
+
+  def self.average_round_trip_time(round_trip_time : Time::Span, old_rtt : Time::Span?)
+    # see: https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst#calculation-of-average-round-trip-times
+    if old_rtt
+      alpha = 0.2
+      (0.2 * round_trip_time.milliseconds + (1 - alpha) * old_rtt.milliseconds).milliseconds
+    else
+      round_trip_time
+    end
+  end
+
+  def authenticate
+    # see: https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst#authentication-handshake
+    return if server_description.type.rs_arbiter?
+    return if @credentials.username.nil? && @credentials.password.nil? && @credentials.mechanism.nil?
+
+    if mechanism = @credentials.mechanism
+      mechanism = Auth::Mechanism.parse(mechanism.gsub('-', ""))
+    elsif @sasl_supported_mechs
+      mechanisms = @sasl_supported_mechs.try &.map { |mech|
+        Auth::Mechanism.parse(mech.gsub('-', ""))
+      }
+      if mechanisms.try &.any? &.scram_sha256?
+        mechanism = Auth::Mechanism::ScramSha256
+      else
+        mechanism = Auth::Mechanism::ScramSha1
+      end
+    else
+      mechanism = Auth::Mechanism::ScramSha1
+    end
+
+    case mechanism
+    when .scram_sha1?, .scram_sha256?
+      scram = Mongo::Auth::Scram.new(mechanism, @credentials)
+      scram.authenticate(self)
+    else
+      raise "Authentication mechanism not supported: #{mechanism}"
+    end
+  end
+
+  def send(op_msg : Messages::OpMsg)
+    message = Messages::Message.new(op_msg)
+    Log.verbose {
+      "Sending: #{message.header.inspect}"
+    }
+    Log.debug {
+      op_msg.body.to_json
+    }
+    op_msg.each_sequence { |key, contents|
+      Log.debug {
+        "Seq[#{key}]: #{contents.to_json}"
+      }
+    }
+    message.to_io(socket)
+  end
+
+  def receive(*, ignore_errors = false)
+    loop do
+      message = Mongo::Messages::Message.new(socket)
+      Log.verbose {
+        "Receiving: #{message.header.inspect}"
+      }
+      op_msg = message.contents.as(Messages::OpMsg)
+      Log.debug {
+        op_msg.body.to_json
+      }
+      op_msg.each_sequence { |key, contents|
+        Log.debug {
+          "Seq[#{key}]: #{contents.to_json}"
+        }
+      }
+      unless op_msg.body["ok"] == 1
+        err_msg = op_msg.body["errmsg"]?.as(String)
+        err_code = op_msg.body["code"]?
+        Log.error {
+          "Received error code: #{err_code} - #{err_msg}"
+        }
+        raise Mongo::CommandError.new(err_code, err_msg) unless ignore_errors
+      end
+      return op_msg unless op_msg.flag_bits.more_to_come?
+    end
+  end
+
   def before_checkout
+  end
+
+  def after_release
   end
 
   def close

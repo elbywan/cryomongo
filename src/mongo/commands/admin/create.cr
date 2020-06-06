@@ -7,7 +7,7 @@ module Mongo::Commands::Create
   def command(database : String, collection : Collection::CollectionKey, options)
     Commands.make({
       create: collection,
-      "$db": database
+      "$db":  database,
     }, options)
   end
 

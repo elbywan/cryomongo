@@ -4,7 +4,6 @@ require "./op_code"
 
 # The OP_UPDATE message is used to update a document in a collection.
 struct Mongo::Messages::OpUpdate < Mongo::Messages::Part
-
   @[Field(ignore: true)]
   getter op_code : OpCode = OpCode::Update
 
@@ -31,6 +30,7 @@ struct Mongo::Messages::OpUpdate < Mongo::Messages::Part
     @full_collection_name,
     @flags : Flags,
     @selector,
-    @update)
+    @update
+  )
   end
 end

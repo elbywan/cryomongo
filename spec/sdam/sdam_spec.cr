@@ -4,7 +4,21 @@ require "../spec_helper"
 alias ServerDescription = Mongo::SDAM::ServerDescription
 alias Topology = Mongo::SDAM::TopologyDescription
 
-class Mongo::Client::Single::Mock < Mongo::Client::Single
+struct Mongo::Connection
+  def initialize(@server_description : ServerDescription, @socket : IO, @credentials : Mongo::Credentials, @options : Mongo::Options)
+  end
+end
+
+class Mongo::SDAM::Monitor::Mock < Mongo::SDAM::Monitor
+  def get_connection(server_description : ServerDescription) : Mongo::Connection
+    @client.get_connection(server_description)
+  end
+
+  def close_connection(server_description : ServerDescription)
+  end
+end
+
+class Mongo::Client::Mock < Mongo::Client
   property mocks : Hash(ServerDescription, BSON) = Hash(ServerDescription, BSON).new
 
   def reset_mocks
@@ -12,36 +26,37 @@ class Mongo::Client::Single::Mock < Mongo::Client::Single
   end
 
   def add_mock(address, mock)
-    description = @topology.servers.find &.address.== address
+    description = topology.servers.find &.address.== address
     description.try { |d| mocks[d] = mock }
   end
 
-  def get_connection(server_description : SDAM::ServerDescription) : IO
+  def get_connection(server_description : SDAM::ServerDescription) : Mongo::Connection
     mock = mocks[server_description]
 
-    raise Socket::Error.new "Simulated network error" if mock.empty? && monitor
+    raise Socket::Error.new "Simulated network error" if mock.empty?
 
-    op_msg = Messages::OpMsg.new(
-      flag_bits: :none,
-      sections: [
-        Messages::OpMsg::SectionBody.new(mock)
-      ].map(&.as(Messages::Part))
-    )
+    op_msg = Messages::OpMsg.new(mock)
     full_msg = Messages::Message.new(op_msg)
 
-    writer = File.new File::NULL
+    writer = IO::Memory.new
     reader = IO::Memory.new
     full_msg.to_io(reader)
     reader.rewind
-    IO::Stapled.new reader, writer
+    io = IO::Stapled.new reader, writer
+    Mongo::Connection.new(server_description, io, @credentials, @options)
   end
 
   def server_description(address : String)
-    @topology.servers.find(&.address.== address)
+    topology.servers.find(&.address.== address)
   end
 
   def check_server(server_description)
-    @monitor.not_nil!.check(server_description)
+    @monitors.find(&.server_description.address.== server_description.address).not_nil!.check(server_description)
+  end
+
+  def add_monitor(server_description : SDAM::ServerDescription, *, start_monitoring = true)
+    monitor = SDAM::Monitor::Mock.new(self, server_description, @credentials, @options.heartbeat_frequency || 10.seconds)
+    @monitors << monitor
   end
 end
 
@@ -62,7 +77,7 @@ describe Mongo::SDAM do
 
         it "#{description} (#{file_path})", focus: focus do
           uri = test["uri"].as_s
-          client = Mongo::Client::Single::Mock.new(uri)
+          client = Mongo::Client::Mock.new(uri, start_monitoring: false)
           phases = test["phases"].as_a
           phases.each { |phase|
             client.reset_mocks

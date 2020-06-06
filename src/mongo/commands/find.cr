@@ -6,9 +6,9 @@ module Mongo::Commands::Find
 
   def command(database : String, collection : Collection::CollectionKey, filter, options)
     Commands.make({
-      find: collection,
+      find:   collection,
       filter: BSON.new(filter),
-      "$db": database
+      "$db":  database,
     }, options)
   end
 

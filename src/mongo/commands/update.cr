@@ -7,9 +7,9 @@ module Mongo::Commands::Update
   def command(database : String, collection : Collection::CollectionKey, updates : Array, options)
     Commands.make({
       update: collection,
-      "$db": database
+      "$db":  database,
     }, sequences: {
-      updates: updates.map { |elt| BSON.new(elt) }
+      updates: updates.map { |elt| BSON.new(elt) },
     }, options: options)
   end
 

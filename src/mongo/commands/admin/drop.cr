@@ -6,8 +6,8 @@ module Mongo::Commands::Drop
 
   def command(database : String, collection : Collection::CollectionKey, options)
     Commands.make({
-      drop: collection,
-      "$db": database
+      drop:  collection,
+      "$db": database,
     }, options)
   end
 

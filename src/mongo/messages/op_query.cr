@@ -4,7 +4,6 @@ require "./op_code"
 
 # The OP_QUERY message is used to query the database for documents in a collection.
 struct Mongo::Messages::OpQuery < Mongo::Messages::Part
-
   @[Field(ignore: true)]
   getter op_code : OpCode = OpCode::Query
 
@@ -62,6 +61,7 @@ struct Mongo::Messages::OpQuery < Mongo::Messages::Part
     @number_to_skip,
     @number_to_return,
     @query,
-    @return_fields_selector = nil)
+    @return_fields_selector = nil
+  )
   end
 end

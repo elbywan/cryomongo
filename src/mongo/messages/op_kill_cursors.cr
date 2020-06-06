@@ -4,7 +4,6 @@ require "./op_code"
 # The OP_KILL_CURSORS message is used to close an active cursor in the database.
 # This is necessary to ensure that database resources are reclaimed at the end of the query.
 struct Mongo::Messages::OpKillCursors < Mongo::Messages::Part
-
   @[Field(ignore: true)]
   getter op_code : OpCode = OpCode::KillCursors
 

@@ -7,8 +7,8 @@ module Mongo::Commands::ConvertToCapped
   def command(database : String, collection : Collection::CollectionKey, size : Int64, options)
     Commands.make({
       convertToCapped: collection,
-      size: size,
-      "$db": database
+      size:            size,
+      "$db":           database,
     }, options)
   end
 

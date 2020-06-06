@@ -8,14 +8,14 @@ module Mongo::Commands::Aggregate
     need_cursor = true
     body, sequences = Commands.make({
       "aggregate": collection,
-      "pipeline": pipeline.map { |elt| BSON.new(elt) },
-      "$db": database
+      "pipeline":  pipeline.map { |elt| BSON.new(elt) },
+      "$db":       database,
     }, options) { |_, key, _|
       need_cursor = false if key == "explain" || key == "cursor"
       false
     }
-    body["cursor"] = BSON.new() if need_cursor
-    { body, sequences }
+    body["cursor"] = BSON.new if need_cursor
+    {body, sequences}
   end
 
   def result(bson)

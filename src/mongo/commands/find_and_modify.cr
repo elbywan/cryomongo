@@ -7,8 +7,8 @@ module Mongo::Commands::FindAndModify
   def command(database : String, collection : Collection::CollectionKey, filter, options)
     Commands.make({
       findAndModify: collection,
-      query: BSON.new(filter),
-      "$db": database
+      query:         BSON.new(filter),
+      "$db":         database,
     }, options)
   end
 

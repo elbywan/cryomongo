@@ -3,7 +3,6 @@ require "./op_code"
 
 # The OP_GET_MORE message is used to query the database for documents in a collection.
 struct Mongo::Messages::OpGetMore < Mongo::Messages::Part
-
   @[Field(ignore: true)]
   getter op_code : OpCode = OpCode::GetMore
 

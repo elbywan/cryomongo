@@ -7,7 +7,7 @@ module Mongo::Commands::ListIndexes
   def command(database : String, collection : Collection::CollectionKey)
     Commands.make({
       listIndexes: collection,
-      "$db": database
+      "$db":       database,
     })
   end
 

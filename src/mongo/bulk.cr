@@ -29,6 +29,7 @@ struct Mongo::Bulk
 
   struct InsertOne < WriteModel
     getter document : BSON
+
     def initialize(document)
       @document = BSON.new(document)
     end
@@ -38,6 +39,7 @@ struct Mongo::Bulk
     getter filter : BSON
     getter collation : BSON?
     getter hint : (String | BSON)?
+
     def initialize(filter, @collation = nil, @hint = nil)
       @filter = BSON.new(filter)
     end
@@ -47,6 +49,7 @@ struct Mongo::Bulk
     getter filter : BSON
     getter collation : BSON?
     getter hint : (String | BSON)?
+
     def initialize(filter, @collation = nil, @hint = nil)
       @filter = BSON.new(filter)
     end
@@ -58,9 +61,10 @@ struct Mongo::Bulk
     getter collation : BSON?
     getter hint : (String | BSON)?
     getter upsert : Bool?
+
     def initialize(filter, replacement, @collation = nil, @hint = nil, @upsert = nil)
       @filter = BSON.new(filter)
-      @replacement =  BSON.new(replacement)
+      @replacement = BSON.new(replacement)
     end
   end
 
@@ -71,9 +75,10 @@ struct Mongo::Bulk
     getter collation : BSON?
     getter hint : (String | BSON)?
     getter upsert : Bool?
+
     def initialize(filter, update, @array_filters = nil, @collation = nil, @hint = nil, @upsert = nil)
       @filter = BSON.new(filter)
-      @update =  BSON.new(update)
+      @update = BSON.new(update)
     end
   end
 
@@ -84,9 +89,10 @@ struct Mongo::Bulk
     getter collation : BSON?
     getter hint : (String | BSON)?
     getter upsert : Bool?
+
     def initialize(filter, update, @array_filters = nil, @collation = nil, @hint = nil, @upsert = nil)
       @filter = BSON.new(filter)
-      @update =  BSON.new(update)
+      @update = BSON.new(update)
     end
   end
 
@@ -137,58 +143,58 @@ struct Mongo::Bulk
       model.document
     when DeleteOne
       Tools.merge_bson({
-        q: model.filter,
+        q:     model.filter,
         limit: 1,
       }, {
-        hint: model.hint,
-        collation: model.collation
+        hint:      model.hint,
+        collation: model.collation,
       }) { |_, value|
         value.nil?
       }
     when DeleteMany
       Tools.merge_bson({
-        q: model.filter,
+        q:     model.filter,
         limit: 0,
       }, {
-        hint: model.hint,
-        collation: model.collation
+        hint:      model.hint,
+        collation: model.collation,
       }) { |_, value|
         value.nil?
       }
     when ReplaceOne
       Tools.merge_bson({
-        q: model.filter,
-        u: model.replacement,
+        q:     model.filter,
+        u:     model.replacement,
         multi: false,
       }, {
-        hint: model.hint,
+        hint:      model.hint,
         collation: model.collation,
-        upsert: model.upsert,
+        upsert:    model.upsert,
       }) { |_, value|
         value.nil?
       }
     when UpdateOne
       Tools.merge_bson({
-        q: model.filter,
-        u: model.update,
+        q:     model.filter,
+        u:     model.update,
         multi: false,
       }, {
-        hint: model.hint,
-        collation: model.collation,
-        upsert: model.upsert,
+        hint:          model.hint,
+        collation:     model.collation,
+        upsert:        model.upsert,
         array_filters: model.array_filters,
       }) { |_, value|
         value.nil?
       }
     when UpdateMany
       Tools.merge_bson({
-        q: model.filter,
-        u: model.update,
+        q:     model.filter,
+        u:     model.update,
         multi: true,
       }, {
-        hint: model.hint,
-        collation: model.collation,
-        upsert: model.upsert,
+        hint:          model.hint,
+        collation:     model.collation,
+        upsert:        model.upsert,
         array_filters: model.array_filters,
       }) { |_, value|
         value.nil?
@@ -267,9 +273,13 @@ struct Mongo::Bulk
     @ordered && results.write_errors.size > 0
   end
 
-  def execute(**options)
+  def execute(write_concern : WriteConcern? = nil)
     _, not_executed = @executed.compare_and_set(0_u8, 1_u8)
     raise "Cannot execute a bulk operation more than once" unless not_executed
+
+    options = {
+      write_concern: write_concern
+    }
 
     models = @models
     unless @ordered

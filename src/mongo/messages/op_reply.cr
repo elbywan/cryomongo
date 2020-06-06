@@ -4,7 +4,6 @@ require "./op_code"
 
 # The OP_REPLY message is sent by the database in response to an OP_QUERY or OP_GET_MORE message.
 struct Mongo::Messages::OpReply < Mongo::Messages::Part
-
   @[Field(ignore: true)]
   @op_code : OpCode = OpCode::Reply
 

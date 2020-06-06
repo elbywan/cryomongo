@@ -7,8 +7,8 @@ module Mongo::Commands::DropConnections
   def command(host_and_port : Array(String))
     Commands.make({
       dropConnections: 1,
-      hostAndPort: host_and_port,
-      "$db": "admin"
+      hostAndPort:     host_and_port,
+      "$db":           "admin",
     })
   end
 

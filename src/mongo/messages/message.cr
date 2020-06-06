@@ -7,7 +7,7 @@ struct Mongo::Messages::Message
   getter header : Header
   getter contents : Part
 
-  def initialize(contents : Part,response_to = 0)
+  def initialize(contents : Part, response_to = 0)
     @header = Header.new(
       message_length: 16 + contents.part_size,
       request_id: @@id.add(1),
@@ -32,5 +32,6 @@ struct Mongo::Messages::Message
   def to_io(io : IO)
     @header.to_io io
     @contents.to_io io
+    io.flush
   end
 end

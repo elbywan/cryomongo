@@ -7,7 +7,7 @@ module Mongo::Commands::CollMod
   def command(database : String, collection : Collection::CollectionKey, options)
     Commands.make({
       collMod: collection,
-      "$db": database
+      "$db":   database,
     }, options)
   end
 

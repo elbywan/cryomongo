@@ -7,7 +7,7 @@ module Mongo::Commands::ListDatabases
   def command(options)
     Commands.make({
       listDatabases: 1,
-      "$db": "admin"
+      "$db":         "admin",
     }, options)
   end
 

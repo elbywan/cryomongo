@@ -7,7 +7,7 @@ module Mongo::Commands::FsyncUnlock
   def command
     Commands.make({
       fsyncUnlock: 1,
-      "$db": "admin"
+      "$db":       "admin",
     })
   end
 

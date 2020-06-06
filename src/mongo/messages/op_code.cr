@@ -1,7 +1,7 @@
 module Mongo::Messages
   enum OpCode : Int32
     # Reply to a client request. responseTo is set.
-    Reply =	1
+    Reply = 1
     # Update document.
     Update = 2001
     # Insert new document.

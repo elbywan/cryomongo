@@ -46,7 +46,7 @@ abstract struct Mongo::Messages::Part
     s = 0
     {% begin %}
       {% for ivar in @type.instance_vars %}
-        {% ann = ivar.annotation( Mongo::Messages::Part::Field) %}
+        {% ann = ivar.annotation(Mongo::Messages::Part::Field) %}
         {% unless ann && ann[:ignore] %}
           s += Messages::Part.field_size({{ivar.id}}) if {{ivar.id}}
         {% end %}
@@ -58,7 +58,7 @@ abstract struct Mongo::Messages::Part
   def to_io(io : IO)
     {% begin %}
       {% for ivar in @type.instance_vars %}
-        {% ann = ivar.annotation( Mongo::Messages::Part::Field) %}
+        {% ann = ivar.annotation(Mongo::Messages::Part::Field) %}
         {% unless ann && ann[:ignore] %}
           Messages::Part.field_to_io(io, {{ivar.id}}) if {{ivar.id}}
         {% end %}

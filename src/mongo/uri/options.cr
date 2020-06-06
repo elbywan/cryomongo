@@ -1,5 +1,4 @@
 struct Mongo::Options
-
   # See: https://github.com/mongodb/specifications/blob/master/source/uri-options/uri-options.rst
 
   # Passed into the server in the client metadata as part of the connection handshake
@@ -13,7 +12,7 @@ struct Mongo::Options
   # The list of allowed compression types for wire protocol messages sent or received from the server
   getter compressors : String? = nil
   # Amount of time to wait for a single TCP socket connection to the server to be established before erroring; note that this applies to SDAM isMaster operations
-  getter connect_timeout : Time::Span? = nil #10.seconds
+  getter connect_timeout : Time::Span? = nil # 10.seconds
   # Whether to connect to the deployment in Single topology.
   getter direct_connection : Bool? = nil
   # The interval between regular server monitoring checks

@@ -79,8 +79,6 @@ module Mongo::Commands
     }
   end
 
-  # TODO: $readPreference
-
   def self.make(init, options = nil, sequences = nil, skip_nil = true)
     bson = BSON.new(init)
     options.try &.each { |key, value|

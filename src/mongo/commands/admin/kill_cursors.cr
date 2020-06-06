@@ -7,8 +7,8 @@ module Mongo::Commands::KillCursors
   def command(database : String, collection : Collection::CollectionKey, cursor_ids : Array(Int64))
     Commands.make({
       killCursors: collection,
-      cursors: cursor_ids,
-      "$db": database
+      cursors:     cursor_ids,
+      "$db":       database,
     })
   end
 

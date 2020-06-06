@@ -1,5 +1,5 @@
 module Mongo
-   @[BSON::Options(camelize: "lower")]
+  @[BSON::Options(camelize: "lower")]
   record Collation,
     locale : String,
     case_level : Bool? = nil,
@@ -9,6 +9,6 @@ module Mongo
     alternate : String? = nil,
     max_variable : String? = nil,
     backwards : Bool? = nil {
-      include BSON::Serializable
+    include BSON::Serializable
   }
 end

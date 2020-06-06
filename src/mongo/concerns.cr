@@ -14,8 +14,8 @@ module Mongo
 
   record ReadConcern,
     level : String? = nil {
-      include BSON::Serializable
-    }
+    include BSON::Serializable
+  }
 
   module WithWriteConcern
     macro included
@@ -49,8 +49,8 @@ module Mongo
         else
           args.merge({
             options: options.merge({
-              write_concern: write_concern
-            })
+              write_concern: write_concern,
+            }),
           })
         end
       else
@@ -79,8 +79,8 @@ module Mongo
         else
           args.merge({
             options: options.merge({
-              read_concern: read_concern.try(&.to_bson)
-            })
+              read_concern: read_concern.try(&.to_bson),
+            }),
           })
         end
       else

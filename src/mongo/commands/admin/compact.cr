@@ -7,7 +7,7 @@ module Mongo::Commands::Compact
   def command(database : String, collection : Collection::CollectionKey, options)
     Commands.make({
       compact: collection,
-      "$db": database
+      "$db":   database,
     }, options)
   end
 

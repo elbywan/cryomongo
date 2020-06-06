@@ -7,8 +7,8 @@ module Mongo::Commands::DropIndexes
   def command(database : String, collection : Collection::CollectionKey, index, options)
     Commands.make({
       dropIndexes: collection,
-      index: index,
-      "$db": database
+      index:       index,
+      "$db":       database,
     }, options)
   end
 

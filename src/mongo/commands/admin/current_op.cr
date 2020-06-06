@@ -7,7 +7,7 @@ module Mongo::Commands::CurrentOp
   def command(options)
     Commands.make({
       currentOp: 1,
-      "$db": "admin"
+      "$db":     "admin",
     }, options)
   end
 

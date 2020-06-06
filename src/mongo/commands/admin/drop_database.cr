@@ -7,7 +7,7 @@ module Mongo::Commands::DropDatabase
   def command(database : String, options)
     Commands.make({
       dropDatabase: 1,
-      "$db": database
+      "$db":        database,
     }, options)
   end
 

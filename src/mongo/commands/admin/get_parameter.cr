@@ -7,10 +7,10 @@ module Mongo::Commands::GetParameter
   def command(parameter : String?)
     bson, _ = Commands.make({
       getParameter: parameter.nil? ? "*" : 1,
-      "$db": "admin"
+      "$db":        "admin",
     })
     bson[parameter] = 1 unless parameter.nil?
-    { bson, nil }
+    {bson, nil}
   end
 
   Common.result(Result) {

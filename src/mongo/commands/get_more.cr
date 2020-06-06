@@ -7,9 +7,9 @@ module Mongo::Commands::GetMore
 
   def command(database : String, collection : Collection::CollectionKey, cursor_id : Int64, **options)
     Commands.make({
-      getMore: cursor_id,
+      getMore:    cursor_id,
       collection: collection,
-      "$db": database
+      "$db":      database,
     }, options)
   end
 

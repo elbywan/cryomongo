@@ -68,7 +68,7 @@ class Mongo::SDAM::TopologyDescription
         erase_logical_session_timeout = true if desc.null_logical_session_timeout_minutes
       end
 
-      if desc == old_description
+      if desc.address == old_description.address
         new_description
       else
         desc
@@ -194,7 +194,9 @@ class Mongo::SDAM::TopologyDescription
       description.passives,
       description.arbiters,
     }.each &.try &.each { |addr_str|
-      @servers << ServerDescription.new(addr_str)
+      unless @servers.any? &.address.==(addr_str)
+        @servers << ServerDescription.new(addr_str)
+      end
     }
 
     unless (primary_address = description.primary).nil?
@@ -247,15 +249,15 @@ class Mongo::SDAM::TopologyDescription
     max_election_id = @max_election_id
     if !set_version.nil? && !election_id.nil?
       if (
-        !max_set_version.nil? &&
-        !max_election_id.nil? && (
-          max_set_version > set_version || (
-            max_set_version == set_version &&
-            max_election_id.data > election_id.data
-          )
-        )
-      )
-       # Stale primary.
+           !max_set_version.nil? &&
+           !max_election_id.nil? && (
+             max_set_version > set_version || (
+               max_set_version == set_version &&
+               max_election_id.data > election_id.data
+             )
+           )
+         )
+        # Stale primary.
         replace_description(description, ServerDescription.new(description.address))
         check_if_has_primary
         return
@@ -281,9 +283,9 @@ class Mongo::SDAM::TopologyDescription
       description.passives,
       description.arbiters,
     }.each { |addresses|
-       addresses.try &.each { |address|
+      addresses.try &.each { |address|
         address = address.downcase
-        unless @servers.any? &.address == address
+        unless @servers.any? &.address.== address
           @servers << ServerDescription.new(address)
         end
       }

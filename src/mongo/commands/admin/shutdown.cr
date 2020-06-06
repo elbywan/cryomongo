@@ -7,7 +7,7 @@ module Mongo::Commands::Shutdown
   def command(options)
     Commands.make({
       shutdown: 1,
-      "$db": "admin"
+      "$db":    "admin",
     }, options)
   end
 

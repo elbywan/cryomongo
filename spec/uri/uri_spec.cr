@@ -7,7 +7,6 @@ describe Mongo::URI do
     })["tests"].as_a
 
     context "(#{file_path})" do
-
       # Crystal URI parser is more relaxed than the specs parser.
       next if file_path.ends_with? "invalid-uris.json"
 

@@ -4,29 +4,29 @@ require "../commands"
 module Mongo::Commands::IsMaster
   extend self
 
-  OS_TYPE = {%if flag?(:linux)%} "Linux" {%elsif flag?(:darwin)%} "Darwin" {%elsif flag?(:win32)%} "Windows" {% else %} "Unknown" {% end %}
+  OS_TYPE = {% if flag?(:linux) %} "Linux" {% elsif flag?(:darwin) %} "Darwin" {% elsif flag?(:win32) %} "Windows" {% else %} "Unknown" {% end %}
 
   def command
-    { BSON.new({
+    {BSON.new({
       isMaster: 1,
-      "$db": "admin",
-      client: {
+      "$db":    "admin",
+      client:   {
         application: {
-            name: "mongo-crystal-driver"
+          name: "mongo-crystal-driver",
         },
         driver: {
-            name: "mongo-crystal-driver",
-            version: Mongo::VERSION
+          name:    "mongo-crystal-driver",
+          version: Mongo::VERSION,
         },
         os: {
-            type: OS_TYPE,
-            # name: "unknown",
-            # architecture: "unknown",
-            # version: "unknown"
+          type: OS_TYPE,
+          # name: "unknown",
+          # architecture: "unknown",
+          # version: "unknown"
         },
         # platform: "<string>"
-      }
-    }), nil }
+      },
+    }), nil}
   end
 
   Common.result(Result) {

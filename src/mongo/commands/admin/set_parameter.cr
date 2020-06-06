@@ -7,10 +7,10 @@ module Mongo::Commands::SetParameter
   def command(parameter : String, value)
     bson, _ = Commands.make({
       setParameter: 1,
-      "$db": "admin"
+      "$db":        "admin",
     })
     bson[parameter] = value
-    { bson, nil }
+    {bson, nil}
   end
 
   def result(bson)

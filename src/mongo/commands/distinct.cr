@@ -7,8 +7,8 @@ module Mongo::Commands::Distinct
   def command(database : String, collection : Collection::CollectionKey, key : String, options)
     Commands.make({
       distinct: collection,
-      key: key,
-      "$db": database
+      key:      key,
+      "$db":    database,
     }, options)
   end
 

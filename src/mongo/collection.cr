@@ -1,4 +1,4 @@
-require "./clients/client"
+require "./client"
 require "./database"
 require "./cursor"
 require "./bulk"
@@ -50,15 +50,15 @@ class Mongo::Collection
     read_preference : ReadPreference? = nil
   ) : Mongo::Cursor? forall H
     maybe_result = self.command(Commands::Aggregate, pipeline: pipeline, options: {
-      allow_disk_use: allow_disk_use,
-      cursor: batch_size.try { { batch_size: batch_size } },
+      allow_disk_use:             allow_disk_use,
+      cursor:                     batch_size.try { {batch_size: batch_size} },
       bypass_document_validation: bypass_document_validation,
-      read_concern: read_concern,
-      collation: collation,
-      hint: hint.is_a?(String) ? hint : BSON.new(hint),
-      comment: comment,
-      write_concern: write_concern,
-      read_preference: read_preference
+      read_concern:               read_concern,
+      collation:                  collation,
+      hint:                       hint.is_a?(String) ? hint : BSON.new(hint),
+      comment:                    comment,
+      write_concern:              write_concern,
+      read_preference:            read_preference,
     })
     maybe_result.try { |result| Cursor.new(@database.client, result) }
   end
@@ -84,12 +84,12 @@ class Mongo::Collection
     limit.try { pipeline << BSON.new({"$limit": limit}) }
     pipeline << BSON.new({"$group": {"_id": 1, "n": {"$sum": 1}}})
     result = self.command(Commands::Aggregate, pipeline: pipeline, options: {
-      skip: skip,
-      limit: limit,
-      collation: collation,
-      hint: hint.is_a?(String) ? hint : BSON.new(hint),
-      max_time_ms: max_time_ms,
-      read_preference: read_preference
+      skip:            skip,
+      limit:           limit,
+      collation:       collation,
+      hint:            hint.is_a?(String) ? hint : BSON.new(hint),
+      max_time_ms:     max_time_ms,
+      read_preference: read_preference,
     }).not_nil!
     cursor = Cursor.new(@database.client, result)
     if (item = cursor.next).is_a? BSON
@@ -104,8 +104,8 @@ class Mongo::Collection
   # See: https://github.com/mongodb/specifications/blob/master/source/crud/crud.rst#count-api-details
   def estimated_document_count(*, max_time_ms : Int64? = nil, read_preference : ReadPreference? = nil) : Int32
     result = self.command(Commands::Count, options: {
-      max_time_ms: max_time_ms,
-      read_preference: read_preference
+      max_time_ms:     max_time_ms,
+      read_preference: read_preference,
     }).not_nil!
     result["n"].as(Int32)
   end
@@ -125,10 +125,10 @@ class Mongo::Collection
     read_preference : ReadPreference? = nil
   ) : Array
     result = self.command(Commands::Distinct, key: key, options: {
-      query: filter,
-      read_concern: read_concern,
-      collation: collation,
-      read_preference: read_preference
+      query:           filter,
+      read_concern:    read_concern,
+      collation:       collation,
+      read_preference: read_preference,
     }).not_nil!
     result.values.each.map(&.[1]).to_a
   end
@@ -174,27 +174,27 @@ class Mongo::Collection
     read_preference : ReadPreference? = nil
   ) : Mongo::Cursor forall H
     result = self.command(Commands::Find, filter: filter, options: {
-      sort: sort.try { BSON.new(sort) },
-      projection: projection.try { BSON.new(projection) },
-      hint: hint.is_a?(String) ? hint : BSON.new(hint),
-      skip: skip,
-      limit: limit,
-      batch_size: batch_size,
-      single_batch: single_batch,
-      comment: comment,
-      max_time_ms: max_time_ms,
-      read_concern: read_concern,
-      max: max.try { BSON.new(max) },
-      min: min.try { BSON.new(min) },
-      return_key: return_key,
-      show_record_id: show_record_id,
-      tailable: tailable,
-      oplog_replay: oplog_replay,
-      no_cursor_timeout: no_cursor_timeout,
-      await_data: await_data,
+      sort:                  sort.try { BSON.new(sort) },
+      projection:            projection.try { BSON.new(projection) },
+      hint:                  hint.is_a?(String) ? hint : BSON.new(hint),
+      skip:                  skip,
+      limit:                 limit,
+      batch_size:            batch_size,
+      single_batch:          single_batch,
+      comment:               comment,
+      max_time_ms:           max_time_ms,
+      read_concern:          read_concern,
+      max:                   max.try { BSON.new(max) },
+      min:                   min.try { BSON.new(min) },
+      return_key:            return_key,
+      show_record_id:        show_record_id,
+      tailable:              tailable,
+      oplog_replay:          oplog_replay,
+      no_cursor_timeout:     no_cursor_timeout,
+      await_data:            await_data,
       allow_partial_results: allow_partial_results,
-      collation: collation,
-      read_preference: read_preference
+      collation:             collation,
+      read_preference:       read_preference,
     }).not_nil!
     Cursor.new(@database.client, result, await_time_ms: tailable && await_data ? max_time_ms : nil)
   end
@@ -286,8 +286,8 @@ class Mongo::Collection
   # @throws WriteException
   def insert_one(document, *, write_concern : WriteConcern? = nil, bypass_document_validation : Bool? = nil) : Commands::Common::InsertResult?
     self.command(Commands::Insert, documents: [document], options: {
-      write_concern: write_concern,
-      bypass_document_validation: bypass_document_validation
+      write_concern:              write_concern,
+      bypass_document_validation: bypass_document_validation,
     })
   end
 
@@ -311,9 +311,9 @@ class Mongo::Collection
   ) : Commands::Common::InsertResult?
     raise "Tried to insert an empty document array" unless documents.size > 0
     self.command(Commands::Insert, documents: documents, options: {
-      ordered: ordered,
-      write_concern: write_concern,
-      bypass_document_validation: bypass_document_validation
+      ordered:                    ordered,
+      write_concern:              write_concern,
+      bypass_document_validation: bypass_document_validation,
     })
   end
 
@@ -330,15 +330,15 @@ class Mongo::Collection
     write_concern : WriteConcern? = nil
   ) : Commands::Common::DeleteResult? forall H
     delete = Tools.merge_bson({
-      q: BSON.new(filter),
+      q:     BSON.new(filter),
       limit: 1,
     }, {
       collation: collation,
-      hint: hint
+      hint:      hint,
     })
     self.command(Commands::Delete, deletes: [delete], options: {
-      ordered: ordered,
-      write_concern: write_concern
+      ordered:       ordered,
+      write_concern: write_concern,
     })
   end
 
@@ -353,17 +353,17 @@ class Mongo::Collection
     hint : (String | H)? = nil,
     ordered : Bool? = nil,
     write_concern : WriteConcern? = nil
-  ): Commands::Common::DeleteResult? forall H
+  ) : Commands::Common::DeleteResult? forall H
     delete = Tools.merge_bson({
-      q: BSON.new(filter),
+      q:     BSON.new(filter),
       limit: 0,
     }, {
       collation: collation,
-      hint: hint
+      hint:      hint,
     })
     self.command(Commands::Delete, deletes: [delete], options: {
-      ordered: ordered,
-      write_concern: write_concern
+      ordered:       ordered,
+      write_concern: write_concern,
     })
   end
 
@@ -407,23 +407,23 @@ class Mongo::Collection
     hint : (String | H)? = nil,
     ordered : Bool? = nil,
     write_concern : WriteConcern? = nil,
-    bypass_document_validation : Bool? = nil,
+    bypass_document_validation : Bool? = nil
   ) : Commands::Common::UpdateResult? forall H
     updates = [
       Tools.merge_bson({
-        q: BSON.new(filter),
-        u: validate_replacement!(replacement),
-        multi: false,
-        upsert: upsert
+        q:      BSON.new(filter),
+        u:      validate_replacement!(replacement),
+        multi:  false,
+        upsert: upsert,
       }, {
         collation: collation,
-        hint: hint
-      })
+        hint:      hint,
+      }),
     ]
     self.command(Commands::Update, updates: updates, options: {
-      ordered: ordered,
-      write_concern: write_concern,
-      bypass_document_validation: bypass_document_validation
+      ordered:                    ordered,
+      write_concern:              write_concern,
+      bypass_document_validation: bypass_document_validation,
     })
   end
 
@@ -441,24 +441,24 @@ class Mongo::Collection
     hint : (String | H)? = nil,
     ordered : Bool? = nil,
     write_concern : WriteConcern? = nil,
-    bypass_document_validation : Bool? = nil,
+    bypass_document_validation : Bool? = nil
   ) : Commands::Common::UpdateResult? forall H
     updates = [
       Tools.merge_bson({
-        q: BSON.new(filter),
-        u: validate_update!(update),
-        multi: false,
-        upsert: upsert
+        q:      BSON.new(filter),
+        u:      validate_update!(update),
+        multi:  false,
+        upsert: upsert,
       }, {
         array_filters: array_filters,
-        collation: collation,
-        hint: hint
-      })
+        collation:     collation,
+        hint:          hint,
+      }),
     ]
     self.command(Commands::Update, updates: updates, options: {
-      ordered: ordered,
-      write_concern: write_concern,
-      bypass_document_validation: bypass_document_validation
+      ordered:                    ordered,
+      write_concern:              write_concern,
+      bypass_document_validation: bypass_document_validation,
     })
   end
 
@@ -476,24 +476,24 @@ class Mongo::Collection
     hint : (String | H)? = nil,
     ordered : Bool? = nil,
     write_concern : WriteConcern? = nil,
-    bypass_document_validation : Bool? = nil,
+    bypass_document_validation : Bool? = nil
   ) : Commands::Common::UpdateResult? forall H
     updates = [
       Tools.merge_bson({
-        q: BSON.new(filter),
-        u: validate_update!(update),
-        multi: true,
-        upsert: upsert
+        q:      BSON.new(filter),
+        u:      validate_update!(update),
+        multi:  true,
+        upsert: upsert,
       }, {
         array_filters: array_filters,
-        collation: collation,
-        hint: hint
-      })
+        collation:     collation,
+        hint:          hint,
+      }),
     ]
     self.command(Commands::Update, updates: updates, options: {
-      ordered: ordered,
-      write_concern: write_concern,
-      bypass_document_validation: bypass_document_validation
+      ordered:                    ordered,
+      write_concern:              write_concern,
+      bypass_document_validation: bypass_document_validation,
     })
   end
 
@@ -519,16 +519,16 @@ class Mongo::Collection
     fields = nil,
     bypass_document_validation : Bool? = nil,
     write_concern : WriteConcern? = nil,
-    collation : Collation? = nil,
+    collation : Collation? = nil
   ) : BSON
     raise "Update argument is disallowed" if options.has_key "update"
     self.command(Commands::FindAndModify, filter: filter, remove: true, options: {
-      sort: sort.try { BSON.new(sort)},
-      new: new,
-      fields: fields.try { BSON.new(fields) },
+      sort:                       sort.try { BSON.new(sort) },
+      new:                        new,
+      fields:                     fields.try { BSON.new(fields) },
       bypass_document_validation: bypass_document_validation,
-      write_concern: write_concern,
-      collation: collation,
+      write_concern:              write_concern,
+      collation:                  collation,
     })
     check_find_and_modify_result!(result)
   end
@@ -553,15 +553,15 @@ class Mongo::Collection
   ) : BSON
     raise "Remove argument is disallowed" if options.has_key "remove"
     replacement = validate_replacement!(replacement)
-    result = self.command(Commands::FindAndModify, filter: filter, update: replacement , options: {
-      sort: sort.try { BSON.new(sort)},
-      new: new,
-      fields: fields.try { BSON.new(fields) },
-      upsert: upsert,
+    result = self.command(Commands::FindAndModify, filter: filter, update: replacement, options: {
+      sort:                       sort.try { BSON.new(sort) },
+      new:                        new,
+      fields:                     fields.try { BSON.new(fields) },
+      upsert:                     upsert,
       bypass_document_validation: bypass_document_validation,
-      write_concern: write_concern,
-      collation: collation,
-      array_filters: array_filters
+      write_concern:              write_concern,
+      collation:                  collation,
+      array_filters:              array_filters,
     })
     check_find_and_modify_result!(result)
   end
@@ -582,18 +582,19 @@ class Mongo::Collection
     bypass_document_validation : Bool? = nil,
     write_concern : WriteConcern? = nil,
     collation : Collation? = nil,
-    array_filters = nil) : BSON
+    array_filters = nil
+  ) : BSON
     raise "Remove argument is disallowed" if options.has_key "remove"
     update = validate_update!(update)
     result = self.command(Commands::FindAndModify, filter: filter, update: update, options: {
-      sort: sort.try { BSON.new(sort)},
-      new: new,
-      fields: fields.try { BSON.new(fields) },
-      upsert: upsert,
+      sort:                       sort.try { BSON.new(sort) },
+      new:                        new,
+      fields:                     fields.try { BSON.new(fields) },
+      upsert:                     upsert,
       bypass_document_validation: bypass_document_validation,
-      write_concern: write_concern,
-      collation: collation,
-      array_filters: array_filters
+      write_concern:              write_concern,
+      collation:                  collation,
+      array_filters:              array_filters,
     })
     check_find_and_modify_result!(result)
   end
