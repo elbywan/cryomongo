@@ -5,7 +5,6 @@ require "digest/md5"
 require "../credentials"
 
 class Mongo::Auth::Scram
-
   MIN_ITER_COUNT = 4096
 
   @server_nonce : String?
@@ -21,10 +20,10 @@ class Mongo::Auth::Scram
   def initialize(mechanism : Mongo::Auth::Mechanism, @credentials : Credentials)
     if mechanism.scram_sha1?
       @mechanism_string = "SCRAM-SHA-1"
-      @digest =  OpenSSL::Digest.new("SHA1")
+      @digest = OpenSSL::Digest.new("SHA1")
     elsif mechanism.scram_sha256?
       @mechanism_string = "SCRAM-SHA-256"
-      @digest =  OpenSSL::Digest.new("SHA256")
+      @digest = OpenSSL::Digest.new("SHA256")
     else
       raise "Invalid SCRAM mechanism: #{mechanism}"
     end
@@ -39,9 +38,9 @@ class Mongo::Auth::Scram
     request = Messages::OpMsg.new({
       saslStart: 1,
       mechanism: @mechanism_string,
-      "$db": source,
-      options: { skipEmptyExchange: true },
-      payload: client_first_payload.to_slice
+      "$db":     source,
+      options:   {skipEmptyExchange: true},
+      payload:   client_first_payload.to_slice,
     })
     connection.send(request)
     # 2.
@@ -67,10 +66,10 @@ class Mongo::Auth::Scram
 
     # 3.
     request = Messages::OpMsg.new({
-      saslContinue: 1,
+      saslContinue:   1,
       conversationId: @id,
-      "$db": source,
-      payload: client_final_message(auth_message).to_slice
+      "$db":          source,
+      payload:        client_final_message(auth_message).to_slice,
     })
     connection.send(request)
 
@@ -86,10 +85,10 @@ class Mongo::Auth::Scram
       break if reply_document["done"] == true
 
       request = Messages::OpMsg.new({
-        saslContinue: 1,
+        saslContinue:   1,
         conversationId: @id,
-        "$db": source,
-        payload: ""
+        "$db":          source,
+        payload:        "",
       })
       connection.send(request)
       response = connection.receive
@@ -114,7 +113,6 @@ class Mongo::Auth::Scram
   def client_final_message(auth_message)
     "#{without_proof},p=#{client_final(auth_message)}"
   end
-
 
   def client_final(auth_message)
     @client_final ||= client_proof(client_key, client_signature(stored_key(client_key), auth_message))
@@ -147,7 +145,7 @@ class Mongo::Auth::Scram
   end
 
   def server_key
-    @server_key ||=hmac(salted_password(@salt, @iterations), "Server Key")
+    @server_key ||= hmac(salted_password(@salt, @iterations), "Server Key")
   end
 
   def hmac(key, data)
@@ -159,7 +157,7 @@ class Mongo::Auth::Scram
   end
 
   def xor(first, second)
-    byte_array = first.zip(second).map{ |(a, b)| (a ^ b) }
+    byte_array = first.zip(second).map { |(a, b)| a ^ b }
     Slice.new(byte_array.size) { |i| byte_array[i] }
   end
 
@@ -178,8 +176,8 @@ class Mongo::Auth::Scram
       data.not_nil!,
       salt.not_nil!,
       iterations: iterations.not_nil!,
-      algorithm: @mechanism.scram_sha1? ? OpenSSL::Algorithm::SHA1 :  OpenSSL::Algorithm::SHA256,
-      key_size: @mechanism.scram_sha1? ? 20 : 32 #@digest.block_size,
+      algorithm: @mechanism.scram_sha1? ? OpenSSL::Algorithm::SHA1 : OpenSSL::Algorithm::SHA256,
+      key_size: @mechanism.scram_sha1? ? 20 : 32 # @digest.block_size,
     )
   end
 
@@ -199,7 +197,7 @@ class Mongo::Auth::Scram
 
   def compare_digest(a, b)
     check = a.bytesize ^ b.bytesize
-    a.bytes.zip(b.bytes){ |x, y| check |= x ^ y.to_i }
+    a.bytes.zip(b.bytes) { |x, y| check |= x ^ y.to_i }
     check == 0
   end
 
@@ -208,7 +206,7 @@ class Mongo::Auth::Scram
     payload.split(',').reject(&.empty?).map do |pair|
       k, v = pair.split('=', 2)
       if k.empty?
-        raise  "Payload malformed: missing key"
+        raise "Payload malformed: missing key"
       end
       hash[k] = v
     end

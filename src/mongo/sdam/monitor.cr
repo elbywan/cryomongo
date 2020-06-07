@@ -53,12 +53,12 @@ class Mongo::SDAM::Monitor
 
       select
       when resume_scan.receive
-        # Immediate scan requested
+      # Immediate scan requested
         sleep(before_cooldown - Time.utc) if Time.utc < before_cooldown
       when timeout @heartbeat_frequency
       end
     rescue e
-      Mongo::Log.error { "Monitoring error: #{e}"}
+      Mongo::Log.error { "Monitoring error: #{e}" }
       # Monitoring error
     end
     close_connection(@server_description)
@@ -68,7 +68,7 @@ class Mongo::SDAM::Monitor
   def request_immediate_scan
     select
     when resume_scan.send nil
-      # Fiber.yield
+    # Fiber.yield
     else # Ignore - scan is in progress already
     end
   end
@@ -80,7 +80,7 @@ class Mongo::SDAM::Monitor
     new_rtt = Connection.average_round_trip_time(round_trip_time, server_description.round_trip_time)
     ServerDescription.new(server_description.address, result, new_rtt)
   rescue error : Exception
-    Mongo::Log.error { "Monitoring handshake error: #{error}"}
+    Mongo::Log.error { "Monitoring handshake error: #{error}" }
     # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-monitoring.rst#network-or-command-error-during-server-check
     close_connection(server_description)
     known_state = !server_description.type.unknown?

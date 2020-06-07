@@ -282,7 +282,7 @@ struct Mongo::Bulk
 
     options = {
       bypass_document_validation: bypass_document_validation,
-      write_concern: write_concern
+      write_concern:              write_concern,
     }
 
     models = @models

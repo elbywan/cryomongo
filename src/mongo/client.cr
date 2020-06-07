@@ -21,7 +21,7 @@ class Mongo::Client
     "hint",
     "collation",
     "bypass_document_validation",
-    "array_filters"
+    "array_filters",
   }
 
   getter! topology : SDAM::TopologyDescription
@@ -115,7 +115,7 @@ class Mongo::Client
 
     body, sequences = cmd.command(**args)
     flag_bits = unacknowledged ? Messages::OpMsg::Flags::MoreToCome : Messages::OpMsg::Flags::None
-    op_msg = Messages::OpMsg.new(body,  flag_bits: flag_bits)
+    op_msg = Messages::OpMsg.new(body, flag_bits: flag_bits)
     sequences.try &.each { |key, documents|
       op_msg.sequence(key.to_s, contents: documents)
     }
@@ -208,7 +208,7 @@ class Mongo::Client
     end
     @pools[server_description].checkout
   rescue error : Exception
-    Mongo::Log.error { "Client handshake error: #{error}"}
+    Mongo::Log.error { "Client handshake error: #{error}" }
     # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-monitoring.rst#network-or-command-error-during-server-check
     close_connection_pool(server_description)
     description = SDAM::ServerDescription.new(server_description.address)
@@ -239,7 +239,7 @@ class Mongo::Client
     loop do
       select
       when @topology_update.send nil
-        # Fiber.yield
+      # Fiber.yield
       else
         break
       end

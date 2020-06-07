@@ -522,7 +522,7 @@ class Mongo::Collection
     write_concern : WriteConcern? = nil,
     collation : Collation? = nil,
     hint : (String | H)? = nil,
-    max_time_ms : Int32? = nil,
+    max_time_ms : Int32? = nil
   ) : BSON? forall H
     result = self.command(Commands::FindAndModify, filter: filter, options: {
       remove:                     true,
@@ -533,7 +533,7 @@ class Mongo::Collection
       write_concern:              write_concern,
       collation:                  collation,
       hint:                       hint,
-      max_time_ms:                max_time_ms
+      max_time_ms:                max_time_ms,
     })
     check_find_and_modify_result!(result)
   end
@@ -556,7 +556,7 @@ class Mongo::Collection
     collation : Collation? = nil,
     array_filters = nil,
     hint : (String | H)? = nil,
-    max_time_ms : Int32? = nil,
+    max_time_ms : Int32? = nil
   ) : BSON? forall H
     replacement = validate_replacement!(replacement)
     result = self.command(Commands::FindAndModify, filter: filter, options: {
@@ -570,7 +570,7 @@ class Mongo::Collection
       collation:                  collation,
       array_filters:              array_filters,
       hint:                       hint,
-      max_time_ms:                max_time_ms
+      max_time_ms:                max_time_ms,
     })
     check_find_and_modify_result!(result)
   end
@@ -593,7 +593,7 @@ class Mongo::Collection
     collation : Collation? = nil,
     array_filters = nil,
     hint : (String | H)? = nil,
-    max_time_ms : Int32? = nil,
+    max_time_ms : Int32? = nil
   ) : BSON? forall H
     update = validate_update!(update)
     result = self.command(Commands::FindAndModify, filter: filter, options: {
@@ -607,7 +607,7 @@ class Mongo::Collection
       collation:                  collation,
       array_filters:              array_filters,
       hint:                       hint,
-      max_time_ms:                max_time_ms
+      max_time_ms:                max_time_ms,
     })
     check_find_and_modify_result!(result)
   end
@@ -631,12 +631,12 @@ class Mongo::Collection
     options = NamedTuple.new,
     commit_quorum : (Int32 | String)? = nil,
     max_time_ms : Int64? = nil,
-    write_concern : WriteConcern? = nil,
+    write_concern : WriteConcern? = nil
   ) : Commands::Common::BaseResult?
     self.create_indexes(
       models: [{
-        keys: keys,
-        options: options
+        keys:    keys,
+        options: options,
       }],
       commit_quorum: commit_quorum,
       max_time_ms: max_time_ms,
@@ -667,18 +667,18 @@ class Mongo::Collection
     *,
     commit_quorum : (Int32 | String)? = nil,
     max_time_ms : Int64? = nil,
-    write_concern : WriteConcern? = nil,
+    write_concern : WriteConcern? = nil
   ) : Commands::Common::BaseResult?
     indexes = models.map { |item|
       index_model = IndexModel.new(item["keys"], IndexOptions.new(**item["options"]))
       index_model.options.name = index_model.keys.reduce([] of String) { |acc, (k, v)|
         acc << "#{k}_#{v}"
       }.join("_") unless index_model.options.name
-      BSON.new({ key: index_model.keys }).append(index_model.options.to_bson)
+      BSON.new({key: index_model.keys}).append(index_model.options.to_bson)
     }
     self.command(Commands::CreateIndexes, indexes: indexes, options: {
       commit_quorum: commit_quorum,
-      max_time_ms: max_time_ms,
+      max_time_ms:   max_time_ms,
       write_concern: write_concern,
     })
   end
@@ -689,19 +689,18 @@ class Mongo::Collection
   #
   # Note: If the string passed is '*', the driver MUST raise an error since
   #   more than one index would be dropped.
-  def drop_index(name : String, *, max_time_ms : Int64? = nil, write_concern : WriteConcern? = nil): Commands::Common::BaseResult?
+  def drop_index(name : String, *, max_time_ms : Int64? = nil, write_concern : WriteConcern? = nil) : Commands::Common::BaseResult?
     raise Mongo::Error.new "'*' cannot be used with drop_index as more than one index would be dropped." if name == "*"
     self.command(Commands::DropIndexes, index: name, options: {
-      max_time_ms: max_time_ms,
+      max_time_ms:   max_time_ms,
       write_concern: write_concern,
     })
   end
 
-
   # Drops all indexes in the collection.
   def drop_indexes(*, max_time_ms : Int64? = nil, write_concern : WriteConcern? = nil) : Commands::Common::BaseResult?
     self.command(Commands::DropIndexes, index: "*", options: {
-      max_time_ms: max_time_ms,
+      max_time_ms:   max_time_ms,
       write_concern: write_concern,
     })
   end

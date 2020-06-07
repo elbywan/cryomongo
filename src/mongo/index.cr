@@ -1,5 +1,4 @@
 module Mongo
-
   struct IndexModel
     property keys : BSON
     property options : IndexOptions
@@ -26,7 +25,7 @@ module Mongo
     property text_index_version : Int32? = nil
     property weights : BSON? = nil
     @[BSON::Field(key: "2dsphereIndexVersion")]
-    property  _2dsphere_index_version : Int32? = nil
+    property _2dsphere_index_version : Int32? = nil
     property bits : Int32? = nil
     property max : Float64? = nil
     property min : Float64? = nil

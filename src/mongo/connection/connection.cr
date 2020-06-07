@@ -45,7 +45,7 @@ struct Mongo::Connection
     if send_metadata
       body, _ = Commands::IsMaster.command
     else
-      body = BSON.new({ isMaster: 1, "$db": "admin", })
+      body = BSON.new({isMaster: 1, "$db": "admin"})
     end
 
     if @credentials.username && !@credentials.mechanism
@@ -67,7 +67,7 @@ struct Mongo::Connection
       @sasl_supported_mechs = result.sasl_supported_mechs
     end
 
-    { result, round_trip_time }
+    {result, round_trip_time}
   end
 
   def self.average_round_trip_time(round_trip_time : Time::Span, old_rtt : Time::Span?)

@@ -70,12 +70,12 @@ module Mongo
             self.mix(args, ReadPreference.new(mode: "primaryPreferred"))
           end
         end
-      # when .sharded?
+        # when .sharded?
       else
         # see: https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst#topology-type-sharded
         self.mix(args, read_preference)
-      # else
-      #   args
+        # else
+        #   args
       end
     end
   end

@@ -20,7 +20,7 @@ module Mongo
       numeric_ordering = nil,
       alternate = nil,
       max_variable = nil,
-      backwards = nil,
+      backwards = nil
     )
     end
   end

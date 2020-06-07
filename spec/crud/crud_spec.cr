@@ -31,6 +31,7 @@ describe "Mongo CRUD" do
   after_all {
     client.close
     puts `mlaunch stop`
+    sleep 1
     `rm -Rf ./data`
   }
 
@@ -45,10 +46,10 @@ describe "Mongo CRUD" do
         })
 
         tests = test_file["tests"].as_a
-        data = test_file["data"]?.try &.as_a.map {|elt| BSON.from_json(elt.to_json) }
+        data = test_file["data"]?.try &.as_a.map { |elt| BSON.from_json(elt.to_json) }
         version_root = test_file["runOn"]?.try(&.as_a.[0]) || test_file
-        min_server_version = version_root["minServerVersion"]?.try{|v| semantic(v.as_s) } || SERVER_VERSION
-        max_server_version = version_root["maxServerVersion"]?.try{|v| semantic(v.as_s) } || SERVER_VERSION
+        min_server_version = version_root["minServerVersion"]?.try { |v| semantic(v.as_s) } || SERVER_VERSION
+        max_server_version = version_root["maxServerVersion"]?.try { |v| semantic(v.as_s) } || SERVER_VERSION
         collection_name = test_file["collection_name"]?.try(&.as_s) || "collection"
         database_name = test_file["database_name"]?.try(&.as_s) || "database"
 
@@ -72,7 +73,6 @@ describe "Mongo CRUD" do
             description = test["description"].as_s
             focus = test["focus"]?.try(&.as_bool) || false
 
-
             it "#{description} (#{file_path})", focus: focus do
               local_client = Mongo::Client.new(uri)
               global_database = client[database_name]
@@ -84,7 +84,6 @@ describe "Mongo CRUD" do
               test_outcome = test["outcome"]?.try &.as_h
               operations = operation.try { |o| [o] } || test["operations"].as_a.map(&.as_h)
               operations.each { |o|
-
                 expect_error = o["error"]?.try &.as_bool
                 collection = local_client[database_name][collection_name]
 

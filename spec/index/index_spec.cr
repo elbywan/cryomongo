@@ -1,7 +1,6 @@
 require "../spec_helper"
 
 describe Mongo::IndexModel do
-
   client = Mongo::Client.new
   collection = client["cryomongo"]["test"]
 
@@ -13,6 +12,7 @@ describe Mongo::IndexModel do
   after_all {
     client.close
     puts `mlaunch stop`
+    sleep 1
     `rm -Rf ./data`
   }
 
@@ -25,8 +25,8 @@ describe Mongo::IndexModel do
 
     collection.create_index(
       keys: {
-        "_id": 1,
-        "name": -1
+        "_id":  1,
+        "name": -1,
       }
     )
 
@@ -46,10 +46,10 @@ describe Mongo::IndexModel do
 
     collection.create_index(
       keys: {
-        "name": -1
+        "name": -1,
       },
       options: {
-        name: "index_name"
+        name: "index_name",
       }
     )
 
@@ -63,20 +63,20 @@ describe Mongo::IndexModel do
       models: [
         {
           keys: {
-            "one": 1
+            "one": 1,
           },
           options: {
-            name: "one"
-          }
+            name: "one",
+          },
         },
         {
           keys: {
-            "two": 1
+            "two": 1,
           },
           options: {
-            name: "two"
-          }
-        }
+            name: "two",
+          },
+        },
       ]
     )
 
