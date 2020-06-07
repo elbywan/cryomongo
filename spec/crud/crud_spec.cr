@@ -1,5 +1,5 @@
-require "../spec_helper"
 require "semantic_version"
+require "../spec_helper"
 require "./spec_helper"
 
 include Crud::Helpers
@@ -54,9 +54,9 @@ describe "Mongo CRUD" do
 
         if max_server_version < SERVER_VERSION || min_server_version > SERVER_VERSION
           if max_server_version < SERVER_VERSION
-            puts "(#{file_path}): maximum version does not match the mongodb running instance: #{max_server_version} < #{SERVER_VERSION}"
+            # puts "(#{file_path}): maximum version does not match the mongodb running instance: #{max_server_version} < #{SERVER_VERSION}"
           else
-            puts "(#{file_path}): minimum version does not match the mongodb running instance: #{min_server_version} > #{SERVER_VERSION}"
+            # puts "(#{file_path}): minimum version does not match the mongodb running instance: #{min_server_version} > #{SERVER_VERSION}"
           end
           next
         end

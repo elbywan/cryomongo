@@ -6,6 +6,7 @@ require "./tools"
 require "./concerns"
 require "./read_preference"
 require "./collation"
+require "./index"
 
 class Mongo::Collection
   include WithReadConcern
@@ -262,9 +263,9 @@ class Mongo::Collection
   # and no documents sent.
   #
   # NOTE: see the FAQ about the previous bulk API and how it relates to this.
-  # @see https://docs.mongodb.com/manual/reference/command/delete/
-  # @see https://docs.mongodb.com/manual/reference/command/insert/
-  # @see https://docs.mongodb.com/manual/reference/command/update/
+  # See: https://docs.mongodb.com/manual/reference/command/delete/
+  # See: https://docs.mongodb.com/manual/reference/command/insert/
+  # See: https://docs.mongodb.com/manual/reference/command/update/
   # @throws InvalidArgumentException if requests is empty
   # @throws BulkWriteException
   def bulk_write(requests : Array(Bulk::WriteModel), *, ordered : Bool, bypass_document_validation : Bool? = nil) : Bulk::WriteResult
@@ -280,7 +281,7 @@ class Mongo::Collection
   # Inserts the provided document. If the document is missing an identifier,
   # the driver should generate one.
   #
-  # @see https://docs.mongodb.com/manual/reference/command/insert/
+  # See: https://docs.mongodb.com/manual/reference/command/insert/
   # @throws WriteException
   def insert_one(document, *, write_concern : WriteConcern? = nil, bypass_document_validation : Bool? = nil) : Commands::Common::InsertResult?
     self.command(Commands::Insert, documents: [document], options: {
@@ -297,7 +298,7 @@ class Mongo::Collection
   # Note that this uses the bulk insert command underneath and should not
   # use OP_INSERT.
   #
-  # @see https://docs.mongodb.com/manual/reference/command/insert/
+  # See: https://docs.mongodb.com/manual/reference/command/insert/
   # @throws InvalidArgumentException if documents is empty
   # @throws BulkWriteException
   def insert_many(
@@ -317,7 +318,7 @@ class Mongo::Collection
 
   # Deletes one document.
   #
-  # @see https://docs.mongodb.com/manual/reference/command/delete/
+  # See: https://docs.mongodb.com/manual/reference/command/delete/
   # @throws WriteException
   def delete_one(
     filter,
@@ -342,7 +343,7 @@ class Mongo::Collection
 
   # Deletes multiple documents.
   #
-  # @see https://docs.mongodb.com/manual/reference/command/delete/
+  # See: https://docs.mongodb.com/manual/reference/command/delete/
   # @throws WriteException
   def delete_many(
     filter,
@@ -394,7 +395,7 @@ class Mongo::Collection
 
   # Replaces a single document.
   #
-  # @see https://docs.mongodb.com/manual/reference/command/update/
+  # See: https://docs.mongodb.com/manual/reference/command/update/
   # @throws WriteException
   def replace_one(
     filter,
@@ -427,7 +428,7 @@ class Mongo::Collection
 
   # Updates one document.
   #
-  # @see https://docs.mongodb.com/manual/reference/command/update/
+  # See: https://docs.mongodb.com/manual/reference/command/update/
   # @throws WriteException
   def update_one(
     filter,
@@ -462,7 +463,7 @@ class Mongo::Collection
 
   # Updates multiple documents.
   #
-  # @see https://docs.mongodb.com/manual/reference/command/update/
+  # See: https://docs.mongodb.com/manual/reference/command/update/
   # @throws WriteException
   def update_many(
     filter,
@@ -509,7 +510,7 @@ class Mongo::Collection
 
   # Finds a single document and deletes it, returning the original. The document to return may be null.
   #
-  # @see https://docs.mongodb.com/manual/reference/command/findAndModify/
+  # See: https://docs.mongodb.com/manual/reference/command/findAndModify/
   # @throws WriteException
   def find_one_and_delete(
     filter,
@@ -540,7 +541,7 @@ class Mongo::Collection
   # Finds a single document and replaces it, returning either the original or the replaced
   # document. The document to return may be null.
   #
-  # @see https://docs.mongodb.com/manual/reference/command/findAndModify/
+  # See: https://docs.mongodb.com/manual/reference/command/findAndModify/
   # @throws WriteException
   def find_one_and_replace(
     filter,
@@ -577,7 +578,7 @@ class Mongo::Collection
   # Finds a single document and updates it, returning either the original or the updated
   # document. The document to return may be null.
   #
-  # @see https://docs.mongodb.com/manual/reference/command/findAndModify/
+  # See: https://docs.mongodb.com/manual/reference/command/findAndModify/
   # @throws WriteException
   def find_one_and_update(
     filter,
@@ -611,7 +612,105 @@ class Mongo::Collection
     check_find_and_modify_result!(result)
   end
 
-  def list_indexes
+  # This is a convenience method for creating a single index. This MUST call the
+  # createIndexes method and pass the provided specification document in a
+  # sequence to that method with the same options.
+  #
+  # @return The name of the created index.
+  #
+  # Note: Drivers MAY opt to implement this method signature, the signature that
+  #   takes an IndexModel as a parameter, or for those languages with method
+  #   overloading MAY decide to implement both.
+  #
+  # Note: Drivers MAY combine the two options types into a single one. If the options are
+  #   explicitly typed, the combined options type MUST be named CreateIndexOptions or an acceptable
+  #   variation.
+  def create_index(
+    keys,
+    *,
+    options = NamedTuple.new,
+    commit_quorum : (Int32 | String)? = nil,
+    max_time_ms : Int64? = nil,
+    write_concern : WriteConcern? = nil,
+  ) : Commands::Common::BaseResult?
+    self.create_indexes(
+      models: [{
+        keys: keys,
+        options: options
+      }],
+      commit_quorum: commit_quorum,
+      max_time_ms: max_time_ms,
+      write_concern: write_concern
+    )
+  end
+
+  # Creates multiple indexes in the collection.
+  #
+  # For MongoDB 2.6 and higher this method MUST execute a createIndexes command.
+  #
+  # For MongoDB 2.4 this method MUST insert the index specifications directly into
+  # the system.indexes collection. The write concern provided provided to the server
+  # MUST be { w: 1 }.
+  #
+  # The driver MAY choose NOT to support creating indexes on 2.4 and if so, MUST
+  # document the method as such.
+  #
+  # Note that in MongoDB server versions >= 3.0.0, the server will create the
+  # indexes in parallel.
+  #
+  # As of 3.4 (see https://jira.mongodb.org/browse/SERVER-769) the server validates
+  # options passed to the createIndexes command.
+  #
+  # @return The names of all the indexes that were created.
+  def create_indexes(
+    models : Array,
+    *,
+    commit_quorum : (Int32 | String)? = nil,
+    max_time_ms : Int64? = nil,
+    write_concern : WriteConcern? = nil,
+  ) : Commands::Common::BaseResult?
+    indexes = models.map { |item|
+      index_model = IndexModel.new(item["keys"], IndexOptions.new(**item["options"]))
+      index_model.options.name = index_model.keys.reduce([] of String) { |acc, (k, v)|
+        acc << "#{k}_#{v}"
+      }.join("_") unless index_model.options.name
+      BSON.new({ key: index_model.keys }).append(index_model.options.to_bson)
+    }
+    self.command(Commands::CreateIndexes, indexes: indexes, options: {
+      commit_quorum: commit_quorum,
+      max_time_ms: max_time_ms,
+      write_concern: write_concern,
+    })
+  end
+
+  # Drops a single index from the collection by the index name.
+  #
+  # In all server versions this MUST execute a dropIndexes command.
+  #
+  # Note: If the string passed is '*', the driver MUST raise an error since
+  #   more than one index would be dropped.
+  def drop_index(name : String, *, max_time_ms : Int64? = nil, write_concern : WriteConcern? = nil): Commands::Common::BaseResult?
+    raise Mongo::Error.new "'*' cannot be used with drop_index as more than one index would be dropped." if name == "*"
+    self.command(Commands::DropIndexes, index: name, options: {
+      max_time_ms: max_time_ms,
+      write_concern: write_concern,
+    })
+  end
+
+
+  # Drops all indexes in the collection.
+  def drop_indexes(*, max_time_ms : Int64? = nil, write_concern : WriteConcern? = nil) : Commands::Common::BaseResult?
+    self.command(Commands::DropIndexes, index: "*", options: {
+      max_time_ms: max_time_ms,
+      write_concern: write_concern,
+    })
+  end
+
+  # Gets index information for all indexes in the collection. This should be
+  # implemented as specified in the Enumerate Indexes specification:
+  #
+  # See: https://github.com/mongodb/specifications/blob/master/source/enumerate-indexes.rst
+  def list_indexes : Mongo::Cursor
     result = self.command(Commands::ListIndexes).not_nil!
     Cursor.new(@database.client, result)
   end
