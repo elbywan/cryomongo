@@ -17,6 +17,13 @@ class Mongo::Client
   MIN_WIRE_VERSION = 6
   MAX_WIRE_VERSION = 8
 
+  UNACKNOWLEDGED_WRITE_PROHIBITED_OPTIONS = {
+    "hint",
+    "collation",
+    "bypass_document_validation",
+    "array_filters"
+  }
+
   getter! topology : SDAM::TopologyDescription
   getter options : Options
 
@@ -86,7 +93,24 @@ class Mongo::Client
 
     unacknowledged = false
     if concern = args["options"]?.try(&.["write_concern"]?)
-      unacknowledged = concern.w == 0 && concern.as(WriteConcern).j == false
+      unacknowledged = concern.w == 0 && !concern.j
+    end
+
+    if unacknowledged
+      prohibited_option = nil
+      UNACKNOWLEDGED_WRITE_PROHIBITED_OPTIONS.each { |option|
+        if opt = args["options"]?.try(&.has_key? option)
+          prohibited_option = opt
+          break
+        elsif opt = args["updates"]?.try(&.any? &.has_key? option)
+          prohibited_option = opt
+          break
+        elsif opt = args["deletes"]?.try(&.any? &.has_key? option)
+          prohibited_option = opt
+          break
+        end
+      }
+      raise Mongo::Error.new("Option #{prohibited_option} is prohibited when performing an unacknowledged write.") if prohibited_option
     end
 
     body, sequences = cmd.command(**args)
@@ -215,6 +239,7 @@ class Mongo::Client
     loop do
       select
       when @topology_update.send nil
+        # Fiber.yield
       else
         break
       end
@@ -234,10 +259,7 @@ class Mongo::Client
     @pools.each { |_, pool|
       pool.close
     }
-    @pools.clear
-    @topology = nil
     @monitors.each &.close
-    @monitors.clear
   end
 
   def find_suitable_servers(command, args, read_preference : ReadPreference) : Array(SDAM::ServerDescription)?

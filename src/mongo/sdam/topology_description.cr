@@ -113,6 +113,8 @@ class Mongo::SDAM::TopologyDescription
         when .replica_set_with_primary?
           remove(new_description)
           check_if_has_primary
+        else
+          # ignore
         end
       when .mongos?
         case @type
@@ -123,6 +125,8 @@ class Mongo::SDAM::TopologyDescription
         when .replica_set_with_primary?
           remove(new_description)
           check_if_has_primary
+        else
+          # ignore
         end
       when .rs_primary?
         case @type
@@ -135,6 +139,8 @@ class Mongo::SDAM::TopologyDescription
           update_rs_from_primary(new_description)
         when .replica_set_with_primary?
           update_rs_from_primary(new_description)
+        else
+          # ignore
         end
       when .rs_secondary?, .rs_arbiter?, .rs_other?
         case @type
@@ -147,6 +153,8 @@ class Mongo::SDAM::TopologyDescription
           update_rs_without_primary(new_description)
         when .replica_set_with_primary?
           update_rs_with_primary_from_member(new_description)
+        else
+          # ignore
         end
       when .rs_ghost?
         case @type
@@ -154,7 +162,11 @@ class Mongo::SDAM::TopologyDescription
           remove(new_description)
         when .replica_set_with_primary?
           check_if_has_primary
+        else
+          # ignore
         end
+      else
+        # ignore
       end
     }
   ensure

@@ -68,6 +68,7 @@ class Mongo::SDAM::Monitor
   def request_immediate_scan
     select
     when resume_scan.send nil
+      # Fiber.yield
     else # Ignore - scan is in progress already
     end
   end

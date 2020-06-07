@@ -519,8 +519,10 @@ class Mongo::Collection
     fields = nil,
     bypass_document_validation : Bool? = nil,
     write_concern : WriteConcern? = nil,
-    collation : Collation? = nil
-  ) : BSON?
+    collation : Collation? = nil,
+    hint : (String | H)? = nil,
+    max_time_ms : Int32? = nil,
+  ) : BSON? forall H
     result = self.command(Commands::FindAndModify, filter: filter, options: {
       remove:                     true,
       sort:                       sort.try { BSON.new(sort) },
@@ -529,6 +531,8 @@ class Mongo::Collection
       bypass_document_validation: bypass_document_validation,
       write_concern:              write_concern,
       collation:                  collation,
+      hint:                       hint,
+      max_time_ms:                max_time_ms
     })
     check_find_and_modify_result!(result)
   end
@@ -549,8 +553,10 @@ class Mongo::Collection
     bypass_document_validation : Bool? = nil,
     write_concern : WriteConcern? = nil,
     collation : Collation? = nil,
-    array_filters = nil
-  ) : BSON?
+    array_filters = nil,
+    hint : (String | H)? = nil,
+    max_time_ms : Int32? = nil,
+  ) : BSON? forall H
     replacement = validate_replacement!(replacement)
     result = self.command(Commands::FindAndModify, filter: filter, options: {
       update:                     replacement,
@@ -562,6 +568,8 @@ class Mongo::Collection
       write_concern:              write_concern,
       collation:                  collation,
       array_filters:              array_filters,
+      hint:                       hint,
+      max_time_ms:                max_time_ms
     })
     check_find_and_modify_result!(result)
   end
@@ -582,8 +590,10 @@ class Mongo::Collection
     bypass_document_validation : Bool? = nil,
     write_concern : WriteConcern? = nil,
     collation : Collation? = nil,
-    array_filters = nil
-  ) : BSON?
+    array_filters = nil,
+    hint : (String | H)? = nil,
+    max_time_ms : Int32? = nil,
+  ) : BSON? forall H
     update = validate_update!(update)
     result = self.command(Commands::FindAndModify, filter: filter, options: {
       update:                     update,
@@ -595,6 +605,8 @@ class Mongo::Collection
       write_concern:              write_concern,
       collation:                  collation,
       array_filters:              array_filters,
+      hint:                       hint,
+      max_time_ms:                max_time_ms
     })
     check_find_and_modify_result!(result)
   end

@@ -78,7 +78,7 @@ struct Mongo::Bulk
 
     def initialize(filter, update, @array_filters = nil, @collation = nil, @hint = nil, @upsert = nil)
       @filter = BSON.new(filter)
-      @update = BSON.new(update)
+      @update = update
     end
   end
 
@@ -92,7 +92,7 @@ struct Mongo::Bulk
 
     def initialize(filter, update, @array_filters = nil, @collation = nil, @hint = nil, @upsert = nil)
       @filter = BSON.new(filter)
-      @update = BSON.new(update)
+      @update = update
     end
   end
 
