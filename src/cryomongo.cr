@@ -1,7 +1,8 @@
 require "log"
 require "bson"
-require "./mongo/messages/**"
-require "./mongo/client"
+require "./cryomongo/messages/**"
+require "./cryomongo/client"
+require "./cryomongo/gridfs"
 
 module Mongo
   VERSION = "0.1.0"

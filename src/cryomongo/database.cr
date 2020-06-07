@@ -2,6 +2,7 @@ require "./client"
 require "./collection"
 require "./concerns"
 require "./read_preference"
+require "./gridfs"
 
 class Mongo::Database
   include WithReadConcern
@@ -71,5 +72,23 @@ class Mongo::Database
       authorized_collections: authorized_collections,
     }).not_nil!
     Cursor.new(@client, result)
+  end
+
+  def grid_fs(
+    bucket_name : String = "fs",
+    *,
+    chunk_size_bytes : Int32 = 255 * 1024,
+    write_concern : WriteConcern? = nil,
+    read_concern : ReadConcern? = nil,
+    read_preference : ReadPreference? = nil
+  ) : GridFS::Bucket
+    GridFS::Bucket.new(
+      self,
+      bucket_name: bucket_name,
+      chunk_size_bytes: chunk_size_bytes,
+      write_concern: write_concern,
+      read_concern: read_concern,
+      read_preference: read_preference
+    )
   end
 end

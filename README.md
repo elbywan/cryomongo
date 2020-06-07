@@ -4,6 +4,8 @@
 
 A dependencies-free MongoDB driver written in pure Crystal.
 
+**Compatible MongoDB versions: 3.6+**
+
 ### Work in progress!
 
 ![Working…](https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)
