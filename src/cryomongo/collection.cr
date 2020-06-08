@@ -41,7 +41,7 @@ class Mongo::Collection
     *,
     allow_disk_use : Bool? = nil,
     batch_size : Int32? = nil,
-    max_time_ms : Int32? = nil,
+    max_time_ms : Int64? = nil,
     bypass_document_validation : Bool? = nil,
     read_concern : ReadConcern? = nil,
     collation : Collation? = nil,
@@ -77,7 +77,7 @@ class Mongo::Collection
     limit : Int32? = nil,
     collation : Collation? = nil,
     hint : (String | H)? = nil,
-    max_time_ms : Int32? = nil,
+    max_time_ms : Int64? = nil,
     read_preference : ReadPreference? = nil
   ) : Int32 forall H
     pipeline = [BSON.new({"$match": filter})]
@@ -169,6 +169,7 @@ class Mongo::Collection
     no_cursor_timeout : Bool? = nil,
     await_data : Bool? = nil,
     allow_partial_results : Bool? = nil,
+    allow_disk_use : Bool? = nil,
     collation : Collation? = nil,
     read_preference : ReadPreference? = nil
   ) : Mongo::Cursor forall H
@@ -192,6 +193,7 @@ class Mongo::Collection
       no_cursor_timeout:     no_cursor_timeout,
       await_data:            await_data,
       allow_partial_results: allow_partial_results,
+      allow_disk_use:        allow_disk_use,
       collation:             collation,
       read_preference:       read_preference,
     }).not_nil!
@@ -522,7 +524,7 @@ class Mongo::Collection
     write_concern : WriteConcern? = nil,
     collation : Collation? = nil,
     hint : (String | H)? = nil,
-    max_time_ms : Int32? = nil
+    max_time_ms : Int64? = nil
   ) : BSON? forall H
     result = self.command(Commands::FindAndModify, filter: filter, options: {
       remove:                     true,
@@ -556,7 +558,7 @@ class Mongo::Collection
     collation : Collation? = nil,
     array_filters = nil,
     hint : (String | H)? = nil,
-    max_time_ms : Int32? = nil
+    max_time_ms : Int64? = nil
   ) : BSON? forall H
     replacement = validate_replacement!(replacement)
     result = self.command(Commands::FindAndModify, filter: filter, options: {
@@ -593,7 +595,7 @@ class Mongo::Collection
     collation : Collation? = nil,
     array_filters = nil,
     hint : (String | H)? = nil,
-    max_time_ms : Int32? = nil
+    max_time_ms : Int64? = nil
   ) : BSON? forall H
     update = validate_update!(update)
     result = self.command(Commands::FindAndModify, filter: filter, options: {

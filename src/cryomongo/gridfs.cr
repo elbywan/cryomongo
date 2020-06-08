@@ -1,5 +1,33 @@
+require "./database"
+require "./error"
+
 module Mongo::GridFS
+
+  @[BSON::Options(camelize: "lower")]
+  private struct File(FileID)
+    include BSON::Serializable
+
+    property _id : FileID
+    property filename : String
+    property length : Int64
+    property chunk_size : Int64
+    property upload_date : Time
+    property metadata : BSON?
+  end
+
+  private struct Chunk(FileID)
+    include BSON::Serializable
+
+    property _id : BSON::ObjectId
+    property files_id : FileID
+    property n : Int32
+    property data : Bytes
+  end
+
   class Bucket
+
+    @completed_indexes_check = false
+
     def initialize(
       @db : Database,
       *,
@@ -7,32 +35,26 @@ module Mongo::GridFS
       @bucket_name : String = "fs",
       # The chunk size in bytes. Defaults to 255 KiB.
       @chunk_size_bytes : Int32 = 255 * 1024,
-      write_concern : WriteConcern? = nil,
-      read_concern : ReadConcern? = nil,
-      read_preference : ReadPreference? = nil
+      @write_concern : WriteConcern? = nil,
+      @read_concern : ReadConcern? = nil,
+      @read_preference : ReadPreference? = nil
     )
-      @write_concern    = write_concern   || db.write_concern
-      @read_concern     = read_concern    || db.read_concern
-      @read_preference  = read_preference || db.read_preference
     end
 
-    private def check_indexes
-      # TODO
+    def write_concern
+      @write_concern || @db.write_concern
     end
 
+    def read_concern
+      @read_concern || @db.read_concern
+    end
+
+    def read_preference
+      @read_preference || @db.read_preference
+    end
 
     # Opens a Stream that the application can write the contents of the file to.
-    # The driver generates the file id.
-    #
-    # Returns a Stream to which the application will write the contents.
-    #
-    # Note: this method is provided for backward compatibility. In languages
-    # that use generic type parameters, this method may be omitted since
-    # the TFileId type might not be an ObjectId.
-    # Stream open_upload_stream(string filename, GridFSUploadOptions options=null);
-
-    # Opens a Stream that the application can write the contents of the file to.
-    # The application provides a custom file id.
+    # The application supplies a custom file id or the driver will generate the file id.
     #
     # Returns a Stream to which the application will write the contents.
     def open_upload_stream(
@@ -44,28 +66,27 @@ module Mongo::GridFS
     ) : IO
       id ||= BSON::ObjectId.new
       chunk_size_bytes ||= @chunk_size_bytes
-      bucket = @db[@bucket_name]
-      chunks = @db["chunks"]
 
-      check_indexes
+      check_indexes(bucket, chunks)
 
       reader, writer = IO.pipe
 
-      spawn do
+      spawn same_thread: true do
         index = 0
         length = 0_i64
         buffer = Bytes.new(chunk_size_bytes)
         loop do
-          read_bytes = reader.read(buffer.to_slice)
-          break if read_bytes < chunk_size_bytes
+          read_bytes = fill_slice(reader, buffer.to_slice)
+          break if read_bytes == 0
           data = buffer.to_slice[0, read_bytes]
           chunks.insert_one({
             files_id: id,
             n: index,
             data: data,
-          }, write_concern: @write_concern)
+          }, write_concern: write_concern)
           length += read_bytes
           index += 1_i64
+          break if read_bytes < chunk_size_bytes
         rescue IO::EOFError
           break
         end
@@ -77,7 +98,9 @@ module Mongo::GridFS
           uploadDate: Time.utc,
           filename: filename,
           metadata: metadata
-        }, write_concern: @write_concern)
+        }, write_concern: write_concern)
+      ensure
+        reader.close
       end
 
       writer
@@ -95,12 +118,15 @@ module Mongo::GridFS
       id ||= BSON::ObjectId.new
       stream = open_upload_stream(filename, id: id, chunk_size_bytes: chunk_size_bytes, metadata: metadata)
       yield stream
+      stream.flush
       Fiber.yield
       stream.close
       id
     end
 
-    # Uploads a user file to a GridFS bucket. The driver generates the file id.
+    # Uploads a user file to a GridFS bucket.
+    #
+    # The application supplies a custom file id or the driver will generate the file id.
     #
     # Reads the contents of the user file from the @source Stream and uploads it
     # as chunks in the chunks collection. After all the chunks have been uploaded,
@@ -110,8 +136,7 @@ module Mongo::GridFS
     #
     # Note: this method is provided for backward compatibility. In languages
     # that use generic type parameters, this method may be omitted since
-    # the TFileId type might not be an ObjectId.
-    # ObjectId upload_from_stream(string filename, Stream source, GridFSUploadOptions options=null);
+    # the FileId type might not be an ObjectId.
     def upload_from_stream(
       filename : String,
       stream : IO,
@@ -122,10 +147,8 @@ module Mongo::GridFS
     ) forall FileID
       id ||= BSON::ObjectId.new
       chunk_size_bytes ||= @chunk_size_bytes
-      bucket = @db[@bucket_name]
-      chunks = @db["chunks"]
 
-      check_indexes
+      check_indexes(bucket, chunks)
 
       index = 0
       length = 0_i64
@@ -136,7 +159,7 @@ module Mongo::GridFS
           files_id: id,
           n: index,
           data: data
-        }, write_concern: @write_concern)
+        }, write_concern: write_concern)
         length += read_bytes
         index += 1_i64
       end
@@ -148,19 +171,142 @@ module Mongo::GridFS
         uploadDate: Time.utc,
         filename: filename,
         metadata: metadata
-      }, write_concern: @write_concern)
+      }, write_concern: write_concern)
 
       id
     end
 
-    # Uploads a user file to a GridFS bucket. The application supplies a custom file id.
+    # Opens a Stream from which the application can read the contents of the stored file
+    # specified by @id.
     #
-    # Reads the contents of the user file from the @source Stream and uploads it
-    # as chunks in the chunks collection. After all the chunks have been uploaded,
-    # it creates a files collection document for @filename in the files collection.
-    #
-    # Note: there is no need to return the id of the uploaded file because the application
-    # already supplied it as a a parameter.
-    # void upload_from_stream_with_id(TFileId id, string filename, Stream source, GridFSUploadOptions options=null);
+    # Returns a Stream.
+    def open_download_stream(id : FileID) : IO forall FileID
+      file = get_file(id)
+      count = chunk_count(file)
+
+      reader, writer = IO.pipe
+
+      spawn same_thread: true do
+        count.times { |n|
+          chunk = get_chunk(id, n)
+          writer.write(chunk.data)
+        }
+        writer.close
+      end
+
+      reader
+    end
+
+    # Downloads the contents of the stored file specified by @id and writes
+    # the contents to the @destination Stream.
+    def download_to_stream(id : FileID, destination : IO) forall FileID
+      file = get_file(id)
+      count = chunk_count(file)
+      count.times { |n|
+        chunk = get_chunk(id, n)
+        destination.write(chunk.data)
+      }
+    end
+
+    # Given a @id, delete this stored file’s files collection document and
+    # associated chunks from a GridFS bucket.
+    def delete(id : FileID) : Void forall FileID
+      delete_result = bucket.delete_one({ _id: id }, write_concern: write_concern)
+      chunks.delete_many({ files_id: id }, write_concern: write_concern)
+      raise Mongo::Error.new "File not found." if delete_result.try &.n == 0
+    end
+
+    # Find and return the files collection documents that match @filter.
+    def find(
+      filter = BSON.new,
+      *,
+      allow_disk_use : Bool? = nil,
+      batch_size : Int32? = nil,
+      limit : Int32? = nil,
+      max_time_ms : Int64? = nil,
+      no_cursor_timeout : Bool? = nil,
+      skip : Int32? = nil,
+      sort = nil
+    )
+      cursor = bucket.find(
+        filter,
+        allow_disk_use: allow_disk_use,
+        batch_size: batch_size,
+        limit: batch_size,
+        max_time_ms: batch_size,
+        no_cursor_timeout: batch_size,
+        skip: batch_size,
+        sort: sort,
+        read_concern: read_concern,
+        read_preference: read_preference
+      )
+      Cursor::Wrapper(File(BSON::Value)).new(cursor)
+    end
+
+    private module Internal
+      def bucket
+        @db[@bucket_name]
+      end
+
+      def chunks
+        @db["#{@bucket_name}.chunks"]
+      end
+
+      def check_indexes(bucket, chunks)
+        # see: https://github.com/mongodb/specifications/blob/master/source/gridfs/gridfs-spec.rst#before-write-operations
+        return if @completed_indexes_check
+        check_collection_index(bucket, { filename: 1, uploadDate: 1 })
+        check_collection_index(chunks, { files_id: 1, n: 1 })
+        @completed_indexes_check = true
+      end
+
+      def check_collection_index(collection, keys)
+        return if collection.find_one(projection: { _id: 1 })
+
+        begin
+          indexes = collection.list_indexes.to_a
+        rescue e
+          # Collection might not exist and listing indexes will raise.
+        end
+        return if indexes.try &.any? { |index|
+          index["key"]?.try &.as(BSON).all? { |key, value|
+            keys[key]?.try &.== value
+          }
+        }
+
+        collection.create_index(
+          keys: keys
+        )
+      end
+
+      def fill_slice(io : IO, slice : Bytes)
+        count = 0
+        while slice.size > 0
+          read_bytes = io.read slice
+          break if read_bytes == 0
+          count += read_bytes
+          slice += read_bytes
+        end
+        count
+      end
+
+      def get_file(id : FileID) forall FileID
+        file = bucket.find_one({ _id: id }, read_preference: read_preference, read_concern: read_concern)
+        raise Mongo::Error.new "File not found" unless file
+        File(FileID).from_bson(file)
+      end
+
+      def chunk_count(file : File(FileID)) forall FileID
+        file.length // file.chunk_size
+      end
+
+      def get_chunk(id : FileID, n : Int64) forall FileID
+        chunk = chunks.find_one({ files_id: id, n: n }, read_preference: read_preference, read_concern: read_concern)
+        raise Mongo::Error.new "Chunk not found" unless chunk
+        Chunk(FileID).from_bson(chunk)
+      end
+    end
+
+    include Internal
   end
 end

@@ -63,3 +63,21 @@ class Mongo::Cursor
     close
   end
 end
+
+class Mongo::Cursor::Wrapper(T)
+  include Iterator(T)
+  def initialize(@cursor : Cursor)
+  end
+
+  def next
+    if (elt = @cursor.next).is_a? Iterator::Stop
+      elt
+    else
+      {% if T == BSON %}
+        elt
+      {% else %}
+        T.from_bson elt
+      {% end %}
+    end
+  end
+end

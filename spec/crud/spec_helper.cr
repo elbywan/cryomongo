@@ -91,7 +91,7 @@ module Crud::Helpers
       limit = int32_arg "limit"
       batch_size = int32_arg "batchSize"
       single_batch = bool_arg "singleBatch"
-      max_time_ms = int32_arg "maxTimeMs"
+      max_time_ms = int64_arg "maxTimeMs"
       read_concern = arguments["readConcern"]?.try { |r|
         Mongo::ReadConcern.from_bson(BSON.from_json(r.to_json))
       }

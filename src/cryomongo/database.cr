@@ -39,7 +39,7 @@ class Mongo::Database
     *,
     allow_disk_use : Bool? = nil,
     batch_size : Int32? = nil,
-    max_time_ms : Int32? = nil,
+    max_time_ms : Int64? = nil,
     bypass_document_validation : Bool? = nil,
     read_concern : ReadConcern? = nil,
     collation : Collation? = nil,
