@@ -65,7 +65,7 @@ module Mongo::GridFS
       metadata = nil
     ) : IO
       id ||= BSON::ObjectId.new
-      chunk_size_bytes ||= @chunk_size_bytes
+      chunk_size : Int32 = chunk_size_bytes || @chunk_size_bytes
 
       check_indexes(bucket, chunks)
 
@@ -74,7 +74,7 @@ module Mongo::GridFS
       spawn same_thread: true do
         index = 0
         length = 0_i64
-        buffer = Bytes.new(chunk_size_bytes)
+        buffer = Bytes.new(chunk_size)
         loop do
           read_bytes = fill_slice(reader, buffer.to_slice)
           break if read_bytes == 0
@@ -86,7 +86,7 @@ module Mongo::GridFS
           }, write_concern: write_concern)
           length += read_bytes
           index += 1_i64
-          break if read_bytes < chunk_size_bytes
+          break if read_bytes < chunk_size
         rescue IO::EOFError
           break
         end
@@ -94,7 +94,7 @@ module Mongo::GridFS
         bucket.insert_one({
           _id: id,
           length: length,
-          chunkSize: chunk_size_bytes,
+          chunkSize: chunk_size,
           uploadDate: Time.utc,
           filename: filename,
           metadata: metadata
@@ -185,7 +185,6 @@ module Mongo::GridFS
       count = chunk_count(file)
 
       reader, writer = IO.pipe
-
       spawn same_thread: true do
         count.times { |n|
           chunk = get_chunk(id, n)
@@ -199,7 +198,7 @@ module Mongo::GridFS
 
     # Downloads the contents of the stored file specified by @id and writes
     # the contents to the @destination Stream.
-    def download_to_stream(id : FileID, destination : IO) forall FileID
+    def download_to_stream(id : FileID, destination : IO) : Nil forall FileID
       file = get_file(id)
       count = chunk_count(file)
       count.times { |n|
@@ -208,9 +207,40 @@ module Mongo::GridFS
       }
     end
 
+    # Opens a Stream from which the application can read the contents of the stored file
+    # specified by @filename and the revision in @options.
+    #
+    # Returns a Stream.
+    def open_download_stream_by_name(filename : String, revision : Int32 = -1) : IO
+      file = get_file_by_name(filename, revision)
+      count = chunk_count(file)
+      reader, writer = IO.pipe
+
+      spawn same_thread: true do
+        count.times { |n|
+          chunk = get_chunk(file._id, n)
+          writer.write(chunk.data)
+        }
+        writer.close
+      end
+
+      reader
+    end
+
+    # Downloads the contents of the stored file specified by @filename and by the
+    # revision in @options and writes the contents to the @destination Stream.
+    def download_to_stream_by_name(filename : String, destination : IO, revision : Int32 = -1) : Nil
+      file = get_file_by_name(filename, revision)
+      count = chunk_count(file)
+      count.times { |n|
+        chunk = get_chunk(file._id, n)
+        destination.write(chunk.data)
+      }
+    end
+
     # Given a @id, delete this stored file’s files collection document and
     # associated chunks from a GridFS bucket.
-    def delete(id : FileID) : Void forall FileID
+    def delete(id : FileID) : Nil forall FileID
       delete_result = bucket.delete_one({ _id: id }, write_concern: write_concern)
       chunks.delete_many({ files_id: id }, write_concern: write_concern)
       raise Mongo::Error.new "File not found." if delete_result.try &.n == 0
@@ -227,7 +257,7 @@ module Mongo::GridFS
       no_cursor_timeout : Bool? = nil,
       skip : Int32? = nil,
       sort = nil
-    )
+    ) : Cursor::Wrapper(File(BSON::Value))
       cursor = bucket.find(
         filter,
         allow_disk_use: allow_disk_use,
@@ -241,6 +271,17 @@ module Mongo::GridFS
         read_preference: read_preference
       )
       Cursor::Wrapper(File(BSON::Value)).new(cursor)
+    end
+
+    # Renames the stored file with the specified @id.
+    def rename(id : FileID, new_filename : String) : Nil forall FileID
+      bucket.update_one({ _id: id }, { "$set": { filename: new_filename } })
+    end
+
+    # Drops the files and chunks collections associated with this bucket.
+    def drop
+      bucket.delete_many(BSON.new)
+      chunks.delete_many(BSON.new)
     end
 
     private module Internal
@@ -290,14 +331,27 @@ module Mongo::GridFS
         count
       end
 
-      def get_file(id : FileID) forall FileID
+      def get_file(id : FileID) : File(FileID) forall FileID
         file = bucket.find_one({ _id: id }, read_preference: read_preference, read_concern: read_concern)
-        raise Mongo::Error.new "File not found" unless file
+        raise Mongo::Error.new "Cannot find file with id: #{id}" unless file
         File(FileID).from_bson(file)
       end
 
-      def chunk_count(file : File(FileID)) forall FileID
-        file.length // file.chunk_size
+      def get_file_by_name(name : String, revision : Int32 = -1) : File(BSON::Value)
+        sort_order = revision >= 0 ? 1 : -1
+        file = bucket.find_one(
+          { filename: name },
+          sort: { uploadDate: sort_order },
+          skip: revision >= 0 ? revision : -revision-1,
+          read_preference: read_preference,
+          read_concern: read_concern
+        )
+        raise Mongo::Error.new "Cannot find revision #{revision} of the file named: #{name}" unless file
+        File(BSON::Value).from_bson(file)
+      end
+
+      def chunk_count(file : File(FileID)) : Int64 forall FileID
+        (file.length / file.chunk_size).ceil.to_i64
       end
 
       def get_chunk(id : FileID, n : Int64) forall FileID
