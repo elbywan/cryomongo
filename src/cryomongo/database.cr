@@ -15,8 +15,8 @@ class Mongo::Database
   def initialize(@client, @name)
   end
 
-  def command(operation, write_concern : WriteConcern? = @write_concern, read_concern : ReadConcern? = @read_concern, read_preference : ReadPreference? = @read_preference, **args)
-    @client.command(operation, **args, database: @name, write_concern: write_concern, read_concern: read_concern, read_preference: read_preference)
+  def command(operation, write_concern : WriteConcern? = nil, read_concern : ReadConcern? = nil, read_preference : ReadPreference? = nil, **args)
+    @client.command(operation, **args, database: @name, write_concern: write_concern || @write_concern, read_concern: read_concern || @read_concern, read_preference: read_preference || @read_preference)
   end
 
   def collection(collection : Collection::CollectionKey) : Mongo::Collection
@@ -89,6 +89,41 @@ class Mongo::Database
       write_concern: write_concern,
       read_concern: read_concern,
       read_preference: read_preference
+    )
+  end
+
+  # Allows a client to observe all changes in a database.
+  # Excludes system collections.
+  # @returns a change stream on all collections in a database
+  # Since: 4.0
+  # See: https://docs.mongodb.com/manual/reference/system-collections/
+  def watch(
+    pipeline : Array = [] of BSON,
+    *,
+    full_document : String? = nil,
+    resume_after = nil,
+    max_await_time_ms : Int64? = nil,
+    batch_size : Int32? = nil,
+    collation : Collation? = nil,
+    start_at_operation_time : Time? = nil,
+    start_after = nil,
+    read_concern : ReadConcern? = nil,
+    read_preference : ReadPreference? = nil
+  ) : Mongo::ChangeStream::Cursor
+    ChangeStream::Cursor.new(
+      client: @client,
+      database: name,
+      collection: 1,
+      pipeline: pipeline.map{ |elt| BSON.new(elt) },
+      full_document: full_document,
+      resume_after: resume_after,
+      start_after: start_after,
+      start_at_operation_time: start_at_operation_time,
+      read_concern: read_concern,
+      read_preference: read_preference,
+      max_time_ms: max_await_time_ms,
+      batch_size: batch_size,
+      collation: collation,
     )
   end
 end

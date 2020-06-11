@@ -127,28 +127,28 @@ struct Mongo::Options
 
   def validate(raw_hash)
     if raw_hash.has_key?("tlsinsecure") && raw_hash.has_key?("tlsallowinvalidcertificates")
-      raise "tlsInsecure and tlsAllowInvalidCertificates cannot be both present"
+      raise Mongo::Error.new "tlsInsecure and tlsAllowInvalidCertificates cannot be both present"
     end
     if raw_hash.has_key?("tlsinsecure") && raw_hash.has_key?("tlsallowinvalidhostnames")
-      raise "tlsInsecure and tlsAllowInvalidHostnames cannot be both present"
+      raise Mongo::Error.new "tlsInsecure and tlsAllowInvalidHostnames cannot be both present"
     end
     if raw_hash.has_key?("tlsdisablecertificaterevocationcheck") && raw_hash.has_key?("tlsallowinvalidcertificates")
-      raise "tlsDisableCertificateRevocationCheck and tlsAllowInvalidCertificates cannot be both present"
+      raise Mongo::Error.new "tlsDisableCertificateRevocationCheck and tlsAllowInvalidCertificates cannot be both present"
     end
     if raw_hash.has_key?("tlsinsecure") && raw_hash.has_key?("tlsdisablecertificaterevocationcheck")
-      raise "tlsInsecure and tlsDisableCertificateRevocationCheck cannot be both present"
+      raise Mongo::Error.new "tlsInsecure and tlsDisableCertificateRevocationCheck cannot be both present"
     end
     if raw_hash.has_key?("tlsdisablecertificaterevocationcheck") && raw_hash.has_key?("tlsdisableocspendpointcheck")
-      raise "tlsDisableCertificateRevocationCheck and tlsDisableOCSPEndpointCheck cannot be both present"
+      raise Mongo::Error.new "tlsDisableCertificateRevocationCheck and tlsDisableOCSPEndpointCheck cannot be both present"
     end
     if raw_hash.has_key?("tlsinsecure") && raw_hash.has_key?("tlsdisableocspendpointcheck")
-      raise "tlsInsecure and tlsDisableOCSPEndpointCheck cannot be both present"
+      raise Mongo::Error.new "tlsInsecure and tlsDisableOCSPEndpointCheck cannot be both present"
     end
     if raw_hash.has_key?("tlsallowinvalidcertificates") && raw_hash.has_key?("tlsdisableocspendpointcheck")
-      raise "tlsAllowInvalidCertificates and tlsDisableOCSPEndpointCheck cannot be both present"
+      raise Mongo::Error.new "tlsAllowInvalidCertificates and tlsDisableOCSPEndpointCheck cannot be both present"
     end
     if raw_hash.has_key?("tls") && raw_hash.has_key?("ssl") && raw_hash["ssl"] != raw_hash["tls"]
-      raise "tls and ssl have different values"
+      raise Mongo::Error.new "tls and ssl have different values"
     end
   end
 end

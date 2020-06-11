@@ -200,7 +200,7 @@ struct Mongo::Bulk
         value.nil?
       }
     else
-      raise "Invalid Operation"
+      raise Mongo::Bulk::Error.new "Invalid Operation"
     end.not_nil!
   end
 
@@ -224,7 +224,7 @@ struct Mongo::Bulk
     elsif type == UpdateMany
       result = @collection.command(Commands::Update, updates: group, options: options)
     else
-      raise "Invalid Operation"
+      raise Mongo::Bulk::Error.new "Invalid Operation"
     end
 
     merge_results(results, result.not_nil!, index_offset)
@@ -278,7 +278,7 @@ struct Mongo::Bulk
 
   def execute(write_concern : WriteConcern? = nil, bypass_document_validation : Bool? = nil)
     _, not_executed = @executed.compare_and_set(0_u8, 1_u8)
-    raise "Cannot execute a bulk operation more than once" unless not_executed
+    raise Mongo::Bulk::Error.new "Cannot execute a bulk operation more than once" unless not_executed
 
     options = {
       bypass_document_validation: bypass_document_validation,
@@ -321,4 +321,8 @@ struct Mongo::Bulk
 
     results
   end
+end
+
+
+class Mongo::Bulk::Error < Mongo::Error
 end

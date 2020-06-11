@@ -17,7 +17,7 @@ abstract struct Mongo::Messages::Part
       sizeof(typeof(field.value))
     when Messages::Part
       field.part_size
-    else raise "Unsupported field type: #{typeof(field)}."
+    else raise Mongo::Error.new "Unsupported field type: #{typeof(field)}."
     end
   end
 
@@ -38,7 +38,7 @@ abstract struct Mongo::Messages::Part
       field.value.to_io(io, IO::ByteFormat::LittleEndian)
     when Messages::Part
       field.to_io(io)
-    else raise "Unsupported field type: #{typeof(field)}."
+    else raise Mongo::Error.new "Unsupported field type: #{typeof(field)}."
     end
   end
 

@@ -105,7 +105,7 @@ struct Mongo::Connection
       scram = Mongo::Auth::Scram.new(mechanism, @credentials)
       scram.authenticate(self)
     else
-      raise "Authentication mechanism not supported: #{mechanism}"
+      raise Mongo::Error.new "Authentication mechanism not supported: #{mechanism}"
     end
   end
 

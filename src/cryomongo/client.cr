@@ -16,7 +16,6 @@ class Mongo::Client
 
   MIN_WIRE_VERSION = 6
   MAX_WIRE_VERSION = 8
-
   UNACKNOWLEDGED_WRITE_PROHIBITED_OPTIONS = {
     "hint",
     "collation",
@@ -59,31 +58,30 @@ class Mongo::Client
     }
   end
 
-  def add_monitor(server_description : SDAM::ServerDescription, *, start_monitoring = true)
-    monitor = SDAM::Monitor.new(self, server_description, @credentials, @options.heartbeat_frequency || 10.seconds)
-    @monitors << monitor
-    if start_monitoring
-      spawn monitor.scan
-    end
+  def database(name : String)
+    Database.new(self, name)
+  end
+
+  def [](name : String)
+    database(name)
   end
 
   def command(
     command cmd,
     ignore_errors = false,
-    write_concern : WriteConcern? = @write_concern,
-    read_concern : ReadConcern? = @read_concern,
-    read_preference : ReadPreference? = @read_preference,
+    write_concern : WriteConcern? = nil,
+    read_concern : ReadConcern? = nil,
+    read_preference : ReadPreference? = nil,
     server_description : SDAM::ServerDescription? = nil,
     **args
   )
-    args = WithWriteConcern.mix_write_concern(cmd, args, write_concern)
-    args = WithReadConcern.mix_read_concern(cmd, args, read_concern)
+    args = WithWriteConcern.mix_write_concern(cmd, args, write_concern || @write_concern)
+    args = WithReadConcern.mix_read_concern(cmd, args, read_concern || @read_concern)
 
     if WithReadPreference.must_use_primary_command?(cmd, args)
       read_preference = ReadPreference.new(mode: "primary")
     else
-      read_preference = @read_preference || read_preference
-      read_preference = read_preference || ReadPreference.new(mode: "primary")
+      read_preference = read_preference || @read_preference || ReadPreference.new(mode: "primary")
     end
 
     server_description ||= server_selection(cmd, args, read_preference)
@@ -133,16 +131,33 @@ class Mongo::Client
     end
 
     result
+  rescue error : IO::Error
+    Mongo::Log.error { "Client error: #{error}" }
+    # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-monitoring.rst#network-or-command-error-during-server-check
+    server_description.try { |desc|
+      description = SDAM::ServerDescription.new(desc.address)
+      description.error = error.message
+      description.last_update_time = desc.last_update_time
+      topology.update(desc, description)
+      close_connection_pool(desc)
+    }
+    raise error
+  rescue error : Mongo::CommandError
+    Mongo::Log.error { "Server error: #{error}" }
+    # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-discovery-and-monitoring.rst#not-master-and-node-is-recovering
+    if error.state_change?
+      server_description.try { |desc|
+        description = SDAM::ServerDescription.new(desc.address)
+        description.error = error.message
+        description.last_update_time = desc.last_update_time
+        topology.update(desc, description)
+        close_connection_pool(desc) if error.shutdown?
+        @monitors.find(&.server_description.address.== desc.address).try &.request_immediate_scan
+      }
+    end
+    raise error
   ensure
     release_connection(connection) if connection
-  end
-
-  def database(name : String)
-    Database.new(self, name)
-  end
-
-  def [](name : String)
-    database(name)
   end
 
   def list_databases(
@@ -158,14 +173,61 @@ class Mongo::Client
     }).not_nil!
   end
 
-  def server_selection(command, args, read_preference : ReadPreference) : SDAM::ServerDescription
+  # Allows a client to observe all changes in a cluster.
+  # Excludes system collections.
+  # Excludes the "config", "local", and "admin" databases.
+  # Since: 4.0
+  # @returns a change stream on all collections in all databases in a cluster
+  # See: https://docs.mongodb.com/manual/reference/system-collections/
+  def watch(
+    pipeline : Array = [] of BSON,
+    *,
+    full_document : String? = nil,
+    resume_after = nil,
+    max_await_time_ms : Int64? = nil,
+    batch_size : Int32? = nil,
+    collation : Collation? = nil,
+    start_at_operation_time : Time? = nil,
+    start_after = nil,
+    read_concern : ReadConcern? = nil,
+    read_preference : ReadPreference? = nil
+  ) : Mongo::ChangeStream::Cursor
+    ChangeStream::Cursor.new(
+      client: self,
+      database: "admin",
+      collection: 1,
+      pipeline: pipeline.map{ |elt| BSON.new(elt) },
+      full_document: full_document,
+      resume_after: resume_after,
+      start_after: start_after,
+      start_at_operation_time: start_at_operation_time,
+      read_concern: read_concern,
+      read_preference: read_preference,
+      max_time_ms: max_await_time_ms,
+      batch_size: batch_size,
+      collation: collation,
+    )
+  end
+
+  def close
+    @pools.each { |_, pool|
+      pool.close
+    }
+    @monitors.each &.close
+  end
+
+  ############
+  # Internal #
+  ############
+
+  private def server_selection(command, args, read_preference : ReadPreference) : SDAM::ServerDescription
     # See: https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst#multi-threaded-or-asynchronous-server-selection
     selection_start_time = Time.utc
     selection_timeout = selection_start_time + @options.server_selection_timeout
 
     loop do
       unless topology.compatible
-        raise Mongo::Error.new topology.compatibility_error
+        raise ServerSelectionError.new topology.compatibility_error
       end
 
       # Find suitable servers by topology type and operation type
@@ -192,7 +254,7 @@ class Mongo::Client
     end
   end
 
-  def get_connection(server_description : SDAM::ServerDescription) : Mongo::Connection
+  protected def get_connection(server_description : SDAM::ServerDescription) : Mongo::Connection
     @pools[server_description] ||= DB::Pool(Mongo::Connection).new(
       initial_pool_size: @options.min_pool_size,
       max_pool_size: @options.max_pool_size,
@@ -207,35 +269,26 @@ class Mongo::Client
       connection
     end
     @pools[server_description].checkout
-  rescue error : Exception
-    Mongo::Log.error { "Client handshake error: #{error}" }
-    # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-monitoring.rst#network-or-command-error-during-server-check
-    close_connection_pool(server_description)
-    description = SDAM::ServerDescription.new(server_description.address)
-    description.error = error.message
-    description.last_update_time = server_description.last_update_time
-    topology.update(server_description, description)
-    raise error
   end
 
-  def release_connection(connection : Mongo::Connection)
+  private def release_connection(connection : Mongo::Connection)
     @pools[connection.server_description]?.try &.release(connection)
   end
 
-  def close_connection_pool(server_description : SDAM::ServerDescription)
+  protected def close_connection_pool(server_description : SDAM::ServerDescription)
     @@lock.synchronize {
       pool = @pools.delete(server_description)
       pool.try &.close
     }
   end
 
-  def stop_monitoring(server_description : SDAM::ServerDescription)
+  protected def stop_monitoring(server_description : SDAM::ServerDescription)
     @@lock.synchronize {
       @monitors.reject!(server_description)
     }
   end
 
-  def on_topology_update
+  protected def on_topology_update
     loop do
       select
       when @topology_update.send nil
@@ -255,14 +308,7 @@ class Mongo::Client
     }
   end
 
-  def close
-    @pools.each { |_, pool|
-      pool.close
-    }
-    @monitors.each &.close
-  end
-
-  def find_suitable_servers(command, args, read_preference : ReadPreference) : Array(SDAM::ServerDescription)?
+  private def find_suitable_servers(command, args, read_preference : ReadPreference) : Array(SDAM::ServerDescription)?
     # see: https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst#topology-type-unknown
     case self.topology.type
     when .unknown?
@@ -353,7 +399,15 @@ class Mongo::Client
     eligible.sample(1)[0]
   end
 
-  def start_monitoring
+  private def start_monitoring
     @monitors.each { spawn &.scan }
+  end
+
+  protected def add_monitor(server_description : SDAM::ServerDescription, *, start_monitoring = true)
+    monitor = SDAM::Monitor.new(self, server_description, @credentials, @options.heartbeat_frequency || 10.seconds)
+    @monitors << monitor
+    if start_monitoring
+      spawn monitor.scan
+    end
   end
 end

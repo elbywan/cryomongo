@@ -70,7 +70,7 @@ struct Mongo::Messages::OpMsg < Mongo::Messages::Part
           )
         )
       else
-        raise "Received invalid payload type: #{payload_type}"
+        raise Mongo::Error.new "Received invalid payload type: #{payload_type}"
       end
     end
 

@@ -20,6 +20,7 @@ module Mongo::Commands::GetMore
       property id : Int64
       property ns : String
       property next_batch : Array(BSON)
+      property post_batch_resume_token : BSON?
     }
   }
 

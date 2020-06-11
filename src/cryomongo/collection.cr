@@ -7,6 +7,7 @@ require "./concerns"
 require "./read_preference"
 require "./collation"
 require "./index"
+require "./change_stream"
 
 class Mongo::Collection
   include WithReadConcern
@@ -20,8 +21,8 @@ class Mongo::Collection
 
   def initialize(@database, @name); end
 
-  def command(operation, write_concern : WriteConcern? = @write_concern, read_concern : ReadConcern? = @read_concern, read_preference : ReadPreference? = @read_preference, **args)
-    @database.command(operation, **args, collection: @name, write_concern: write_concern, read_concern: read_concern, read_preference: read_preference)
+  def command(operation, write_concern : WriteConcern? = nil, read_concern : ReadConcern? = nil, read_preference : ReadPreference? = nil, **args)
+    @database.command(operation, **args, collection: @name, write_concern: write_concern || @write_concern, read_concern: read_concern || @read_concern, read_preference: read_preference || @read_preference)
   end
 
   #  Runs an aggregation framework pipeline.
@@ -43,10 +44,10 @@ class Mongo::Collection
     batch_size : Int32? = nil,
     max_time_ms : Int64? = nil,
     bypass_document_validation : Bool? = nil,
-    read_concern : ReadConcern? = nil,
     collation : Collation? = nil,
     hint : (String | H)? = nil,
     comment : String? = nil,
+    read_concern : ReadConcern? = nil,
     write_concern : WriteConcern? = nil,
     read_preference : ReadPreference? = nil
   ) : Mongo::Cursor? forall H
@@ -54,10 +55,10 @@ class Mongo::Collection
       allow_disk_use:             allow_disk_use,
       cursor:                     batch_size.try { {batchSize: batch_size} },
       bypass_document_validation: bypass_document_validation,
-      read_concern:               read_concern,
       collation:                  collation,
       hint:                       hint.is_a?(String) ? hint : BSON.new(hint),
       comment:                    comment,
+      read_concern:               read_concern,
       write_concern:              write_concern,
       read_preference:            read_preference,
     })
@@ -197,7 +198,7 @@ class Mongo::Collection
       collation:             collation,
       read_preference:       read_preference,
     }).not_nil!
-    Cursor.new(@database.client, result, await_time_ms: tailable && await_data ? max_time_ms : nil)
+    Cursor.new(@database.client, result, await_time_ms: tailable && await_data ? max_time_ms : nil, tailable: tailable || false)
   end
 
   # Finds the document matching the model.
@@ -271,7 +272,7 @@ class Mongo::Collection
   # @throws InvalidArgumentException if requests is empty
   # @throws BulkWriteException
   def bulk_write(requests : Array(Bulk::WriteModel), *, ordered : Bool, bypass_document_validation : Bool? = nil) : Bulk::WriteResult
-    raise "Tried to execute an empty bulk" unless requests.size > 0
+    raise Mongo::Bulk::Error.new "Tried to execute an empty bulk" unless requests.size > 0
     bulk = Mongo::Bulk.new(self, ordered, requests)
     bulk.execute(bypass_document_validation: bypass_document_validation)
   end
@@ -310,7 +311,7 @@ class Mongo::Collection
     write_concern : WriteConcern? = nil,
     bypass_document_validation : Bool? = nil
   ) : Commands::Common::InsertResult?
-    raise "Tried to insert an empty document array" unless documents.size > 0
+    raise Mongo::Error.new "Tried to insert an empty document array" unless documents.size > 0
     self.command(Commands::Insert, documents: documents, options: {
       ordered:                    ordered,
       write_concern:              write_concern,
@@ -371,12 +372,12 @@ class Mongo::Collection
   private def validate_replacement!(replacement)
     replacement = BSON.new(replacement)
     first_element = replacement.each.next
-    raise "The replacement document must not be an array" if replacement.is_a? Array
+    raise Mongo::Error.new "The replacement document must not be an array" if replacement.is_a? Array
     unless first_element.is_a? Iterator::Stop
       if first_element[0].starts_with? '$'
-        raise "The replacement document parameter must not begin with an atomic modifier"
+        raise Mongo::Error.new "The replacement document parameter must not begin with an atomic modifier"
       elsif first_element[0] == '0'
-        raise "The replacement document must not be an array"
+        raise Mongo::Error.new "The replacement document must not be an array"
       end
     end
     replacement
@@ -388,7 +389,7 @@ class Mongo::Collection
       first_element = update.each.next
       unless first_element.is_a? Iterator::Stop
         unless first_element[0].starts_with? '$'
-          raise "The update document parameter must have only atomic modifiers"
+          raise Mongo::Error.new "The update document parameter must have only atomic modifiers"
         end
       end
     end
@@ -714,5 +715,36 @@ class Mongo::Collection
   def list_indexes : Mongo::Cursor
     result = self.command(Commands::ListIndexes).not_nil!
     Cursor.new(@database.client, result)
+  end
+
+  # Returns a change stream on a specific collection.
+  def watch(
+    pipeline : Array = [] of BSON,
+    *,
+    full_document : String? = nil,
+    start_at_operation_time : Time? = nil,
+    resume_after : BSON? = nil,
+    start_after : BSON? = nil,
+    max_await_time_ms : Int64? = nil,
+    batch_size : Int32? = nil,
+    collation : Collation? = nil,
+    read_concern : ReadConcern? = nil,
+    read_preference : ReadPreference? = nil
+  ) : Mongo::ChangeStream::Cursor
+    ChangeStream::Cursor.new(
+      client: @database.client,
+      database: @database.name,
+      collection: name,
+      pipeline: pipeline.map{ |elt| BSON.new(elt) },
+      full_document: full_document,
+      resume_after: resume_after,
+      start_after: start_after,
+      start_at_operation_time: start_at_operation_time,
+      read_concern: read_concern,
+      read_preference: read_preference,
+      max_time_ms: max_await_time_ms,
+      batch_size: batch_size,
+      collation: collation,
+    )
   end
 end

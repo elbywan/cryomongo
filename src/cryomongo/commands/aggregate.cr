@@ -19,7 +19,7 @@ module Mongo::Commands::Aggregate
   end
 
   def result(bson)
-    raise "Explain is not supported" unless bson["cursor"]?
+    raise Mongo::Error.new "Explain is not supported" unless bson["cursor"]?
     Common::QueryResult.from_bson bson
   end
 end

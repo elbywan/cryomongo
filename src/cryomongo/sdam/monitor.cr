@@ -82,12 +82,12 @@ class Mongo::SDAM::Monitor
   rescue error : Exception
     Mongo::Log.error { "Monitoring handshake error: #{error}" }
     # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-monitoring.rst#network-or-command-error-during-server-check
-    close_connection(server_description)
     known_state = !server_description.type.unknown?
     description = ServerDescription.new(server_description.address)
     description.error = error.message
     description.last_update_time = server_description.last_update_time
-    if known_state && error.is_a? Socket::Error
+    close_connection(server_description)
+    if known_state && error.is_a? IO::Error
       check(description)
     else
       description

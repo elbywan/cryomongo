@@ -9,7 +9,7 @@ module Mongo
     property wtimeout : Int64? = nil
 
     def initialize(@j = nil, @w = nil, @wtimeout = nil)
-      raise "Invalid write concern" if @j == true && w == 0
+      raise Mongo::Error.new "Invalid write concern" if @j == true && w == 0
     end
   end
 

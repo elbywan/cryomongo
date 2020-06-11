@@ -25,7 +25,7 @@ class Mongo::Auth::Scram
       @mechanism_string = "SCRAM-SHA-256"
       @digest = OpenSSL::Digest.new("SHA256")
     else
-      raise "Invalid SCRAM mechanism: #{mechanism}"
+      raise Mongo::Error.new "Invalid SCRAM mechanism: #{mechanism}"
     end
     @mechanism = mechanism
     @client_nonce = Random::Secure.base64
@@ -53,7 +53,7 @@ class Mongo::Auth::Scram
     @salt = Base64.decode(parsed_data["s"])
     @iterations = parsed_data["i"].to_i.tap do |i|
       if i < MIN_ITER_COUNT
-        raise "Insufficient iteration count: #{i}, min: #{MIN_ITER_COUNT}"
+        raise Mongo::Error.new "Insufficient iteration count: #{i}, min: #{MIN_ITER_COUNT}"
       end
     end
 
@@ -97,7 +97,7 @@ class Mongo::Auth::Scram
   end
 
   def first_bare
-    raise "Username is missing" unless username = @credentials.username
+    raise Mongo::Error.new "Username is missing" unless username = @credentials.username
     encoded_name = username.gsub('=', "=3D").gsub(',', "=2C")
     @first_bare ||= "n=#{encoded_name},r=#{@client_nonce}"
   end
@@ -190,7 +190,7 @@ class Mongo::Auth::Scram
       if compare_digest(verifier, server_signature(server_key, auth_message))
         @server_verified = true
       else
-        raise "Invalid server signature."
+        raise Mongo::Error.new "Invalid server signature."
       end
     end
   end
@@ -206,7 +206,7 @@ class Mongo::Auth::Scram
     payload.split(',').reject(&.empty?).map do |pair|
       k, v = pair.split('=', 2)
       if k.empty?
-        raise "Payload malformed: missing key"
+        raise Mongo::Error.new "Payload malformed: missing key"
       end
       hash[k] = v
     end
@@ -215,11 +215,11 @@ class Mongo::Auth::Scram
 
   def validate_server_nonce!
     if @client_nonce.nil? || @client_nonce.empty?
-      raise "Cannot validate server nonce when client nonce is nil or empty"
+      raise Mongo::Error.new "Cannot validate server nonce when client nonce is nil or empty"
     end
 
     unless (nonce = @server_nonce) && nonce.starts_with?(@client_nonce)
-      raise "Invalid nonce"
+      raise Mongo::Error.new "Invalid nonce"
     end
   end
 end

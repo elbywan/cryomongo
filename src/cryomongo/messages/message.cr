@@ -25,7 +25,7 @@ struct Mongo::Messages::Message
     when .msg?
       @contents = Mongo::Messages::OpMsg.new(io: io, header: header)
     else
-      raise "Received unexpected message op_code: #{header.op_code}"
+      raise Mongo::Error.new "Received unexpected message op_code: #{header.op_code}"
     end
   end
 
