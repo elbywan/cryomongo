@@ -4,7 +4,7 @@ require "../commands"
 module Mongo::Commands::Drop
   extend self
 
-  def command(database : String, name : Collection::CollectionKey, options)
+  def command(database : String, name : Collection::CollectionKey, options = nil)
     Commands.make({
       drop:  name,
       "$db": database,

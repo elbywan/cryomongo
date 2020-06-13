@@ -1,17 +1,17 @@
-name: mongo
+name: cryomongo
 version: 0.1.0
 
 authors:
   - elbywan <elbywan@hotmail.com>
 
-crystal: 0.34.0
+crystal: 0.35.0
 
 license: MIT
 
 dependencies:
   bson:
     github: elbywan/bson.cr
-    version: ~> 0.2.0
+    version: ~> 0.2.5
   db:
     github: crystal-lang/crystal-db
 

@@ -4,10 +4,10 @@ require "../commands"
 module Mongo::Commands::DropDatabase
   extend self
 
-  def command(database : String, options)
+  def command(database : String, options = nil)
     Commands.make({
       dropDatabase: 1,
-      "$db":        database,
+      "$db": database,
     }, options)
   end
 

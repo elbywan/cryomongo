@@ -81,7 +81,7 @@ class Mongo::Collection
     max_time_ms : Int64? = nil,
     read_preference : ReadPreference? = nil
   ) : Int32 forall H
-    pipeline = [BSON.new({"$match": filter})]
+    pipeline = filter.empty? ? [] of BSON : [BSON.new({"$match": BSON.new(filter)})]
     skip.try { pipeline << BSON.new({"$skip": skip}) }
     limit.try { pipeline << BSON.new({"$limit": limit}) }
     pipeline << BSON.new({"$group": {"_id": 1, "n": {"$sum": 1}}})
@@ -519,7 +519,6 @@ class Mongo::Collection
     filter,
     *,
     sort = nil,
-    new : Bool? = nil,
     fields = nil,
     bypass_document_validation : Bool? = nil,
     write_concern : WriteConcern? = nil,
@@ -530,7 +529,6 @@ class Mongo::Collection
     result = self.command(Commands::FindAndModify, filter: filter, options: {
       remove:                     true,
       sort:                       sort.try { BSON.new(sort) },
-      new:                        new,
       fields:                     fields.try { BSON.new(fields) },
       bypass_document_validation: bypass_document_validation,
       write_concern:              write_concern,
@@ -673,11 +671,25 @@ class Mongo::Collection
     write_concern : WriteConcern? = nil
   ) : Commands::Common::BaseResult?
     indexes = models.map { |item|
-      index_model = IndexModel.new(item["keys"], IndexOptions.new(**item["options"]))
-      index_model.options.name = index_model.keys.reduce([] of String) { |acc, (k, v)|
-        acc << "#{k}_#{v}"
-      }.join("_") unless index_model.options.name
-      BSON.new({key: index_model.keys}).append(index_model.options.to_bson)
+      if item.is_a? BSON
+        keys = item["keys"].as(BSON)
+        options = item["options"]?.try(&.as(BSON)) || BSON.new
+        if options.["name"]?
+          BSON.new({ key: keys }).append(options)
+        else
+          index_name = keys.reduce([] of String) { |acc, (k, v)|
+            acc << "#{k}_#{v}"
+          }.join("_")
+          options.append(name: index_name)
+          BSON.new({key: keys}).append(options)
+        end
+      else
+        index_model = IndexModel.new(item["keys"], IndexOptions.new(**item["options"]))
+        index_model.options.name = index_model.keys.reduce([] of String) { |acc, (k, v)|
+          acc << "#{k}_#{v}"
+        }.join("_") unless index_model.options.name
+        BSON.new({key: index_model.keys}).append(index_model.options.to_bson)
+      end
     }
     self.command(Commands::CreateIndexes, indexes: indexes, options: {
       commit_quorum: commit_quorum,

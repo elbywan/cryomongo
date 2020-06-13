@@ -26,7 +26,7 @@ A dependencies-free MongoDB driver written in pure Crystal.
 - https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst
 - https://github.com/mongodb/specifications/blob/master/source/max-staleness/max-staleness.rst
 - https://github.com/mongodb/specifications/tree/master/source/connection-monitoring-and-pooling (loosely - using the crystal-db pool)
-- https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst (SHA1 / SHA256 only for the moment - without SASLprep)
+- https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst (SHA1 / SHA256 only - without SASLprep)
 - https://github.com/mongodb/specifications/blob/master/source/index-management.rst (no IndexView fluid syntax)
 - https://github.com/mongodb/specifications/tree/master/source/gridfs
 - https://github.com/mongodb/specifications/tree/master/source/change-streams

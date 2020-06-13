@@ -111,14 +111,14 @@ struct Mongo::Connection
 
   def send(op_msg : Messages::OpMsg)
     message = Messages::Message.new(op_msg)
-    Log.verbose {
+    Log.debug {
       "Sending: #{message.header.inspect}"
     }
-    Log.debug {
+    Log.trace {
       op_msg.body.to_json
     }
     op_msg.each_sequence { |key, contents|
-      Log.debug {
+      Log.trace {
         "Seq[#{key}]: #{contents.to_json}"
       }
     }
@@ -128,15 +128,15 @@ struct Mongo::Connection
   def receive(*, ignore_errors = false)
     loop do
       message = Mongo::Messages::Message.new(socket)
-      Log.verbose {
+      Log.debug {
         "Receiving: #{message.header.inspect}"
       }
       op_msg = message.contents.as(Messages::OpMsg)
-      Log.debug {
+      Log.trace {
         op_msg.body.to_json
       }
       op_msg.each_sequence { |key, contents|
-        Log.debug {
+        Log.trace {
           "Seq[#{key}]: #{contents.to_json}"
         }
       }
