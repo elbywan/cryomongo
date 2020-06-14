@@ -87,6 +87,10 @@ class Mongo::Client
     server_description ||= server_selection(cmd, args, read_preference)
     connection = get_connection(server_description)
 
+    if cmd == Mongo::Commands::FindAndModify && args["options"]?.try(&.["hint"]?) && server_description.max_wire_version < 8
+      raise Mongo::Error.new "The hint option is not supported by MongoDB servers < 4.2"
+    end
+
     args = WithReadPreference.mix_read_preference(cmd, args, read_preference, topology, server_description)
 
     unacknowledged = false
