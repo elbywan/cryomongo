@@ -6,12 +6,12 @@ describe Mongo::IndexModel do
 
   before_all {
     `rm -Rf ./data`
-    puts `mlaunch init --single`
+    start_mongo
   }
 
   after_all {
     client.close
-    puts `mlaunch stop`
+    stop_mongo
     sleep 1
     `rm -Rf ./data`
   }

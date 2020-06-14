@@ -1,6 +1,37 @@
+dist: bionic
 language: crystal
 
-# Uncomment the following if you'd like Travis to run specs and check code formatting
-# script:
-#   - crystal spec
-#   - crystal tool format --check
+# env:
+#   matrix:
+    # - MONGODB=3.6.18
+    # - MONGODB=4.0.18
+    # - MONGODB=4.2.7
+  # global:
+    # - MONGODB_PATH=${PWD}/mongodb-linux-x86_64-ubuntu1604-${MONGODB}/bin
+
+addons:
+  apt:
+    update: true
+    packages:
+      - python3-pip
+      - python3-setuptools
+      - libevent-dev
+
+install:
+  # - wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-${MONGODB}.tgz
+  # - tar xzf mongodb-linux-x86_64-ubuntu1604-${MONGODB}.tgz
+  # - ${PWD}/mongodb-linux-x86_64-ubuntu1604-${MONGODB}/bin/mongod --version
+  - wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
+  - echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
+  - sudo apt-get -qq update
+  - sudo apt-get install -y mongodb-org
+  - python3 -m pip install mtools[all]
+
+before_script:
+  - shards install --ignore-crystal-version
+  # - export MONGODB_PATH=${PWD}/mongodb-linux-x86_64-ubuntu1604-${MONGODB}/bin
+  # - mkdir ${PWD}/mongodb-linux-x86_64-ubuntu1604-${MONGODB}/data
+  # - ${PWD}/mongodb-linux-x86_64-ubuntu1604-${MONGODB}/bin/mongod --dbpath ${PWD}/mongodb-linux-x86_64-ubuntu1604-${MONGODB}/data --logpath ${PWD}/mongodb-linux-x86_64-ubuntu1604-${MONGODB}/mongodb.log --fork
+
+script:
+  - crystal spec
