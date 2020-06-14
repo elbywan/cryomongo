@@ -20,5 +20,6 @@ development_dependencies:
     github: crystal-ameba/ameba
     version: ~> 0.12.0
 
-executables:
-  - ameba
+targets:
+  ameba:
+    main: lib/ameba/src/cli.cr
