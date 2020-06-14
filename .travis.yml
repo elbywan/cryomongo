@@ -1,6 +1,11 @@
 dist: bionic
 language: crystal
 
+env:
+  matrix:
+    - MONGODB_VERSION=4.0.18 MONGODB_RELEASE=4.0
+    - MONGODB_VERSION=4.2.7  MONGODB_RELEASE=4.2
+
 addons:
   apt:
     update: true
@@ -10,12 +15,8 @@ addons:
       - libevent-dev
 
 install:
-  # - wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
-  # - echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
-  # - sudo apt-get -qq update
-  # - sudo apt-get install -y mongodb-org=4.2.7
-  - wget https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/4.2/multiverse/binary-amd64/mongodb-org-server_4.2.7_amd64.deb
-  - sudo dpkg -i mongodb-org-server_4.2.7_amd64.deb
+  - wget https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/${MONGODB_RELEASE}/multiverse/binary-amd64/mongodb-org-server_${MONGODB_VERSION}_amd64.deb
+  - sudo dpkg -i mongodb-org-server_${MONGODB_VERSION}_amd64.deb
   - python3 -m pip install mtools[all]
 
 before_script:

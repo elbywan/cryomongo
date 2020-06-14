@@ -4,10 +4,6 @@ require "./spec_helper"
 
 include Crud::Helpers
 
-# MIN_VERSION = SemanticVersion.parse "3.6.0"
-# MAX_VERSION = SemanticVersion.parse "4.2.0"
-SERVER_VERSION = SemanticVersion.parse "4.2.0"
-
 def semantic(str)
   split = str.split(".")
   full_version = ""
