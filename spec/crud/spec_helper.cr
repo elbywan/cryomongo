@@ -266,7 +266,6 @@ module Crud::Helpers
         collection.find_one_and_delete(
           filter: filter.not_nil!,
           sort: sort,
-          new: new_,
           fields: fields,
           bypass_document_validation: bypass_document_validation,
           write_concern: write_concern,
