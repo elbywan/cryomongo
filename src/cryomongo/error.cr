@@ -53,4 +53,22 @@ module Mongo
       @code.in? RESUMABLE_CODES
     end
   end
+
+  class CommandWriteError < Error
+    getter errors = [] of CommandError
+
+    def initialize(errors : BSON)
+      errors.each { |_, error|
+        error = error.as(BSON)
+        err_msg = error["errmsg"]?.as(String)
+        err_code = error["code"]?
+        @errors << CommandError.new(err_code, err_msg)
+      }
+    end
+
+    def to_s(io : IO)
+      io << "Write errors."
+      @errors.each &.to_s(io)
+    end
+  end
 end
