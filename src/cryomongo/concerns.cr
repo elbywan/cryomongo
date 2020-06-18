@@ -33,18 +33,18 @@ module Mongo
       Commands::Update,
       Commands::Delete,
       Commands::FindAndModify,
-      # Commands::CopyDb,
       Commands::Create,
       Commands::CreateIndexes,
       Commands::Drop,
       Commands::DropDatabase,
       Commands::DropIndexes,
-      # Commands::MapReduce,
-      # Commands::Clone,
-      # Commands::CloneCollection,
       # Commands::CreateUser,
       # Commands::UpdateUser,
       # Commands::DropUser,
+      # Commands::MapReduce,
+      # Commands::CopyDb,
+      # Commands::Clone,
+      # Commands::CloneCollection,
     }
 
     def self.mix_write_concern(command, args, write_concern : WriteConcern?)

@@ -633,7 +633,7 @@ class Mongo::Collection
     commit_quorum : (Int32 | String)? = nil,
     max_time_ms : Int64? = nil,
     write_concern : WriteConcern? = nil
-  ) : Commands::Common::BaseResult?
+  ) : Commands::CreateIndexes::Result?
     self.create_indexes(
       models: [{
         keys:    keys,
@@ -669,7 +669,7 @@ class Mongo::Collection
     commit_quorum : (Int32 | String)? = nil,
     max_time_ms : Int64? = nil,
     write_concern : WriteConcern? = nil
-  ) : Commands::Common::BaseResult?
+  ) : Commands::CreateIndexes::Result?
     indexes = models.map { |item|
       if item.is_a? BSON
         keys = item["keys"].as(BSON)
@@ -758,5 +758,10 @@ class Mongo::Collection
       batch_size: batch_size,
       collation: collation,
     )
+  end
+
+  # Returns a variety of storage statistics for the collection.
+  def stats(*, scale : Int32? = nil) : BSON?
+    self.command(Commands::CollStats, options: { scale: scale })
   end
 end

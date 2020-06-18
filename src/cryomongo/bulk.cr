@@ -113,27 +113,27 @@ struct Mongo::Bulk
   end
 
   def delete_one(filter, **options)
-    @models << DeleteOne.new(BSON.new filter, **options)
+    @models << DeleteOne.new(BSON.new(filter), **options)
     self
   end
 
   def delete_many(filter, **options)
-    @models << DeleteMany.new(BSON.new filter, **options)
+    @models << DeleteMany.new(BSON.new(filter), **options)
     self
   end
 
   def replace_one(filter, replacement, **options)
-    @models << ReplaceOne.new(BSON.new filter, rBSON.new eplacement, **options)
+    @models << ReplaceOne.new(BSON.new(filter), BSON.new(replacement), **options)
     self
   end
 
   def update_one(filter, update, **options)
-    @models << UpdateOne.new(BSON.new filter, BSON.new update, **options)
+    @models << UpdateOne.new(BSON.new(filter), BSON.new(update), **options)
     self
   end
 
   def update_many(filter, update, **options)
-    @models << UpdateMany.new(BSON.new filter, BSON.new update, **options)
+    @models << UpdateMany.new(BSON.new(filter), BSON.new(update), **options)
     self
   end
 

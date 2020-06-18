@@ -17,9 +17,9 @@ module Mongo
 
     MAY_USE_SECONDARY = {
       # Commands::Aggregate, # without a write stage (e.g. $out, $merge)
-      # Commands::CollStats,
+      Commands::CollStats,
       Commands::Count,
-      # Commands::DbStats,
+      Commands::DbStats,
       Commands::Distinct,
       Commands::Find,
       # Commands::GeoNear,

@@ -126,4 +126,9 @@ class Mongo::Database
       collation: collation,
     )
   end
+
+  # Returns a variety of storage statistics for the database.
+  def stats(*, scale : Int32? = nil) : BSON?
+    self.command(Commands::DbStats, options: { scale: scale })
+  end
 end

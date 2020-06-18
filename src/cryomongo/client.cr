@@ -58,6 +58,17 @@ class Mongo::Client
     }
   end
 
+  def close
+    @pools.each { |_, pool|
+      pool.close
+    }
+    @monitors.each &.close
+  end
+
+  ##################
+  # Public Methods #
+  ##################
+
   def database(name : String)
     Database.new(self, name)
   end
@@ -177,6 +188,22 @@ class Mongo::Client
     }).not_nil!
   end
 
+  # Returns a document that provides an overview of the database’s state.
+  def status(*, repl : Int32? = nil, metrics : Int32? = nil, locks : Int32? = nil, mirrored_reads : Int32? = nil, latch_analysis : Int32? = nil) : BSON?
+    self.command(Commands::ServerStatus, options: {
+      repl: repl,
+      metrics: metrics,
+      locks: locks,
+      mirrored_reads: mirrored_reads,
+      latch_analysis: latch_analysis
+    })
+  end
+
+  # An administrative command that returns usage statistics for each collection.
+  def top : BSON?
+    self.command(Commands::Top)
+  end
+
   # Allows a client to observe all changes in a cluster.
   # Excludes system collections.
   # Excludes the "config", "local", and "admin" databases.
@@ -211,13 +238,6 @@ class Mongo::Client
       batch_size: batch_size,
       collation: collation,
     )
-  end
-
-  def close
-    @pools.each { |_, pool|
-      pool.close
-    }
-    @monitors.each &.close
   end
 
   ############

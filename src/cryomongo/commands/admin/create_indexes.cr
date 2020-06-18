@@ -12,7 +12,7 @@ module Mongo::Commands::CreateIndexes
     }, options)
   end
 
-  Common.result(Response) {
+  Common.result(Result) {
     property created_collection_automatically : Bool?
     property num_indexes_before : Int32?
     property num_indexes_after : Int32?
@@ -22,6 +22,6 @@ module Mongo::Commands::CreateIndexes
   }
 
   def result(bson)
-    Common::BaseResult.from_bson bson
+    Result.from_bson bson
   end
 end
