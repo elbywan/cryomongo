@@ -4,7 +4,7 @@ require "../commands"
 module Mongo::Commands::IsMaster
   extend self
 
-  OS_TYPE = {% if flag?(:linux) %} "Linux" {% elsif flag?(:darwin) %} "Darwin" {% elsif flag?(:win32) %} "Windows" {% else %} "Unknown" {% end %}
+  OS_TYPE = {% if host_flag?(:linux) %} "Linux" {% elsif host_flag?(:darwin) %} "Darwin" {% elsif host_flag?(:win32) %} "Windows" {% else %} "Unknown" {% end %}
 
   def command(appname : String? = nil)
     {BSON.new({
