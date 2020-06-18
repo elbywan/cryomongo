@@ -41,9 +41,9 @@ struct Mongo::Connection
     @socket = socket
   end
 
-  def handshake(*, send_metadata = false)
+  def handshake(*, send_metadata = false, appname = nil)
     if send_metadata
-      body, _ = Commands::IsMaster.command
+      body, _ = Commands::IsMaster.command(appname: appname)
     else
       body = BSON.new({isMaster: 1, "$db": "admin"})
     end

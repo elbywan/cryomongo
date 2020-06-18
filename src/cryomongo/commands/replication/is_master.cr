@@ -6,13 +6,13 @@ module Mongo::Commands::IsMaster
 
   OS_TYPE = {% if flag?(:linux) %} "Linux" {% elsif flag?(:darwin) %} "Darwin" {% elsif flag?(:win32) %} "Windows" {% else %} "Unknown" {% end %}
 
-  def command
+  def command(appname : String? = nil)
     {BSON.new({
       isMaster: 1,
       "$db":    "admin",
       client:   {
         application: {
-          name: "cryomongo",
+          name: appname || "cryomongo",
         },
         driver: {
           name:    "cryomongo",

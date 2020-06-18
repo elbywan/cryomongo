@@ -285,7 +285,7 @@ class Mongo::Client
       max_idle_pool_size: @options.min_pool_size
     ) do
       connection = Mongo::Connection.new(server_description, @credentials, @options)
-      result, round_trip_time = connection.handshake(send_metadata: true)
+      result, round_trip_time = connection.handshake(send_metadata: true, appname: @options.appname)
       connection.authenticate
       new_rtt = Connection.average_round_trip_time(round_trip_time, server_description.round_trip_time)
       new_description = SDAM::ServerDescription.new(server_description.address, result, new_rtt)

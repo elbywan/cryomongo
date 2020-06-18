@@ -23,7 +23,7 @@ class Mongo::SDAM::Monitor
   def get_connection(server_description : ServerDescription) : Mongo::Connection
     if !@connection || @connection.try &.socket.closed?
       @connection = Mongo::Connection.new(@server_description, @credentials, @client.options)
-      @connection.try &.handshake(send_metadata: true)
+      @connection.try &.handshake(send_metadata: true, appname: @client.options.appname)
     end
     @connection.not_nil!
   end
