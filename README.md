@@ -15,6 +15,8 @@
 
 **⚠️ BETA state.**
 
+> If you are looking for a higher-level object-document mapper library, you might want to check out the [`moongoon`](https://github.com/elbywan/moongoon) shard.
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:
