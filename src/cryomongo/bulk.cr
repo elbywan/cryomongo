@@ -2,31 +2,51 @@ require "./collection"
 require "./tools"
 require "./commands/**"
 
+# A bulk operations builder.
+#
+# ```
+# # A Bulk instance can be obtained by calling `.bulk()` on a collection.
+# bulk = collection.bulk(ordered: true)
+# # Then, operations can be added…
+# 500.times { |idx|
+#   bulk.insert_one({number: idx})
+#   bulk.delete_many({number: {"$lt": 450}})
+# }
+# # …and they will be performed once the bulk gets executed.
+# bulk_result = bulk.execute(write_concern: Mongo::WriteConcern.new(w: 1))
+# pp bulk_result
+# ```
 struct Mongo::Bulk
+  # The target collection.
   getter collection : Mongo::Collection
+  # Whether the bulk is ordered.
   getter ordered : Bool
-  getter models = [] of WriteModel
 
+  @models = [] of WriteModel
   @max_bson_object_size : Int32 = 16 * 1024 * 1024
   @max_write_batch_size : Int32 = 100_000
   @executed = Atomic(UInt8).new(0)
 
+  # :nodoc:
   def initialize(@collection, @ordered = true)
     # handshake_result = @collection.database.client.handshake_reply
     # @max_bson_object_size = handshake_result.max_bson_object_size
     # @max_write_batch_size = handshake_result.max_write_batch_size
   end
 
+  # :nodoc:
   def initialize(collection, ordered, @models)
     initialize(collection, ordered)
   end
 
+  # The base Struct inherited by all the bulk write models.
   abstract struct WriteModel
     def <=>(other)
       self.class.to_s <=> other.class.to_s
     end
   end
 
+  # Insert one document.
   struct InsertOne < WriteModel
     getter document : BSON
 
@@ -35,6 +55,7 @@ struct Mongo::Bulk
     end
   end
 
+  # Delete one document.
   struct DeleteOne < WriteModel
     getter filter : BSON
     getter collation : Collation?
@@ -45,6 +66,7 @@ struct Mongo::Bulk
     end
   end
 
+  # Delete one or more documents.
   struct DeleteMany < WriteModel
     getter filter : BSON
     getter collation : Collation?
@@ -55,6 +77,7 @@ struct Mongo::Bulk
     end
   end
 
+  # Replace one document.
   struct ReplaceOne < WriteModel
     getter filter : BSON
     getter replacement : BSON
@@ -68,6 +91,7 @@ struct Mongo::Bulk
     end
   end
 
+  # Update one document.
   struct UpdateOne < WriteModel
     getter filter : BSON
     getter update : BSON | Array(BSON)
@@ -82,6 +106,7 @@ struct Mongo::Bulk
     end
   end
 
+  # Update one or more documents.
   struct UpdateMany < WriteModel
     getter filter : BSON
     getter update : BSON | Array(BSON)
@@ -96,6 +121,7 @@ struct Mongo::Bulk
     end
   end
 
+  # An aggregated result of the server replies.
   class WriteResult
     property n_inserted : Int32 = 0
     property n_matched : Int32 = 0
@@ -107,34 +133,87 @@ struct Mongo::Bulk
     property write_concern_errors : Array(Commands::Common::WriteConcernError) = [] of Commands::Common::WriteConcernError
   end
 
+  # Insert a single document.
   def insert_one(document)
     @models << InsertOne.new(BSON.new document)
     self
   end
 
+  # Delete a single document.
   def delete_one(filter, **options)
     @models << DeleteOne.new(BSON.new(filter), **options)
     self
   end
 
+  # Delete one or more documents.
   def delete_many(filter, **options)
     @models << DeleteMany.new(BSON.new(filter), **options)
     self
   end
 
+  # Replace one document.
   def replace_one(filter, replacement, **options)
     @models << ReplaceOne.new(BSON.new(filter), BSON.new(replacement), **options)
     self
   end
 
+  # Update one document.
   def update_one(filter, update, **options)
     @models << UpdateOne.new(BSON.new(filter), BSON.new(update), **options)
     self
   end
 
+  # Update many documents.
   def update_many(filter, update, **options)
     @models << UpdateMany.new(BSON.new(filter), BSON.new(update), **options)
     self
+  end
+
+  # Execute the bulk operations stored in this `Bulk` instance.
+  def execute(write_concern : WriteConcern? = nil, bypass_document_validation : Bool? = nil)
+    _, not_executed = @executed.compare_and_set(0_u8, 1_u8)
+    raise Mongo::Bulk::Error.new "Cannot execute a bulk operation more than once" unless not_executed
+
+    options = {
+      bypass_document_validation: bypass_document_validation,
+      write_concern:              write_concern,
+    }
+
+    models = @models
+    unless @ordered
+      # Reorder based on the operation type
+      models.sort!
+    end
+    # Group by operation type.
+    group_type = nil
+    group = [] of BSON
+    group_bytesize = 0
+    index_offset = 0
+    results = WriteResult.new
+
+    models.each { |model|
+      if model.class != group_type
+        index_offset = process_group(group_type, group, results, index_offset, options)
+        return results if early_return?(results)
+        group_type = model.class
+        group_bytesize = 0
+      end
+
+      bson = format_bson(model)
+
+      if group_bytesize + bson.size >= @max_bson_object_size || group.size >= @max_bson_object_size
+        index_offset = process_group(group_type, group, results, index_offset, options)
+        return results if early_return?(results)
+        group_bytesize = 0
+      end
+
+      group << bson
+      group_bytesize += bson.size
+    }
+
+    process_group(group_type, group, results, index_offset, options)
+
+    results
   end
 
   private def format_bson(model : WriteModel) : BSON
@@ -272,56 +351,11 @@ struct Mongo::Bulk
     end
   end
 
-  def early_return?(results)
+  private def early_return?(results)
     @ordered && results.write_errors.size > 0
-  end
-
-  def execute(write_concern : WriteConcern? = nil, bypass_document_validation : Bool? = nil)
-    _, not_executed = @executed.compare_and_set(0_u8, 1_u8)
-    raise Mongo::Bulk::Error.new "Cannot execute a bulk operation more than once" unless not_executed
-
-    options = {
-      bypass_document_validation: bypass_document_validation,
-      write_concern:              write_concern,
-    }
-
-    models = @models
-    unless @ordered
-      # Reorder based on the operation type
-      models.sort!
-    end
-    # Group by operation type.
-    group_type = nil
-    group = [] of BSON
-    group_bytesize = 0
-    index_offset = 0
-    results = WriteResult.new
-
-    models.each { |model|
-      if model.class != group_type
-        index_offset = process_group(group_type, group, results, index_offset, options)
-        return results if early_return?(results)
-        group_type = model.class
-        group_bytesize = 0
-      end
-
-      bson = format_bson(model)
-
-      if group_bytesize + bson.size >= @max_bson_object_size || group.size >= @max_bson_object_size
-        index_offset = process_group(group_type, group, results, index_offset, options)
-        return results if early_return?(results)
-        group_bytesize = 0
-      end
-
-      group << bson
-      group_bytesize += bson.size
-    }
-
-    process_group(group_type, group, results, index_offset, options)
-
-    results
   end
 end
 
+# Is raised while trying to build or execute a bulk operation.
 class Mongo::Bulk::Error < Mongo::Error
 end

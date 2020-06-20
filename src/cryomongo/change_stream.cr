@@ -1,3 +1,10 @@
+# Change streams allow applications to access real-time data changes without the complexity and risk of tailing the oplog.
+#
+# Applications can use change streams to subscribe to all data changes on a single collection, a database, or an entire deployment,
+# and immediately react to them. Because change streams use the aggregation framework, applications can also filter for specific changes
+# or transform the notifications at will.
+#
+# NOTE: [for more details, please check the official manual](https://docs.mongodb.com/manual/changeStreams/index.html).
 module Mongo::ChangeStream
   @[BSON::Options(camelize: "lower")]
   struct Document(T)
@@ -5,15 +12,15 @@ module Mongo::ChangeStream
 
     # The id functions as an opaque token for use when resuming an interrupted
     # change stream.
-    property _id : BSON
+    getter _id : BSON
 
     # Describes the type of operation represented in this change notification.
     # "insert" | "update" | "replace" | "delete" | "invalidate" | "drop" | "dropDatabase" | "rename"
-    property operation_type : String
+    getter operation_type : String
 
     # Contains two fields: “db” and “coll” containing the database and
     # collection name in which the change happened.
-    property ns : BSON
+    getter ns : BSON
 
     # Only present for ops of type ‘insert’, ‘update’, ‘replace’, and
     # ‘delete’.
@@ -22,13 +29,13 @@ module Mongo::ChangeStream
     # value of the _id of the document updated.  For sharded collections,
     # this will contain all the components of the shard key in order,
     # followed by the _id if the _id isn’t part of the shard key.
-    property document_key : BSON? = nil
+    getter document_key : BSON? = nil
 
     # Only present for ops of type ‘update’.
     #
     # Contains a description of updated and removed fields in this
     # operation.
-    property update_description: UpdateDescription? = nil
+    getter update_description: UpdateDescription? = nil
 
     # Always present for operations of type ‘insert’ and ‘replace’. Also
     # present for operations of type ‘update’ if the user has specified ‘updateLookup’
@@ -41,7 +48,7 @@ module Mongo::ChangeStream
     # For operations of type ‘update’, this key will contain a copy of the full
     # version of the document from some point after the update occurred. If the
     # document was deleted since the updated happened, it will be null.
-    property full_document : T? = nil
+    getter full_document : T? = nil
 
     @[BSON::Options(camelize: "lower")]
     struct UpdateDescription
@@ -49,15 +56,17 @@ module Mongo::ChangeStream
 
       # A document containing key:value pairs of names of the fields that were
       # changed, and the new value for those fields.
-      property updated_dields : BSON
+      getter updated_fields : BSON
 
       # An array of field names that were removed from the document.
-      property removed_fields : Array(String)
+      getter removed_fields : Array(String)
     end
   end
 
   class Cursor < ::Mongo::Cursor
+    # The resume_token can be used to create a change stream that will start from this cursor position.
     getter resume_token : BSON? = nil
+
     @options : NamedTuple(
       pipeline: Array(BSON),
       full_document: String?,
@@ -73,6 +82,7 @@ module Mongo::ChangeStream
       database: String
     )
 
+    # :nodoc:
     def initialize(@client : Mongo::Client, **@options)
       @await_time_ms = options["max_time_ms"]?
       @tailable = true
@@ -89,13 +99,22 @@ module Mongo::ChangeStream
       @database, @collection = result.cursor.ns.split(".", 2)
     end
 
+    # Will convert the elements to the `Mongo::ChangeStream::Document(T)` type while iterating the `Cursor`.
+    #
+    # NOTE: see `Mongo::Cursor.of`
+    def of(type : T) forall T
+      {% begin %}
+      Cursor::Wrapper(Mongo::ChangeStream::Document({{T.instance}})).new(self)
+      {% end %}
+    end
+
     def next : BSON | Iterator::Stop
       element = super
       if element.is_a?(BSON) && @batch.empty?
         @resume_token ||= element["_id"]?.try &.as(BSON)
       end
       element
-    rescue e : Mongo::CommandError
+    rescue e : Mongo::Error::Command
       # see: https://github.com/mongodb/specifications/blob/master/source/change-streams/change-streams.rst#resume-process
       if e.resumable?
         self.close

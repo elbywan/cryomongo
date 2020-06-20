@@ -1,9 +1,13 @@
 require "bson"
 require "../commands"
 
+# The *dropDatabase* command drops the current database, deleting the associated data files.
+#
+# NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/dropDatabase/).
 module Mongo::Commands::DropDatabase
   extend self
 
+  # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
   def command(database : String, options = nil)
     Commands.make({
       dropDatabase: 1,
@@ -11,7 +15,8 @@ module Mongo::Commands::DropDatabase
     }, options)
   end
 
-  def result(bson)
+  # Transforms the server result.
+  def result(bson : BSON)
     Common::BaseResult.from_bson bson
   end
 end

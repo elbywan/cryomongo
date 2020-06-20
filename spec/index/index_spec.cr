@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Mongo::IndexModel do
+describe Mongo::Index::Model do
   client = Mongo::Client.new
   collection = client["cryomongo"]["test"]
 

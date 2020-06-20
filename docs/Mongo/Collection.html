@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.34.0">
+<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="crystal_docs.project_name" content="cryomongo">
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="cryomongo">
+  <title>Mongo::Collection - cryomongo master-dev</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          cryomongo
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master-dev
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="cryomongo/Mongo" data-name="mongo">
+      <a href="../Mongo.html">Mongo</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Bulk" data-name="mongo::bulk">
+      <a href="../Mongo/Bulk.html">Bulk</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/DeleteMany" data-name="mongo::bulk::deletemany">
+      <a href="../Mongo/Bulk/DeleteMany.html">DeleteMany</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/DeleteOne" data-name="mongo::bulk::deleteone">
+      <a href="../Mongo/Bulk/DeleteOne.html">DeleteOne</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/Error" data-name="mongo::bulk::error">
+      <a href="../Mongo/Bulk/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/InsertOne" data-name="mongo::bulk::insertone">
+      <a href="../Mongo/Bulk/InsertOne.html">InsertOne</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/ReplaceOne" data-name="mongo::bulk::replaceone">
+      <a href="../Mongo/Bulk/ReplaceOne.html">ReplaceOne</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/UpdateMany" data-name="mongo::bulk::updatemany">
+      <a href="../Mongo/Bulk/UpdateMany.html">UpdateMany</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/UpdateOne" data-name="mongo::bulk::updateone">
+      <a href="../Mongo/Bulk/UpdateOne.html">UpdateOne</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/WriteModel" data-name="mongo::bulk::writemodel">
+      <a href="../Mongo/Bulk/WriteModel.html">WriteModel</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/WriteResult" data-name="mongo::bulk::writeresult">
+      <a href="../Mongo/Bulk/WriteResult.html">WriteResult</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/ChangeStream" data-name="mongo::changestream">
+      <a href="../Mongo/ChangeStream.html">ChangeStream</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/ChangeStream/Cursor" data-name="mongo::changestream::cursor">
+      <a href="../Mongo/ChangeStream/Cursor.html">Cursor</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/ChangeStream/Document" data-name="mongo::changestream::document(t)">
+      <a href="../Mongo/ChangeStream/Document.html">Document</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/ChangeStream/Document/UpdateDescription" data-name="mongo::changestream::document::updatedescription">
+      <a href="../Mongo/ChangeStream/Document/UpdateDescription.html">UpdateDescription</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Client" data-name="mongo::client">
+      <a href="../Mongo/Client.html">Client</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Collation" data-name="mongo::collation">
+      <a href="../Mongo/Collation.html">Collation</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="cryomongo/Mongo/Collection" data-name="mongo::collection">
+      <a href="../Mongo/Collection.html">Collection</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Collection/CollectionKey" data-name="mongo::collection::collectionkey">
+      <a href="../Mongo/Collection/CollectionKey.html">CollectionKey</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands" data-name="mongo::commands">
+      <a href="../Mongo/Commands.html">Commands</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Aggregate" data-name="mongo::commands::aggregate">
+      <a href="../Mongo/Commands/Aggregate.html">Aggregate</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/BuildInfo" data-name="mongo::commands::buildinfo">
+      <a href="../Mongo/Commands/BuildInfo.html">BuildInfo</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/BuildInfo/Result" data-name="mongo::commands::buildinfo::result">
+      <a href="../Mongo/Commands/BuildInfo/Result.html">Result</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/CloneCollectionAsCapped" data-name="mongo::commands::clonecollectionascapped">
+      <a href="../Mongo/Commands/CloneCollectionAsCapped.html">CloneCollectionAsCapped</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/CollMod" data-name="mongo::commands::collmod">
+      <a href="../Mongo/Commands/CollMod.html">CollMod</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/CollStats" data-name="mongo::commands::collstats">
+      <a href="../Mongo/Commands/CollStats.html">CollStats</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/Common" data-name="mongo::commands::common">
+      <a href="../Mongo/Commands/Common.html">Common</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/BaseResult" data-name="mongo::commands::common::baseresult">
+      <a href="../Mongo/Commands/Common/BaseResult.html">BaseResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/Cursor" data-name="mongo::commands::common::cursor">
+      <a href="../Mongo/Commands/Common/Cursor.html">Cursor</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/DeleteResult" data-name="mongo::commands::common::deleteresult">
+      <a href="../Mongo/Commands/Common/DeleteResult.html">DeleteResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/FindAndModifyResult" data-name="mongo::commands::common::findandmodifyresult">
+      <a href="../Mongo/Commands/Common/FindAndModifyResult.html">FindAndModifyResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/InsertResult" data-name="mongo::commands::common::insertresult">
+      <a href="../Mongo/Commands/Common/InsertResult.html">InsertResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/QueryResult" data-name="mongo::commands::common::queryresult">
+      <a href="../Mongo/Commands/Common/QueryResult.html">QueryResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/UpdateResult" data-name="mongo::commands::common::updateresult">
+      <a href="../Mongo/Commands/Common/UpdateResult.html">UpdateResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/Upserted" data-name="mongo::commands::common::upserted">
+      <a href="../Mongo/Commands/Common/Upserted.html">Upserted</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/WriteConcernError" data-name="mongo::commands::common::writeconcernerror">
+      <a href="../Mongo/Commands/Common/WriteConcernError.html">WriteConcernError</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/WriteError" data-name="mongo::commands::common::writeerror">
+      <a href="../Mongo/Commands/Common/WriteError.html">WriteError</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Compact" data-name="mongo::commands::compact">
+      <a href="../Mongo/Commands/Compact.html">Compact</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ConnectionStatus" data-name="mongo::commands::connectionstatus">
+      <a href="../Mongo/Commands/ConnectionStatus.html">ConnectionStatus</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ConnPoolStats" data-name="mongo::commands::connpoolstats">
+      <a href="../Mongo/Commands/ConnPoolStats.html">ConnPoolStats</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ConvertToCapped" data-name="mongo::commands::converttocapped">
+      <a href="../Mongo/Commands/ConvertToCapped.html">ConvertToCapped</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Count" data-name="mongo::commands::count">
+      <a href="../Mongo/Commands/Count.html">Count</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Create" data-name="mongo::commands::create">
+      <a href="../Mongo/Commands/Create.html">Create</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/CreateIndexes" data-name="mongo::commands::createindexes">
+      <a href="../Mongo/Commands/CreateIndexes.html">CreateIndexes</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/CreateIndexes/Result" data-name="mongo::commands::createindexes::result">
+      <a href="../Mongo/Commands/CreateIndexes/Result.html">Result</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/CurrentOp" data-name="mongo::commands::currentop">
+      <a href="../Mongo/Commands/CurrentOp.html">CurrentOp</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/DataSize" data-name="mongo::commands::datasize">
+      <a href="../Mongo/Commands/DataSize.html">DataSize</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/DbHash" data-name="mongo::commands::dbhash">
+      <a href="../Mongo/Commands/DbHash.html">DbHash</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/DbStats" data-name="mongo::commands::dbstats">
+      <a href="../Mongo/Commands/DbStats.html">DbStats</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Delete" data-name="mongo::commands::delete">
+      <a href="../Mongo/Commands/Delete.html">Delete</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/Distinct" data-name="mongo::commands::distinct">
+      <a href="../Mongo/Commands/Distinct.html">Distinct</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Distinct/Result" data-name="mongo::commands::distinct::result">
+      <a href="../Mongo/Commands/Distinct/Result.html">Result</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Drop" data-name="mongo::commands::drop">
+      <a href="../Mongo/Commands/Drop.html">Drop</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/DropConnections" data-name="mongo::commands::dropconnections">
+      <a href="../Mongo/Commands/DropConnections.html">DropConnections</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/DropDatabase" data-name="mongo::commands::dropdatabase">
+      <a href="../Mongo/Commands/DropDatabase.html">DropDatabase</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/DropIndexes" data-name="mongo::commands::dropindexes">
+      <a href="../Mongo/Commands/DropIndexes.html">DropIndexes</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Explain" data-name="mongo::commands::explain">
+      <a href="../Mongo/Commands/Explain.html">Explain</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Find" data-name="mongo::commands::find">
+      <a href="../Mongo/Commands/Find.html">Find</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/FindAndModify" data-name="mongo::commands::findandmodify">
+      <a href="../Mongo/Commands/FindAndModify.html">FindAndModify</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Fsync" data-name="mongo::commands::fsync">
+      <a href="../Mongo/Commands/Fsync.html">Fsync</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/FsyncUnlock" data-name="mongo::commands::fsyncunlock">
+      <a href="../Mongo/Commands/FsyncUnlock.html">FsyncUnlock</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/FsyncUnlock/Result" data-name="mongo::commands::fsyncunlock::result">
+      <a href="../Mongo/Commands/FsyncUnlock/Result.html">Result</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/GetCmdLineOpts" data-name="mongo::commands::getcmdlineopts">
+      <a href="../Mongo/Commands/GetCmdLineOpts.html">GetCmdLineOpts</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/GetLog" data-name="mongo::commands::getlog">
+      <a href="../Mongo/Commands/GetLog.html">GetLog</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/GetMore" data-name="mongo::commands::getmore">
+      <a href="../Mongo/Commands/GetMore.html">GetMore</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/GetMore/Result" data-name="mongo::commands::getmore::result">
+      <a href="../Mongo/Commands/GetMore/Result.html">Result</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/GetMore/Result/Cursor" data-name="mongo::commands::getmore::result::cursor">
+      <a href="../Mongo/Commands/GetMore/Result/Cursor.html">Cursor</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/GetParameter" data-name="mongo::commands::getparameter">
+      <a href="../Mongo/Commands/GetParameter.html">GetParameter</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/GetParameter/Result" data-name="mongo::commands::getparameter::result">
+      <a href="../Mongo/Commands/GetParameter/Result.html">Result</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/HostInfo" data-name="mongo::commands::hostinfo">
+      <a href="../Mongo/Commands/HostInfo.html">HostInfo</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Insert" data-name="mongo::commands::insert">
+      <a href="../Mongo/Commands/Insert.html">Insert</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/IsMaster" data-name="mongo::commands::ismaster">
+      <a href="../Mongo/Commands/IsMaster.html">IsMaster</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/IsMaster/Result" data-name="mongo::commands::ismaster::result">
+      <a href="../Mongo/Commands/IsMaster/Result.html">Result</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/KillCursors" data-name="mongo::commands::killcursors">
+      <a href="../Mongo/Commands/KillCursors.html">KillCursors</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/KillCursors/Result" data-name="mongo::commands::killcursors::result">
+      <a href="../Mongo/Commands/KillCursors/Result.html">Result</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/KillOp" data-name="mongo::commands::killop">
+      <a href="../Mongo/Commands/KillOp.html">KillOp</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ListCollections" data-name="mongo::commands::listcollections">
+      <a href="../Mongo/Commands/ListCollections.html">ListCollections</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ListCommands" data-name="mongo::commands::listcommands">
+      <a href="../Mongo/Commands/ListCommands.html">ListCommands</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/ListDatabases" data-name="mongo::commands::listdatabases">
+      <a href="../Mongo/Commands/ListDatabases.html">ListDatabases</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/ListDatabases/Result" data-name="mongo::commands::listdatabases::result">
+      <a href="../Mongo/Commands/ListDatabases/Result.html">Result</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ListDatabases/Result/Database" data-name="mongo::commands::listdatabases::result::database">
+      <a href="../Mongo/Commands/ListDatabases/Result/Database.html">Database</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ListIndexes" data-name="mongo::commands::listindexes">
+      <a href="../Mongo/Commands/ListIndexes.html">ListIndexes</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/LogRotate" data-name="mongo::commands::logrotate">
+      <a href="../Mongo/Commands/LogRotate.html">LogRotate</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Ping" data-name="mongo::commands::ping">
+      <a href="../Mongo/Commands/Ping.html">Ping</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Profile" data-name="mongo::commands::profile">
+      <a href="../Mongo/Commands/Profile.html">Profile</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ReIndex" data-name="mongo::commands::reindex">
+      <a href="../Mongo/Commands/ReIndex.html">ReIndex</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/RenameCollection" data-name="mongo::commands::renamecollection">
+      <a href="../Mongo/Commands/RenameCollection.html">RenameCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ServerStatus" data-name="mongo::commands::serverstatus">
+      <a href="../Mongo/Commands/ServerStatus.html">ServerStatus</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/SetFeatureCompatibilityVersion" data-name="mongo::commands::setfeaturecompatibilityversion">
+      <a href="../Mongo/Commands/SetFeatureCompatibilityVersion.html">SetFeatureCompatibilityVersion</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/SetParameter" data-name="mongo::commands::setparameter">
+      <a href="../Mongo/Commands/SetParameter.html">SetParameter</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ShardConnPoolStats" data-name="mongo::commands::shardconnpoolstats">
+      <a href="../Mongo/Commands/ShardConnPoolStats.html">ShardConnPoolStats</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Shutdown" data-name="mongo::commands::shutdown">
+      <a href="../Mongo/Commands/Shutdown.html">Shutdown</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Top" data-name="mongo::commands::top">
+      <a href="../Mongo/Commands/Top.html">Top</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Update" data-name="mongo::commands::update">
+      <a href="../Mongo/Commands/Update.html">Update</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Validate" data-name="mongo::commands::validate">
+      <a href="../Mongo/Commands/Validate.html">Validate</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Cursor" data-name="mongo::cursor">
+      <a href="../Mongo/Cursor.html">Cursor</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Cursor/Wrapper" data-name="mongo::cursor::wrapper(t)">
+      <a href="../Mongo/Cursor/Wrapper.html">Wrapper</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Database" data-name="mongo::database">
+      <a href="../Mongo/Database.html">Database</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Error" data-name="mongo::error">
+      <a href="../Mongo/Error.html">Error</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Error/Command" data-name="mongo::error::command">
+      <a href="../Mongo/Error/Command.html">Command</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Error/CommandWrite" data-name="mongo::error::commandwrite">
+      <a href="../Mongo/Error/CommandWrite.html">CommandWrite</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Error/ServerSelection" data-name="mongo::error::serverselection">
+      <a href="../Mongo/Error/ServerSelection.html">ServerSelection</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/GridFS" data-name="mongo::gridfs">
+      <a href="../Mongo/GridFS.html">GridFS</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/GridFS/Bucket" data-name="mongo::gridfs::bucket">
+      <a href="../Mongo/GridFS/Bucket.html">Bucket</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/GridFS/File" data-name="mongo::gridfs::file(fileid)">
+      <a href="../Mongo/GridFS/File.html">File</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Options" data-name="mongo::options">
+      <a href="../Mongo/Options.html">Options</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/ReadConcern" data-name="mongo::readconcern">
+      <a href="../Mongo/ReadConcern.html">ReadConcern</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/ReadPreference" data-name="mongo::readpreference">
+      <a href="../Mongo/ReadPreference.html">ReadPreference</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/WriteConcern" data-name="mongo::writeconcern">
+      <a href="../Mongo/WriteConcern.html">WriteConcern</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Mongo::Collection
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Mongo/Collection.html">Mongo::Collection</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>A <code><a href="../Mongo/Collection.html">Collection</a></code> provides access to a MongoDB collection.</p>
+
+<pre><code>collection <span class="o">=</span> client[<span class="s">&quot;database_name&quot;</span>][<span class="s">&quot;collection_name&quot;</span>]</code></pre>
+
+
+
+
+
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type">Mongo::WithReadConcern</li>
+    
+      <li class="other-type">Mongo::WithReadPreference</li>
+    
+      <li class="other-type">Mongo::WithWriteConcern</li>
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#aggregate(pipeline:Array,*,allow_disk_use:Bool?=nil,batch_size:Int32?=nil,max_time_ms:Int64?=nil,bypass_document_validation:Bool?=nil,collation:Collation?=nil,hint:String%7CH?=nil,comment:String?=nil,read_concern:ReadConcern?=nil,write_concern:WriteConcern?=nil,read_preference:ReadPreference?=nil):Mongo::Cursor?forallH-instance-method" class="signature"><strong>#aggregate</strong>(pipeline : Array, *, allow_disk_use : Bool? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, comment : String? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>) : Mongo::Cursor? forall H</a>
+        
+          <div class="summary"><p>Runs an aggregation framework pipeline.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bulk(ordered:Bool=true)-instance-method" class="signature"><strong>#bulk</strong>(ordered : Bool = <span class="n">true</span>)</a>
+        
+          <div class="summary"><p>Create a <code><a href="../Mongo/Bulk.html">Mongo::Bulk</a></code> instance.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bulk_write(requests:Array(Bulk::WriteModel),*,ordered:Bool,bypass_document_validation:Bool?=nil):Bulk::WriteResult-instance-method" class="signature"><strong>#bulk_write</strong>(requests : Array(Bulk::WriteModel), *, ordered : Bool, bypass_document_validation : Bool? = <span class="n">nil</span>) : Bulk::WriteResult</a>
+        
+          <div class="summary"><p>Executes multiple write operations.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,**args)-instance-method" class="signature"><strong>#command</strong>(operation, write_concern : WriteConcern? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, **args)</a>
+        
+          <div class="summary"><p>Execute a command on the server targeting the collection.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#count_documents(filter=BSON.new,*,skip:Int32?=nil,limit:Int32?=nil,collation:Collation?=nil,hint:String%7CH?=nil,max_time_ms:Int64?=nil,read_preference:ReadPreference?=nil):Int32forallH-instance-method" class="signature"><strong>#count_documents</strong>(filter = <span class="t">BSON</span>.<span class="k">new</span>, *, skip : Int32? = <span class="n">nil</span>, limit : Int32? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>) : Int32 forall H</a>
+        
+          <div class="summary"><p>Count the number of documents in a collection that match the given filter.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#create_index(keys,*,options=NamedTuple.new,commit_quorum:Int32%7CString?=nil,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil):Commands::CreateIndexes::Result?-instance-method" class="signature"><strong>#create_index</strong>(keys, *, options = <span class="t">NamedTuple</span>.<span class="k">new</span>, commit_quorum : Int32 | String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>) : Commands::CreateIndexes::Result?</a>
+        
+          <div class="summary"><p>This is a convenience method for creating a single index.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#create_indexes(models:Array,*,commit_quorum:Int32%7CString?=nil,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil):Commands::CreateIndexes::Result?-instance-method" class="signature"><strong>#create_indexes</strong>(models : Array, *, commit_quorum : Int32 | String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>) : Commands::CreateIndexes::Result?</a>
+        
+          <div class="summary"><p>Creates multiple indexes in the collection.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#database:Mongo::Database-instance-method" class="signature"><strong>#database</strong> : Mongo::Database</a>
+        
+          <div class="summary"><p>The parent database.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#delete_many(filter,*,collation:Collation?=nil,hint:String%7CH?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil):Commands::Common::DeleteResult?forallH-instance-method" class="signature"><strong>#delete_many</strong>(filter, *, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>) : Commands::Common::DeleteResult? forall H</a>
+        
+          <div class="summary"><p>Deletes multiple documents.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#delete_one(filter,*,collation:Collation?=nil,hint:String%7CH?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil):Commands::Common::DeleteResult?forallH-instance-method" class="signature"><strong>#delete_one</strong>(filter, *, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>) : Commands::Common::DeleteResult? forall H</a>
+        
+          <div class="summary"><p>Deletes one document.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#distinct(key:String,*,filter=nil,read_concern:ReadConcern?=nil,collation:Collation?=nil,read_preference:ReadPreference?=nil):Array-instance-method" class="signature"><strong>#distinct</strong>(key : String, *, filter = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>) : Array</a>
+        
+          <div class="summary"><p>Finds the distinct values for a specified field across a single collection.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#drop_index(name:String,*,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil):Commands::Common::BaseResult?-instance-method" class="signature"><strong>#drop_index</strong>(name : String, *, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>) : Commands::Common::BaseResult?</a>
+        
+          <div class="summary"><p>Drops a single index from the collection by the index name.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#drop_indexes(*,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil):Commands::Common::BaseResult?-instance-method" class="signature"><strong>#drop_indexes</strong>(*, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>) : Commands::Common::BaseResult?</a>
+        
+          <div class="summary"><p>Drops all indexes in the collection.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#estimated_document_count(*,max_time_ms:Int64?=nil,read_preference:ReadPreference?=nil):Int32-instance-method" class="signature"><strong>#estimated_document_count</strong>(*, max_time_ms : Int64? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>) : Int32</a>
+        
+          <div class="summary"><p>Gets an estimate of the count of documents in a collection using collection metadata.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#find(filter=BSON.new,*,sort=nil,projection=nil,hint:String%7CH?=nil,skip:Int32?=nil,limit:Int32?=nil,batch_size:Int32?=nil,single_batch:Bool?=nil,comment:String?=nil,max_time_ms:Int64?=nil,read_concern:ReadConcern?=nil,max=nil,min=nil,return_key:Bool?=nil,show_record_id:Bool?=nil,tailable:Bool?=nil,oplog_replay:Bool?=nil,no_cursor_timeout:Bool?=nil,await_data:Bool?=nil,allow_partial_results:Bool?=nil,allow_disk_use:Bool?=nil,collation:Collation?=nil,read_preference:ReadPreference?=nil):Mongo::CursorforallH-instance-method" class="signature"><strong>#find</strong>(filter = <span class="t">BSON</span>.<span class="k">new</span>, *, sort = <span class="n">nil</span>, projection = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, skip : Int32? = <span class="n">nil</span>, limit : Int32? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, single_batch : Bool? = <span class="n">nil</span>, comment : String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, max = <span class="n">nil</span>, min = <span class="n">nil</span>, return_key : Bool? = <span class="n">nil</span>, show_record_id : Bool? = <span class="n">nil</span>, tailable : Bool? = <span class="n">nil</span>, oplog_replay : Bool? = <span class="n">nil</span>, no_cursor_timeout : Bool? = <span class="n">nil</span>, await_data : Bool? = <span class="n">nil</span>, allow_partial_results : Bool? = <span class="n">nil</span>, allow_disk_use : Bool? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>) : Mongo::Cursor forall H</a>
+        
+          <div class="summary"><p>Finds the documents matching the model.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#find_one(filter=BSON.new,*,sort=nil,projection=nil,hint:String%7CH?=nil,skip:Int32?=nil,comment:String?=nil,max_time_ms:Int64?=nil,read_concern:ReadConcern?=nil,max=nil,min=nil,return_key:Bool?=nil,show_record_id:Bool?=nil,oplog_replay:Bool?=nil,no_cursor_timeout:Bool?=nil,allow_partial_results:Bool?=nil,collation:Collation?=nil,read_preference:ReadPreference?=nil):BSON?forallH-instance-method" class="signature"><strong>#find_one</strong>(filter = <span class="t">BSON</span>.<span class="k">new</span>, *, sort = <span class="n">nil</span>, projection = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, skip : Int32? = <span class="n">nil</span>, comment : String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, max = <span class="n">nil</span>, min = <span class="n">nil</span>, return_key : Bool? = <span class="n">nil</span>, show_record_id : Bool? = <span class="n">nil</span>, oplog_replay : Bool? = <span class="n">nil</span>, no_cursor_timeout : Bool? = <span class="n">nil</span>, allow_partial_results : Bool? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>) : BSON? forall H</a>
+        
+          <div class="summary"><p>Finds the document matching the model.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#find_one_and_delete(filter,*,sort=nil,fields=nil,bypass_document_validation:Bool?=nil,write_concern:WriteConcern?=nil,collation:Collation?=nil,hint:String%7CH?=nil,max_time_ms:Int64?=nil):BSON?forallH-instance-method" class="signature"><strong>#find_one_and_delete</strong>(filter, *, sort = <span class="n">nil</span>, fields = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>) : BSON? forall H</a>
+        
+          <div class="summary"><p>Finds a single document and deletes it, returning the original.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#find_one_and_replace(filter,replacement,*,sort=nil,new:Bool?=nil,fields=nil,upsert:Bool?=nil,bypass_document_validation:Bool?=nil,write_concern:WriteConcern?=nil,collation:Collation?=nil,array_filters=nil,hint:String%7CH?=nil,max_time_ms:Int64?=nil):BSON?forallH-instance-method" class="signature"><strong>#find_one_and_replace</strong>(filter, replacement, *, sort = <span class="n">nil</span>, new : Bool? = <span class="n">nil</span>, fields = <span class="n">nil</span>, upsert : Bool? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, array_filters = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>) : BSON? forall H</a>
+        
+          <div class="summary"><p>Finds a single document and replaces it, returning either the original or the replaced document.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#find_one_and_update(filter,update,*,sort=nil,new:Bool?=nil,fields=nil,upsert:Bool?=nil,bypass_document_validation:Bool?=nil,write_concern:WriteConcern?=nil,collation:Collation?=nil,array_filters=nil,hint:String%7CH?=nil,max_time_ms:Int64?=nil):BSON?forallH-instance-method" class="signature"><strong>#find_one_and_update</strong>(filter, update, *, sort = <span class="n">nil</span>, new : Bool? = <span class="n">nil</span>, fields = <span class="n">nil</span>, upsert : Bool? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, array_filters = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>) : BSON? forall H</a>
+        
+          <div class="summary"><p>Finds a single document and updates it, returning either the original or the updated document.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#insert_many(documents:Array,*,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::InsertResult?-instance-method" class="signature"><strong>#insert_many</strong>(documents : Array, *, ordered : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>) : Commands::Common::InsertResult?</a>
+        
+          <div class="summary"><p>Inserts the provided document.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#insert_one(document,*,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::InsertResult?-instance-method" class="signature"><strong>#insert_one</strong>(document, *, write_concern : WriteConcern? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>) : Commands::Common::InsertResult?</a>
+        
+          <div class="summary"><p>Inserts the provided document.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#list_indexes:Mongo::Cursor-instance-method" class="signature"><strong>#list_indexes</strong> : Mongo::Cursor</a>
+        
+          <div class="summary"><p>Gets index information for all indexes in the collection.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#name:CollectionKey-instance-method" class="signature"><strong>#name</strong> : CollectionKey</a>
+        
+          <div class="summary"><p>The collection name.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_concern:ReadConcern?-instance-method" class="signature"><strong>#read_concern</strong> : ReadConcern?</a>
+        
+          <div class="summary"><p>Read concern accessor.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_concern=(read_concern:ReadConcern?)-instance-method" class="signature"><strong>#read_concern=</strong>(read_concern : ReadConcern?)</a>
+        
+          <div class="summary"><p>Read concern accessor.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_preference:ReadPreference?-instance-method" class="signature"><strong>#read_preference</strong> : ReadPreference?</a>
+        
+          <div class="summary"><p>ReadPreference accessor.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_preference=(read_preference:ReadPreference?)-instance-method" class="signature"><strong>#read_preference=</strong>(read_preference : ReadPreference?)</a>
+        
+          <div class="summary"><p>ReadPreference accessor.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#replace_one(filter,replacement,*,upsert:Bool=false,collation:Collation?=nil,hint:String%7CH?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::UpdateResult?forallH-instance-method" class="signature"><strong>#replace_one</strong>(filter, replacement, *, upsert : Bool = <span class="n">false</span>, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>) : Commands::Common::UpdateResult? forall H</a>
+        
+          <div class="summary"><p>Replaces a single document.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#stats(*,scale:Int32?=nil):BSON?-instance-method" class="signature"><strong>#stats</strong>(*, scale : Int32? = <span class="n">nil</span>) : BSON?</a>
+        
+          <div class="summary"><p>Returns a variety of storage statistics for the collection.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#update_many(filter,update,*,upsert:Bool=false,array_filters=nil,collation:Collation?=nil,hint:String%7CH?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::UpdateResult?forallH-instance-method" class="signature"><strong>#update_many</strong>(filter, update, *, upsert : Bool = <span class="n">false</span>, array_filters = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>) : Commands::Common::UpdateResult? forall H</a>
+        
+          <div class="summary"><p>Updates multiple documents.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#update_one(filter,update,*,upsert:Bool=false,array_filters=nil,collation:Collation?=nil,hint:String%7CH?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::UpdateResult?forallH-instance-method" class="signature"><strong>#update_one</strong>(filter, update, *, upsert : Bool = <span class="n">false</span>, array_filters = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>) : Commands::Common::UpdateResult? forall H</a>
+        
+          <div class="summary"><p>Updates one document.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#watch(pipeline:Array=[]ofBSON,*,full_document:String?=nil,start_at_operation_time:Time?=nil,resume_after:BSON?=nil,start_after:BSON?=nil,max_await_time_ms:Int64?=nil,batch_size:Int32?=nil,collation:Collation?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil):Mongo::ChangeStream::Cursor-instance-method" class="signature"><strong>#watch</strong>(pipeline : Array = <span class="o">[]</span> <span class="k">of</span> <span class="t">BSON</span>, *, full_document : String? = <span class="n">nil</span>, start_at_operation_time : Time? = <span class="n">nil</span>, resume_after : BSON? = <span class="n">nil</span>, start_after : BSON? = <span class="n">nil</span>, max_await_time_ms : Int64? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>) : Mongo::ChangeStream::Cursor</a>
+        
+          <div class="summary"><p>Returns a <code><a href="../Mongo/ChangeStream/Cursor.html">ChangeStream::Cursor</a></code> watching a specific collection.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#write_concern:WriteConcern?-instance-method" class="signature"><strong>#write_concern</strong> : WriteConcern?</a>
+        
+          <div class="summary"><p>Write concern accessor.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#write_concern=(write_concern:WriteConcern?)-instance-method" class="signature"><strong>#write_concern=</strong>(write_concern : WriteConcern?)</a>
+        
+          <div class="summary"><p>Write concern accessor.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="aggregate(pipeline:Array,*,allow_disk_use:Bool?=nil,batch_size:Int32?=nil,max_time_ms:Int64?=nil,bypass_document_validation:Bool?=nil,collation:Collation?=nil,hint:String|H?=nil,comment:String?=nil,read_concern:ReadConcern?=nil,write_concern:WriteConcern?=nil,read_preference:ReadPreference?=nil):Mongo::Cursor?forallH-instance-method">
+      <div class="signature">
+        
+        def <strong>aggregate</strong>(pipeline : Array, *, allow_disk_use : Bool? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, comment : String? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>) : <a href="../Mongo/Cursor.html">Mongo::Cursor</a>? forall H
+
+        <a class="method-permalink" href="#aggregate(pipeline:Array,*,allow_disk_use:Bool?=nil,batch_size:Int32?=nil,max_time_ms:Int64?=nil,bypass_document_validation:Bool?=nil,collation:Collation?=nil,hint:String%7CH?=nil,comment:String?=nil,read_concern:ReadConcern?=nil,write_concern:WriteConcern?=nil,read_preference:ReadPreference?=nil):Mongo::Cursor?forallH-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Runs an aggregation framework pipeline.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/aggregate/" target="_blank">for more details, please check the official MongoDB documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bulk(ordered:Bool=true)-instance-method">
+      <div class="signature">
+        
+        def <strong>bulk</strong>(ordered : Bool = <span class="n">true</span>)
+
+        <a class="method-permalink" href="#bulk(ordered:Bool=true)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Create a <code><a href="../Mongo/Bulk.html">Mongo::Bulk</a></code> instance.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bulk_write(requests:Array(Bulk::WriteModel),*,ordered:Bool,bypass_document_validation:Bool?=nil):Bulk::WriteResult-instance-method">
+      <div class="signature">
+        
+        def <strong>bulk_write</strong>(requests : Array(<a href="../Mongo/Bulk/WriteModel.html">Bulk::WriteModel</a>), *, ordered : Bool, bypass_document_validation : Bool? = <span class="n">nil</span>) : <a href="../Mongo/Bulk/WriteResult.html">Bulk::WriteResult</a>
+
+        <a class="method-permalink" href="#bulk_write(requests:Array(Bulk::WriteModel),*,ordered:Bool,bypass_document_validation:Bool?=nil):Bulk::WriteResult-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Executes multiple write operations.</p>
+
+<p>An error will be raised if the <em>requests</em> parameter is empty.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://github.com/mongodb/specifications/blob/master/source/driver-bulk-update.rst" target="_blank">for more details, please check the official specifications document</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,**args)-instance-method">
+      <div class="signature">
+        
+        def <strong>command</strong>(operation, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, **args)
+
+        <a class="method-permalink" href="#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,**args)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a command on the server targeting the collection.</p>
+
+<p>Will automatically set the <em>collection</em> and <em>database</em> arguments.</p>
+
+<p>See: <code><a href="../Mongo/Client.html#command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,ignore_errors=false,**args)-instance-method">Mongo::Client.command</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="count_documents(filter=BSON.new,*,skip:Int32?=nil,limit:Int32?=nil,collation:Collation?=nil,hint:String|H?=nil,max_time_ms:Int64?=nil,read_preference:ReadPreference?=nil):Int32forallH-instance-method">
+      <div class="signature">
+        
+        def <strong>count_documents</strong>(filter = <span class="t">BSON</span>.<span class="k">new</span>, *, skip : Int32? = <span class="n">nil</span>, limit : Int32? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>) : Int32 forall H
+
+        <a class="method-permalink" href="#count_documents(filter=BSON.new,*,skip:Int32?=nil,limit:Int32?=nil,collation:Collation?=nil,hint:String%7CH?=nil,max_time_ms:Int64?=nil,read_preference:ReadPreference?=nil):Int32forallH-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Count the number of documents in a collection that match the given filter.
+Note that an empty filter will force a scan of the entire collection.
+For a fast count of the total documents in a collection see <code><a href="../Mongo/Collection.html#estimated_document_count(*,max_time_ms:Int64?=nil,read_preference:ReadPreference?=nil):Int32-instance-method">#estimated_document_count</a></code>.</p>
+
+<p>See: <a href="https://github.com/mongodb/specifications/blob/master/source/crud/crud.rst#count-api-details" target="_blank">the specification document</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="create_index(keys,*,options=NamedTuple.new,commit_quorum:Int32|String?=nil,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil):Commands::CreateIndexes::Result?-instance-method">
+      <div class="signature">
+        
+        def <strong>create_index</strong>(keys, *, options = <span class="t">NamedTuple</span>.<span class="k">new</span>, commit_quorum : Int32 | String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/CreateIndexes/Result.html">Commands::CreateIndexes::Result</a>?
+
+        <a class="method-permalink" href="#create_index(keys,*,options=NamedTuple.new,commit_quorum:Int32%7CString?=nil,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil):Commands::CreateIndexes::Result?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>This is a convenience method for creating a single index.</p>
+
+<p>See: <code><a href="../Mongo/Collection.html#create_indexes(models:Array,*,commit_quorum:Int32%7CString?=nil,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil):Commands::CreateIndexes::Result?-instance-method">#create_indexes</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="create_indexes(models:Array,*,commit_quorum:Int32|String?=nil,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil):Commands::CreateIndexes::Result?-instance-method">
+      <div class="signature">
+        
+        def <strong>create_indexes</strong>(models : Array, *, commit_quorum : Int32 | String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/CreateIndexes/Result.html">Commands::CreateIndexes::Result</a>?
+
+        <a class="method-permalink" href="#create_indexes(models:Array,*,commit_quorum:Int32%7CString?=nil,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil):Commands::CreateIndexes::Result?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates multiple indexes in the collection.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/createIndexes/" target="_blank">for more details, please check the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="database:Mongo::Database-instance-method">
+      <div class="signature">
+        
+        def <strong>database</strong> : <a href="../Mongo/Database.html">Mongo::Database</a>
+
+        <a class="method-permalink" href="#database:Mongo::Database-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>The parent database.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="delete_many(filter,*,collation:Collation?=nil,hint:String|H?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil):Commands::Common::DeleteResult?forallH-instance-method">
+      <div class="signature">
+        
+        def <strong>delete_many</strong>(filter, *, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/DeleteResult.html">Commands::Common::DeleteResult</a>? forall H
+
+        <a class="method-permalink" href="#delete_many(filter,*,collation:Collation?=nil,hint:String%7CH?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil):Commands::Common::DeleteResult?forallH-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Deletes multiple documents.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/delete/" target="_blank">for more details, please check the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="delete_one(filter,*,collation:Collation?=nil,hint:String|H?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil):Commands::Common::DeleteResult?forallH-instance-method">
+      <div class="signature">
+        
+        def <strong>delete_one</strong>(filter, *, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/DeleteResult.html">Commands::Common::DeleteResult</a>? forall H
+
+        <a class="method-permalink" href="#delete_one(filter,*,collation:Collation?=nil,hint:String%7CH?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil):Commands::Common::DeleteResult?forallH-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Deletes one document.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/delete/" target="_blank">for more details, please check the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="distinct(key:String,*,filter=nil,read_concern:ReadConcern?=nil,collation:Collation?=nil,read_preference:ReadPreference?=nil):Array-instance-method">
+      <div class="signature">
+        
+        def <strong>distinct</strong>(key : String, *, filter = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>) : Array
+
+        <a class="method-permalink" href="#distinct(key:String,*,filter=nil,read_concern:ReadConcern?=nil,collation:Collation?=nil,read_preference:ReadPreference?=nil):Array-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Finds the distinct values for a specified field across a single collection.</p>
+
+<p><span class="flag purple">NOTE</span>  the results are backed by the "values" array in the distinct command's result
+document. This differs from aggregate and find, where results are backed by a cursor.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/distinct/" target="_blank">for more details, please check the official MongoDB documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="drop_index(name:String,*,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil):Commands::Common::BaseResult?-instance-method">
+      <div class="signature">
+        
+        def <strong>drop_index</strong>(name : String, *, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/BaseResult.html">Commands::Common::BaseResult</a>?
+
+        <a class="method-permalink" href="#drop_index(name:String,*,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil):Commands::Common::BaseResult?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Drops a single index from the collection by the index name.</p>
+
+<p>See: <code><a href="../Mongo/Collection.html#drop_indexes(*,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil):Commands::Common::BaseResult?-instance-method">#drop_indexes</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="drop_indexes(*,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil):Commands::Common::BaseResult?-instance-method">
+      <div class="signature">
+        
+        def <strong>drop_indexes</strong>(*, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/BaseResult.html">Commands::Common::BaseResult</a>?
+
+        <a class="method-permalink" href="#drop_indexes(*,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil):Commands::Common::BaseResult?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Drops all indexes in the collection.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/dropIndexes/" target="_blank">for more details, please check the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="estimated_document_count(*,max_time_ms:Int64?=nil,read_preference:ReadPreference?=nil):Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>estimated_document_count</strong>(*, max_time_ms : Int64? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>) : Int32
+
+        <a class="method-permalink" href="#estimated_document_count(*,max_time_ms:Int64?=nil,read_preference:ReadPreference?=nil):Int32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Gets an estimate of the count of documents in a collection using collection metadata.</p>
+
+<p>See: <a href="https://github.com/mongodb/specifications/blob/master/source/crud/crud.rst#count-api-details" target="_blank">the specification document</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="find(filter=BSON.new,*,sort=nil,projection=nil,hint:String|H?=nil,skip:Int32?=nil,limit:Int32?=nil,batch_size:Int32?=nil,single_batch:Bool?=nil,comment:String?=nil,max_time_ms:Int64?=nil,read_concern:ReadConcern?=nil,max=nil,min=nil,return_key:Bool?=nil,show_record_id:Bool?=nil,tailable:Bool?=nil,oplog_replay:Bool?=nil,no_cursor_timeout:Bool?=nil,await_data:Bool?=nil,allow_partial_results:Bool?=nil,allow_disk_use:Bool?=nil,collation:Collation?=nil,read_preference:ReadPreference?=nil):Mongo::CursorforallH-instance-method">
+      <div class="signature">
+        
+        def <strong>find</strong>(filter = <span class="t">BSON</span>.<span class="k">new</span>, *, sort = <span class="n">nil</span>, projection = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, skip : Int32? = <span class="n">nil</span>, limit : Int32? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, single_batch : Bool? = <span class="n">nil</span>, comment : String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, max = <span class="n">nil</span>, min = <span class="n">nil</span>, return_key : Bool? = <span class="n">nil</span>, show_record_id : Bool? = <span class="n">nil</span>, tailable : Bool? = <span class="n">nil</span>, oplog_replay : Bool? = <span class="n">nil</span>, no_cursor_timeout : Bool? = <span class="n">nil</span>, await_data : Bool? = <span class="n">nil</span>, allow_partial_results : Bool? = <span class="n">nil</span>, allow_disk_use : Bool? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>) : <a href="../Mongo/Cursor.html">Mongo::Cursor</a> forall H
+
+        <a class="method-permalink" href="#find(filter=BSON.new,*,sort=nil,projection=nil,hint:String%7CH?=nil,skip:Int32?=nil,limit:Int32?=nil,batch_size:Int32?=nil,single_batch:Bool?=nil,comment:String?=nil,max_time_ms:Int64?=nil,read_concern:ReadConcern?=nil,max=nil,min=nil,return_key:Bool?=nil,show_record_id:Bool?=nil,tailable:Bool?=nil,oplog_replay:Bool?=nil,no_cursor_timeout:Bool?=nil,await_data:Bool?=nil,allow_partial_results:Bool?=nil,allow_disk_use:Bool?=nil,collation:Collation?=nil,read_preference:ReadPreference?=nil):Mongo::CursorforallH-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Finds the documents matching the model.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/find/" target="_blank">for more details, please check the official MongoDB documentation</a>.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/core/read-operations-introduction/" target="_blank">for an overview of read operations, check the official manual</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="find_one(filter=BSON.new,*,sort=nil,projection=nil,hint:String|H?=nil,skip:Int32?=nil,comment:String?=nil,max_time_ms:Int64?=nil,read_concern:ReadConcern?=nil,max=nil,min=nil,return_key:Bool?=nil,show_record_id:Bool?=nil,oplog_replay:Bool?=nil,no_cursor_timeout:Bool?=nil,allow_partial_results:Bool?=nil,collation:Collation?=nil,read_preference:ReadPreference?=nil):BSON?forallH-instance-method">
+      <div class="signature">
+        
+        def <strong>find_one</strong>(filter = <span class="t">BSON</span>.<span class="k">new</span>, *, sort = <span class="n">nil</span>, projection = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, skip : Int32? = <span class="n">nil</span>, comment : String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, max = <span class="n">nil</span>, min = <span class="n">nil</span>, return_key : Bool? = <span class="n">nil</span>, show_record_id : Bool? = <span class="n">nil</span>, oplog_replay : Bool? = <span class="n">nil</span>, no_cursor_timeout : Bool? = <span class="n">nil</span>, allow_partial_results : Bool? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>) : BSON? forall H
+
+        <a class="method-permalink" href="#find_one(filter=BSON.new,*,sort=nil,projection=nil,hint:String%7CH?=nil,skip:Int32?=nil,comment:String?=nil,max_time_ms:Int64?=nil,read_concern:ReadConcern?=nil,max=nil,min=nil,return_key:Bool?=nil,show_record_id:Bool?=nil,oplog_replay:Bool?=nil,no_cursor_timeout:Bool?=nil,allow_partial_results:Bool?=nil,collation:Collation?=nil,read_preference:ReadPreference?=nil):BSON?forallH-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Finds the document matching the model.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/find/" target="_blank">for more details, please check the official MongoDB documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="find_one_and_delete(filter,*,sort=nil,fields=nil,bypass_document_validation:Bool?=nil,write_concern:WriteConcern?=nil,collation:Collation?=nil,hint:String|H?=nil,max_time_ms:Int64?=nil):BSON?forallH-instance-method">
+      <div class="signature">
+        
+        def <strong>find_one_and_delete</strong>(filter, *, sort = <span class="n">nil</span>, fields = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>) : BSON? forall H
+
+        <a class="method-permalink" href="#find_one_and_delete(filter,*,sort=nil,fields=nil,bypass_document_validation:Bool?=nil,write_concern:WriteConcern?=nil,collation:Collation?=nil,hint:String%7CH?=nil,max_time_ms:Int64?=nil):BSON?forallH-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Finds a single document and deletes it, returning the original. The document to return may be nil.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/findAndModify/" target="_blank">for more details, please check the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="find_one_and_replace(filter,replacement,*,sort=nil,new:Bool?=nil,fields=nil,upsert:Bool?=nil,bypass_document_validation:Bool?=nil,write_concern:WriteConcern?=nil,collation:Collation?=nil,array_filters=nil,hint:String|H?=nil,max_time_ms:Int64?=nil):BSON?forallH-instance-method">
+      <div class="signature">
+        
+        def <strong>find_one_and_replace</strong>(filter, replacement, *, sort = <span class="n">nil</span>, new : Bool? = <span class="n">nil</span>, fields = <span class="n">nil</span>, upsert : Bool? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, array_filters = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>) : BSON? forall H
+
+        <a class="method-permalink" href="#find_one_and_replace(filter,replacement,*,sort=nil,new:Bool?=nil,fields=nil,upsert:Bool?=nil,bypass_document_validation:Bool?=nil,write_concern:WriteConcern?=nil,collation:Collation?=nil,array_filters=nil,hint:String%7CH?=nil,max_time_ms:Int64?=nil):BSON?forallH-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Finds a single document and replaces it, returning either the original or the replaced
+document. The document to return may be nil.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/findAndModify/" target="_blank">for more details, please check the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="find_one_and_update(filter,update,*,sort=nil,new:Bool?=nil,fields=nil,upsert:Bool?=nil,bypass_document_validation:Bool?=nil,write_concern:WriteConcern?=nil,collation:Collation?=nil,array_filters=nil,hint:String|H?=nil,max_time_ms:Int64?=nil):BSON?forallH-instance-method">
+      <div class="signature">
+        
+        def <strong>find_one_and_update</strong>(filter, update, *, sort = <span class="n">nil</span>, new : Bool? = <span class="n">nil</span>, fields = <span class="n">nil</span>, upsert : Bool? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, array_filters = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>) : BSON? forall H
+
+        <a class="method-permalink" href="#find_one_and_update(filter,update,*,sort=nil,new:Bool?=nil,fields=nil,upsert:Bool?=nil,bypass_document_validation:Bool?=nil,write_concern:WriteConcern?=nil,collation:Collation?=nil,array_filters=nil,hint:String%7CH?=nil,max_time_ms:Int64?=nil):BSON?forallH-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Finds a single document and updates it, returning either the original or the updated
+document. The document to return may be nil.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/findAndModify/" target="_blank">for more details, please check the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="insert_many(documents:Array,*,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::InsertResult?-instance-method">
+      <div class="signature">
+        
+        def <strong>insert_many</strong>(documents : Array, *, ordered : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/InsertResult.html">Commands::Common::InsertResult</a>?
+
+        <a class="method-permalink" href="#insert_many(documents:Array,*,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::InsertResult?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Inserts the provided document. If any documents are missing an identifier, they will be generated.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/insert/" target="_blank">for more details, please check the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="insert_one(document,*,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::InsertResult?-instance-method">
+      <div class="signature">
+        
+        def <strong>insert_one</strong>(document, *, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/InsertResult.html">Commands::Common::InsertResult</a>?
+
+        <a class="method-permalink" href="#insert_one(document,*,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::InsertResult?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Inserts the provided document. If the document is missing an identifier, it will be generated.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/insert/" target="_blank">for more details, please check the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="list_indexes:Mongo::Cursor-instance-method">
+      <div class="signature">
+        
+        def <strong>list_indexes</strong> : <a href="../Mongo/Cursor.html">Mongo::Cursor</a>
+
+        <a class="method-permalink" href="#list_indexes:Mongo::Cursor-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Gets index information for all indexes in the collection.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/listIndexes/" target="_blank">for more details, please check the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="name:CollectionKey-instance-method">
+      <div class="signature">
+        
+        def <strong>name</strong> : <a href="../Mongo/Collection/CollectionKey.html">CollectionKey</a>
+
+        <a class="method-permalink" href="#name:CollectionKey-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>The collection name.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_concern:ReadConcern?-instance-method">
+      <div class="signature">
+        
+        def <strong>read_concern</strong> : <a href="../Mongo/ReadConcern.html">ReadConcern</a>?
+
+        <a class="method-permalink" href="#read_concern:ReadConcern?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Read concern accessor.</p>
+
+<p>See: <a href="https://docs.mongodb.com/manual/reference/read-concern/index.html" target="_blank">the official documentation</a></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_concern=(read_concern:ReadConcern?)-instance-method">
+      <div class="signature">
+        
+        def <strong>read_concern=</strong>(read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>?)
+
+        <a class="method-permalink" href="#read_concern=(read_concern:ReadConcern?)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Read concern accessor.</p>
+
+<p>See: <a href="https://docs.mongodb.com/manual/reference/read-concern/index.html" target="_blank">the official documentation</a></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_preference:ReadPreference?-instance-method">
+      <div class="signature">
+        
+        def <strong>read_preference</strong> : <a href="../Mongo/ReadPreference.html">ReadPreference</a>?
+
+        <a class="method-permalink" href="#read_preference:ReadPreference?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>ReadPreference accessor.</p>
+
+<p>See: <a href="https://docs.mongodb.com/manual/core/read-preference/index.html" target="_blank">the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_preference=(read_preference:ReadPreference?)-instance-method">
+      <div class="signature">
+        
+        def <strong>read_preference=</strong>(read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>?)
+
+        <a class="method-permalink" href="#read_preference=(read_preference:ReadPreference?)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>ReadPreference accessor.</p>
+
+<p>See: <a href="https://docs.mongodb.com/manual/core/read-preference/index.html" target="_blank">the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="replace_one(filter,replacement,*,upsert:Bool=false,collation:Collation?=nil,hint:String|H?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::UpdateResult?forallH-instance-method">
+      <div class="signature">
+        
+        def <strong>replace_one</strong>(filter, replacement, *, upsert : Bool = <span class="n">false</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/UpdateResult.html">Commands::Common::UpdateResult</a>? forall H
+
+        <a class="method-permalink" href="#replace_one(filter,replacement,*,upsert:Bool=false,collation:Collation?=nil,hint:String%7CH?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::UpdateResult?forallH-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Replaces a single document.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/update/" target="_blank">for more details, please check the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="stats(*,scale:Int32?=nil):BSON?-instance-method">
+      <div class="signature">
+        
+        def <strong>stats</strong>(*, scale : Int32? = <span class="n">nil</span>) : BSON?
+
+        <a class="method-permalink" href="#stats(*,scale:Int32?=nil):BSON?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a variety of storage statistics for the collection.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/collStats/" target="_blank">for more details, please check the official MongoDB documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="update_many(filter,update,*,upsert:Bool=false,array_filters=nil,collation:Collation?=nil,hint:String|H?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::UpdateResult?forallH-instance-method">
+      <div class="signature">
+        
+        def <strong>update_many</strong>(filter, update, *, upsert : Bool = <span class="n">false</span>, array_filters = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/UpdateResult.html">Commands::Common::UpdateResult</a>? forall H
+
+        <a class="method-permalink" href="#update_many(filter,update,*,upsert:Bool=false,array_filters=nil,collation:Collation?=nil,hint:String%7CH?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::UpdateResult?forallH-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Updates multiple documents.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/update/" target="_blank">for more details, please check the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="update_one(filter,update,*,upsert:Bool=false,array_filters=nil,collation:Collation?=nil,hint:String|H?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::UpdateResult?forallH-instance-method">
+      <div class="signature">
+        
+        def <strong>update_one</strong>(filter, update, *, upsert : Bool = <span class="n">false</span>, array_filters = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/UpdateResult.html">Commands::Common::UpdateResult</a>? forall H
+
+        <a class="method-permalink" href="#update_one(filter,update,*,upsert:Bool=false,array_filters=nil,collation:Collation?=nil,hint:String%7CH?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil):Commands::Common::UpdateResult?forallH-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Updates one document.</p>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/update/" target="_blank">for more details, please check the official documentation</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="watch(pipeline:Array=[]ofBSON,*,full_document:String?=nil,start_at_operation_time:Time?=nil,resume_after:BSON?=nil,start_after:BSON?=nil,max_await_time_ms:Int64?=nil,batch_size:Int32?=nil,collation:Collation?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil):Mongo::ChangeStream::Cursor-instance-method">
+      <div class="signature">
+        
+        def <strong>watch</strong>(pipeline : Array = <span class="o">[]</span> <span class="k">of</span> <span class="t">BSON</span>, *, full_document : String? = <span class="n">nil</span>, start_at_operation_time : Time? = <span class="n">nil</span>, resume_after : BSON? = <span class="n">nil</span>, start_after : BSON? = <span class="n">nil</span>, max_await_time_ms : Int64? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>) : <a href="../Mongo/ChangeStream/Cursor.html">Mongo::ChangeStream::Cursor</a>
+
+        <a class="method-permalink" href="#watch(pipeline:Array=[]ofBSON,*,full_document:String?=nil,start_at_operation_time:Time?=nil,resume_after:BSON?=nil,start_after:BSON?=nil,max_await_time_ms:Int64?=nil,batch_size:Int32?=nil,collation:Collation?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil):Mongo::ChangeStream::Cursor-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a <code><a href="../Mongo/ChangeStream/Cursor.html">ChangeStream::Cursor</a></code> watching a specific collection.</p>
+
+<pre><code>client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+collection <span class="o">=</span> client[<span class="s">&quot;db&quot;</span>][<span class="s">&quot;coll&quot;</span>]
+
+spawn {
+  cursor <span class="o">=</span> collection.watch(
+    [
+      {<span class="s">&quot;$match&quot;</span>: {<span class="s">&quot;operationType&quot;</span>: <span class="s">&quot;insert&quot;</span>}},
+    ],
+    max_await_time_ms: <span class="n">10000</span>
+  )
+  <span class="c"># cursor.of(BSON) converts to the Mongo::ChangeStream::Document(BSON) type.</span>
+  cursor.<span class="k">of</span>(<span class="t">BSON</span>).each { <span class="o">|</span>doc<span class="o">|</span>
+    puts doc.to_bson.to_json
+  }
+}
+
+<span class="n">100</span>.times <span class="k">do</span> <span class="o">|</span>i<span class="o">|</span>
+  collection.insert_one({count: i})
+<span class="k">end</span>
+
+sleep</code></pre>
+
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/changeStreams/index.html" target="_blank">for more details, please check the official manual</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="write_concern:WriteConcern?-instance-method">
+      <div class="signature">
+        
+        def <strong>write_concern</strong> : <a href="../Mongo/WriteConcern.html">WriteConcern</a>?
+
+        <a class="method-permalink" href="#write_concern:WriteConcern?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Write concern accessor.</p>
+
+<p>See: <a href="https://docs.mongodb.com/manual/reference/write-concern/index.html" target="_blank">the official documentation</a></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="write_concern=(write_concern:WriteConcern?)-instance-method">
+      <div class="signature">
+        
+        def <strong>write_concern=</strong>(write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>?)
+
+        <a class="method-permalink" href="#write_concern=(write_concern:WriteConcern?)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Write concern accessor.</p>
+
+<p>See: <a href="https://docs.mongodb.com/manual/reference/write-concern/index.html" target="_blank">the official documentation</a></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

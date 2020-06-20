@@ -1,5 +1,6 @@
 require "./scram"
 
+# :nodoc:
 module Mongo::Auth
   enum Mechanism
     ScramSha1

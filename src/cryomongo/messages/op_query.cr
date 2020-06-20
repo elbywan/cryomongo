@@ -27,7 +27,7 @@ struct Mongo::Messages::OpQuery < Mongo::Messages::Part
     AwaitData
     # Stream the data down full blast in multiple “more” packages, on the assumption that the client will fully read all data queried.
     # Faster when you are pulling a lot of data and know you want to pull it all down.
-    # Note: the client is not allowed to not read all the data unless it closes the connection.
+    # NOTE: the client is not allowed to not read all the data unless it closes the connection.
     Exhaust
     # Get partial results from a mongos if some shards are down. (instead of throwing an error)
     Partial

@@ -1,9 +1,13 @@
 require "bson"
 require "../commands"
 
+# Returns a document that contains information on in-progress operations for the mongod instance.
+#
+# NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/currentOp/).
 module Mongo::Commands::CurrentOp
   extend self
 
+  # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
   def command(options)
     Commands.make({
       currentOp: 1,
@@ -11,7 +15,8 @@ module Mongo::Commands::CurrentOp
     }, options)
   end
 
-  def result(bson)
+  # Transforms the server result.
+  def result(bson : BSON)
     bson
   end
 end

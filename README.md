@@ -34,11 +34,12 @@ A dependencies-free MongoDB driver written in pure Crystal.
 **Next**
 
 - https://github.com/mongodb/specifications/tree/master/source/causal-consistency
+- https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst
 - https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst
 - https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst
+- https://github.com/mongodb/specifications/tree/master/source/transactions
 - https://github.com/mongodb/specifications/tree/master/source/command-monitoring
 - https://github.com/mongodb/specifications/tree/master/source/compression
-- https://github.com/mongodb/specifications/tree/master/source/transactions
 
 ## Installation
 

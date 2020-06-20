@@ -1,3 +1,4 @@
+# :nodoc:
 record Mongo::Credentials,
   username : String? = nil,
   password : String? = nil,

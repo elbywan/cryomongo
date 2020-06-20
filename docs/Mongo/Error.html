@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.34.0">
+<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="crystal_docs.project_name" content="cryomongo">
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="cryomongo">
+  <title>Mongo::Error - cryomongo master-dev</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          cryomongo
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master-dev
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="cryomongo/Mongo" data-name="mongo">
+      <a href="../Mongo.html">Mongo</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Bulk" data-name="mongo::bulk">
+      <a href="../Mongo/Bulk.html">Bulk</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/DeleteMany" data-name="mongo::bulk::deletemany">
+      <a href="../Mongo/Bulk/DeleteMany.html">DeleteMany</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/DeleteOne" data-name="mongo::bulk::deleteone">
+      <a href="../Mongo/Bulk/DeleteOne.html">DeleteOne</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/Error" data-name="mongo::bulk::error">
+      <a href="../Mongo/Bulk/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/InsertOne" data-name="mongo::bulk::insertone">
+      <a href="../Mongo/Bulk/InsertOne.html">InsertOne</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/ReplaceOne" data-name="mongo::bulk::replaceone">
+      <a href="../Mongo/Bulk/ReplaceOne.html">ReplaceOne</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/UpdateMany" data-name="mongo::bulk::updatemany">
+      <a href="../Mongo/Bulk/UpdateMany.html">UpdateMany</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/UpdateOne" data-name="mongo::bulk::updateone">
+      <a href="../Mongo/Bulk/UpdateOne.html">UpdateOne</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/WriteModel" data-name="mongo::bulk::writemodel">
+      <a href="../Mongo/Bulk/WriteModel.html">WriteModel</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Bulk/WriteResult" data-name="mongo::bulk::writeresult">
+      <a href="../Mongo/Bulk/WriteResult.html">WriteResult</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/ChangeStream" data-name="mongo::changestream">
+      <a href="../Mongo/ChangeStream.html">ChangeStream</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/ChangeStream/Cursor" data-name="mongo::changestream::cursor">
+      <a href="../Mongo/ChangeStream/Cursor.html">Cursor</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/ChangeStream/Document" data-name="mongo::changestream::document(t)">
+      <a href="../Mongo/ChangeStream/Document.html">Document</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/ChangeStream/Document/UpdateDescription" data-name="mongo::changestream::document::updatedescription">
+      <a href="../Mongo/ChangeStream/Document/UpdateDescription.html">UpdateDescription</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Client" data-name="mongo::client">
+      <a href="../Mongo/Client.html">Client</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Collation" data-name="mongo::collation">
+      <a href="../Mongo/Collation.html">Collation</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Collection" data-name="mongo::collection">
+      <a href="../Mongo/Collection.html">Collection</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Collection/CollectionKey" data-name="mongo::collection::collectionkey">
+      <a href="../Mongo/Collection/CollectionKey.html">CollectionKey</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands" data-name="mongo::commands">
+      <a href="../Mongo/Commands.html">Commands</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Aggregate" data-name="mongo::commands::aggregate">
+      <a href="../Mongo/Commands/Aggregate.html">Aggregate</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/BuildInfo" data-name="mongo::commands::buildinfo">
+      <a href="../Mongo/Commands/BuildInfo.html">BuildInfo</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/BuildInfo/Result" data-name="mongo::commands::buildinfo::result">
+      <a href="../Mongo/Commands/BuildInfo/Result.html">Result</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/CloneCollectionAsCapped" data-name="mongo::commands::clonecollectionascapped">
+      <a href="../Mongo/Commands/CloneCollectionAsCapped.html">CloneCollectionAsCapped</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/CollMod" data-name="mongo::commands::collmod">
+      <a href="../Mongo/Commands/CollMod.html">CollMod</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/CollStats" data-name="mongo::commands::collstats">
+      <a href="../Mongo/Commands/CollStats.html">CollStats</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/Common" data-name="mongo::commands::common">
+      <a href="../Mongo/Commands/Common.html">Common</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/BaseResult" data-name="mongo::commands::common::baseresult">
+      <a href="../Mongo/Commands/Common/BaseResult.html">BaseResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/Cursor" data-name="mongo::commands::common::cursor">
+      <a href="../Mongo/Commands/Common/Cursor.html">Cursor</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/DeleteResult" data-name="mongo::commands::common::deleteresult">
+      <a href="../Mongo/Commands/Common/DeleteResult.html">DeleteResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/FindAndModifyResult" data-name="mongo::commands::common::findandmodifyresult">
+      <a href="../Mongo/Commands/Common/FindAndModifyResult.html">FindAndModifyResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/InsertResult" data-name="mongo::commands::common::insertresult">
+      <a href="../Mongo/Commands/Common/InsertResult.html">InsertResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/QueryResult" data-name="mongo::commands::common::queryresult">
+      <a href="../Mongo/Commands/Common/QueryResult.html">QueryResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/UpdateResult" data-name="mongo::commands::common::updateresult">
+      <a href="../Mongo/Commands/Common/UpdateResult.html">UpdateResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/Upserted" data-name="mongo::commands::common::upserted">
+      <a href="../Mongo/Commands/Common/Upserted.html">Upserted</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/WriteConcernError" data-name="mongo::commands::common::writeconcernerror">
+      <a href="../Mongo/Commands/Common/WriteConcernError.html">WriteConcernError</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Common/WriteError" data-name="mongo::commands::common::writeerror">
+      <a href="../Mongo/Commands/Common/WriteError.html">WriteError</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Compact" data-name="mongo::commands::compact">
+      <a href="../Mongo/Commands/Compact.html">Compact</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ConnectionStatus" data-name="mongo::commands::connectionstatus">
+      <a href="../Mongo/Commands/ConnectionStatus.html">ConnectionStatus</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ConnPoolStats" data-name="mongo::commands::connpoolstats">
+      <a href="../Mongo/Commands/ConnPoolStats.html">ConnPoolStats</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ConvertToCapped" data-name="mongo::commands::converttocapped">
+      <a href="../Mongo/Commands/ConvertToCapped.html">ConvertToCapped</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Count" data-name="mongo::commands::count">
+      <a href="../Mongo/Commands/Count.html">Count</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Create" data-name="mongo::commands::create">
+      <a href="../Mongo/Commands/Create.html">Create</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/CreateIndexes" data-name="mongo::commands::createindexes">
+      <a href="../Mongo/Commands/CreateIndexes.html">CreateIndexes</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/CreateIndexes/Result" data-name="mongo::commands::createindexes::result">
+      <a href="../Mongo/Commands/CreateIndexes/Result.html">Result</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/CurrentOp" data-name="mongo::commands::currentop">
+      <a href="../Mongo/Commands/CurrentOp.html">CurrentOp</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/DataSize" data-name="mongo::commands::datasize">
+      <a href="../Mongo/Commands/DataSize.html">DataSize</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/DbHash" data-name="mongo::commands::dbhash">
+      <a href="../Mongo/Commands/DbHash.html">DbHash</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/DbStats" data-name="mongo::commands::dbstats">
+      <a href="../Mongo/Commands/DbStats.html">DbStats</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Delete" data-name="mongo::commands::delete">
+      <a href="../Mongo/Commands/Delete.html">Delete</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/Distinct" data-name="mongo::commands::distinct">
+      <a href="../Mongo/Commands/Distinct.html">Distinct</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Distinct/Result" data-name="mongo::commands::distinct::result">
+      <a href="../Mongo/Commands/Distinct/Result.html">Result</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Drop" data-name="mongo::commands::drop">
+      <a href="../Mongo/Commands/Drop.html">Drop</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/DropConnections" data-name="mongo::commands::dropconnections">
+      <a href="../Mongo/Commands/DropConnections.html">DropConnections</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/DropDatabase" data-name="mongo::commands::dropdatabase">
+      <a href="../Mongo/Commands/DropDatabase.html">DropDatabase</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/DropIndexes" data-name="mongo::commands::dropindexes">
+      <a href="../Mongo/Commands/DropIndexes.html">DropIndexes</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Explain" data-name="mongo::commands::explain">
+      <a href="../Mongo/Commands/Explain.html">Explain</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Find" data-name="mongo::commands::find">
+      <a href="../Mongo/Commands/Find.html">Find</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/FindAndModify" data-name="mongo::commands::findandmodify">
+      <a href="../Mongo/Commands/FindAndModify.html">FindAndModify</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Fsync" data-name="mongo::commands::fsync">
+      <a href="../Mongo/Commands/Fsync.html">Fsync</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/FsyncUnlock" data-name="mongo::commands::fsyncunlock">
+      <a href="../Mongo/Commands/FsyncUnlock.html">FsyncUnlock</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/FsyncUnlock/Result" data-name="mongo::commands::fsyncunlock::result">
+      <a href="../Mongo/Commands/FsyncUnlock/Result.html">Result</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/GetCmdLineOpts" data-name="mongo::commands::getcmdlineopts">
+      <a href="../Mongo/Commands/GetCmdLineOpts.html">GetCmdLineOpts</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/GetLog" data-name="mongo::commands::getlog">
+      <a href="../Mongo/Commands/GetLog.html">GetLog</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/GetMore" data-name="mongo::commands::getmore">
+      <a href="../Mongo/Commands/GetMore.html">GetMore</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/GetMore/Result" data-name="mongo::commands::getmore::result">
+      <a href="../Mongo/Commands/GetMore/Result.html">Result</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/GetMore/Result/Cursor" data-name="mongo::commands::getmore::result::cursor">
+      <a href="../Mongo/Commands/GetMore/Result/Cursor.html">Cursor</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/GetParameter" data-name="mongo::commands::getparameter">
+      <a href="../Mongo/Commands/GetParameter.html">GetParameter</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/GetParameter/Result" data-name="mongo::commands::getparameter::result">
+      <a href="../Mongo/Commands/GetParameter/Result.html">Result</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/HostInfo" data-name="mongo::commands::hostinfo">
+      <a href="../Mongo/Commands/HostInfo.html">HostInfo</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Insert" data-name="mongo::commands::insert">
+      <a href="../Mongo/Commands/Insert.html">Insert</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/IsMaster" data-name="mongo::commands::ismaster">
+      <a href="../Mongo/Commands/IsMaster.html">IsMaster</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/IsMaster/Result" data-name="mongo::commands::ismaster::result">
+      <a href="../Mongo/Commands/IsMaster/Result.html">Result</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/KillCursors" data-name="mongo::commands::killcursors">
+      <a href="../Mongo/Commands/KillCursors.html">KillCursors</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/KillCursors/Result" data-name="mongo::commands::killcursors::result">
+      <a href="../Mongo/Commands/KillCursors/Result.html">Result</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/KillOp" data-name="mongo::commands::killop">
+      <a href="../Mongo/Commands/KillOp.html">KillOp</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ListCollections" data-name="mongo::commands::listcollections">
+      <a href="../Mongo/Commands/ListCollections.html">ListCollections</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ListCommands" data-name="mongo::commands::listcommands">
+      <a href="../Mongo/Commands/ListCommands.html">ListCommands</a>
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/ListDatabases" data-name="mongo::commands::listdatabases">
+      <a href="../Mongo/Commands/ListDatabases.html">ListDatabases</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Commands/ListDatabases/Result" data-name="mongo::commands::listdatabases::result">
+      <a href="../Mongo/Commands/ListDatabases/Result.html">Result</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ListDatabases/Result/Database" data-name="mongo::commands::listdatabases::result::database">
+      <a href="../Mongo/Commands/ListDatabases/Result/Database.html">Database</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ListIndexes" data-name="mongo::commands::listindexes">
+      <a href="../Mongo/Commands/ListIndexes.html">ListIndexes</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/LogRotate" data-name="mongo::commands::logrotate">
+      <a href="../Mongo/Commands/LogRotate.html">LogRotate</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Ping" data-name="mongo::commands::ping">
+      <a href="../Mongo/Commands/Ping.html">Ping</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Profile" data-name="mongo::commands::profile">
+      <a href="../Mongo/Commands/Profile.html">Profile</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ReIndex" data-name="mongo::commands::reindex">
+      <a href="../Mongo/Commands/ReIndex.html">ReIndex</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/RenameCollection" data-name="mongo::commands::renamecollection">
+      <a href="../Mongo/Commands/RenameCollection.html">RenameCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ServerStatus" data-name="mongo::commands::serverstatus">
+      <a href="../Mongo/Commands/ServerStatus.html">ServerStatus</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/SetFeatureCompatibilityVersion" data-name="mongo::commands::setfeaturecompatibilityversion">
+      <a href="../Mongo/Commands/SetFeatureCompatibilityVersion.html">SetFeatureCompatibilityVersion</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/SetParameter" data-name="mongo::commands::setparameter">
+      <a href="../Mongo/Commands/SetParameter.html">SetParameter</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/ShardConnPoolStats" data-name="mongo::commands::shardconnpoolstats">
+      <a href="../Mongo/Commands/ShardConnPoolStats.html">ShardConnPoolStats</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Shutdown" data-name="mongo::commands::shutdown">
+      <a href="../Mongo/Commands/Shutdown.html">Shutdown</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Top" data-name="mongo::commands::top">
+      <a href="../Mongo/Commands/Top.html">Top</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Update" data-name="mongo::commands::update">
+      <a href="../Mongo/Commands/Update.html">Update</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/Validate" data-name="mongo::commands::validate">
+      <a href="../Mongo/Commands/Validate.html">Validate</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/Cursor" data-name="mongo::cursor">
+      <a href="../Mongo/Cursor.html">Cursor</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Cursor/Wrapper" data-name="mongo::cursor::wrapper(t)">
+      <a href="../Mongo/Cursor/Wrapper.html">Wrapper</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Database" data-name="mongo::database">
+      <a href="../Mongo/Database.html">Database</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="cryomongo/Mongo/Error" data-name="mongo::error">
+      <a href="../Mongo/Error.html">Error</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Error/Command" data-name="mongo::error::command">
+      <a href="../Mongo/Error/Command.html">Command</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Error/CommandWrite" data-name="mongo::error::commandwrite">
+      <a href="../Mongo/Error/CommandWrite.html">CommandWrite</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Error/ServerSelection" data-name="mongo::error::serverselection">
+      <a href="../Mongo/Error/ServerSelection.html">ServerSelection</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="cryomongo/Mongo/GridFS" data-name="mongo::gridfs">
+      <a href="../Mongo/GridFS.html">GridFS</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/GridFS/Bucket" data-name="mongo::gridfs::bucket">
+      <a href="../Mongo/GridFS/Bucket.html">Bucket</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/GridFS/File" data-name="mongo::gridfs::file(fileid)">
+      <a href="../Mongo/GridFS/File.html">File</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Options" data-name="mongo::options">
+      <a href="../Mongo/Options.html">Options</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/ReadConcern" data-name="mongo::readconcern">
+      <a href="../Mongo/ReadConcern.html">ReadConcern</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/ReadPreference" data-name="mongo::readpreference">
+      <a href="../Mongo/ReadPreference.html">ReadPreference</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/WriteConcern" data-name="mongo::writeconcern">
+      <a href="../Mongo/WriteConcern.html">WriteConcern</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Mongo::Error
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Mongo/Error.html">Mongo::Error</a></li><li class="superclass">Exception</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="direct-known-subclasses" class="anchor" href="#direct-known-subclasses">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Direct Known Subclasses
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../Mongo/Bulk/Error.html">Mongo::Bulk::Error</a></li>
+    
+      <li class="other-type"><a href="../Mongo/Error/Command.html">Mongo::Error::Command</a></li>
+    
+      <li class="other-type"><a href="../Mongo/Error/CommandWrite.html">Mongo::Error::CommandWrite</a></li>
+    
+      <li class="other-type"><a href="../Mongo/Error/ServerSelection.html">Mongo::Error::ServerSelection</a></li>
+    
+  </ul>
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+
+</body>
+</html>

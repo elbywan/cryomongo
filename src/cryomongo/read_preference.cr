@@ -1,6 +1,9 @@
 require "bson"
 
 module Mongo
+  # The read preference describes how MongoDB clients route read operations to the members of a replica set.
+  #
+  # See: [the official documentation](https://docs.mongodb.com/manual/core/read-preference/index.html).
   @[BSON::Options(camelize: "lower")]
   record ReadPreference,
     mode : String,
@@ -10,8 +13,11 @@ module Mongo
     include BSON::Serializable
   }
 
-  module WithReadPreference
+  private module WithReadPreference
     macro included
+      # ReadPreference accessor.
+      #
+      # See: [the official documentation](https://docs.mongodb.com/manual/core/read-preference/index.html).
       property read_preference : ReadPreference? = nil
     end
 
@@ -29,7 +35,7 @@ module Mongo
       # Commands:: ParallelCollectionScean
     }
 
-    def self.must_use_primary_command?(command, command_args)
+    protected def self.must_use_primary_command?(command, command_args)
       !MAY_USE_SECONDARY.includes?(command) ||
         command == Commands::Aggregate && command_args["pipeline"]?.try { |pipeline|
           pipeline.as(Array).map { |elt| BSON.new(elt) }.any? { |stage|
@@ -54,7 +60,7 @@ module Mongo
       end
     end
 
-    def self.mix_read_preference(command, args, read_preference : ReadPreference?, topology : SDAM::TopologyDescription, server_description : SDAM::ServerDescription)
+    protected def self.mix_read_preference(command, args, read_preference : ReadPreference?, topology : SDAM::TopologyDescription, server_description : SDAM::ServerDescription)
       case topology.type
       when .single?
         # see: https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst#topology-type-single

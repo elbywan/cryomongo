@@ -2,6 +2,7 @@ require "openssl"
 require "./credentials"
 require "./auth"
 
+# :nodoc:
 struct Mongo::Connection
   getter server_description : SDAM::ServerDescription
   getter credentials : Mongo::Credentials
@@ -146,10 +147,10 @@ struct Mongo::Connection
         Log.error {
           "Received error code: #{err_code} - #{err_msg}"
         }
-        raise Mongo::CommandError.new(err_code, err_msg) unless ignore_errors
+        raise Mongo::Error::Command.new(err_code, err_msg) unless ignore_errors
       end
       if errors = op_msg.body["writeErrors"]?
-        raise Mongo::CommandWriteError.new(errors.as(BSON))
+        raise Mongo::Error::CommandWrite.new(errors.as(BSON))
       end
       return op_msg unless op_msg.flag_bits.more_to_come?
     end

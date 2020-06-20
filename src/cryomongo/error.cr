@@ -2,16 +2,18 @@ module Mongo
   class Error < Exception
   end
 
-  class HandshakeError < Error
+  # class Error::Handshake < Error
+  # end
+
+  # class Error::Connection < Error
+  # end
+
+  # Is raised during server selection when encountering a timeout.
+  class Error::ServerSelection < Error
   end
 
-  class ConnectionError < Error
-  end
-
-  class ServerSelectionError < Error
-  end
-
-  class CommandError < Error
+  # Is raised when the server replies with an error to a command request.
+  class Error::Command < Error
     # See: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-discovery-and-monitoring.rst#not-master-and-node-is-recovering
     RECOVERING_CODES    = {11600, 11602, 13436, 189, 91}
     RECOVERING_MESSAGES = {"not master or secondary", "node is recovering"}
@@ -53,15 +55,16 @@ module Mongo
     end
   end
 
-  class CommandWriteError < Error
-    getter errors = [] of CommandError
+  # Is raised when the server replies to a write with one or more WriteErrors.
+  class Error::CommandWrite < Error
+    getter errors = [] of Error::Command
 
     def initialize(errors : BSON)
       errors.each { |_, error|
         error = error.as(BSON)
         err_msg = error["errmsg"]?.as(String)
         err_code = error["code"]?
-        @errors << CommandError.new(err_code, err_msg)
+        @errors << Error::Command.new(err_code, err_msg)
       }
     end
 

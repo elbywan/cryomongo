@@ -1,3 +1,4 @@
+# :nodoc:
 module Mongo::Messages
   enum OpCode : Int32
     # Reply to a client request. responseTo is set.

@@ -1,9 +1,13 @@
 require "bson"
 require "../commands"
 
+# The *buildInfo* command is an administrative command which returns a build summary for the current mongod.
+#
+# NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/buildInfo/).
 module Mongo::Commands::BuildInfo
   extend self
 
+  # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
   def command
     Commands.make({
       buildInfo: 1,
@@ -26,7 +30,8 @@ module Mongo::Commands::BuildInfo
     property max_bson_object_size : Float64?
   }
 
-  def result(bson)
+  # Transforms the server result.
+  def result(bson : BSON)
     Result.from_bson bson
   end
 end

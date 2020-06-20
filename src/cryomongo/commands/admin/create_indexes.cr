@@ -1,9 +1,13 @@
 require "bson"
 require "../commands"
 
+# Builds one or more indexes on a collection.
+#
+# NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/createIndexes/).
 module Mongo::Commands::CreateIndexes
   extend self
 
+  # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
   def command(database : String, collection : Collection::CollectionKey, indexes : Array, options)
     Commands.make({
       createIndexes: collection,
@@ -21,7 +25,8 @@ module Mongo::Commands::CreateIndexes
     property errmsg : String?
   }
 
-  def result(bson)
+  # Transforms the server result.
+  def result(bson : BSON)
     Result.from_bson bson
   end
 end

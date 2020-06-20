@@ -1,9 +1,13 @@
 require "bson"
 require "../commands"
 
+# Enables or disables the features that persist data incompatible with earlier versions of MongoDB.
+#
+# NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/setFeatureCompatibilityVersion/).
 module Mongo::Commands::SetFeatureCompatibilityVersion
   extend self
 
+  # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
   def command(version : String)
     Commands.make({
       setFeatureCompatibilityVersion: version,
@@ -11,7 +15,8 @@ module Mongo::Commands::SetFeatureCompatibilityVersion
     })
   end
 
-  def result(bson)
+  # Transforms the server result.
+  def result(bson : BSON)
     Common::BaseResult.from_bson bson
   end
 end

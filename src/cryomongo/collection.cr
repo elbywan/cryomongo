@@ -9,34 +9,39 @@ require "./collation"
 require "./index"
 require "./change_stream"
 
+# A `Collection` provides access to a MongoDB collection.
+#
+# ```
+# collection = client["database_name"]["collection_name"]
+# ```
 class Mongo::Collection
   include WithReadConcern
   include WithWriteConcern
   include WithReadPreference
 
+  # A collection name can be a String or an Integer.
   alias CollectionKey = String | Int32
 
+  # The parent database.
   getter database : Mongo::Database
+  # The collection name.
   getter name : CollectionKey
 
+  # :nodoc:
   def initialize(@database, @name); end
 
+  # Execute a command on the server targeting the collection.
+  #
+  # Will automatically set the *collection* and *database* arguments.
+  #
+  # See: `Mongo::Client.command`
   def command(operation, write_concern : WriteConcern? = nil, read_concern : ReadConcern? = nil, read_preference : ReadPreference? = nil, **args)
     @database.command(operation, **args, collection: @name, write_concern: write_concern || @write_concern, read_concern: read_concern || @read_concern, read_preference: read_preference || @read_preference)
   end
 
-  #  Runs an aggregation framework pipeline.
+  # Runs an aggregation framework pipeline.
   #
-  #  Note: $out and $merge are special pipeline stages that cause no results
-  #  to be returned from the server. As such, the iterable here would never
-  #  contain documents. Drivers MAY setup a cursor to be executed upon
-  #  iteration against the output collection such that if a user were to
-  #  iterate the return value, results would be returned.
-  #
-  #  Note: result iteration should be backed by a cursor. Depending on the implementation,
-  #  the cursor may back the returned Iterable instance or an iterator that it produces.
-  #
-  #  See: https://docs.mongodb.com/manual/reference/command/aggregate/
+  # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/aggregate/).
   def aggregate(
     pipeline : Array,
     *,
@@ -65,12 +70,11 @@ class Mongo::Collection
     maybe_result.try { |result| Cursor.new(@database.client, result) }
   end
 
-  # Count the number of documents in a collection that match the given
-  # filter. Note that an empty filter will force a scan of the entire
-  # collection. For a fast count of the total documents in a collection
-  # see `estimatedDocumentCount`.
+  # Count the number of documents in a collection that match the given filter.
+  # Note that an empty filter will force a scan of the entire collection.
+  # For a fast count of the total documents in a collection see `estimated_document_count`.
   #
-  # See: https://github.com/mongodb/specifications/blob/master/source/crud/crud.rst#count-api-details
+  # See: [the specification document](https://github.com/mongodb/specifications/blob/master/source/crud/crud.rst#count-api-details).
   def count_documents(
     filter = BSON.new,
     *,
@@ -101,7 +105,7 @@ class Mongo::Collection
 
   # Gets an estimate of the count of documents in a collection using collection metadata.
   #
-  # See: https://github.com/mongodb/specifications/blob/master/source/crud/crud.rst#count-api-details
+  # See: [the specification document](https://github.com/mongodb/specifications/blob/master/source/crud/crud.rst#count-api-details).
   def estimated_document_count(*, max_time_ms : Int64? = nil, read_preference : ReadPreference? = nil) : Int32
     result = self.command(Commands::Count, options: {
       max_time_ms:     max_time_ms,
@@ -112,10 +116,10 @@ class Mongo::Collection
 
   # Finds the distinct values for a specified field across a single collection.
   #
-  # Note: the results are backed by the "values" array in the distinct command's result
+  # NOTE: the results are backed by the "values" array in the distinct command's result
   # document. This differs from aggregate and find, where results are backed by a cursor.
   #
-  # See: https://docs.mongodb.com/manual/reference/command/distinct/
+  # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/distinct/).
   def distinct(
     key : String,
     *,
@@ -135,19 +139,8 @@ class Mongo::Collection
 
   # Finds the documents matching the model.
   #
-  # Note: The filter parameter below equates to the $query meta operator. It cannot
-  # contain other meta operators like $maxScan. However, do not validate this document
-  # as it would be impossible to be forwards and backwards compatible. Let the server
-  # handle the validation.
-  #
-  # Note: If $explain is specified in the modifiers, the return value is a single
-  # document. This could cause problems for static languages using strongly typed entities.
-  #
-  # Note: result iteration should be backed by a cursor. Depending on the implementation,
-  # the cursor may back the returned Iterable instance or an iterator that it produces.
-  #
-  # See: https://docs.mongodb.com/manual/reference/command/find/
-  # See: https://docs.mongodb.com/manual/core/read-operations-introduction/
+  # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/find/).
+  # NOTE: [for an overview of read operations, check the official manual](https://docs.mongodb.com/manual/core/read-operations-introduction/).
   def find(
     filter = BSON.new,
     *,
@@ -203,12 +196,7 @@ class Mongo::Collection
 
   # Finds the document matching the model.
   #
-  # Note: The filter parameter below equates to the $query meta operator. It cannot
-  # contain other meta operators like $maxScan. However, do not validate this document
-  # as it would be impossible to be forwards and backwards compatible. Let the server
-  # handle the validation.
-  #
-  # See: https://docs.mongodb.com/manual/reference/command/find/
+  # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/find/).
   def find_one(
     filter = BSON.new,
     *,
@@ -260,32 +248,23 @@ class Mongo::Collection
 
   # Executes multiple write operations.
   #
-  # An error MUST be raised if the requests parameter is empty.
+  # An error will be raised if the *requests* parameter is empty.
   #
-  # For servers < 3.4, if a collation was explicitly set for any request, an error MUST be raised
-  # and no documents sent.
-  #
-  # NOTE: see the FAQ about the previous bulk API and how it relates to this.
-  # See: https://docs.mongodb.com/manual/reference/command/delete/
-  # See: https://docs.mongodb.com/manual/reference/command/insert/
-  # See: https://docs.mongodb.com/manual/reference/command/update/
-  # @throws InvalidArgumentException if requests is empty
-  # @throws BulkWriteException
+  # NOTE: [for more details, please check the official specifications document](https://github.com/mongodb/specifications/blob/master/source/driver-bulk-update.rst).
   def bulk_write(requests : Array(Bulk::WriteModel), *, ordered : Bool, bypass_document_validation : Bool? = nil) : Bulk::WriteResult
     raise Mongo::Bulk::Error.new "Tried to execute an empty bulk" unless requests.size > 0
     bulk = Mongo::Bulk.new(self, ordered, requests)
     bulk.execute(bypass_document_validation: bypass_document_validation)
   end
 
+  # Create a `Mongo::Bulk` instance.
   def bulk(ordered : Bool = true)
     Mongo::Bulk.new(self, ordered)
   end
 
-  # Inserts the provided document. If the document is missing an identifier,
-  # the driver should generate one.
+  # Inserts the provided document. If the document is missing an identifier, it will be generated.
   #
-  # See: https://docs.mongodb.com/manual/reference/command/insert/
-  # @throws WriteException
+  # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/insert/).
   def insert_one(document, *, write_concern : WriteConcern? = nil, bypass_document_validation : Bool? = nil) : Commands::Common::InsertResult?
     self.command(Commands::Insert, documents: [document], options: {
       write_concern:              write_concern,
@@ -293,17 +272,9 @@ class Mongo::Collection
     })
   end
 
-  # Inserts the provided documents. If any documents are missing an identifier,
-  # the driver should generate them.
+  # Inserts the provided document. If any documents are missing an identifier, they will be generated.
   #
-  # An error MUST be raised if the documents parameter is empty.
-  #
-  # Note that this uses the bulk insert command underneath and should not
-  # use OP_INSERT.
-  #
-  # See: https://docs.mongodb.com/manual/reference/command/insert/
-  # @throws InvalidArgumentException if documents is empty
-  # @throws BulkWriteException
+  # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/insert/).
   def insert_many(
     documents : Array,
     *,
@@ -321,8 +292,7 @@ class Mongo::Collection
 
   # Deletes one document.
   #
-  # See: https://docs.mongodb.com/manual/reference/command/delete/
-  # @throws WriteException
+  # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/delete/).
   def delete_one(
     filter,
     *,
@@ -346,8 +316,7 @@ class Mongo::Collection
 
   # Deletes multiple documents.
   #
-  # See: https://docs.mongodb.com/manual/reference/command/delete/
-  # @throws WriteException
+  # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/delete/).
   def delete_many(
     filter,
     *,
@@ -398,8 +367,7 @@ class Mongo::Collection
 
   # Replaces a single document.
   #
-  # See: https://docs.mongodb.com/manual/reference/command/update/
-  # @throws WriteException
+  # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/update/).
   def replace_one(
     filter,
     replacement,
@@ -431,8 +399,7 @@ class Mongo::Collection
 
   # Updates one document.
   #
-  # See: https://docs.mongodb.com/manual/reference/command/update/
-  # @throws WriteException
+  # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/update/).
   def update_one(
     filter,
     update,
@@ -466,8 +433,7 @@ class Mongo::Collection
 
   # Updates multiple documents.
   #
-  # See: https://docs.mongodb.com/manual/reference/command/update/
-  # @throws WriteException
+  # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/update/).
   def update_many(
     filter,
     update,
@@ -505,16 +471,15 @@ class Mongo::Collection
       last_error_object = last_error_object.as(BSON)
       code = last_error_object["code"]?
       err_msg = last_error_object["errmsg"]?
-      raise Mongo::CommandError.new(code, err_msg)
+      raise Mongo::Error::Command.new(code, err_msg)
     end
 
     result["value"]?.try &.as(BSON)
   end
 
-  # Finds a single document and deletes it, returning the original. The document to return may be null.
+  # Finds a single document and deletes it, returning the original. The document to return may be nil.
   #
-  # See: https://docs.mongodb.com/manual/reference/command/findAndModify/
-  # @throws WriteException
+  # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/findAndModify/).
   def find_one_and_delete(
     filter,
     *,
@@ -540,10 +505,9 @@ class Mongo::Collection
   end
 
   # Finds a single document and replaces it, returning either the original or the replaced
-  # document. The document to return may be null.
+  # document. The document to return may be nil.
   #
-  # See: https://docs.mongodb.com/manual/reference/command/findAndModify/
-  # @throws WriteException
+  # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/findAndModify/).
   def find_one_and_replace(
     filter,
     replacement,
@@ -577,10 +541,9 @@ class Mongo::Collection
   end
 
   # Finds a single document and updates it, returning either the original or the updated
-  # document. The document to return may be null.
+  # document. The document to return may be nil.
   #
-  # See: https://docs.mongodb.com/manual/reference/command/findAndModify/
-  # @throws WriteException
+  # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/findAndModify/).
   def find_one_and_update(
     filter,
     update,
@@ -613,19 +576,9 @@ class Mongo::Collection
     check_find_and_modify_result!(result)
   end
 
-  # This is a convenience method for creating a single index. This MUST call the
-  # createIndexes method and pass the provided specification document in a
-  # sequence to that method with the same options.
+  # This is a convenience method for creating a single index.
   #
-  # @return The name of the created index.
-  #
-  # Note: Drivers MAY opt to implement this method signature, the signature that
-  #   takes an IndexModel as a parameter, or for those languages with method
-  #   overloading MAY decide to implement both.
-  #
-  # Note: Drivers MAY combine the two options types into a single one. If the options are
-  #   explicitly typed, the combined options type MUST be named CreateIndexOptions or an acceptable
-  #   variation.
+  # See: `create_indexes`
   def create_index(
     keys,
     *,
@@ -647,22 +600,7 @@ class Mongo::Collection
 
   # Creates multiple indexes in the collection.
   #
-  # For MongoDB 2.6 and higher this method MUST execute a createIndexes command.
-  #
-  # For MongoDB 2.4 this method MUST insert the index specifications directly into
-  # the system.indexes collection. The write concern provided provided to the server
-  # MUST be { w: 1 }.
-  #
-  # The driver MAY choose NOT to support creating indexes on 2.4 and if so, MUST
-  # document the method as such.
-  #
-  # Note that in MongoDB server versions >= 3.0.0, the server will create the
-  # indexes in parallel.
-  #
-  # As of 3.4 (see https://jira.mongodb.org/browse/SERVER-769) the server validates
-  # options passed to the createIndexes command.
-  #
-  # @return The names of all the indexes that were created.
+  # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/createIndexes/).
   def create_indexes(
     models : Array,
     *,
@@ -684,7 +622,7 @@ class Mongo::Collection
           BSON.new({key: keys}).append(options)
         end
       else
-        index_model = IndexModel.new(item["keys"], IndexOptions.new(**item["options"]))
+        index_model = Index::Model.new(item["keys"], Index::Options.new(**item["options"]))
         index_model.options.name = index_model.keys.reduce([] of String) { |acc, (k, v)|
           acc << "#{k}_#{v}"
         }.join("_") unless index_model.options.name
@@ -700,10 +638,7 @@ class Mongo::Collection
 
   # Drops a single index from the collection by the index name.
   #
-  # In all server versions this MUST execute a dropIndexes command.
-  #
-  # Note: If the string passed is '*', the driver MUST raise an error since
-  #   more than one index would be dropped.
+  # See: `drop_indexes`
   def drop_index(name : String, *, max_time_ms : Int64? = nil, write_concern : WriteConcern? = nil) : Commands::Common::BaseResult?
     raise Mongo::Error.new "'*' cannot be used with drop_index as more than one index would be dropped." if name == "*"
     self.command(Commands::DropIndexes, index: name, options: {
@@ -713,6 +648,8 @@ class Mongo::Collection
   end
 
   # Drops all indexes in the collection.
+  #
+  # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/dropIndexes/).
   def drop_indexes(*, max_time_ms : Int64? = nil, write_concern : WriteConcern? = nil) : Commands::Common::BaseResult?
     self.command(Commands::DropIndexes, index: "*", options: {
       max_time_ms:   max_time_ms,
@@ -720,16 +657,41 @@ class Mongo::Collection
     })
   end
 
-  # Gets index information for all indexes in the collection. This should be
-  # implemented as specified in the Enumerate Indexes specification:
+  # Gets index information for all indexes in the collection.
   #
-  # See: https://github.com/mongodb/specifications/blob/master/source/enumerate-indexes.rst
+  # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/listIndexes/).
   def list_indexes : Mongo::Cursor
     result = self.command(Commands::ListIndexes).not_nil!
     Cursor.new(@database.client, result)
   end
 
-  # Returns a change stream on a specific collection.
+  # Returns a `ChangeStream::Cursor` watching a specific collection.
+  #
+  # ```
+  # client = Mongo::Client.new
+  # collection = client["db"]["coll"]
+  #
+  # spawn {
+  #   cursor = collection.watch(
+  #     [
+  #       {"$match": {"operationType": "insert"}},
+  #     ],
+  #     max_await_time_ms: 10000
+  #   )
+  #   # cursor.of(BSON) converts to the Mongo::ChangeStream::Document(BSON) type.
+  #   cursor.of(BSON).each { |doc|
+  #     puts doc.to_bson.to_json
+  #   }
+  # }
+  #
+  # 100.times do |i|
+  #   collection.insert_one({count: i})
+  # end
+  #
+  # sleep
+  # ```
+  #
+  # NOTE: [for more details, please check the official manual](https://docs.mongodb.com/manual/changeStreams/index.html).
   def watch(
     pipeline : Array = [] of BSON,
     *,
@@ -761,6 +723,8 @@ class Mongo::Collection
   end
 
   # Returns a variety of storage statistics for the collection.
+  #
+  # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/collStats/).
   def stats(*, scale : Int32? = nil) : BSON?
     self.command(Commands::CollStats, options: {scale: scale})
   end

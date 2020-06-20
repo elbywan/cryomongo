@@ -1,15 +1,16 @@
-module Mongo
-  struct IndexModel
+# :nodoc:
+module Mongo::Index
+  struct Model
     property keys : BSON
-    property options : IndexOptions
+    property options : Options
 
-    def initialize(keys, @options = IndexOptions.new)
+    def initialize(keys, @options = Index::Options.new)
       @keys = BSON.new keys
     end
   end
 
   @[BSON::Options(camelize: "lower")]
-  struct IndexOptions
+  struct Options
     include Tools::Initializer
     include BSON::Serializable
 

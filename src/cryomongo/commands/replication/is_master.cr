@@ -1,11 +1,15 @@
 require "bson"
 require "../commands"
 
+# *isMaster* returns a document that describes the role of the mongod instance.
+#
+# NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/isMaster/).
 module Mongo::Commands::IsMaster
   extend self
 
   OS_TYPE = {% if host_flag?(:linux) %} "Linux" {% elsif host_flag?(:darwin) %} "Darwin" {% elsif host_flag?(:win32) %} "Windows" {% else %} "Unknown" {% end %}
 
+  # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
   def command(appname : String? = nil)
     {BSON.new({
       isMaster: 1,
@@ -67,7 +71,8 @@ module Mongo::Commands::IsMaster
     property null_logical_session_timeout_minutes : Bool = false
   }
 
-  def result(bson)
+  # Transforms the server result.
+  def result(bson : BSON)
     result = Result.from_bson(bson)
     result.null_logical_session_timeout_minutes = bson.has_key?("logicalSessionTimeoutMinutes") && result.logical_session_timeout_minutes.nil?
     result

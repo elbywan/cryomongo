@@ -1,5 +1,6 @@
 require "./error"
 
+# :nodoc:
 module Mongo::Tools
   extend self
 

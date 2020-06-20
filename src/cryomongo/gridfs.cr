@@ -1,31 +1,46 @@
 require "./database"
 require "./error"
 
+# GridFS is a specification for storing and retrieving files that exceed the BSON-document size limit of 16 MB.
 module Mongo::GridFS
+  # A GridFS file document.
   @[BSON::Options(camelize: "lower")]
-  private struct File(FileID)
+  struct File(FileID)
     include BSON::Serializable
 
+    # A unique ID for this document. Usually this will be of type ObjectId, but a custom _id value provided by the application may be of any type.
     property _id : FileID
+    # The name of this stored file; this does not need to be unique.
     property filename : String = ""
+    # The length of this stored file, in bytes.
     property length : Int64
+    # The size, in bytes, of each data chunk of this file. This value is configurable by file. The default is 255 KiB.
     property chunk_size : Int64
+    # The date and time this file was added to GridFS, stored as a BSON datetime value.
     property upload_date : Time
+    # Any additional application data the user wishes to store.
     property metadata : BSON?
   end
 
+  # A GridFS chunk document.
   private struct Chunk(FileID)
     include BSON::Serializable
 
+    # A unique ID for this document of type BSON ObjectId.
     property _id : BSON::ObjectId
+    # The id for this file (the _id from the files collection document). This field takes the type of the corresponding _id in the files collection.
     property files_id : FileID
+    # The index number of this chunk, zero-based.
     property n : Int32
+    # A chunk of data from the user file.
     property data : Bytes
   end
 
+  # A configured GridFS bucket instance.
   class Bucket
     @completed_indexes_check = false
 
+    # Creates a new GridFSBucket object, managing a GridFS bucket within the given database.
     def initialize(
       @db : Database,
       *,
@@ -39,22 +54,30 @@ module Mongo::GridFS
     )
     end
 
-    def write_concern
+    private def write_concern
       @write_concern || @db.write_concern
     end
 
-    def read_concern
+    private def read_concern
       @read_concern || @db.read_concern
     end
 
-    def read_preference
+    private def read_preference
       @read_preference || @db.read_preference
     end
 
-    # Opens a Stream that the application can write the contents of the file to.
-    # The application supplies a custom file id or the driver will generate the file id.
+    # Opens an `IO` stream that the caller can write the contents of the file to.
     #
-    # Returns a Stream to which the application will write the contents.
+    # NOTE: It is the responsbility of the caller to flush and close the stream.
+    #
+    # ```
+    # gridfs = client["database"].grid_fs
+    # io = gridfs.open_upload_stream(filename: "file.txt", chunk_size_bytes: 1024, metadata: {hello: "world"})
+    # io << "some" << "text"
+    # io.flush
+    # io.close
+    # sleep 1
+    # ```
     def open_upload_stream(
       filename : String,
       *,
@@ -68,6 +91,8 @@ module Mongo::GridFS
       check_indexes(bucket, chunks)
 
       reader, writer = IO.pipe
+      reader.buffer_size = chunk_size
+      writer.buffer_size = chunk_size
 
       spawn same_thread: true do
         index = 0
@@ -104,7 +129,17 @@ module Mongo::GridFS
       writer
     end
 
-    # :ditto:
+    # Yields an `IO` stream that the caller can write the contents of the file to.
+    #
+    # NOTE: Will flush and close the stream after the block gets executed.
+    #
+    # ```
+    # gridfs = client["database"].grid_fs
+    # gridfs.open_upload_stream(filename: "file.txt", chunk_size_bytes: 1024, metadata: {hello: "world"}) { |io|
+    #   io << "some text"
+    # }
+    # sleep 1
+    # ```
     def open_upload_stream(
       filename : String,
       *,
@@ -126,15 +161,21 @@ module Mongo::GridFS
     #
     # The application supplies a custom file id or the driver will generate the file id.
     #
-    # Reads the contents of the user file from the @source Stream and uploads it
+    # Reads the contents of the user file from the *source* Stream and uploads it
     # as chunks in the chunks collection. After all the chunks have been uploaded,
-    # it creates a files collection document for @filename in the files collection.
+    # it creates a files collection document for *filename* in the files collection.
     #
     # Returns the id of the uploaded file.
     #
-    # Note: this method is provided for backward compatibility. In languages
-    # that use generic type parameters, this method may be omitted since
-    # the FileId type might not be an ObjectId.
+    # NOTE: It is the responsbility of the caller to flush and close the stream.
+    #
+    # ```
+    # gridfs = client["database"].grid_fs
+    # file = File.new("file.txt")
+    # id = gridfs.upload_from_stream("file.txt", file)
+    # file.close
+    # puts id
+    # ```
     def upload_from_stream(
       filename : String,
       stream : IO,
@@ -175,15 +216,26 @@ module Mongo::GridFS
     end
 
     # Opens a Stream from which the application can read the contents of the stored file
-    # specified by @id.
+    # specified by *id*.
     #
-    # Returns a Stream.
+    # Returns a `IO` stream.
+    #
+    # ```
+    # gridfs = client["database"].grid_fs
+    # id = BSON::ObjectId.new("5eed35600000000000000000")
+    # stream = gridfs.open_download_stream(id)
+    # puts stream.gets_to_end
+    # stream.close
+    # ```
     def open_download_stream(id : FileID) : IO forall FileID
       file = get_file(id)
       count = chunk_count(file)
       remaining = file.length
 
       reader, writer = IO.pipe
+      reader.buffer_size = file.chunk_size.to_i32
+      writer.buffer_size = file.chunk_size.to_i32
+
       spawn same_thread: true do
         count.times { |n|
           chunk = get_chunk(id, n)
@@ -198,8 +250,16 @@ module Mongo::GridFS
       reader
     end
 
-    # Downloads the contents of the stored file specified by @id and writes
-    # the contents to the @destination Stream.
+    # Downloads the contents of the stored file specified by *id* and writes
+    # the contents to the *destination* Stream.
+    #
+    # ```
+    # gridfs = client["database"].grid_fs
+    # stream = IO::Memory.new
+    # id = BSON::ObjectId.new("5eed35600000000000000000")
+    # gridfs.download_to_stream(id, stream)
+    # puts stream.rewind.gets_to_end
+    # ```
     def download_to_stream(id : FileID, destination : IO) : Nil forall FileID
       file = get_file(id)
       count = chunk_count(file)
@@ -213,14 +273,40 @@ module Mongo::GridFS
       }
     end
 
-    # Opens a Stream from which the application can read the contents of the stored file
-    # specified by @filename and the revision in @options.
+    # Opens a `IO` stream from which the application can read the contents of the stored file
+    # specified by *filename* and an optional *revision*.
     #
-    # Returns a Stream.
+    # Returns a `IO` stream.
+    #
+    # NOTE: It is the responsbility of the caller to close the stream.
+    #
+    # ```
+    # gridfs = client["database"].grid_fs
+    # stream = gridfs.open_download_stream_by_name("file", revision: 2)
+    # puts stream.gets_to_end
+    # stream.close
+    # ```
+    #
+    # #### About the the *revision* argument:
+    #
+    # Specifies which revision (documents with the same filename and different uploadDate)
+    # of the file to retrieve. Defaults to -1 (the most recent revision).
+    #
+    # Revision numbers are defined as follows:
+    # - 0 = the original stored file
+    # - 1 = the first revision
+    # - 2 = the second revision
+    #
+    # etc…
+    #
+    # - -2 = the second most recent revision
+    # - -1 = the most recent revision
     def open_download_stream_by_name(filename : String, revision : Int32 = -1) : IO
       file = get_file_by_name(filename, revision)
       count = chunk_count(file)
       reader, writer = IO.pipe
+      reader.buffer_size = file.chunk_size.to_i32
+      writer.buffer_size = file.chunk_size.to_i32
 
       spawn same_thread: true do
         remaining = file.length
@@ -237,8 +323,16 @@ module Mongo::GridFS
       reader
     end
 
-    # Downloads the contents of the stored file specified by @filename and by the
-    # revision in @options and writes the contents to the @destination Stream.
+    # Downloads the contents of the stored file specified by *filename* and by an optional *revision* and writes the contents to the *destination* `IO` stream.
+    #
+    # See: `open_download_stream_by_name` for how the revision is calculated.
+    #
+    # ```
+    # gridfs = client["database"].grid_fs
+    # io = IO::Memory.new
+    # gridfs.download_to_stream_by_name("file", io, revision: -1)
+    # puts io.to_s
+    # ```
     def download_to_stream_by_name(filename : String, destination : IO, revision : Int32 = -1) : Nil
       file = get_file_by_name(filename, revision)
       count = chunk_count(file)
@@ -252,15 +346,27 @@ module Mongo::GridFS
       }
     end
 
-    # Given a @id, delete this stored file’s files collection document and
-    # associated chunks from a GridFS bucket.
+    # Given an *id*, delete this stored file’s files collection document and associated chunks from a GridFS bucket.
+    #
+    # ```
+    # gridfs = client["database"].grid_fs
+    # id = BSON::ObjectId.new("5eed35600000000000000000")
+    # gridfs.delete(id)
+    # ```
     def delete(id : FileID) : Nil forall FileID
       delete_result = bucket.delete_one({_id: id}, write_concern: write_concern)
       chunks.delete_many({files_id: id}, write_concern: write_concern)
       raise Mongo::Error.new "File not found." if delete_result.try &.n == 0
     end
 
-    # Find and return the files collection documents that match @filter.
+    # Find and return the files collection documents that match *filter*.
+    #
+    # ```
+    # gridfs = client["database"].grid_fs
+    # gridfs.find({
+    #   length: {"$gte": 5000},
+    # })
+    # ```
     def find(
       filter = BSON.new,
       *,
@@ -287,12 +393,23 @@ module Mongo::GridFS
       Cursor::Wrapper(File(BSON::Value)).new(cursor)
     end
 
-    # Renames the stored file with the specified @id.
+    # Renames the stored file with the specified *id*.
+    #
+    # ```
+    # gridfs = client["database"].grid_fs
+    # id = BSON::ObjectId.new("5eed35600000000000000000")
+    # gridfs.rename(id, new_filename: "new_name.txt")
+    # ```
     def rename(id : FileID, new_filename : String) : Nil forall FileID
       bucket.update_one({_id: id}, {"$set": {filename: new_filename}})
     end
 
     # Drops the files and chunks collections associated with this bucket.
+    #
+    # ```
+    # gridfs = client["database"].grid_fs
+    # gridfs.drop
+    # ```
     def drop
       bucket.delete_many(BSON.new)
       chunks.delete_many(BSON.new)

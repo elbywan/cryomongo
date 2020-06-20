@@ -3,6 +3,7 @@ require "./seed"
 require "./options"
 require "../connection/*"
 
+# :nodoc:
 module Mongo::URI
   extend self
 

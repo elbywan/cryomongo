@@ -1,6 +1,7 @@
+# A set of options used to configure the driver.
+#
+# NOTE: [For more details, see the uri options specification document](https://github.com/mongodb/specifications/blob/master/source/uri-options/uri-options.rst).
 struct Mongo::Options
-  # See: https://github.com/mongodb/specifications/blob/master/source/uri-options/uri-options.rst
-
   # Passed into the server in the client metadata as part of the connection handshake
   getter appname : String? = nil
   # The authentication mechanism method to use for connection to the server

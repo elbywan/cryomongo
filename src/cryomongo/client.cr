@@ -9,13 +9,20 @@ require "./read_preference"
 require "./sdam/**"
 require "./uri"
 
+# The client which provides access to a MongoDB server, replica set, or sharded cluster.
+#
+# It maintains management of underlying sockets and routing to individual nodes.
 class Mongo::Client
   include WithReadConcern
   include WithWriteConcern
   include WithReadPreference
 
-  MIN_WIRE_VERSION                        = 6
-  MAX_WIRE_VERSION                        = 8
+  # The mininum wire protocol version supported by this driver.
+  MIN_WIRE_VERSION = 6
+  # The maximum wire protocol version supported by this driver.
+  MAX_WIRE_VERSION = 8
+
+  # :nodoc:
   UNACKNOWLEDGED_WRITE_PROHIBITED_OPTIONS = {
     "hint",
     "collation",
@@ -23,7 +30,9 @@ class Mongo::Client
     "array_filters",
   }
 
+  # :nodoc:
   getter! topology : SDAM::TopologyDescription
+  # The set of driver options.
   getter options : Options
 
   @@lock = Mutex.new(:reentrant)
@@ -34,6 +43,18 @@ class Mongo::Client
   @min_heartbeat_frequency : Time::Span = 500.milliseconds
   @topology_update = Channel(Nil).new
 
+  # Create a mongodb client instance from a mongodb URL.
+  #
+  # ```
+  # require "cryomongo"
+  #
+  # client = Mongo::Client.new "mongodb://127.0.0.1/?appname=client-example"
+  # ```
+  def initialize(connection_string : String = "mongodb://localhost:27017")
+    initialize(connection_string: connection_string, start_monitoring: true)
+  end
+
+  # :nodoc:
   def initialize(connection_string : String = "mongodb://localhost:27017", *, start_monitoring = true)
     seeds, @options, @credentials = Mongo::URI.parse(connection_string)
 
@@ -58,6 +79,7 @@ class Mongo::Client
     }
   end
 
+  # Frees all the resources associated with a client.
   def close
     @pools.each { |_, pool|
       pool.close
@@ -69,21 +91,29 @@ class Mongo::Client
   # Public Methods #
   ##################
 
-  def database(name : String)
+  # Get a newly allocated `Mongo::Database` for the database named *name*.
+  def database(name : String) : Database
     Database.new(self, name)
   end
 
-  def [](name : String)
+  # :ditto:
+  def [](name : String) : Database
     database(name)
   end
 
+  # Execute a command on the server.
+  #
+  # ```
+  # # First argument is the `Mongo::Commands`.
+  # client.command(Mongo::Commands::DropDatabase, database: "database_name")
+  # ```
   def command(
     command cmd,
-    ignore_errors = false,
     write_concern : WriteConcern? = nil,
     read_concern : ReadConcern? = nil,
     read_preference : ReadPreference? = nil,
     server_description : SDAM::ServerDescription? = nil,
+    ignore_errors = false,
     **args
   )
     args = WithWriteConcern.mix_write_concern(cmd, args, write_concern || @write_concern)
@@ -157,7 +187,7 @@ class Mongo::Client
       close_connection_pool(desc)
     }
     raise error
-  rescue error : Mongo::CommandError
+  rescue error : Mongo::Error::Command
     Mongo::Log.error { "Server error: #{error}" }
     # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-discovery-and-monitoring.rst#not-master-and-node-is-recovering
     if error.state_change?
@@ -175,6 +205,9 @@ class Mongo::Client
     release_connection(connection) if connection
   end
 
+  # Provides a list of all existing databases along with basic statistics about them.
+  #
+  # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/listDatabases).
   def list_databases(
     *,
     filter = nil,
@@ -189,6 +222,8 @@ class Mongo::Client
   end
 
   # Returns a document that provides an overview of the database’s state.
+  #
+  # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/serverStatus/).
   def status(*, repl : Int32? = nil, metrics : Int32? = nil, locks : Int32? = nil, mirrored_reads : Int32? = nil, latch_analysis : Int32? = nil) : BSON?
     self.command(Commands::ServerStatus, options: {
       repl:           repl,
@@ -200,16 +235,17 @@ class Mongo::Client
   end
 
   # An administrative command that returns usage statistics for each collection.
+  #
+  # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/top).
   def top : BSON?
     self.command(Commands::Top)
   end
 
   # Allows a client to observe all changes in a cluster.
-  # Excludes system collections.
-  # Excludes the "config", "local", and "admin" databases.
-  # Since: 4.0
-  # @returns a change stream on all collections in all databases in a cluster
-  # See: https://docs.mongodb.com/manual/reference/system-collections/
+  #
+  # Returns a change stream on all collections in all databases in a cluster.
+  #
+  # NOTE: Excludes system collections.
   def watch(
     pipeline : Array = [] of BSON,
     *,
@@ -251,7 +287,7 @@ class Mongo::Client
 
     loop do
       unless topology.compatible
-        raise ServerSelectionError.new topology.compatibility_error
+        raise Error::ServerSelection.new topology.compatibility_error
       end
 
       # Find suitable servers by topology type and operation type
@@ -273,7 +309,7 @@ class Mongo::Client
 
       # If more than serverSelectionTimeoutMS milliseconds have elapsed since the selection start time, raise a server selection error
       if Time.utc > selection_timeout
-        raise ServerSelectionError.new "Timeout (#{@options.server_selection_timeout}) reached while trying to select a suitable server with read preference #{read_preference.mode}."
+        raise Error::ServerSelection.new "Timeout (#{@options.server_selection_timeout}) reached while trying to select a suitable server with read preference #{read_preference.mode}."
       end
     end
   end

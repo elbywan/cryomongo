@@ -4,25 +4,40 @@ require "./concerns"
 require "./read_preference"
 require "./gridfs"
 
+# A `Database` provides access to a MongoDB database.
+#
+# ```
+# database = client["database_name"]
+# ```
 class Mongo::Database
   include WithReadConcern
   include WithWriteConcern
   include WithReadPreference
 
+  # The underlying MongoDB client.
   getter client : Mongo::Client
+  # The database name.
   getter name : String
 
+  # :nodoc:
   def initialize(@client, @name)
   end
 
+  # Execute a command on the server targeting the database.
+  #
+  # Will automatically set the *database* arguments.
+  #
+  # See: `Mongo::Client.command`
   def command(operation, write_concern : WriteConcern? = nil, read_concern : ReadConcern? = nil, read_preference : ReadPreference? = nil, **args)
     @client.command(operation, **args, database: @name, write_concern: write_concern || @write_concern, read_concern: read_concern || @read_concern, read_preference: read_preference || @read_preference)
   end
 
+  # Get a newly allocated `Mongo::Collection` for the collection named *name*.
   def collection(collection : Collection::CollectionKey) : Mongo::Collection
     Collection.new(self, collection)
   end
 
+  # :ditto:
   def [](collection : Collection::CollectionKey) : Mongo::Collection
     self.collection(collection)
   end
@@ -30,10 +45,7 @@ class Mongo::Database
   # Runs an aggregation framework pipeline on the database for pipeline stages
   # that do not require an underlying collection, such as $currentOp and $listLocalSessions.
   #
-  # Note: result iteration should be backed by a cursor. Depending on the implementation,
-  # the cursor may back the returned Iterable instance or an iterator that it produces.
-  #
-  # See: https://docs.mongodb.com/manual/reference/command/aggregate/#dbcmd.aggregate
+  # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/aggregate/).
   def aggregate(
     pipeline : Array,
     *,
@@ -60,6 +72,11 @@ class Mongo::Database
     maybe_result.try { |result| Cursor.new(@client, result) }
   end
 
+  # Retrieve information, i.e. the name and options, about the collections and views in a database.
+  #
+  # Specifically, the command returns a document that contains information with which to create a cursor to the collection information.
+  #
+  # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/listCollections/).
   def list_collections(
     *,
     filter = nil,
@@ -74,6 +91,9 @@ class Mongo::Database
     Cursor.new(@client, result)
   end
 
+  # Returns a `Mongo::GridFS` instance configured with the arguments provided.
+  #
+  # NOTE: [for more details about GridFS, please check the official MongoDB manual](https://docs.mongodb.com/manual/core/gridfs/).
   def grid_fs(
     bucket_name : String = "fs",
     *,
@@ -92,11 +112,35 @@ class Mongo::Database
     )
   end
 
-  # Allows a client to observe all changes in a database.
-  # Excludes system collections.
-  # @returns a change stream on all collections in a database
-  # Since: 4.0
-  # See: https://docs.mongodb.com/manual/reference/system-collections/
+  # Returns a `ChangeStream::Cursor` watching all the database collection.
+  #
+  # NOTE: Excludes system collections.
+  #
+  # ```
+  # client = Mongo::Client.new
+  # database = client["db"]
+  #
+  # spawn {
+  #   cursor = database.watch(
+  #     [
+  #       {"$match": {"operationType": "insert"}},
+  #     ],
+  #     max_await_time_ms: 10000
+  #   )
+  #   # cursor.of(BSON) converts to the Mongo::ChangeStream::Document(BSON) type.
+  #   cursor.of(BSON).each { |doc|
+  #     puts doc.to_bson.to_json
+  #   }
+  # }
+  #
+  # 100.times do |i|
+  #   database["collection"].insert_one({count: i})
+  # end
+  #
+  # sleep
+  # ```
+  #
+  # NOTE: [for more details, please check the official manual](https://docs.mongodb.com/manual/changeStreams/index.html).
   def watch(
     pipeline : Array = [] of BSON,
     *,
@@ -128,6 +172,8 @@ class Mongo::Database
   end
 
   # Returns a variety of storage statistics for the database.
+  #
+  # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/dbStats/).
   def stats(*, scale : Int32? = nil) : BSON?
     self.command(Commands::DbStats, options: {scale: scale})
   end
