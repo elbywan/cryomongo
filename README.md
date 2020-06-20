@@ -1,10 +1,19 @@
-# cryomongo | [![Build Status](https://travis-ci.org/elbywan/cryomongo.svg?branch=master)](https://travis-ci.org/elbywan/cryomongo)
+<div align="center">
+	<img src="icon.svg" width="128" height="128" />
+	<h1>cryomongo</h1>
+  <h3>A MongoDB driver written in pure Crystal.</h3>
+  <a href="https://travis-ci.org/elbywan/cryomongo"><img alt="travis-badge" src="https://travis-ci.org/elbywan/cryomongo.svg?branch=master"></a>
+  <a href="https://github.com/elbywan/cryomongo/releases"><img alt="GitHub release (latest SemVer)" src="https://img.shields.io/github/v/release/elbywan/cryomongo"></a>
+  <a href="https://github.com/elbywan/cryomongo/blob/master/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/elbywan/cryomongo"></a>
+</div>
 
-### A pure Crystal MongoDB driver for MongoDB 3.6+.
+<hr/>
 
-#### ⚠️ Status: BETA
+#### Cryomongo is a high-performance MongoDB driver written in pure Crystal. (i.e. no C dependencies needed.)
 
-Cryomongo is a high-performance MongoDB driver written in pure Crystal. (i.e. no C dependencies needed.)
+*Compatible with MongoDB 3.6+. Tested against: 4.0 and 4.2.*
+
+**⚠️ BETA state.**
 
 ## Installation
 
@@ -360,7 +369,7 @@ puts result.to_bson
 
 The goal is to to be compliant with most of the [official MongoDB set of specifications](https://github.com/mongodb/specifications).
 
-**Implemented**
+**✅ Implemented**
 
  The following specifications are implemented:
 
@@ -383,7 +392,7 @@ The goal is to to be compliant with most of the [official MongoDB set of specifi
 - https://github.com/mongodb/specifications/tree/master/source/gridfs
 - https://github.com/mongodb/specifications/tree/master/source/change-streams
 
-**Next**
+**⏳Next**
 
 The following specifications are to be implemented next:
 
@@ -406,3 +415,7 @@ The following specifications are to be implemented next:
 ## Contributors
 
 - [elbywan](https://github.com/elbywan) - creator and maintainer
+
+## Credit
+
+- Icon made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [www.flaticon.com](www.flaticon.com).
