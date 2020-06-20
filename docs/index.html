@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
 
@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="cryomongo">
-  <title>cryomongo master-dev</title>
+  <title>cryomongo master</title>
   <script type="text/javascript">
   CrystalDocs.base_path = "";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        master-dev
+        master
       </span>
     </div>
   </div>
@@ -708,17 +708,16 @@
 
 
 <div class="main-content">
-<h1><a id="cryomongo-build-statushttpstravis-ci.orgelbywancryomongo.svgbranchmasterhttpstravis-ci.orgelbywancryomongo" class="anchor" href="#cryomongo-build-statushttpstravis-ci.orgelbywancryomongo.svgbranchmasterhttpstravis-ci.orgelbywancryomongo">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>cryomongo | <a href="https://travis-ci.org/elbywan/cryomongo" target="_blank"><img src="https://travis-ci.org/elbywan/cryomongo.svg?branch=master" alt="Build Status"/></a></h1>
+<p>&lt;div align="center">
+	&lt;img src="icon.svg" width="128" height="128" />
+	&lt;h1>cryomongo&lt;/h1>
+  &lt;h3>A MongoDB driver written in pure Crystal.&lt;/h3>
+  &lt;a href="https://travis-ci.org/elbywan/cryomongo">&lt;img alt="travis-badge" src="https://travis-ci.org/elbywan/cryomongo.svg?branch=master">&lt;/a>
+  &lt;a href="https://github.com/elbywan/cryomongo/tags">&lt;img alt="GitHub tag (latest SemVer)" src="https://img.shields.io/github/v/tag/elbywan/cryomongo">&lt;/a>
+  &lt;a href="https://github.com/elbywan/cryomongo/blob/master/LICENSE">&lt;img alt="GitHub" src="https://img.shields.io/github/license/elbywan/cryomongo">&lt;/a>
+&lt;/div></p>
 
-<h3><a id="a-pure-crystal-mongo-db-driver." class="anchor" href="#a-pure-crystal-mongo-db-driver.">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>A pure Crystal MongoDB driver.</h3>
+<p>&lt;hr/></p>
 
 <h4><a id="cryomongo-is-a-high-performance-mongo-db-driver-written-in-pure-crystal.-i.e.-no-c-dependencies-needed." class="anchor" href="#cryomongo-is-a-high-performance-mongo-db-driver-written-in-pure-crystal.-i.e.-no-c-dependencies-needed.">
   <svg class="octicon-link" aria-hidden="true">
@@ -726,7 +725,7 @@
   </svg>
 </a>Cryomongo is a high-performance MongoDB driver written in pure Crystal. (i.e. no C dependencies needed.)</h4>
 
-<p><strong>Compatible with MongoDB 3.6+. Tested against: 4.0 and 4.2.</strong></p>
+<p><em>Compatible with MongoDB 3.6+. Tested against: 4.0 and 4.2.</em></p>
 
 <p><strong>⚠️ BETA state.</strong></p>
 
@@ -1108,13 +1107,13 @@ puts result.to_bson</code></pre>
 
 <p>The goal is to to be compliant with most of the <a href="https://github.com/mongodb/specifications" target="_blank">official MongoDB set of specifications</a>.</p>
 
-<p><strong>Implemented</strong></p>
+<p><strong>✅ Implemented</strong></p>
 
 <p>The following specifications are implemented:</p>
 
 <ul><li>https://github.com/mongodb/specifications/tree/master/source/message</li><li>https://github.com/mongodb/specifications/tree/master/source/crud</li><li>https://github.com/mongodb/specifications/blob/master/source/find_getmore_killcursors_commands.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/driver-bulk-update.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/read-write-concern/read-write-concern.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-collections.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-databases.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-indexes.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/connection-string</li><li>https://github.com/mongodb/specifications/tree/master/source/uri-options (except validation)</li><li>https://github.com/mongodb/specifications/tree/master/source/server-discovery-and-monitoring</li><li>https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/max-staleness/max-staleness.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/connection-monitoring-and-pooling (loosely - using the crystal-db pool)</li><li>https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst (SHA1 / SHA256 only - without SASLprep)</li><li>https://github.com/mongodb/specifications/blob/master/source/index-management.rst (no IndexView fluid syntax)</li><li>https://github.com/mongodb/specifications/tree/master/source/gridfs</li><li>https://github.com/mongodb/specifications/tree/master/source/change-streams</li></ul>
 
-<p><strong>Next</strong></p>
+<p><strong>⏳Next</strong></p>
 
 <p>The following specifications are to be implemented next:</p>
 
@@ -1135,6 +1134,14 @@ puts result.to_bson</code></pre>
 </a>Contributors</h2>
 
 <ul><li><a href="https://github.com/elbywan" target="_blank">elbywan</a> - creator and maintainer</li></ul>
+
+<h2><a id="credit" class="anchor" href="#credit">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Credit</h2>
+
+<ul><li>Icon made by <a href="https://www.flaticon.com/authors/smashicons" target="_blank">Smashicons</a> from <a href="www.flaticon.com" target="_blank">www.flaticon.com</a>.</li></ul>
 </div>
 </body>
 </html>
