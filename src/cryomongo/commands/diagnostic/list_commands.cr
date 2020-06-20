@@ -7,7 +7,7 @@ module Mongo::Commands::ListCommands
   def command
     Commands.make({
       listCommands: 1,
-      "$db":    "admin",
+      "$db":        "admin",
     })
   end
 

@@ -6,7 +6,7 @@ module Mongo::Commands::Top
 
   def command
     Commands.make({
-      top: 1,
+      top:   1,
       "$db": "admin",
     })
   end

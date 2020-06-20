@@ -675,7 +675,7 @@ class Mongo::Collection
         keys = item["keys"].as(BSON)
         options = item["options"]?.try(&.as(BSON)) || BSON.new
         if options.["name"]?
-          BSON.new({ key: keys }).append(options)
+          BSON.new({key: keys}).append(options)
         else
           index_name = keys.reduce([] of String) { |acc, (k, v)|
             acc << "#{k}_#{v}"
@@ -747,7 +747,7 @@ class Mongo::Collection
       client: @database.client,
       database: @database.name,
       collection: name,
-      pipeline: pipeline.map{ |elt| BSON.new(elt) },
+      pipeline: pipeline.map { |elt| BSON.new(elt) },
       full_document: full_document,
       resume_after: resume_after,
       start_after: start_after,
@@ -762,6 +762,6 @@ class Mongo::Collection
 
   # Returns a variety of storage statistics for the collection.
   def stats(*, scale : Int32? = nil) : BSON?
-    self.command(Commands::CollStats, options: { scale: scale })
+    self.command(Commands::CollStats, options: {scale: scale})
   end
 end

@@ -7,7 +7,7 @@ module Mongo::Commands::ShardConnPoolStats
   def command
     Commands.make({
       shardConnPoolStats: 1,
-      "$db": "admin",
+      "$db":              "admin",
     })
   end
 

@@ -7,7 +7,7 @@ module Mongo::Commands::ConnectionStatus
   def command(options)
     Commands.make({
       connectionStatus: 1,
-      "$db":     "admin",
+      "$db":            "admin",
     }, options)
   end
 

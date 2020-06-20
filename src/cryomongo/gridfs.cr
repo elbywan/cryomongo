@@ -2,7 +2,6 @@ require "./database"
 require "./error"
 
 module Mongo::GridFS
-
   @[BSON::Options(camelize: "lower")]
   private struct File(FileID)
     include BSON::Serializable
@@ -25,7 +24,6 @@ module Mongo::GridFS
   end
 
   class Bucket
-
     @completed_indexes_check = false
 
     def initialize(
@@ -81,8 +79,8 @@ module Mongo::GridFS
           data = buffer.to_slice[0, read_bytes]
           chunks.insert_one({
             files_id: id,
-            n: index,
-            data: data,
+            n:        index,
+            data:     data,
           }, write_concern: write_concern)
           length += read_bytes
           index += 1_i64
@@ -92,12 +90,12 @@ module Mongo::GridFS
         end
 
         bucket.insert_one({
-          _id: id,
-          length: length,
-          chunkSize: chunk_size,
+          _id:        id,
+          length:     length,
+          chunkSize:  chunk_size,
           uploadDate: Time.utc,
-          filename: filename,
-          metadata: metadata
+          filename:   filename,
+          metadata:   metadata,
         }, write_concern: write_concern)
       ensure
         reader.close
@@ -157,20 +155,20 @@ module Mongo::GridFS
         data = buffer.to_slice[0, read_bytes]
         chunks.insert_one({
           files_id: id,
-          n: index,
-          data: data
+          n:        index,
+          data:     data,
         }, write_concern: write_concern)
         length += read_bytes
         index += 1_i64
       end
 
       bucket.insert_one({
-        _id: id,
-        length: length,
-        chunkSize: chunk_size_bytes,
+        _id:        id,
+        length:     length,
+        chunkSize:  chunk_size_bytes,
         uploadDate: Time.utc,
-        filename: filename,
-        metadata: metadata
+        filename:   filename,
+        metadata:   metadata,
       }, write_concern: write_concern)
 
       id
@@ -257,8 +255,8 @@ module Mongo::GridFS
     # Given a @id, delete this stored file’s files collection document and
     # associated chunks from a GridFS bucket.
     def delete(id : FileID) : Nil forall FileID
-      delete_result = bucket.delete_one({ _id: id }, write_concern: write_concern)
-      chunks.delete_many({ files_id: id }, write_concern: write_concern)
+      delete_result = bucket.delete_one({_id: id}, write_concern: write_concern)
+      chunks.delete_many({files_id: id}, write_concern: write_concern)
       raise Mongo::Error.new "File not found." if delete_result.try &.n == 0
     end
 
@@ -291,7 +289,7 @@ module Mongo::GridFS
 
     # Renames the stored file with the specified @id.
     def rename(id : FileID, new_filename : String) : Nil forall FileID
-      bucket.update_one({ _id: id }, { "$set": { filename: new_filename } })
+      bucket.update_one({_id: id}, {"$set": {filename: new_filename}})
     end
 
     # Drops the files and chunks collections associated with this bucket.
@@ -312,13 +310,13 @@ module Mongo::GridFS
       def check_indexes(bucket, chunks)
         # see: https://github.com/mongodb/specifications/blob/master/source/gridfs/gridfs-spec.rst#before-write-operations
         return if @completed_indexes_check
-        check_collection_index(bucket, { filename: 1, uploadDate: 1 })
-        check_collection_index(chunks, { files_id: 1, n: 1 })
+        check_collection_index(bucket, {filename: 1, uploadDate: 1})
+        check_collection_index(chunks, {files_id: 1, n: 1})
         @completed_indexes_check = true
       end
 
       def check_collection_index(collection, keys)
-        return if collection.find_one(projection: { _id: 1 })
+        return if collection.find_one(projection: {_id: 1})
 
         begin
           indexes = collection.list_indexes.to_a
@@ -326,10 +324,10 @@ module Mongo::GridFS
           # Collection might not exist and listing indexes will raise.
         end
         return if indexes.try &.any? { |index|
-          index["key"]?.try &.as(BSON).all? { |key, value|
-            keys[key]?.try &.== value
-          }
-        }
+                    index["key"]?.try &.as(BSON).all? { |key, value|
+                      keys[key]?.try &.== value
+                    }
+                  }
 
         collection.create_index(
           keys: keys
@@ -348,7 +346,7 @@ module Mongo::GridFS
       end
 
       def get_file(id : FileID) : File(FileID) forall FileID
-        file = bucket.find_one({ _id: id }, read_preference: read_preference, read_concern: read_concern)
+        file = bucket.find_one({_id: id}, read_preference: read_preference, read_concern: read_concern)
         raise Mongo::Error.new "Cannot find file with id: #{id}" unless file
         File(FileID).from_bson(file)
       end
@@ -356,9 +354,9 @@ module Mongo::GridFS
       def get_file_by_name(name : String, revision : Int32 = -1) : File(BSON::Value)
         sort_order = revision >= 0 ? 1 : -1
         file = bucket.find_one(
-          { filename: name },
-          sort: { uploadDate: sort_order },
-          skip: revision >= 0 ? revision : -revision-1,
+          {filename: name},
+          sort: {uploadDate: sort_order},
+          skip: revision >= 0 ? revision : -revision - 1,
           read_preference: read_preference,
           read_concern: read_concern
         )
@@ -371,7 +369,7 @@ module Mongo::GridFS
       end
 
       def get_chunk(id : FileID, n : Int64) forall FileID
-        chunk = chunks.find_one({ files_id: id, n: n }, read_preference: read_preference, read_concern: read_concern)
+        chunk = chunks.find_one({files_id: id, n: n}, read_preference: read_preference, read_concern: read_concern)
         raise Mongo::Error.new "Chunk not found" unless chunk
         Chunk(FileID).from_bson(chunk)
       end

@@ -7,7 +7,7 @@ module Mongo::Commands::ConnPoolStats
   def command
     Commands.make({
       connPoolStats: 1,
-      "$db":     "admin",
+      "$db":         "admin",
     }, options)
   end
 

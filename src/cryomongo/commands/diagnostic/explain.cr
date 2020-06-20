@@ -7,7 +7,7 @@ module Mongo::Commands::Explain
   def command(database : String, explain, options)
     Commands.make({
       explain: BSON.new(explain),
-      "$db":    database,
+      "$db":   database,
     }, options)
   end
 

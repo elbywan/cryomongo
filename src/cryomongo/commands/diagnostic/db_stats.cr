@@ -7,7 +7,7 @@ module Mongo::Commands::DbStats
   def command(database : String, options)
     Commands.make({
       dbStats: 1,
-      "$db":     database,
+      "$db":   database,
     }, options)
   end
 

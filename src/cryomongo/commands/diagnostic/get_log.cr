@@ -7,7 +7,7 @@ module Mongo::Commands::GetLog
   def command(log_value : String)
     Commands.make({
       getLog: log_value,
-      "$db":    "admin",
+      "$db":  "admin",
     })
   end
 

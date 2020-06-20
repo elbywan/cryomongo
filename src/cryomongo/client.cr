@@ -14,8 +14,8 @@ class Mongo::Client
   include WithWriteConcern
   include WithReadPreference
 
-  MIN_WIRE_VERSION = 6
-  MAX_WIRE_VERSION = 8
+  MIN_WIRE_VERSION                        = 6
+  MAX_WIRE_VERSION                        = 8
   UNACKNOWLEDGED_WRITE_PROHIBITED_OPTIONS = {
     "hint",
     "collation",
@@ -191,11 +191,11 @@ class Mongo::Client
   # Returns a document that provides an overview of the database’s state.
   def status(*, repl : Int32? = nil, metrics : Int32? = nil, locks : Int32? = nil, mirrored_reads : Int32? = nil, latch_analysis : Int32? = nil) : BSON?
     self.command(Commands::ServerStatus, options: {
-      repl: repl,
-      metrics: metrics,
-      locks: locks,
+      repl:           repl,
+      metrics:        metrics,
+      locks:          locks,
       mirrored_reads: mirrored_reads,
-      latch_analysis: latch_analysis
+      latch_analysis: latch_analysis,
     })
   end
 
@@ -227,7 +227,7 @@ class Mongo::Client
       client: self,
       database: "admin",
       collection: 1,
-      pipeline: pipeline.map{ |elt| BSON.new(elt) },
+      pipeline: pipeline.map { |elt| BSON.new(elt) },
       full_document: full_document,
       resume_after: resume_after,
       start_after: start_after,

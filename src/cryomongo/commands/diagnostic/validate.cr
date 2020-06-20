@@ -7,7 +7,7 @@ module Mongo::Commands::Validate
   def command(database : String, collection : Collection::CollectionKey, options)
     Commands.make({
       validate: collection,
-      "$db": database,
+      "$db":    database,
     }, options)
   end
 

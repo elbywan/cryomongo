@@ -7,7 +7,7 @@ module Mongo::Commands::GetCmdLineOpts
   def command
     Commands.make({
       getCmdLineOpts: 1,
-      "$db":    "admin",
+      "$db":          "admin",
     })
   end
 

@@ -323,6 +323,5 @@ struct Mongo::Bulk
   end
 end
 
-
 class Mongo::Bulk::Error < Mongo::Error
 end

@@ -18,7 +18,6 @@ describe Mongo::GridFS do
   }
 
   context "features" {
-
     chunks_collection = database["gridfs_bucket.chunks"]
     chunk_size = 1000
     gridfs = database.grid_fs(bucket_name: "gridfs_bucket", chunk_size_bytes: chunk_size)
@@ -34,7 +33,7 @@ describe Mongo::GridFS do
       gridfs.drop
     }
 
-    it "should create IO streams to upload and download data", do
+    it "should create IO streams to upload and download data" do
       id = "lorem_id"
       gridfs.open_upload_stream("lorem.txt", id: id) { |stream|
         # Fragment the contents into multiple short writes to ensure that it works across fibers.
@@ -48,7 +47,7 @@ describe Mongo::GridFS do
 
       sleep 0.5
 
-      gridfs_file = gridfs.find({ _id: id }).first
+      gridfs_file = gridfs.find({_id: id}).first
       gridfs_file.filename.should eq file_name
       gridfs_file.length.should eq file_size
       gridfs_file.chunk_size.should eq chunk_size
@@ -68,7 +67,7 @@ describe Mongo::GridFS do
 
       sleep 0.5
 
-      gridfs_file = gridfs.find({ _id: id }).first
+      gridfs_file = gridfs.find({_id: id}).first
       gridfs_file.filename.should eq file_name
       gridfs_file.length.should eq file_size
       gridfs_file.chunk_size.should eq chunk_size
@@ -92,13 +91,13 @@ describe Mongo::GridFS do
         io = IO::Memory.new
         gridfs.download_to_stream_by_name("file", io, i)
         io.rewind.gets_to_end.should eq "#{i}"
-        gridfs.download_to_stream_by_name("file", io.rewind, -i-1)
+        gridfs.download_to_stream_by_name("file", io.rewind, -i - 1)
         io.rewind.gets_to_end.should eq "#{9 - i}"
 
         stream = gridfs.open_download_stream_by_name("file", i)
         stream.gets_to_end.should eq "#{i}"
         stream.close
-        stream = gridfs.open_download_stream_by_name("file", -i-1)
+        stream = gridfs.open_download_stream_by_name("file", -i - 1)
         stream.gets_to_end.should eq "#{9 - i}"
         stream.close
       }
@@ -111,7 +110,7 @@ describe Mongo::GridFS do
       }
 
       files = gridfs.find({
-        _id: { "$gte": 5 }
+        _id: {"$gte": 5},
       }).to_a
       files.size.should eq 5
 
@@ -128,16 +127,16 @@ describe Mongo::GridFS do
       }
 
       gridfs.find.to_a.size.should eq 10
-      gridfs.find({ _id: 5 }).to_a.size.should eq 1
+      gridfs.find({_id: 5}).to_a.size.should eq 1
       gridfs.delete(5)
       gridfs.find.to_a.size.should eq 9
-      gridfs.find({ _id: 5 }).to_a.size.should eq 0
+      gridfs.find({_id: 5}).to_a.size.should eq 0
     end
 
     it "should rename a file" do
       id = gridfs.upload_from_stream("file", stream: IO::Memory.new("12345678"))
       gridfs.rename(id, "file2")
-      gridfs.find({ _id: id }).first.filename.should eq "file2"
+      gridfs.find({_id: id}).first.filename.should eq "file2"
     end
 
     it "should drop all files and chunks" do
@@ -166,11 +165,11 @@ describe Mongo::GridFS do
         })
 
         tests = test_file["tests"].as_a
-        data  = test_file["data"].as_h
+        data = test_file["data"].as_h
 
         before_each {
-          files = data["files"].as_a.map{|elt| BSON.from_json(elt.to_json)}
-          chunks = data["chunks"].as_a.map{|elt| BSON.from_json(elt.to_json)}
+          files = data["files"].as_a.map { |elt| BSON.from_json(elt.to_json) }
+          chunks = data["chunks"].as_a.map { |elt| BSON.from_json(elt.to_json) }
           database["fs.files"].insert_many(files) if files.size > 0
           database["fs.chunks"].insert_many(chunks) if chunks.size > 0
           database["expected.files"].insert_many(files) if files.size > 0

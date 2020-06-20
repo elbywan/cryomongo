@@ -7,7 +7,7 @@ module Mongo::Commands::Profile
   def command(level : Int32, options)
     Commands.make({
       profile: level,
-      "$db": "admin",
+      "$db":   "admin",
     })
   end
 

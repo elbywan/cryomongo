@@ -114,7 +114,7 @@ class Mongo::Database
       client: @client,
       database: name,
       collection: 1,
-      pipeline: pipeline.map{ |elt| BSON.new(elt) },
+      pipeline: pipeline.map { |elt| BSON.new(elt) },
       full_document: full_document,
       resume_after: resume_after,
       start_after: start_after,
@@ -129,6 +129,6 @@ class Mongo::Database
 
   # Returns a variety of storage statistics for the database.
   def stats(*, scale : Int32? = nil) : BSON?
-    self.command(Commands::DbStats, options: { scale: scale })
+    self.command(Commands::DbStats, options: {scale: scale})
   end
 end

@@ -6,7 +6,7 @@ module Mongo::Commands::Ping
 
   def command
     Commands.make({
-      ping: 1,
+      ping:  1,
       "$db": "admin",
     })
   end

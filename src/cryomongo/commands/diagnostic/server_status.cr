@@ -7,7 +7,7 @@ module Mongo::Commands::ServerStatus
   def command(options)
     Commands.make({
       serverStatus: 1,
-      "$db": "admin",
+      "$db":        "admin",
     }, options)
   end
 

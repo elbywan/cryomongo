@@ -12,14 +12,13 @@ module Mongo
   end
 
   class CommandError < Error
-
     # See: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-discovery-and-monitoring.rst#not-master-and-node-is-recovering
-    RECOVERING_CODES = {11600, 11602, 13436, 189, 91}
+    RECOVERING_CODES    = {11600, 11602, 13436, 189, 91}
     RECOVERING_MESSAGES = {"not master or secondary", "node is recovering"}
-    NOT_MASTER_CODES = {10107, 13435}
+    NOT_MASTER_CODES    = {10107, 13435}
     NOT_MASTER_MESSAGES = {"not master"}
-    SHUTDOWN_CODES   = {11600, 91}
-    RESUMABLE_CODES  = {6, 7, 89, 91, 189, 262, 9001, 10107, 11600, 11602, 13435, 13436, 63, 150, 13388, 234, 133}
+    SHUTDOWN_CODES      = {11600, 91}
+    RESUMABLE_CODES     = {6, 7, 89, 91, 189, 262, 9001, 10107, 11600, 11602, 13435, 13436, 63, 150, 13388, 234, 133}
 
     def initialize(code, message)
       @code = code.try &.as(Int32) || 0
@@ -32,13 +31,13 @@ module Mongo
 
     def recovering?
       @code.in?(RECOVERING_CODES) ||
-      RECOVERING_MESSAGES.any? &.in? @message.not_nil!
+        RECOVERING_MESSAGES.any? &.in? @message.not_nil!
     end
 
     def not_master?
       @code.in?(NOT_MASTER_CODES) ||
-      self.recovering? ||
-      NOT_MASTER_MESSAGES.any? &.in? @message.not_nil!
+        self.recovering? ||
+        NOT_MASTER_MESSAGES.any? &.in? @message.not_nil!
     end
 
     def shutdown?
