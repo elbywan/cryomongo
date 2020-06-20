@@ -66,9 +66,8 @@ module Mongo
       }
     end
 
-    def to_s(io : IO)
-      io << "Write errors."
-      @errors.each &.to_s(io)
+    def message
+      @errors.join('\n')
     end
   end
 end

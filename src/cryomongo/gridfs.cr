@@ -8,7 +8,7 @@ module Mongo::GridFS
     include BSON::Serializable
 
     property _id : FileID
-    property filename : String
+    property filename : String = ""
     property length : Int64
     property chunk_size : Int64
     property upload_date : Time
@@ -183,13 +183,17 @@ module Mongo::GridFS
     def open_download_stream(id : FileID) : IO forall FileID
       file = get_file(id)
       count = chunk_count(file)
+      remaining = file.length
 
       reader, writer = IO.pipe
       spawn same_thread: true do
         count.times { |n|
           chunk = get_chunk(id, n)
+          integrity_check!(file, chunk, remaining)
           writer.write(chunk.data)
+          remaining -= chunk.data.size
         }
+      ensure
         writer.close
       end
 
@@ -201,9 +205,13 @@ module Mongo::GridFS
     def download_to_stream(id : FileID, destination : IO) : Nil forall FileID
       file = get_file(id)
       count = chunk_count(file)
+      remaining = file.length
+
       count.times { |n|
         chunk = get_chunk(id, n)
+        integrity_check!(file, chunk, remaining)
         destination.write(chunk.data)
+        remaining -= chunk.data.size
       }
     end
 
@@ -217,10 +225,14 @@ module Mongo::GridFS
       reader, writer = IO.pipe
 
       spawn same_thread: true do
+        remaining = file.length
         count.times { |n|
           chunk = get_chunk(file._id, n)
+          integrity_check!(file, chunk, remaining)
           writer.write(chunk.data)
+          remaining -= chunk.data.size
         }
+      ensure
         writer.close
       end
 
@@ -232,9 +244,13 @@ module Mongo::GridFS
     def download_to_stream_by_name(filename : String, destination : IO, revision : Int32 = -1) : Nil
       file = get_file_by_name(filename, revision)
       count = chunk_count(file)
+      remaining = file.length
+
       count.times { |n|
         chunk = get_chunk(file._id, n)
+        integrity_check!(file, chunk, remaining)
         destination.write(chunk.data)
+        remaining -= chunk.data.size
       }
     end
 
@@ -286,7 +302,7 @@ module Mongo::GridFS
 
     private module Internal
       def bucket
-        @db[@bucket_name]
+        @db["#{@bucket_name}.files"]
       end
 
       def chunks
@@ -358,6 +374,12 @@ module Mongo::GridFS
         chunk = chunks.find_one({ files_id: id, n: n }, read_preference: read_preference, read_concern: read_concern)
         raise Mongo::Error.new "Chunk not found" unless chunk
         Chunk(FileID).from_bson(chunk)
+      end
+
+      def integrity_check!(file : File, chunk : Chunk, remaining : Int64)
+        if chunk.data.size != remaining && chunk.data.size < file.chunk_size
+          raise Mongo::Error.new "Wrong chunk size"
+        end
       end
     end
 
