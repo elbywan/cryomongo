@@ -3,7 +3,7 @@
 	<h1>cryomongo</h1>
   <h3>A MongoDB driver written in pure Crystal.</h3>
   <a href="https://travis-ci.org/elbywan/cryomongo"><img alt="travis-badge" src="https://travis-ci.org/elbywan/cryomongo.svg?branch=master"></a>
-  <a href="https://github.com/elbywan/cryomongo/releases"><img alt="GitHub release (latest SemVer)" src="https://img.shields.io/github/v/release/elbywan/cryomongo"></a>
+  <a href="https://github.com/elbywan/cryomongo/tags"><img alt="GitHub tag (latest SemVer)" src="https://img.shields.io/github/v/tag/elbywan/cryomongo"></a>
   <a href="https://github.com/elbywan/cryomongo/blob/master/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/elbywan/cryomongo"></a>
 </div>
 
