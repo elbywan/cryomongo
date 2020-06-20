@@ -1,12 +1,10 @@
 # cryomongo | [![Build Status](https://travis-ci.org/elbywan/cryomongo.svg?branch=master)](https://travis-ci.org/elbywan/cryomongo)
 
-### A pure Crystal MongoDB driver.
+### A pure Crystal MongoDB driver for MongoDB 3.6+.
 
-#### Cryomongo is a high-performance MongoDB driver written in pure Crystal. (i.e. no C dependencies needed.)
+#### ⚠️ Status: BETA
 
-**Compatible with MongoDB 3.6+. Tested against: 4.0 and 4.2.**
-
-**⚠️ BETA state.**
+Cryomongo is a high-performance MongoDB driver written in pure Crystal. (i.e. no C dependencies needed.)
 
 ## Installation
 
