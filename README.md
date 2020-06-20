@@ -52,22 +52,25 @@ puts collection.count_documents # => 0
 
 ## Features
 
-- **CRUD operations**
-- **Bulk operations**
-- **Read and Write Concerns**
-- **Read Preference**
-- **Authentication (SCRAM only)**
-- **Indexes**
-- **GridFS**
-- **Change Streams**
+- **[CRUD operations](https://docs.mongodb.com/manual/crud/index.html)**
+- **[Aggregation](https://docs.mongodb.com/manual/aggregation/) (except: Map-Reduce)**
+- **[Bulk](https://docs.mongodb.com/manual/reference/method/Bulk/index.html)**
+- **[Read](https://docs.mongodb.com/manual/reference/read-concern/index.html) and [Write](https://docs.mongodb.com/manual/reference/write-concern/) Concerns**
+- **[Read Preference](https://docs.mongodb.com/manual/core/read-preference/index.html)**
+- **[Authentication](https://docs.mongodb.com/manual/core/authentication/index.html) (only: SCRAM mechanisms)**
+- **[TLS encryption](https://docs.mongodb.com/manual/core/security-transport-encryption/)**
+- **[Indexes](https://docs.mongodb.com/manual/indexes/index.html)**
+- **[GridFS](https://docs.mongodb.com/manual/core/gridfs/index.html)**
+- **[Change Streams](https://docs.mongodb.com/manual/changeStreams/index.html)**
 - **[Admin/Diagnostic commands](https://elbywan.github.io/cryomongo/Mongo/Commands.html)**
-- **Standalone, Sharded or ReplicaSet topologies**
-- **Tailable and Awaitable cursors**
+- **[Tailable and Awaitable cursors](https://docs.mongodb.com/manual/core/tailable-cursors/index.html)**
+- **[Collation](https://docs.mongodb.com/manual/reference/collation/index.html)**
+- **Standalone, [Sharded](https://docs.mongodb.com/manual/sharding/) or [ReplicaSet](https://docs.mongodb.com/manual/replication/) topologies**
 
 ## Conventions
 
 - Methods and arguments names are in **snake case**.
-- Object arguments can usually be passed as a **NamedTuple**, **Hash** or a **BSON** instance.
+- Object arguments can usually be passed as a **[NamedTuple](https://crystal-lang.org/api/NamedTuple.html)**, **[Hash](https://crystal-lang.org/api/Hash.html)**, **[BSON::Serializable](https://github.com/elbywan/bson.cr#serialization)** or a **[BSON](https://elbywan.github.io/bson.cr/BSON.html)** instance.
 
 ## Documentation
 
