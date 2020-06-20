@@ -78,7 +78,7 @@ puts collection.count_documents # => 0
 
 **The generated API documentation is available [here](https://elbywan.github.io/cryomongo/Mongo.html).**
 
-### Client object
+### Connection
 
 ```crystal
 require "cryomongo"
@@ -96,13 +96,19 @@ collection = database["collection_name"]
 client.close
 ```
 
+```crystal
+# To enable SSL/TLS, use the `tls` option, alongside the `tlsCAFile` and `tlsCertificateKeyFile` options.
+uri = "mongodb://localhost:27017/?tls=true&tlsCAFile=./ca.crt&tlsCertificateKeyFile=./client.pem"
+ssl_client = Mongo::Client.new uri
+```
+
 **Links**
 
 - [Mongo::Client](https://elbywan.github.io/cryomongo/Mongo/Client.html)
 
 ### Authentication
 
-**Cryomongo only supports the SCRAM-SHA1 and SCRAM-SHA256 authentication methods without SASLprep.**
+*Cryomongo only supports the SCRAM-SHA1 and SCRAM-SHA256 authentication methods without SASLprep.*
 
 ```crystal
 require "cryomongo"
@@ -112,7 +118,7 @@ require "cryomongo"
 client = Mongo::Client.new("mongodb://username:password@localhost:27017")
 ```
 
-### CRUD operations
+### Basic operations
 
 ```crystal
 require "cryomongo"
