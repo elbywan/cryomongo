@@ -20,7 +20,7 @@ struct Mongo::Bulk
   # The target collection.
   getter collection : Mongo::Collection
   # Whether the bulk is ordered.
-  getter ordered : Bool
+  getter? ordered : Bool
 
   @models = [] of WriteModel
   @max_bson_object_size : Int32 = 16 * 1024 * 1024

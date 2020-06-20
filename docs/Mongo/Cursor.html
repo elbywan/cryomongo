@@ -734,7 +734,7 @@
 <p>This class implements the <a href="https://crystal-lang.org/api/Iterator.html" target="_blank"><code>Iterator</code></a> module under the hood.</p>
 
 <pre><code><span class="c"># Find is one of the methods that return a cursor.</span>
-cursor <span class="o">=</span> collection.find({qty: { <span class="s">&quot;$gt&quot;</span>: <span class="n">20</span> }})
+cursor <span class="o">=</span> collection.find({qty: {<span class="s">&quot;$gt&quot;</span>: <span class="n">20</span>}})
 <span class="c"># Using `to_a` iterates the cursor until the end and stores the elements inside an `Array`.</span>
 elements <span class="o">=</span> cursor.to_a
 <span class="c"># `to_a` is one of the methods inherited from the `Iterator` module.</span></code></pre>

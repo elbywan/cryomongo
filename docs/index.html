@@ -708,11 +708,11 @@
 
 
 <div class="main-content">
-<h1><a id="cryomongo" class="anchor" href="#cryomongo">
+<h1><a id="cryomongo-build-statushttpstravis-ci.orgelbywancryomongo.svgbranchmasterhttpstravis-ci.orgelbywancryomongo" class="anchor" href="#cryomongo-build-statushttpstravis-ci.orgelbywancryomongo.svgbranchmasterhttpstravis-ci.orgelbywancryomongo">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>cryomongo</h1>
+</a>cryomongo | <a href="https://travis-ci.org/elbywan/cryomongo" target="_blank"><img src="https://travis-ci.org/elbywan/cryomongo.svg?branch=master" alt="Build Status"/></a></h1>
 
 <h3><a id="a-pure-crystal-mongo-db-driver." class="anchor" href="#a-pure-crystal-mongo-db-driver.">
   <svg class="octicon-link" aria-hidden="true">
@@ -720,25 +720,15 @@
   </svg>
 </a>A pure Crystal MongoDB driver.</h3>
 
-<p>A dependencies-free MongoDB driver written in pure Crystal.</p>
-
-<p><strong>Compatible MongoDB versions: 3.6+</strong></p>
-
-<h3><a id="work-in-progress" class="anchor" href="#work-in-progress">
+<h4><a id="cryomongo-is-a-high-performance-mongo-db-driver-written-in-pure-crystal.-i.e.-no-c-dependencies-needed." class="anchor" href="#cryomongo-is-a-high-performance-mongo-db-driver-written-in-pure-crystal.-i.e.-no-c-dependencies-needed.">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>Work in progress!</h3>
+</a>Cryomongo is a high-performance MongoDB driver written in pure Crystal. (i.e. no C dependencies needed.)</h4>
 
-<p><img src="https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif" alt="Working…"/></p>
+<p><strong>Compatible with MongoDB 3.6+. Tested against: 4.0 and 4.2.</strong></p>
 
-<p><strong>Implemented</strong></p>
-
-<ul><li>https://github.com/mongodb/specifications/tree/master/source/message</li><li>https://github.com/mongodb/specifications/tree/master/source/crud</li><li>https://github.com/mongodb/specifications/blob/master/source/find_getmore_killcursors_commands.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/driver-bulk-update.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/read-write-concern/read-write-concern.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-collections.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-databases.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-indexes.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/connection-string</li><li>https://github.com/mongodb/specifications/tree/master/source/uri-options (except validation)</li><li>https://github.com/mongodb/specifications/tree/master/source/server-discovery-and-monitoring</li><li>https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/max-staleness/max-staleness.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/connection-monitoring-and-pooling (loosely - using the crystal-db pool)</li><li>https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst (SHA1 / SHA256 only - without SASLprep)</li><li>https://github.com/mongodb/specifications/blob/master/source/index-management.rst (no IndexView fluid syntax)</li><li>https://github.com/mongodb/specifications/tree/master/source/gridfs</li><li>https://github.com/mongodb/specifications/tree/master/source/change-streams</li></ul>
-
-<p><strong>Next</strong></p>
-
-<ul><li>https://github.com/mongodb/specifications/tree/master/source/causal-consistency</li><li>https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/transactions</li><li>https://github.com/mongodb/specifications/tree/master/source/command-monitoring</li><li>https://github.com/mongodb/specifications/tree/master/source/compression</li></ul>
+<p><strong>⚠️ BETA state.</strong></p>
 
 <h2><a id="installation" class="anchor" href="#installation">
   <svg class="octicon-link" aria-hidden="true">
@@ -749,7 +739,7 @@
 <ol><li>Add the dependency to your <code>shard.yml</code>:</li></ol>
 
 <pre><code class="language-yaml">dependencies:
-  mongo:
+  cryomongo:
     github: elbywan/cryomongo</code></pre>
 
 <ol><li>Run <code>shards install</code></li></ol>
@@ -760,12 +750,22 @@
   </svg>
 </a>Usage</h2>
 
+<h3><a id="minimal-working-example" class="anchor" href="#minimal-working-example">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Minimal working example</h3>
+
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
 
-client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>(<span class="s">&quot;mongodb://localhost:27017&quot;</span>)
+<span class="c"># Create a Mongo client, using a standard mongodb connection string.</span>
+client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span> <span class="c"># defaults to: &quot;mongodb://localhost:27017&quot;</span>
+
+<span class="c"># Get database and collection.</span>
 database <span class="o">=</span> client[<span class="s">&quot;database_name&quot;</span>]
 collection <span class="o">=</span> database[<span class="s">&quot;collection_name&quot;</span>]
 
+<span class="c"># Perform crud operations.</span>
 collection.insert_one({ one: <span class="n">1</span> })
 collection.replace_one({ one: <span class="n">1</span> }, { two: <span class="n">2</span> })
 bson <span class="o">=</span> collection.find_one({ two: <span class="n">2</span> })
@@ -773,15 +773,352 @@ puts bson.not_nil!.[<span class="s">&quot;two&quot;</span>] <span class="c"># =&
 collection.delete_one({ two: <span class="n">2</span> })
 puts collection.count_documents <span class="c"># =&gt; 0</span></code></pre>
 
-<p><span class="flag orange">TODO</span>  Write usage instructions here</p>
-
-<h2><a id="development" class="anchor" href="#development">
+<h2><a id="features" class="anchor" href="#features">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>Development</h2>
+</a>Features</h2>
 
-<p><span class="flag orange">TODO</span>  Write development instructions here</p>
+<ul><li><strong>CRUD operations</strong></li><li><strong>Bulk operations</strong></li><li><strong>Read and Write Concerns</strong></li><li><strong>Read Preference</strong></li><li><strong>Authentication (SCRAM only)</strong></li><li><strong>Indexes</strong></li><li><strong>GridFS</strong></li><li><strong>Change Streams</strong></li><li><strong><a href="https://elbywan.github.io/cryomongo/Mongo/Commands.html" target="_blank">Admin/Diagnostic commands</a></strong></li><li><strong>Standalone, Sharded or ReplicaSet topologies</strong></li><li><strong>Tailable and Awaitable cursors</strong></li></ul>
+
+<h2><a id="conventions" class="anchor" href="#conventions">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Conventions</h2>
+
+<ul><li>Methods and arguments names are in <strong>snake case</strong>.</li><li>Object arguments can usually be passed as a <strong>NamedTuple</strong>, <strong>Hash</strong> or a <strong>BSON</strong> instance.</li></ul>
+
+<h2><a id="documentation" class="anchor" href="#documentation">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Documentation</h2>
+
+<p><strong>The generated API documentation is available <a href="https://elbywan.github.io/cryomongo/Mongo.html" target="_blank">here</a>.</strong></p>
+
+<h3><a id="client-object" class="anchor" href="#client-object">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Client object</h3>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
+
+<span class="c"># A client can be instantiated using a standard mongodb connection string.</span>
+<span class="c"># Client options can be passed as query parameters.</span>
+<span class="c"># See: https://docs.mongodb.com/manual/reference/connection-string/index.html</span>
+client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>(<span class="s">&quot;mongodb://address:port/database?option=value&quot;</span>)
+
+<span class="c"># Instantiate objects to interact with a specific database or a collection.</span>
+database   <span class="o">=</span> client[<span class="s">&quot;database_name&quot;</span>]
+collection <span class="o">=</span> database[<span class="s">&quot;collection_name&quot;</span>]
+
+<span class="c"># Important: to free underlying resources the client must be manually closed.</span>
+client.close</code></pre>
+
+<p><strong>Links</strong></p>
+
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html" target="_blank">Mongo::Client</a></li></ul>
+
+<h3><a id="authentication" class="anchor" href="#authentication">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Authentication</h3>
+
+<p><strong>Cryomongo only supports the SCRAM-SHA1 and SCRAM-SHA256 authentication methods without SASLprep.</strong></p>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
+
+<span class="c"># To use authentication, specify a username and password when passing an URI to the client constructor.</span>
+<span class="c"># Authentication methods depend on the server configuration and on the value of the `authMechanism` query parameter.</span>
+client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>(<span class="s">&quot;mongodb://username:password@localhost:27017&quot;</span>)</code></pre>
+
+<h3><a id="crud-operations" class="anchor" href="#crud-operations">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>CRUD operations</h3>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
+
+client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+
+<span class="c"># Most CRUD operations are performed at collection-level.</span>
+collection <span class="o">=</span> client[<span class="s">&quot;database_name&quot;</span>][<span class="s">&quot;collection_name&quot;</span>]
+
+<span class="c"># The examples below are very basic, but the methods can accept all the options documented in the MongoDB manual.</span>
+
+<span class="c">## Create</span>
+
+<span class="c"># Insert a single document</span>
+collection.insert_one({key: <span class="s">&quot;value&quot;</span>})
+<span class="c"># Insert multiple documents</span>
+collection.insert_many((<span class="n">1</span>..<span class="n">100</span>).map{<span class="o">|</span>i<span class="o">|</span> { count: i }}.to_a)
+
+<span class="c">## Read</span>
+
+<span class="c"># Find a single document</span>
+document <span class="o">=</span> collection.find_one({ _id: <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.<span class="k">new</span>(<span class="s">&quot;5eed35600000000000000000&quot;</span>) })
+document.try { <span class="o">|</span>d<span class="o">|</span> puts d.to_json }
+<span class="c"># Find multiple documents.</span>
+cursor <span class="o">=</span> collection.find({ qty: { <span class="s">&quot;$gt&quot;</span>: <span class="n">4</span> }})
+elements <span class="o">=</span> cursor.to_a <span class="c"># cursor is an Iterable(BSON)</span>
+
+<span class="c">## Update</span>
+
+<span class="c"># Replace a single document.</span>
+collection.replace_one({ name: <span class="s">&quot;John&quot;</span> }, { name: <span class="s">&quot;Jane&quot;</span> })
+<span class="c"># Update a single document.</span>
+collection.update_one({ name: <span class="s">&quot;John&quot;</span> }, { <span class="s">&quot;$set&quot;</span>: { name: <span class="s">&quot;Jane&quot;</span> }})
+<span class="c"># Update multiple documents</span>
+collection.update_many({ name: { <span class="s">&quot;$in&quot;</span>: [<span class="s">&quot;John&quot;</span>, <span class="s">&quot;Jane&quot;</span>] }}, { <span class="s">&quot;$set&quot;</span>: { name: <span class="s">&quot;Jules&quot;</span> }})
+<span class="c"># Find one document and replace it</span>
+document <span class="o">=</span> collection.find_one_and_replace({ name: <span class="s">&quot;John&quot;</span> }, { name: <span class="s">&quot;Jane&quot;</span> })
+puts document.try <span class="o">&amp;</span>.[<span class="s">&quot;name&quot;</span>]
+<span class="c"># Find one document and update it</span>
+document <span class="o">=</span> collection.find_one_and_update({ name: <span class="s">&quot;John&quot;</span> }, { <span class="s">&quot;$set&quot;</span>: { name: <span class="s">&quot;Jane&quot;</span> }})
+puts document.try <span class="o">&amp;</span>.[<span class="s">&quot;name&quot;</span>]
+
+<span class="c">## Delete</span>
+
+<span class="c"># Delete one document</span>
+collection.delete_one({ age: <span class="n">20</span> })
+<span class="c"># Delete multiple documents</span>
+collection.delete_many({ age: { <span class="s">&quot;$lt&quot;</span>: <span class="n">18</span> }})
+<span class="c"># find_one_and_delete</span>
+document <span class="o">=</span> collection.find_one_and_delete({ age: { <span class="s">&quot;$lt&quot;</span>: <span class="n">18</span> }})
+puts document.try <span class="o">&amp;</span>.[<span class="s">&quot;age&quot;</span>]
+
+<span class="c"># Aggregate</span>
+
+<span class="c"># Perform an aggregation pipeline query</span>
+cursor <span class="o">=</span> collection.aggregate([
+  {<span class="s">&quot;$match&quot;</span>: { status: <span class="s">&quot;available&quot;</span> }}
+  {<span class="s">&quot;$limit&quot;</span>: <span class="n">5</span>},
+])
+cursor.try <span class="o">&amp;</span>.each { <span class="o">|</span>bson<span class="o">|</span> puts bson.to_json }
+
+<span class="c"># Distinct collection values</span>
+values <span class="o">=</span> collection.distinct(
+  key: <span class="s">&quot;field&quot;</span>,
+  filter: { age: { <span class="s">&quot;$gt&quot;</span>: <span class="n">18</span> }}
+)
+
+<span class="c"># Documents count</span>
+counter <span class="o">=</span> collection.count_documents({ age: { <span class="s">&quot;$lt&quot;</span>: <span class="n">18</span> }})
+
+<span class="c"># Estimated count</span>
+counter <span class="o">=</span> collection.estimated_document_count</code></pre>
+
+<p><strong>Links</strong></p>
+
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Collection.html" target="_blank">Mongo::Collection</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Database.html" target="_blank">Mongo::Database</a></li></ul>
+
+<h3><a id="bulk-operations" class="anchor" href="#bulk-operations">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Bulk operations</h3>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
+
+client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+
+<span class="c"># A Bulk object can be initialized by calling `.bulk` on a collection.</span>
+collection <span class="o">=</span> client[<span class="s">&quot;database_name&quot;</span>][<span class="s">&quot;collection_name&quot;</span>]
+bulk <span class="o">=</span> collection.bulk
+<span class="c"># A bulk is ordered by default.</span>
+bulk.ordered? <span class="c"># =&gt; true</span>
+
+<span class="n">500</span>.times { <span class="o">|</span>idx<span class="o">|</span>
+  <span class="c"># Build the queries by calling bulk methods multiple times.</span>
+  bulk.insert_one({number: idx})
+  bulk.delete_many({number: {<span class="s">&quot;$lt&quot;</span>: <span class="n">450</span>}})
+  bulk.replace_one({ number: idx }, { number: idx <span class="o">+</span> <span class="n">1</span>})
+}
+
+<span class="c"># Execute all the queries and return an aggregated result.</span>
+pp bulk.execute(write_concern: <span class="t">Mongo</span><span class="t">::</span><span class="t">WriteConcern</span>.<span class="k">new</span>(w: <span class="n">1</span>))</code></pre>
+
+<p><strong>Links</strong></p>
+
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Bulk.html" target="_blank">Mongo::Bulk</a></li></ul>
+
+<h3><a id="indexes" class="anchor" href="#indexes">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Indexes</h3>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
+
+client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+collection <span class="o">=</span> client[<span class="s">&quot;database_name&quot;</span>][<span class="s">&quot;collection_name&quot;</span>]
+
+<span class="c"># Create one index without options…</span>
+collection.create_index(
+  keys: {
+    <span class="s">&quot;a&quot;</span>:  <span class="n">1</span>,
+    <span class="s">&quot;b&quot;</span>:  <span class="n">-1</span>,
+  }
+)
+<span class="c"># or with options (snake_cased)…</span>
+collection.create_index(
+  keys: {
+    <span class="s">&quot;a&quot;</span>:  <span class="n">1</span>,
+    <span class="s">&quot;b&quot;</span>:  <span class="n">-1</span>,
+  },
+  options: {
+    unique: <span class="n">true</span>
+  }
+)
+<span class="c"># and optionally specify the name.</span>
+collection.create_index(
+  keys: {
+    <span class="s">&quot;a&quot;</span>:  <span class="n">1</span>,
+    <span class="s">&quot;b&quot;</span>:  <span class="n">-1</span>,
+  },
+  options: {
+    name: <span class="s">&quot;index_name&quot;</span>,
+  }
+)
+
+<span class="c"># Follow the same rules to create multiple indexes with a single method call.</span>
+collection.create_indexes([
+  {
+    keys: { a: <span class="n">1</span> }
+  },
+  {
+    keys: { b: <span class="n">2</span> }, options: { expire_after_seconds: <span class="n">3600</span> }
+  }
+])</code></pre>
+
+<p><strong>Links</strong></p>
+
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Collection.html" target="_blank">Mongo::Collection</a></li></ul>
+
+<h3><a id="grid-fs" class="anchor" href="#grid-fs">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>GridFS</h3>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
+
+client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+database <span class="o">=</span> client[<span class="s">&quot;database_name&quot;</span>]
+
+<span class="c"># A GridFS bucket belong to a database.</span>
+gridfs <span class="o">=</span> database.grid_fs
+
+<span class="c"># Upload</span>
+file <span class="o">=</span> <span class="t">File</span>.<span class="k">new</span>(<span class="s">&quot;file.txt&quot;</span>)
+id <span class="o">=</span> gridfs.upload_from_stream(<span class="s">&quot;file.txt&quot;</span>, file)
+file.close
+
+<span class="c"># Download</span>
+stream <span class="o">=</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>
+gridfs.download_to_stream(id, stream)
+puts stream.rewind.gets_to_end
+
+<span class="c"># Find</span>
+files <span class="o">=</span> gridfs.find({
+  length: {<span class="s">&quot;$gte&quot;</span>: <span class="n">5000</span>},
+})
+files.each { <span class="o">|</span>file<span class="o">|</span>
+  puts file.filename
+}
+
+<span class="c"># Delete</span>
+gridfs.delete(id)
+
+<span class="c"># And many more methods… (check the link below.)</span></code></pre>
+
+<p><strong>Links</strong></p>
+
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/GridFS/Bucket.html" target="_blank">Mongo::GridFS::Bucket</a></li></ul>
+
+<h3><a id="change-streams" class="anchor" href="#change-streams">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Change streams</h3>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
+
+<span class="c"># Change streams can watch a client, database or collection for change.</span>
+<span class="c"># This code snippet will focus on watching a single collection.</span>
+
+client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+collection <span class="o">=</span> client[<span class="s">&quot;database_name&quot;</span>][<span class="s">&quot;collection_name&quot;</span>]
+
+spawn {
+  cursor <span class="o">=</span> collection.watch(
+    [
+      {<span class="s">&quot;$match&quot;</span>: {<span class="s">&quot;operationType&quot;</span>: <span class="s">&quot;insert&quot;</span>}},
+    ],
+    max_await_time_ms: <span class="n">10000</span>
+  )
+  <span class="c"># cursor.of(BSON) converts fetched elements to the Mongo::ChangeStream::Document(BSON) type.</span>
+  cursor.<span class="k">of</span>(<span class="t">BSON</span>).each { <span class="o">|</span>doc<span class="o">|</span>
+    puts doc.document_key
+    puts doc.full_document.to_json
+  }
+}
+
+<span class="n">100</span>.times <span class="k">do</span> <span class="o">|</span>i<span class="o">|</span>
+  collection.insert_one({count: i})
+<span class="k">end</span>
+
+sleep</code></pre>
+
+<p><strong>Links</strong></p>
+
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/ChangeStream/Cursor.html" target="_blank">Mongo::ChangeStream::Cursor</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/ChangeStream/Document.html" target="_blank">Mongo::ChangeStream::Document</a></li></ul>
+
+<h2><a id="raw-commands" class="anchor" href="#raw-commands">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Raw commands</h2>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
+
+<span class="c"># Commands can be run on a client, database or collection depending on the command target.</span>
+<span class="c"># This snippet will demonstrate how to run a command against the client object.</span>
+
+client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+
+result <span class="o">=</span> client.command(<span class="t">Mongo</span><span class="t">::</span><span class="t">Commands</span><span class="t">::</span><span class="t">ServerStatus</span>, options: {
+  repl: <span class="n">0</span>
+})
+puts result.to_bson</code></pre>
+
+<p><strong>Links</strong></p>
+
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Commands.html" target="_blank">Mongo::Commands</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,ignore_errors=false,**args" target="_blank">Mongo::Client#command</a>-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Database.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,**args" target="_blank">Mongo::Database#command</a>-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Collection.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,**args" target="_blank">Mongo::Collection#command</a>-instance-method)</li></ul>
+
+<h2><a id="specifications" class="anchor" href="#specifications">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Specifications</h2>
+
+<p>The goal is to to be compliant with most of the <a href="https://github.com/mongodb/specifications" target="_blank">official MongoDB set of specifications</a>.</p>
+
+<p><strong>Implemented</strong></p>
+
+<p>The following specifications are implemented:</p>
+
+<ul><li>https://github.com/mongodb/specifications/tree/master/source/message</li><li>https://github.com/mongodb/specifications/tree/master/source/crud</li><li>https://github.com/mongodb/specifications/blob/master/source/find_getmore_killcursors_commands.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/driver-bulk-update.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/read-write-concern/read-write-concern.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-collections.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-databases.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-indexes.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/connection-string</li><li>https://github.com/mongodb/specifications/tree/master/source/uri-options (except validation)</li><li>https://github.com/mongodb/specifications/tree/master/source/server-discovery-and-monitoring</li><li>https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/max-staleness/max-staleness.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/connection-monitoring-and-pooling (loosely - using the crystal-db pool)</li><li>https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst (SHA1 / SHA256 only - without SASLprep)</li><li>https://github.com/mongodb/specifications/blob/master/source/index-management.rst (no IndexView fluid syntax)</li><li>https://github.com/mongodb/specifications/tree/master/source/gridfs</li><li>https://github.com/mongodb/specifications/tree/master/source/change-streams</li></ul>
+
+<p><strong>Next</strong></p>
+
+<p>The following specifications are to be implemented next:</p>
+
+<ul><li>https://github.com/mongodb/specifications/tree/master/source/causal-consistency</li><li>https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/transactions</li><li>https://github.com/mongodb/specifications/tree/master/source/command-monitoring</li><li>https://github.com/mongodb/specifications/tree/master/source/compression</li></ul>
 
 <h2><a id="contributing" class="anchor" href="#contributing">
   <svg class="octicon-link" aria-hidden="true">

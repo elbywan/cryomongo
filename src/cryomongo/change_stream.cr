@@ -35,7 +35,7 @@ module Mongo::ChangeStream
     #
     # Contains a description of updated and removed fields in this
     # operation.
-    getter update_description: UpdateDescription? = nil
+    getter update_description : UpdateDescription? = nil
 
     # Always present for operations of type ‘insert’ and ‘replace’. Also
     # present for operations of type ‘update’ if the user has specified ‘updateLookup’
@@ -79,8 +79,7 @@ module Mongo::ChangeStream
       read_concern: ReadConcern?,
       read_preference: ReadPreference?,
       collection: Collection::CollectionKey,
-      database: String
-    )
+      database: String)
 
     # :nodoc:
     def initialize(@client : Mongo::Client, **@options)
@@ -122,9 +121,9 @@ module Mongo::ChangeStream
         if resume_token
           result = init(
             **@options.merge({
-              resume_after: resume_token,
-              start_after: nil,
-              start_at_operation_time: nil
+              resume_after:            resume_token,
+              start_after:             nil,
+              start_at_operation_time: nil,
             })
           ).not_nil!
         else
@@ -179,24 +178,24 @@ module Mongo::ChangeStream
         read_preference: read_preference,
         options: {
           max_time_ms: max_time_ms,
-          batch_size: batch_size,
-          collation: collation,
+          batch_size:  batch_size,
+          collation:   collation,
         }
       )
     end
 
     private def make_pipeline(*, pipeline, full_document, resume_after, start_after, start_at_operation_time)
       change_stream_stage = Tools.merge_bson(NamedTuple.new, {
-        full_document: full_document,
-        resume_after: resume_after,
+        full_document:           full_document,
+        resume_after:            resume_after,
         start_at_operation_time: start_at_operation_time.try { |time| BSON::Timestamp.new(time.to_unix.to_u32, 1_u32) },
-        start_after: start_after,
-        allChangesForCluster: (@options["database"]? == "admin") || nil,
+        start_after:             start_after,
+        allChangesForCluster:    (@options["database"]? == "admin") || nil,
       })
       [
         BSON.new({
-          "$changeStream": change_stream_stage
-        })
+          "$changeStream": change_stream_stage,
+        }),
       ].concat(pipeline)
     end
   end

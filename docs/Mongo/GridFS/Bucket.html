@@ -1258,7 +1258,7 @@ sleep <span class="n">1</span></code></pre>
 
 <pre><code>gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 gridfs.open_upload_stream(filename: <span class="s">&quot;file.txt&quot;</span>, chunk_size_bytes: <span class="n">1024</span>, metadata: {hello: <span class="s">&quot;world&quot;</span>}) { <span class="o">|</span>io<span class="o">|</span>
- io <span class="o">&lt;&lt;</span> <span class="s">&quot;some text&quot;</span>
+  io <span class="o">&lt;&lt;</span> <span class="s">&quot;some text&quot;</span>
 }
 sleep <span class="n">1</span></code></pre>
         </div>
