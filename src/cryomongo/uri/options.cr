@@ -72,7 +72,7 @@ struct Mongo::Options
   getter tls_insecure : Bool? = nil
   # Default write concern "w" field for the client
   getter w : Int32? = nil
-  # The maximum number of clients or connections able to be created by a pool at a given time
+  # The maximum amount of time a fiber can wait for a connection to become available
   getter wait_queue_timeout : Time::Span? = nil
   # Default write concern "wtimeout" field for the client
   getter w_timeout : Time::Span? = nil

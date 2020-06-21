@@ -14,10 +14,10 @@ module Mongo
     # The *w* option requests acknowledgment that the write operation has propagated to a specified number of mongod instances or to mongod instances with specified tags.
     property w : (Int32 | String)? = nil
     # This option specifies a time limit, in milliseconds, for the write concern. *wtimeout* is only applicable for w values greater than 1.
-    property wtimeout : Int64? = nil
+    property w_timeout : Int64? = nil
 
     # Create a WriteConcern instance.
-    def initialize(@j = nil, @w = nil, @wtimeout = nil)
+    def initialize(@j : Bool? = nil, @w : (Int32? | String)? = nil, @w_timeout : Int64? = nil)
       raise Mongo::Error.new "Invalid write concern" if @j == true && w == 0
     end
   end

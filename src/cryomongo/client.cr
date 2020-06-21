@@ -58,6 +58,14 @@ class Mongo::Client
   def initialize(connection_string : String = "mongodb://localhost:27017", *, options : Mongo::Options = Mongo::Options.new, start_monitoring = true)
     seeds, @options, @credentials = Mongo::URI.parse(connection_string, options)
 
+    if (w = @options.w) || (w_timeout = @options.w_timeout) || (journal = @options.journal)
+      @write_concern = WriteConcern.new(w: w, w_timeout: w_timeout.try &.milliseconds.to_i64, j: journal)
+    end
+
+    if read_concern_level = @options.read_concern_level
+      @read_concern = ReadConcern.new(level: read_concern_level)
+    end
+
     if read_pref = @options.read_preference
       @read_preference = ReadPreference.new(
         mode: read_pref,
@@ -318,7 +326,8 @@ class Mongo::Client
     @pools[server_description] ||= DB::Pool(Mongo::Connection).new(
       initial_pool_size: @options.min_pool_size,
       max_pool_size: @options.max_pool_size,
-      max_idle_pool_size: @options.min_pool_size
+      max_idle_pool_size: @options.min_pool_size,
+      checkout_timeout: @options.wait_queue_timeout.try(&.milliseconds.to_f64) || 5.0
     ) do
       connection = Mongo::Connection.new(server_description, @credentials, @options)
       result, round_trip_time = connection.handshake(send_metadata: true, appname: @options.appname)
