@@ -88,7 +88,7 @@ require "cryomongo"
 # Client options can be passed as query parameters…
 client = Mongo::Client.new("mongodb://address:port/database?appname=MyApp")
 # …or with a Mongo::Options instance…
-options = Mongo::Options(appname: "MyApp")
+options = Mongo::Options.new(appname: "MyApp")
 client = Mongo::Client.new("mongodb://address:port/database", options)
 # …or both.
 
