@@ -2,6 +2,8 @@
 #
 # NOTE: [For more details, see the uri options specification document](https://github.com/mongodb/specifications/blob/master/source/uri-options/uri-options.rst).
 struct Mongo::Options
+  include Tools::Initializer
+
   # Passed into the server in the client metadata as part of the connection handshake
   getter appname : String? = nil
   # The authentication mechanism method to use for connection to the server
@@ -77,19 +79,20 @@ struct Mongo::Options
   # Specifies the level of compression when using zlib to compress wire protocol messages; -1 signifies the default level, 0 signifies no compression, 1 signifies the fastest speed, and 9 signifies the best compression
   getter zlib_compression_level : Int32? = nil
 
-  getter raw : HTTP::Params
+  getter! raw : HTTP::Params
 
-  def initialize(options_hash : HTTP::Params)
+  def mix_with_query_params(options_hash : HTTP::Params)
     @raw = HTTP::Params.parse HTTP::Params.build { |form|
       options_hash.each { |key, value|
         form.add key.downcase, value
       }
     }
 
-    validate(@raw)
+    validate(raw)
 
     {% begin %}
       {% for ivar in @type.instance_vars %}
+        {% default_value = ivar.default_value %}
         {% types = ivar.type.union_types %}
 
         {% if types.includes? Time::Span %}
@@ -97,29 +100,31 @@ struct Mongo::Options
         {% else %}
           {% option_name = ivar.name.gsub(/_/, "").stringify %}
         {% end %}
-        option = @raw[{{option_name}}]?
+        option = raw[{{option_name}}]?
 
         unless option.nil? || option.empty?
-          begin
-            {% if types.includes? Bool %}
-              if option == "true"
-                @{{ivar.name.id}} = true
-              elsif option == "false"
-                @{{ivar.name.id}} = false
-              end
-            {% elsif types.includes? Int32 %}
-              @{{ivar.name.id}} = option.to_i32
-            {% elsif types.includes? Int64 %}
-              @{{ivar.name.id}} = option.to_i64
-            {% elsif types.includes? Time::Span %}
-              @{{ivar.name.id}} = option.to_i32.milliseconds
-            {% elsif types.includes? String %}
-              @{{ivar.name.id}} = option
-            {% elsif types.includes? Array %}
-              @{{ivar.name.id}} = @raw.fetch_all({{option_name}})
-            {% end %}
-          rescue e
-            ::Mongo::Log.warn { %(option "#{{{option_name}}}" has invalid value: "#{option}".) }
+          unless @{{ivar.name.id}} != {{default_value}}
+            begin
+              {% if types.includes? Bool %}
+                if option == "true"
+                  @{{ivar.name.id}} = true
+                elsif option == "false"
+                  @{{ivar.name.id}} = false
+                end
+              {% elsif types.includes? Int32 %}
+                @{{ivar.name.id}} = option.to_i32
+              {% elsif types.includes? Int64 %}
+                @{{ivar.name.id}} = option.to_i64
+              {% elsif types.includes? Time::Span %}
+                @{{ivar.name.id}} = option.to_i32.milliseconds
+              {% elsif types.includes? String %}
+                @{{ivar.name.id}} = option
+              {% elsif types.includes? Array %}
+                @{{ivar.name.id}} = raw.fetch_all({{option_name}})
+              {% end %}
+            rescue e
+              ::Mongo::Log.warn { %(option "#{{{option_name}}}" has invalid value: "#{option}".) }
+            end
           end
         end
       {% end %}

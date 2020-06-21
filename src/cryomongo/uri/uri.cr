@@ -15,7 +15,7 @@ module Mongo::URI
     "$",
   }
 
-  def parse(uri : String) : Tuple(Array(Seed), Mongo::Options, Mongo::Credentials)
+  def parse(uri : String, options : Mongo::Options) : Tuple(Array(Seed), Mongo::Options, Mongo::Credentials)
     scheme, scheme_rest = uri.split("://")
 
     raise Mongo::Error.new "Invalid scheme" unless scheme == "mongodb" || scheme == "mongodb+srv"
@@ -53,7 +53,7 @@ module Mongo::URI
       )
     }
 
-    options = Options.new(parsed_uri.query_params)
+    options.mix_with_query_params(parsed_uri.query_params)
     source = ::URI.decode(database[1..])
     if source.empty?
       source = options.auth_source

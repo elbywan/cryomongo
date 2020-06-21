@@ -22,23 +22,21 @@ module Mongo::Tools
   module Initializer
     macro included
       {% verbatim do %}
-      def self.new(**args)
-        instance = self.allocate
+      def initialize(**args)
         {% for ivar in @type.instance_vars %}
           {% default_value = ivar.default_value %}
           {% if ivar.type.nilable? %}
-            instance.{{ivar.id}} = args["{{ivar.id}}"]? {% if ivar.has_default_value? %}|| {{ default_value }}{% end %}
+            @{{ivar.id}} = args["{{ivar.id}}"]? {% if ivar.has_default_value? %}|| {{ default_value }}{% end %}
           {% else %}
             if value = args["{{ivar.id}}"]?
-              instance.{{ivar.id}} = value
+              @{{ivar.id}} = value
             {% if ivar.has_default_value? %}
             else
-              instance.{{ivar.id}} = {{ default_value }}
+              @{{ivar.id}} = {{ default_value }}
             {% end %}
             end
           {% end %}
         {% end %}
-        instance
       end
       {% end %}
     end

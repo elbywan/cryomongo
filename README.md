@@ -84,9 +84,13 @@ puts collection.count_documents # => 0
 require "cryomongo"
 
 # A client can be instantiated using a standard mongodb connection string.
-# Client options can be passed as query parameters.
-# See: https://docs.mongodb.com/manual/reference/connection-string/index.html
-client = Mongo::Client.new("mongodb://address:port/database?option=value")
+
+# Client options can be passed as query parameters…
+client = Mongo::Client.new("mongodb://address:port/database?appname=MyApp")
+# …or with a Mongo::Options instance…
+options = Mongo::Options(appname: "MyApp")
+client = Mongo::Client.new("mongodb://address:port/database", options)
+# …or both.
 
 # Instantiate objects to interact with a specific database or a collection.
 database   = client["database_name"]
@@ -105,6 +109,7 @@ ssl_client = Mongo::Client.new uri
 **Links**
 
 - [Mongo::Client](https://elbywan.github.io/cryomongo/Mongo/Client.html)
+- [Mongo::Options](https://elbywan.github.io/cryomongo/Mongo/Options.html)
 
 ### Authentication
 

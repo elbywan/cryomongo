@@ -50,13 +50,13 @@ class Mongo::Client
   #
   # client = Mongo::Client.new "mongodb://127.0.0.1/?appname=client-example"
   # ```
-  def initialize(connection_string : String = "mongodb://localhost:27017")
-    initialize(connection_string: connection_string, start_monitoring: true)
+  def initialize(connection_string : String = "mongodb://localhost:27017", options : Mongo::Options = Mongo::Options.new)
+    initialize(connection_string: connection_string, options: options, start_monitoring: true)
   end
 
   # :nodoc:
-  def initialize(connection_string : String = "mongodb://localhost:27017", *, start_monitoring = true)
-    seeds, @options, @credentials = Mongo::URI.parse(connection_string)
+  def initialize(connection_string : String = "mongodb://localhost:27017", *, options : Mongo::Options = Mongo::Options.new, start_monitoring = true)
+    seeds, @options, @credentials = Mongo::URI.parse(connection_string, options)
 
     if read_pref = @options.read_preference
       @read_preference = ReadPreference.new(

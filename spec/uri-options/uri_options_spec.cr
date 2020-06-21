@@ -15,7 +15,7 @@ describe Mongo::Options do
         it "#{description}", focus: focus do
           uri = test["uri"].as_s
           if test["valid"]? == true
-            _, mongo_options = Mongo::URI.parse(uri)
+            _, mongo_options = Mongo::URI.parse(uri, Mongo::Options.new)
             # Options
             if options = test["options"].as_h?
               options.each { |option, value|
@@ -49,7 +49,7 @@ describe Mongo::Options do
             end
           else
             expect_raises(Exception) {
-              Mongo::URI.parse(uri)
+              Mongo::URI.parse(uri, Mongo::Options.new)
             }
           end
         end
