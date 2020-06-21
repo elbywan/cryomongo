@@ -359,22 +359,56 @@ sleep
 require "cryomongo"
 
 # Commands can be run on a client, database or collection depending on the command target.
-# This snippet will demonstrate how to run a command against the client object.
 
 client = Mongo::Client.new
 
+# Call the `.command` method to run a command against the server.
+# The first argument is a `Mongo::Commands` sub-class, followed by the mandatory arguments
+# and finally an *options* named tuple containing the optional parameters in snake_case.
 result = client.command(Mongo::Commands::ServerStatus, options: {
   repl: 0
 })
 puts result.to_bson
 ```
-
 **Links**
 
 - [Mongo::Commands](https://elbywan.github.io/cryomongo/Mongo/Commands.html)
 - [Mongo::Client#command](https://elbywan.github.io/cryomongo/Mongo/Client.html#command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,ignore_errors=false,**args)-instance-method)
 - [Mongo::Database#command](https://elbywan.github.io/cryomongo/Mongo/Database.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,**args)-instance-method)
 - [Mongo::Collection#command](https://elbywan.github.io/cryomongo/Mongo/Collection.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,**args)-instance-method)
+
+## Concerns and Preference
+
+```crystal
+require "cryomongo"
+
+# Instantiate Read/Write Concerns and Preference
+read_concern = Mongo::ReadConcern.new(level: "majority")
+write_concern = Mongo::WriteConcern.new(w: 1, j: true)
+read_preference = Mongo::ReadPreference.new(mode: "primary")
+
+# They can be set at the client, database or client level…
+client = Mongo::Client.new
+database = client["database_name"]
+collection = database["collection_name"]
+
+client.read_concern = read_concern
+database.write_concern = write_concern
+collection.read_preference = read_preference
+
+# …or by passing an extra argument when calling a method.
+collection.find(
+  filter: { key: "value" },
+  read_concern:  Mongo::ReadConcern.new(level: "local"),
+  read_preference: Mongo::ReadPreference.new(mode: "secondary")
+)
+```
+
+**Links**
+
+- [Mongo::ReadConcern](https://elbywan.github.io/cryomongo/Mongo/ReadConcern.html)
+- [Mongo::WriteConcern](https://elbywan.github.io/cryomongo/Mongo/WriteConcern.html)
+- [Mongo::ReadPreference](https://elbywan.github.io/cryomongo/Mongo/ReadPreference.html)
 
 ## Specifications
 
