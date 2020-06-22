@@ -326,7 +326,7 @@ class Mongo::Client
     @pools[server_description] ||= DB::Pool(Mongo::Connection).new(
       initial_pool_size: @options.min_pool_size,
       max_pool_size: @options.max_pool_size,
-      max_idle_pool_size: @options.min_pool_size,
+      max_idle_pool_size: @options.max_pool_size,
       checkout_timeout: @options.wait_queue_timeout.try(&.milliseconds.to_f64) || 5.0
     ) do
       connection = Mongo::Connection.new(server_description, @credentials, @options)
