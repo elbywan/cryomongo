@@ -35,13 +35,23 @@ class Mongo::Auth::Scram
     source = @credentials.source || ""
     source = "admin" if source.empty?
     # 1.
-    request = Messages::OpMsg.new({
-      saslStart: 1,
-      mechanism: @mechanism_string,
-      "$db":     source,
-      options:   {skipEmptyExchange: true},
-      payload:   client_first_payload.to_slice,
-    })
+    request = if connection.server_description.max_wire_version > 6
+       Messages::OpMsg.new({
+        saslStart: 1,
+        mechanism: @mechanism_string,
+        "$db":     source,
+        options:   {skipEmptyExchange: true},
+        payload:   client_first_payload.to_slice,
+      })
+    else
+      # DocumentDB workaround - skipEmptyExchange is not supported
+      Messages::OpMsg.new({
+        saslStart: 1,
+        mechanism: @mechanism_string,
+        "$db":     source,
+        payload:   client_first_payload.to_slice,
+      })
+    end
     connection.send(request)
     # 2.
     response = connection.receive
