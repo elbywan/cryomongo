@@ -83,6 +83,9 @@ puts collection.count_documents # => 0
 ```crystal
 require "cryomongo"
 
+# Mongo::Client is the root object for interacting with a MongoDB deployment.
+# It is responsible for monitoring the cluster, routing the requests and managing the socket pools.
+
 # A client can be instantiated using a standard mongodb connection string.
 
 # Client options can be passed as query parameters…
@@ -96,7 +99,8 @@ client = Mongo::Client.new("mongodb://address:port/database", options)
 database   = client["database_name"]
 collection = database["collection_name"]
 
-# Important: to free underlying resources the client must be manually closed.
+# The overwhelming majority of programs should use a single client and should not bother with closing clients.
+# Otherwise, to free the underlying resources a client must be manually closed.
 client.close
 ```
 
