@@ -26,17 +26,18 @@ struct Mongo::Bulk
   @max_bson_object_size : Int32 = 16 * 1024 * 1024
   @max_write_batch_size : Int32 = 100_000
   @executed = Atomic(UInt8).new(0)
+  @session : Session::ClientSession? = nil
 
   # :nodoc:
-  def initialize(@collection, @ordered = true)
+  def initialize(@collection, @ordered = true, *, @session = nil)
     # handshake_result = @collection.database.client.handshake_reply
     # @max_bson_object_size = handshake_result.max_bson_object_size
     # @max_write_batch_size = handshake_result.max_write_batch_size
   end
 
   # :nodoc:
-  def initialize(collection, ordered, @models)
-    initialize(collection, ordered)
+  def initialize(collection, ordered, @models, *, session = nil)
+    initialize(collection, ordered, session: session)
   end
 
   # The base Struct inherited by all the bulk write models.
@@ -291,17 +292,17 @@ struct Mongo::Bulk
     })
 
     if type == InsertOne
-      result = @collection.command(Commands::Insert, documents: group, options: options)
+      result = @collection.command(Commands::Insert, documents: group, options: options, session: @session)
     elsif type == DeleteOne
-      result = @collection.command(Commands::Delete, deletes: group, options: options)
+      result = @collection.command(Commands::Delete, deletes: group, options: options, session: @session)
     elsif type == DeleteMany
-      result = @collection.command(Commands::Delete, deletes: group, options: options)
+      result = @collection.command(Commands::Delete, deletes: group, options: options, session: @session)
     elsif type == ReplaceOne
-      result = @collection.command(Commands::Update, updates: group, options: options)
+      result = @collection.command(Commands::Update, updates: group, options: options, session: @session)
     elsif type == UpdateOne
-      result = @collection.command(Commands::Update, updates: group, options: options)
+      result = @collection.command(Commands::Update, updates: group, options: options, session: @session)
     elsif type == UpdateMany
-      result = @collection.command(Commands::Update, updates: group, options: options)
+      result = @collection.command(Commands::Update, updates: group, options: options, session: @session)
     else
       raise Mongo::Bulk::Error.new "Invalid Operation"
     end

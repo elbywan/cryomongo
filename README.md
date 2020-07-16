@@ -142,14 +142,18 @@ collection = client["database_name"]["collection_name"]
 ## Create
 
 # Insert a single document
-collection.insert_one({key: "value"})
+collection.insert_one({ key: "value" })
 # Insert multiple documents
 collection.insert_many((1..100).map{|i| { count: i }}.to_a)
+
+# To track the _id, generate and pass it as a property
+id = BSON::ObjectId.new
+collection.insert_one({ _id: id, key: "value" })
 
 ## Read
 
 # Find a single document
-document = collection.find_one({ _id: BSON::ObjectId.new("5eed35600000000000000000") })
+document = collection.find_one({ _id: id })
 document.try { |d| puts d.to_json }
 # Find multiple documents.
 cursor = collection.find({ qty: { "$gt": 4 }})
@@ -472,4 +476,4 @@ The following specifications are to be implemented next:
 
 ## Credit
 
-- Icon made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [www.flaticon.com](www.flaticon.com).
+- Icon made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [www.flaticon.com](https://www.flaticon.com).

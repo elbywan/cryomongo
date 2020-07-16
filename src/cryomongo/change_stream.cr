@@ -82,7 +82,7 @@ module Mongo::ChangeStream
       database: String)
 
     # :nodoc:
-    def initialize(@client : Mongo::Client, **@options)
+    def initialize(@client : Mongo::Client, @session : Session::ClientSession? = nil, **@options)
       @await_time_ms = options["max_time_ms"]?
       @tailable = true
 
@@ -176,6 +176,7 @@ module Mongo::ChangeStream
         database: database,
         read_concern: read_concern,
         read_preference: read_preference,
+        session: @session,
         options: {
           max_time_ms: max_time_ms,
           batch_size:  batch_size,

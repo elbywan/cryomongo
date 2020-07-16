@@ -23,15 +23,34 @@ class Mongo::Cursor
   private property server_description : SDAM::ServerDescription? = nil
 
   # :nodoc:
-  def initialize(@client : Mongo::Client, @cursor_id : Int64, namespace : String, @batch : Array(BSON), @await_time_ms : Int64? = nil, @tailable : Bool = false)
+  def initialize(
+    @client : Mongo::Client,
+    @cursor_id : Int64,
+    namespace : String,
+    @batch : Array(BSON),
+    @await_time_ms : Int64? = nil,
+    @tailable : Bool = false,
+    @session : Session::ClientSession? = nil
+  )
     @database, @collection = namespace.split(".", 2)
   end
 
   # :nodoc:
-  def initialize(@client : Mongo::Client, result : Commands::Common::QueryResult, @await_time_ms : Int64? = nil, @tailable : Bool = false)
+  def initialize(
+    @client : Mongo::Client,
+    result : Commands::Common::QueryResult,
+    @await_time_ms : Int64? = nil,
+    @tailable : Bool = false,
+    @session : Session::ClientSession? = nil
+  )
     @cursor_id = result.cursor.id
     @batch = result.cursor.first_batch
     @database, @collection = result.cursor.ns.split(".", 2)
+  end
+
+  # :nodoc:
+  def exhausted?
+    @cursor_id == 0
   end
 
   def next
@@ -55,7 +74,10 @@ class Mongo::Cursor
   # Close the cursor and frees underlying resources.
   def close
     @@lock.synchronize {
-      unless @cursor_id == 0
+      unless exhausted?
+        if (session = @session) && session.implicit?
+          session.end
+        end
         @client.command(
           Commands::KillCursors,
           database: @database,
@@ -72,16 +94,23 @@ class Mongo::Cursor
 
   protected def fetch_more
     return if @cursor_id == 0
+
     reply = @client.command(
       Commands::GetMore,
       database: @database,
       collection: @collection,
       cursor_id: @cursor_id,
       max_time_ms: @await_time_ms,
-      server_description: @server_description
+      server_description: @server_description,
+      session: @session
     ).not_nil!
     @cursor_id = reply.cursor.id
     @batch = reply.cursor.next_batch
+
+    if (session = @session) && exhausted? && session.implicit?
+      session.end
+    end
+
     reply
   end
 

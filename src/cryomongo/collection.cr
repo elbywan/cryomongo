@@ -35,8 +35,23 @@ class Mongo::Collection
   # Will automatically set the *collection* and *database* arguments.
   #
   # See: `Mongo::Client.command`
-  def command(operation, write_concern : WriteConcern? = nil, read_concern : ReadConcern? = nil, read_preference : ReadPreference? = nil, **args)
-    @database.command(operation, **args, collection: @name, write_concern: write_concern || @write_concern, read_concern: read_concern || @read_concern, read_preference: read_preference || @read_preference)
+  def command(
+    operation,
+    write_concern : WriteConcern? = nil,
+    read_concern : ReadConcern? = nil,
+    read_preference : ReadPreference? = nil,
+    session : Session::ClientSession? = nil,
+    **args
+  )
+    @database.command(
+      operation,
+      **args,
+      collection: @name,
+      write_concern: write_concern || @write_concern,
+      read_concern: read_concern || @read_concern,
+      read_preference: read_preference || @read_preference,
+      session: session
+    )
   end
 
   # Runs an aggregation framework pipeline.
@@ -54,9 +69,10 @@ class Mongo::Collection
     comment : String? = nil,
     read_concern : ReadConcern? = nil,
     write_concern : WriteConcern? = nil,
-    read_preference : ReadPreference? = nil
+    read_preference : ReadPreference? = nil,
+    session : Session::ClientSession? = nil
   ) : Mongo::Cursor? forall H
-    maybe_result = self.command(Commands::Aggregate, pipeline: pipeline, options: {
+    maybe_result = self.command(Commands::Aggregate, pipeline: pipeline, session: session, options: {
       allow_disk_use:             allow_disk_use,
       cursor:                     batch_size.try { {batchSize: batch_size} },
       bypass_document_validation: bypass_document_validation,
@@ -65,9 +81,9 @@ class Mongo::Collection
       comment:                    comment,
       read_concern:               read_concern,
       write_concern:              write_concern,
-      read_preference:            read_preference,
+      read_preference:            read_preference
     })
-    maybe_result.try { |result| Cursor.new(@database.client, result) }
+    maybe_result.try { |result| Cursor.new(@database.client, result, session: session) }
   end
 
   # Count the number of documents in a collection that match the given filter.
@@ -83,19 +99,20 @@ class Mongo::Collection
     collation : Collation? = nil,
     hint : (String | H)? = nil,
     max_time_ms : Int64? = nil,
-    read_preference : ReadPreference? = nil
+    read_preference : ReadPreference? = nil,
+    session : Session::ClientSession? = nil
   ) : Int32 forall H
     pipeline = !filter || filter.empty? ? [] of BSON : [BSON.new({"$match": BSON.new(filter)})]
     skip.try { pipeline << BSON.new({"$skip": skip}) }
     limit.try { pipeline << BSON.new({"$limit": limit}) }
     pipeline << BSON.new({"$group": {"_id": 1, "n": {"$sum": 1}}})
-    result = self.command(Commands::Aggregate, pipeline: pipeline, options: {
+    result = self.command(Commands::Aggregate, pipeline: pipeline, session: session, options: {
       collation:       collation,
       hint:            hint.is_a?(String) ? hint : BSON.new(hint),
       max_time_ms:     max_time_ms,
-      read_preference: read_preference,
+      read_preference: read_preference
     }).not_nil!
-    cursor = Cursor.new(@database.client, result)
+    cursor = Cursor.new(@database.client, result, session: session)
     if (item = cursor.next).is_a? BSON
       item["n"].as(Int32)
     else
@@ -106,8 +123,8 @@ class Mongo::Collection
   # Gets an estimate of the count of documents in a collection using collection metadata.
   #
   # See: [the specification document](https://github.com/mongodb/specifications/blob/master/source/crud/crud.rst#count-api-details).
-  def estimated_document_count(*, max_time_ms : Int64? = nil, read_preference : ReadPreference? = nil) : Int32
-    result = self.command(Commands::Count, options: {
+  def estimated_document_count(*, max_time_ms : Int64? = nil, read_preference : ReadPreference? = nil, session : Session::ClientSession? = nil) : Int32
+    result = self.command(Commands::Count, session: session, options: {
       max_time_ms:     max_time_ms,
       read_preference: read_preference,
     }).not_nil!
@@ -126,9 +143,10 @@ class Mongo::Collection
     filter = nil,
     read_concern : ReadConcern? = nil,
     collation : Collation? = nil,
-    read_preference : ReadPreference? = nil
+    read_preference : ReadPreference? = nil,
+    session : Session::ClientSession? = nil
   ) : Array
-    result = self.command(Commands::Distinct, key: key, options: {
+    result = self.command(Commands::Distinct, key: key, session: session, options: {
       query:           filter,
       read_concern:    read_concern,
       collation:       collation,
@@ -165,9 +183,10 @@ class Mongo::Collection
     allow_partial_results : Bool? = nil,
     allow_disk_use : Bool? = nil,
     collation : Collation? = nil,
-    read_preference : ReadPreference? = nil
+    read_preference : ReadPreference? = nil,
+    session : Session::ClientSession? = nil
   ) : Mongo::Cursor forall H
-    result = self.command(Commands::Find, filter: filter, options: {
+    result = self.command(Commands::Find, filter: filter, session: session, options: {
       sort:                  sort.try { BSON.new(sort) },
       projection:            projection.try { BSON.new(projection) },
       hint:                  hint.is_a?(String) ? hint : BSON.new(hint),
@@ -191,7 +210,7 @@ class Mongo::Collection
       collation:             collation,
       read_preference:       read_preference,
     }).not_nil!
-    Cursor.new(@database.client, result, await_time_ms: tailable && await_data ? max_time_ms : nil, tailable: tailable || false)
+    Cursor.new(@database.client, result, await_time_ms: tailable && await_data ? max_time_ms : nil, tailable: tailable || false, session: session)
   end
 
   # Finds the document matching the model.
@@ -215,7 +234,8 @@ class Mongo::Collection
     no_cursor_timeout : Bool? = nil,
     allow_partial_results : Bool? = nil,
     collation : Collation? = nil,
-    read_preference : ReadPreference? = nil
+    read_preference : ReadPreference? = nil,
+    session : Session::ClientSession? = nil
   ) : BSON? forall H
     cursor = self.find(
       filter: filter,
@@ -239,7 +259,8 @@ class Mongo::Collection
       no_cursor_timeout: no_cursor_timeout,
       allow_partial_results: allow_partial_results,
       collation: collation,
-      read_preference: read_preference
+      read_preference: read_preference,
+      session: session
     ).not_nil!
     element = cursor.next
     return element if element.is_a? BSON
@@ -251,22 +272,22 @@ class Mongo::Collection
   # An error will be raised if the *requests* parameter is empty.
   #
   # NOTE: [for more details, please check the official specifications document](https://github.com/mongodb/specifications/blob/master/source/driver-bulk-update.rst).
-  def bulk_write(requests : Array(Bulk::WriteModel), *, ordered : Bool, bypass_document_validation : Bool? = nil) : Bulk::WriteResult
+  def bulk_write(requests : Array(Bulk::WriteModel), *, ordered : Bool, bypass_document_validation : Bool? = nil, session : Session::ClientSession? = nil) : Bulk::WriteResult
     raise Mongo::Bulk::Error.new "Tried to execute an empty bulk" unless requests.size > 0
-    bulk = Mongo::Bulk.new(self, ordered, requests)
+    bulk = Mongo::Bulk.new(self, ordered, requests, session: session)
     bulk.execute(bypass_document_validation: bypass_document_validation)
   end
 
   # Create a `Mongo::Bulk` instance.
-  def bulk(ordered : Bool = true)
-    Mongo::Bulk.new(self, ordered)
+  def bulk(ordered : Bool = true, session : Session::ClientSession? = nil)
+    Mongo::Bulk.new(self, ordered, session: session)
   end
 
   # Inserts the provided document. If the document is missing an identifier, it will be generated.
   #
   # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/insert/).
-  def insert_one(document, *, write_concern : WriteConcern? = nil, bypass_document_validation : Bool? = nil) : Commands::Common::InsertResult?
-    self.command(Commands::Insert, documents: [document], options: {
+  def insert_one(document, *, write_concern : WriteConcern? = nil, bypass_document_validation : Bool? = nil, session : Session::ClientSession? = nil) : Commands::Common::InsertResult?
+    self.command(Commands::Insert, documents: [document], session: session, options: {
       write_concern:              write_concern,
       bypass_document_validation: bypass_document_validation,
     })
@@ -280,10 +301,11 @@ class Mongo::Collection
     *,
     ordered : Bool? = nil,
     write_concern : WriteConcern? = nil,
-    bypass_document_validation : Bool? = nil
+    bypass_document_validation : Bool? = nil,
+    session : Session::ClientSession? = nil
   ) : Commands::Common::InsertResult?
     raise Mongo::Error.new "Tried to insert an empty document array" unless documents.size > 0
-    self.command(Commands::Insert, documents: documents, options: {
+    self.command(Commands::Insert, documents: documents, session: session, options: {
       ordered:                    ordered,
       write_concern:              write_concern,
       bypass_document_validation: bypass_document_validation,
@@ -299,7 +321,8 @@ class Mongo::Collection
     collation : Collation? = nil,
     hint : (String | H)? = nil,
     ordered : Bool? = nil,
-    write_concern : WriteConcern? = nil
+    write_concern : WriteConcern? = nil,
+    session : Session::ClientSession? = nil
   ) : Commands::Common::DeleteResult? forall H
     delete = Tools.merge_bson({
       q:     BSON.new(filter),
@@ -308,7 +331,7 @@ class Mongo::Collection
       collation: collation,
       hint:      hint,
     })
-    self.command(Commands::Delete, deletes: [delete], options: {
+    self.command(Commands::Delete, deletes: [delete], session: session, options: {
       ordered:       ordered,
       write_concern: write_concern,
     })
@@ -323,7 +346,8 @@ class Mongo::Collection
     collation : Collation? = nil,
     hint : (String | H)? = nil,
     ordered : Bool? = nil,
-    write_concern : WriteConcern? = nil
+    write_concern : WriteConcern? = nil,
+    session : Session::ClientSession? = nil
   ) : Commands::Common::DeleteResult? forall H
     delete = Tools.merge_bson({
       q:     BSON.new(filter),
@@ -332,7 +356,7 @@ class Mongo::Collection
       collation: collation,
       hint:      hint,
     })
-    self.command(Commands::Delete, deletes: [delete], options: {
+    self.command(Commands::Delete, deletes: [delete], session: session, options: {
       ordered:       ordered,
       write_concern: write_concern,
     })
@@ -377,7 +401,8 @@ class Mongo::Collection
     hint : (String | H)? = nil,
     ordered : Bool? = nil,
     write_concern : WriteConcern? = nil,
-    bypass_document_validation : Bool? = nil
+    bypass_document_validation : Bool? = nil,
+    session : Session::ClientSession? = nil
   ) : Commands::Common::UpdateResult? forall H
     updates = [
       Tools.merge_bson({
@@ -390,7 +415,7 @@ class Mongo::Collection
         hint:      hint,
       }),
     ]
-    self.command(Commands::Update, updates: updates, options: {
+    self.command(Commands::Update, updates: updates, session: session, options: {
       ordered:                    ordered,
       write_concern:              write_concern,
       bypass_document_validation: bypass_document_validation,
@@ -410,7 +435,8 @@ class Mongo::Collection
     hint : (String | H)? = nil,
     ordered : Bool? = nil,
     write_concern : WriteConcern? = nil,
-    bypass_document_validation : Bool? = nil
+    bypass_document_validation : Bool? = nil,
+    session : Session::ClientSession? = nil
   ) : Commands::Common::UpdateResult? forall H
     updates = [
       Tools.merge_bson({
@@ -424,7 +450,7 @@ class Mongo::Collection
         hint:          hint,
       }),
     ]
-    self.command(Commands::Update, updates: updates, options: {
+    self.command(Commands::Update, updates: updates, session: session, options: {
       ordered:                    ordered,
       write_concern:              write_concern,
       bypass_document_validation: bypass_document_validation,
@@ -444,7 +470,8 @@ class Mongo::Collection
     hint : (String | H)? = nil,
     ordered : Bool? = nil,
     write_concern : WriteConcern? = nil,
-    bypass_document_validation : Bool? = nil
+    bypass_document_validation : Bool? = nil,
+    session : Session::ClientSession? = nil
   ) : Commands::Common::UpdateResult? forall H
     updates = [
       Tools.merge_bson({
@@ -458,7 +485,7 @@ class Mongo::Collection
         hint:          hint,
       }),
     ]
-    self.command(Commands::Update, updates: updates, options: {
+    self.command(Commands::Update, updates: updates, session: session, options: {
       ordered:                    ordered,
       write_concern:              write_concern,
       bypass_document_validation: bypass_document_validation,
@@ -489,9 +516,10 @@ class Mongo::Collection
     write_concern : WriteConcern? = nil,
     collation : Collation? = nil,
     hint : (String | H)? = nil,
-    max_time_ms : Int64? = nil
+    max_time_ms : Int64? = nil,
+    session : Session::ClientSession? = nil
   ) : BSON? forall H
-    result = self.command(Commands::FindAndModify, filter: filter, options: {
+    result = self.command(Commands::FindAndModify, filter: filter, session: session, options: {
       remove:                     true,
       sort:                       sort.try { BSON.new(sort) },
       fields:                     fields.try { BSON.new(fields) },
@@ -521,10 +549,11 @@ class Mongo::Collection
     collation : Collation? = nil,
     array_filters = nil,
     hint : (String | H)? = nil,
-    max_time_ms : Int64? = nil
+    max_time_ms : Int64? = nil,
+    session : Session::ClientSession? = nil
   ) : BSON? forall H
     replacement = validate_replacement!(replacement)
-    result = self.command(Commands::FindAndModify, filter: filter, options: {
+    result = self.command(Commands::FindAndModify, filter: filter, session: session, options: {
       update:                     replacement,
       sort:                       sort.try { BSON.new(sort) },
       new:                        new,
@@ -557,10 +586,11 @@ class Mongo::Collection
     collation : Collation? = nil,
     array_filters = nil,
     hint : (String | H)? = nil,
-    max_time_ms : Int64? = nil
+    max_time_ms : Int64? = nil,
+    session : Session::ClientSession? = nil
   ) : BSON? forall H
     update = validate_update!(update)
-    result = self.command(Commands::FindAndModify, filter: filter, options: {
+    result = self.command(Commands::FindAndModify, filter: filter, session: session, options: {
       update:                     update,
       sort:                       sort.try { BSON.new(sort) },
       new:                        new,
@@ -585,7 +615,8 @@ class Mongo::Collection
     options = NamedTuple.new,
     commit_quorum : (Int32 | String)? = nil,
     max_time_ms : Int64? = nil,
-    write_concern : WriteConcern? = nil
+    write_concern : WriteConcern? = nil,
+    session : Session::ClientSession? = nil
   ) : Commands::CreateIndexes::Result?
     self.create_indexes(
       models: [{
@@ -594,7 +625,8 @@ class Mongo::Collection
       }],
       commit_quorum: commit_quorum,
       max_time_ms: max_time_ms,
-      write_concern: write_concern
+      write_concern: write_concern,
+      session: session
     )
   end
 
@@ -606,7 +638,8 @@ class Mongo::Collection
     *,
     commit_quorum : (Int32 | String)? = nil,
     max_time_ms : Int64? = nil,
-    write_concern : WriteConcern? = nil
+    write_concern : WriteConcern? = nil,
+    session : Session::ClientSession? = nil
   ) : Commands::CreateIndexes::Result?
     indexes = models.map { |item|
       if item.is_a? BSON
@@ -629,7 +662,7 @@ class Mongo::Collection
         BSON.new({key: index_model.keys}).append(index_model.options.to_bson)
       end
     }
-    self.command(Commands::CreateIndexes, indexes: indexes, options: {
+    self.command(Commands::CreateIndexes, indexes: indexes, session: session, options: {
       commit_quorum: commit_quorum,
       max_time_ms:   max_time_ms,
       write_concern: write_concern,
@@ -639,9 +672,9 @@ class Mongo::Collection
   # Drops a single index from the collection by the index name.
   #
   # See: `drop_indexes`
-  def drop_index(name : String, *, max_time_ms : Int64? = nil, write_concern : WriteConcern? = nil) : Commands::Common::BaseResult?
+  def drop_index(name : String, *, max_time_ms : Int64? = nil, write_concern : WriteConcern? = nil, session : Session::ClientSession? = nil) : Commands::Common::BaseResult?
     raise Mongo::Error.new "'*' cannot be used with drop_index as more than one index would be dropped." if name == "*"
-    self.command(Commands::DropIndexes, index: name, options: {
+    self.command(Commands::DropIndexes, index: name, session: session, options: {
       max_time_ms:   max_time_ms,
       write_concern: write_concern,
     })
@@ -650,8 +683,8 @@ class Mongo::Collection
   # Drops all indexes in the collection.
   #
   # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/dropIndexes/).
-  def drop_indexes(*, max_time_ms : Int64? = nil, write_concern : WriteConcern? = nil) : Commands::Common::BaseResult?
-    self.command(Commands::DropIndexes, index: "*", options: {
+  def drop_indexes(*, max_time_ms : Int64? = nil, write_concern : WriteConcern? = nil, session : Session::ClientSession? = nil) : Commands::Common::BaseResult?
+    self.command(Commands::DropIndexes, index: "*", session: session, options: {
       max_time_ms:   max_time_ms,
       write_concern: write_concern,
     })
@@ -660,9 +693,9 @@ class Mongo::Collection
   # Gets index information for all indexes in the collection.
   #
   # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/listIndexes/).
-  def list_indexes : Mongo::Cursor
-    result = self.command(Commands::ListIndexes).not_nil!
-    Cursor.new(@database.client, result)
+  def list_indexes(session : Session::ClientSession? = nil) : Mongo::Cursor
+    result = self.command(Commands::ListIndexes, session: session).not_nil!
+    Cursor.new(@database.client, result, session: session)
   end
 
   # Returns a `ChangeStream::Cursor` watching a specific collection.
@@ -703,7 +736,8 @@ class Mongo::Collection
     batch_size : Int32? = nil,
     collation : Collation? = nil,
     read_concern : ReadConcern? = nil,
-    read_preference : ReadPreference? = nil
+    read_preference : ReadPreference? = nil,
+    session : Session::ClientSession? = nil
   ) : Mongo::ChangeStream::Cursor
     ChangeStream::Cursor.new(
       client: @database.client,
@@ -719,13 +753,14 @@ class Mongo::Collection
       max_time_ms: max_await_time_ms,
       batch_size: batch_size,
       collation: collation,
+      session: session
     )
   end
 
   # Returns a variety of storage statistics for the collection.
   #
   # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/collStats/).
-  def stats(*, scale : Int32? = nil) : BSON?
-    self.command(Commands::CollStats, options: {scale: scale})
+  def stats(*, scale : Int32? = nil, session : Session::ClientSession? = nil) : BSON?
+    self.command(Commands::CollStats, session: session, options: {scale: scale})
   end
 end

@@ -146,7 +146,7 @@ class Mongo::Auth::Scram
   def h(string)
     @digest.reset
     @digest.update(string)
-    @digest.digest
+    @digest.dup.final
   end
 
   # ClientKey := HMAC(SaltedPassword, "Client Key")

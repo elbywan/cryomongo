@@ -329,4 +329,8 @@ class Mongo::SDAM::TopologyDescription
   def remove(server_description)
     @servers = @servers.select &.!= server_description
   end
+
+  def supports_sessions?
+    !@type.unknown? && !@logical_session_timeout_minutes.nil?
+  end
 end

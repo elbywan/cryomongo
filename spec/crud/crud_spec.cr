@@ -32,7 +32,7 @@ describe "Mongo CRUD" do
   }
 
   %w(
-    #v1
+    v1
     v2
   ).each do |version|
     context "[#{version}]" do
@@ -80,7 +80,7 @@ describe "Mongo CRUD" do
               test_outcome = test["outcome"]?.try &.as_h
               operations = operation.try { |o| [o] } || test["operations"].as_a.map(&.as_h)
               operations.each { |o|
-                expect_error = o["error"]?.try &.as_bool
+                expect_error = o["error"]?.try &.as_bool || test_outcome.try &.["error"]?.try &.as_bool
                 collection = local_client[database_name][collection_name]
 
                 if collection_options = o["collectionOptions"]?

@@ -34,6 +34,10 @@ class Mongo::Client
   getter! topology : SDAM::TopologyDescription
   # The set of driver options.
   getter options : Options
+  # The current highest seen cluster time for the deployment
+  getter cluster_time : Session::ClusterTime?
+  # :nodoc:
+  getter session_pool : Session::Pool = Session::Pool.new
 
   @@lock = Mutex.new(:reentrant)
   @pools : Hash(SDAM::ServerDescription, DB::Pool(Mongo::Connection)) = Hash(SDAM::ServerDescription, DB::Pool(Mongo::Connection)).new
@@ -92,6 +96,7 @@ class Mongo::Client
     @pools.each { |_, pool|
       pool.close
     }
+    @session_pool.close(self)
     @monitors.each &.close
   end
 
@@ -121,6 +126,7 @@ class Mongo::Client
     read_concern : ReadConcern? = nil,
     read_preference : ReadPreference? = nil,
     server_description : SDAM::ServerDescription? = nil,
+    session : Session::ClientSession? = nil,
     ignore_errors = false,
     **args
   )
@@ -166,6 +172,20 @@ class Mongo::Client
 
     body, sequences = cmd.command(**args)
     flag_bits = unacknowledged ? Messages::OpMsg::Flags::MoreToCome : Messages::OpMsg::Flags::None
+
+    if topology.supports_sessions?
+      if unacknowledged && session
+        raise Mongo::Error.new("Unacknowledged writes are incompatible with sessions.")
+      elsif !session
+        session = Session::ClientSession.new(self)
+      end
+      body["lsid"] = session.session_id if session
+      cluster_time = gossip_cluster_time(session)
+      body["$clusterTime"] = cluster_time if cluster_time
+    end
+
+    # Also check if the command is unacknowledged and potentially raise!!
+
     op_msg = Messages::OpMsg.new(body, flag_bits: flag_bits)
     sequences.try &.each { |key, documents|
       op_msg.sequence(key.to_s, contents: documents)
@@ -179,8 +199,15 @@ class Mongo::Client
 
     result = cmd.result(op_msg.body)
 
+    if cluster_time = Commands::Common::BaseResult.from_bson(op_msg.body).cluster_time
+      @cluster_time = cluster_time if !@cluster_time || @cluster_time.try &.< cluster_time
+      session.advance_cluster_time(cluster_time) if session
+    end
+
     if result.is_a? Cursor
       result.server_description = server_description
+    elsif session && session.implicit?
+      session.end
     end
 
     result
@@ -194,6 +221,7 @@ class Mongo::Client
       topology.update(desc, description)
       close_connection_pool(desc)
     }
+    session.try &.dirty = true
     raise error
   rescue error : Mongo::Error::Command
     Mongo::Log.error { "Server error: #{error}" }
@@ -220,9 +248,10 @@ class Mongo::Client
     *,
     filter = nil,
     name_only : Bool? = nil,
-    authorized_databases : Bool? = nil
+    authorized_databases : Bool? = nil,
+    session : Session::ClientSession? = nil
   ) : Commands::ListDatabases::Result
-    self.command(Commands::ListDatabases, options: {
+    self.command(Commands::ListDatabases, session: session, options: {
       filter:               filter,
       name_only:            name_only,
       authorized_databases: authorized_databases,
@@ -232,8 +261,8 @@ class Mongo::Client
   # Returns a document that provides an overview of the database’s state.
   #
   # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/serverStatus/).
-  def status(*, repl : Int32? = nil, metrics : Int32? = nil, locks : Int32? = nil, mirrored_reads : Int32? = nil, latch_analysis : Int32? = nil) : BSON?
-    self.command(Commands::ServerStatus, options: {
+  def status(*, repl : Int32? = nil, metrics : Int32? = nil, locks : Int32? = nil, mirrored_reads : Int32? = nil, latch_analysis : Int32? = nil, session : Session::ClientSession? = nil) : BSON?
+    self.command(Commands::ServerStatus, session: session, options: {
       repl:           repl,
       metrics:        metrics,
       locks:          locks,
@@ -258,14 +287,15 @@ class Mongo::Client
     pipeline : Array = [] of BSON,
     *,
     full_document : String? = nil,
-    resume_after = nil,
+    resume_after : BSON? = nil,
     max_await_time_ms : Int64? = nil,
     batch_size : Int32? = nil,
     collation : Collation? = nil,
     start_at_operation_time : Time? = nil,
-    start_after = nil,
+    start_after : BSON? = nil,
     read_concern : ReadConcern? = nil,
-    read_preference : ReadPreference? = nil
+    read_preference : ReadPreference? = nil,
+    session : Session::ClientSession? = nil
   ) : Mongo::ChangeStream::Cursor
     ChangeStream::Cursor.new(
       client: self,
@@ -281,6 +311,16 @@ class Mongo::Client
       max_time_ms: max_await_time_ms,
       batch_size: batch_size,
       collation: collation,
+      session: session
+    )
+  end
+
+  # Starts a new logical session for a sequence of operations.
+  def start_session(**options) : Session::ClientSession
+    Session::ClientSession.new(
+      **options,
+      client: self,
+      implicit: false
     )
   end
 
@@ -477,6 +517,21 @@ class Mongo::Client
     @monitors << monitor
     if start_monitoring
       spawn monitor.scan
+    end
+  end
+
+  private def gossip_cluster_time(session : Session::ClientSession? = nil)
+    # see: https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst#gossipping-the-cluster-time
+    if session
+      client_time = @cluster_time
+      session_time = session.cluster_time
+      if !client_time || (session_time && client_time < session_time)
+        session_time
+      else
+        client_time
+      end
+    else
+      @cluster_time
     end
   end
 end
