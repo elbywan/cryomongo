@@ -68,6 +68,7 @@ puts collection.count_documents # => 0
 - **[Tailable and Awaitable cursors](https://docs.mongodb.com/manual/core/tailable-cursors/index.html)**
 - **[Collation](https://docs.mongodb.com/manual/reference/collation/index.html)**
 - **Standalone, [Sharded](https://docs.mongodb.com/manual/sharding/) or [ReplicaSet](https://docs.mongodb.com/manual/replication/) topologies**
+- **[Command monitoring](https://github.com/mongodb/specifications/blob/master/source/command-monitoring/command-monitoring.rst)**
 
 ## Conventions
 
@@ -422,6 +423,40 @@ collection.find(
 - [Mongo::ReadConcern](https://elbywan.github.io/cryomongo/Mongo/ReadConcern.html)
 - [Mongo::WriteConcern](https://elbywan.github.io/cryomongo/Mongo/WriteConcern.html)
 - [Mongo::ReadPreference](https://elbywan.github.io/cryomongo/Mongo/ReadPreference.html)
+
+## Command Monitoring
+
+```crystal
+require "cryomongo"
+
+client = Mongo::Client.new
+
+# A simple logging subscriber.
+
+subscription = client.subscribe { |event|
+  case event
+  when Mongo::Monitoring::CommandStartedEvent
+    Log.info { "COMMAND.#{event.command_name} #{event.address} STARTED: #{event.command.to_json}" }
+  when Mongo::Monitoring::CommandSucceededEvent
+    Log.info { "COMMAND.#{event.command_name} #{event.address} COMPLETED: #{event.reply.to_json} (#{event.duration}s)" }
+  when Mongo::Monitoring::CommandFailedEvent
+    Log.info { "COMMAND.#{event.command_name} #{event.address} FAILED: #{event.failure.inspect} (#{event.duration}s)" }
+  end
+}
+
+# Make some queries…
+client["database_name"]["collection_name"].find({ hello: "world" })
+
+# …and eventually at some point, unsubscribe the logger.
+client.unsubscribe(subscription)
+```
+
+**Links**
+
+- [Mongo::Monitoring::Observable](https://elbywan.github.io/cryomongo/Mongo/Monitoring/Observable.html)
+- [Mongo::Monitoring::CommandStartedEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandStartedEvent.html)
+- [Mongo::Monitoring::CommandSucceededEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandSucceededEvent.html)
+- [Mongo::Monitoring::CommandFailedEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandFailedEvent.html)
 
 ## Specifications
 
