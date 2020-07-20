@@ -85,7 +85,7 @@ class Mongo::Database
       comment:                    comment,
       write_concern:              write_concern
     })
-    maybe_result.try { |result| Cursor.new(@client, result, session: session) }
+    maybe_result.try { |result| Cursor.new(@client, result, batch_size: batch_size, session: session) }
   end
 
   # Retrieve information, i.e. the name and options, about the collections and views in a database.

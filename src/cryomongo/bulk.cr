@@ -16,7 +16,7 @@ require "./commands/**"
 # bulk_result = bulk.execute(write_concern: Mongo::WriteConcern.new(w: 1))
 # pp bulk_result
 # ```
-struct Mongo::Bulk
+class Mongo::Bulk
   # The target collection.
   getter collection : Mongo::Collection
   # Whether the bulk is ordered.
@@ -176,9 +176,12 @@ struct Mongo::Bulk
     raise Mongo::Bulk::Error.new "Cannot execute a bulk operation more than once" unless not_executed
 
     options = {
-      bypass_document_validation: bypass_document_validation,
-      write_concern:              write_concern,
+      write_concern: write_concern,
     }
+
+    if bypass_document_validation
+      options.merge({ bypass_document_validation: bypass_document_validation })
+    end
 
     models = @models
     unless @ordered

@@ -37,14 +37,18 @@ module Crud::Helpers
       arguments["{{name.id}}"]?.try &.as_s
     end
 
-    private macro bool_arg(name)
-      arguments["{{name.id}}"]?.try &.as_bool
+    private macro bool_arg(name, default = nil)
+      if arguments["{{name.id}}"]?
+        arguments["{{name.id}}"].as_bool
+      else
+        {{default}}
+      end
     end
 
     private def compare_json(a : JSON::Any, b : JSON::Any)
       if a.as_a?
         a.as_a.each_with_index { |elt, index|
-        compare_json(elt, b[index])
+          compare_json(elt, b[index])
         }
       elsif a.as_h?
         a.as_h.each { |k, v|
@@ -55,19 +59,34 @@ module Crud::Helpers
       end
     end
 
+    private def compare_json(a : JSON::Any, b : JSON::Any, &block : (JSON::Any, JSON::Any) ->)
+      if a.as_a?
+        a.as_a.each_with_index { |elt, index|
+          compare_json(elt, b[index], &block)
+        }
+      elsif a.as_h?
+        a.as_h.each { |k, v|
+          compare_json(v, b.as_h[k], &block)
+        }
+      else
+        yield a, b
+      end
+    end
+
     private def query_options(options)
       options.reduce([] of String) { |acc, (k, v)|
         acc << "#{k}=#{v}"
       }.join("&")
     end
 
-    private def spec_operation(global_db, db, collection, operation, outcome, *, expect_error)
+    private def spec_operation(global_db, db, collection, operation, outcome)
       arguments = operation["arguments"].as_h
       arguments["options"]?.try { |options|
         arguments = arguments.merge(options.as_h)
       }
       operation_name = operation["name"].as_s
       operation_object = operation["object"]?.try &.as_s || "collection"
+
       # Arguments
 
       collation = arguments["collation"]?.try { |c|
@@ -100,7 +119,7 @@ module Crud::Helpers
       }
       allow_disk_use = bool_arg "allowDiskUse"
       bypass_document_validation = bool_arg "bypassDocumentValidation"
-      ordered = bool_arg "ordered"
+      ordered = bool_arg "ordered", default: true
       new_ = string_arg("returnDocument").try(&.== "After")
       fields = bson_arg "projection"
 
@@ -121,8 +140,12 @@ module Crud::Helpers
           max_time_ms: max_time_ms
         )
       when "count"
-        # deprecated - not implemented
-        return
+        collection.command(Mongo::Commands::Count, options: {
+          query: filter,
+          skip: skip,
+          limit: limit,
+          collation: collation
+        }).not_nil!.["n"].as(Int32)
       when "distinct"
         collection.distinct(
           key: arguments["fieldName"].as_s,
@@ -334,7 +357,7 @@ module Crud::Helpers
         }
         collection.bulk_write(
           requests: requests,
-          ordered: (ordered || true),
+          ordered: ordered,
           bypass_document_validation: bypass_document_validation
         )
       else
@@ -398,6 +421,8 @@ module Crud::Helpers
           result.to_json.should eq outcome["result"].to_json
         end
       end
+
+      result
     end
 
   {% end %}

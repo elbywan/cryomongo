@@ -19,6 +19,8 @@ class Mongo::Cursor
   @database : String
   @collection : Collection::CollectionKey
   @tailable : Bool = false
+  @counter : Int32
+  @limit : Int32? = nil
 
   private property server_description : SDAM::ServerDescription? = nil
 
@@ -28,10 +30,13 @@ class Mongo::Cursor
     @cursor_id : Int64,
     namespace : String,
     @batch : Array(BSON),
+    @batch_size : Int32? = nil,
+    @limit : Int32? = nil,
     @await_time_ms : Int64? = nil,
     @tailable : Bool = false,
     @session : Session::ClientSession? = nil
   )
+    @counter = @batch.size
     @database, @collection = namespace.split(".", 2)
   end
 
@@ -39,18 +44,21 @@ class Mongo::Cursor
   def initialize(
     @client : Mongo::Client,
     result : Commands::Common::QueryResult,
+    @batch_size : Int32? = nil,
+    @limit : Int32? = nil,
     @await_time_ms : Int64? = nil,
     @tailable : Bool = false,
     @session : Session::ClientSession? = nil
   )
     @cursor_id = result.cursor.id
     @batch = result.cursor.first_batch
+    @counter = @batch.size
     @database, @collection = result.cursor.ns.split(".", 2)
   end
 
   # :nodoc:
   def exhausted?
-    @cursor_id == 0
+    @cursor_id == 0 || @limit.try { |limit| limit <= @counter }
   end
 
   def next
@@ -63,7 +71,7 @@ class Mongo::Cursor
 
     return element if element
 
-    if @cursor_id == 0 || !element
+    if @cursor_id == 0 || (@tailable && !element)
       Iterator::Stop::INSTANCE
     else
       fetch_more
@@ -78,40 +86,50 @@ class Mongo::Cursor
         if (session = @session) && session.implicit?
           session.end
         end
-        @client.command(
-          Commands::KillCursors,
-          database: @database,
-          collection: @collection,
-          cursor_ids: [@cursor_id],
-          server_description: @server_description
-        )
-        @cursor_id = 0_i64
+        self.kill
       end
     }
   rescue e
     # Ignore - client might be dead
   end
 
+  private def kill
+    @client.command(
+      Commands::KillCursors,
+      database: @database,
+      collection: @collection,
+      cursor_ids: [@cursor_id],
+      server_description: @server_description
+    )
+    @cursor_id = 0_i64
+  end
+
   protected def fetch_more
     return if @cursor_id == 0
 
-    reply = @client.command(
-      Commands::GetMore,
-      database: @database,
-      collection: @collection,
-      cursor_id: @cursor_id,
-      max_time_ms: @await_time_ms,
-      server_description: @server_description,
-      session: @session
-    ).not_nil!
-    @cursor_id = reply.cursor.id
-    @batch = reply.cursor.next_batch
+    @@lock.synchronize {
+      batch_size = @limit.try { |limit| Math.max(limit - @counter, 1) } || @batch_size
 
-    if (session = @session) && exhausted? && session.implicit?
-      session.end
-    end
+      reply = @client.command(
+        Commands::GetMore,
+        database: @database,
+        collection: @collection,
+        cursor_id: @cursor_id,
+        batch_size: batch_size,
+        max_time_ms: @await_time_ms,
+        server_description: @server_description,
+        session: @session
+      ).not_nil!
+      @cursor_id = reply.cursor.id
+      @batch = reply.cursor.next_batch
+      @counter += @batch.size
 
-    reply
+      if (session = @session) && exhausted? && session.implicit?
+        session.end
+      end
+
+      reply
+    }
   end
 
   # Will convert the elements to the `T` type while iterating the `Cursor`.

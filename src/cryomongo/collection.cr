@@ -83,7 +83,7 @@ class Mongo::Collection
       write_concern:              write_concern,
       read_preference:            read_preference
     })
-    maybe_result.try { |result| Cursor.new(@database.client, result, session: session) }
+    maybe_result.try { |result| Cursor.new(@database.client, result, batch_size: batch_size, session: session) }
   end
 
   # Count the number of documents in a collection that match the given filter.
@@ -112,7 +112,7 @@ class Mongo::Collection
       max_time_ms:     max_time_ms,
       read_preference: read_preference
     }).not_nil!
-    cursor = Cursor.new(@database.client, result, session: session)
+    cursor = Cursor.new(@database.client, result, limit: limit, session: session)
     if (item = cursor.next).is_a? BSON
       item["n"].as(Int32)
     else
@@ -210,7 +210,15 @@ class Mongo::Collection
       collation:             collation,
       read_preference:       read_preference,
     }).not_nil!
-    Cursor.new(@database.client, result, await_time_ms: tailable && await_data ? max_time_ms : nil, tailable: tailable || false, session: session)
+    Cursor.new(
+      @database.client,
+      result,
+      await_time_ms: tailable && await_data ? max_time_ms : nil,
+      tailable: tailable || false,
+      batch_size: batch_size,
+      limit: limit,
+      session: session
+    )
   end
 
   # Finds the document matching the model.
@@ -290,6 +298,7 @@ class Mongo::Collection
     self.command(Commands::Insert, documents: [document], session: session, options: {
       write_concern:              write_concern,
       bypass_document_validation: bypass_document_validation,
+      ordered: true
     })
   end
 
