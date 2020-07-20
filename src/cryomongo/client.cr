@@ -8,6 +8,7 @@ require "./concerns"
 require "./read_preference"
 require "./sdam/**"
 require "./uri"
+require "./monitoring"
 
 # The client which provides access to a MongoDB server, replica set, or sharded cluster.
 #
@@ -16,6 +17,7 @@ class Mongo::Client
   include WithReadConcern
   include WithWriteConcern
   include WithReadPreference
+  include Monitoring::Observable
 
   # The mininum wire protocol version supported by this driver.
   MIN_WIRE_VERSION = 6
@@ -127,27 +129,34 @@ class Mongo::Client
     read_preference : ReadPreference? = nil,
     server_description : SDAM::ServerDescription? = nil,
     session : Session::ClientSession? = nil,
+    operation_id : Int64? = nil,
     ignore_errors = false,
     **args
   )
+    # Mix collection/database/client/options read and write concerns considering the precedence rules.
     args = WithWriteConcern.mix_write_concern(cmd, args, write_concern || @write_concern)
     args = WithReadConcern.mix_read_concern(cmd, args, read_concern || @read_concern)
 
+    # Determines the read preference to apply to the command
     if WithReadPreference.must_use_primary_command?(cmd, args)
       read_preference = ReadPreference.new(mode: "primary")
     else
       read_preference = read_preference || @read_preference || ReadPreference.new(mode: "primary")
     end
 
+    # Select a suitable server and retrieve the underlying connection.
     server_description ||= server_selection(cmd, args, read_preference)
     connection = get_connection(server_description)
 
+    # Reject for this special case.
     if cmd == Mongo::Commands::FindAndModify && args["options"]?.try(&.["hint"]?) && server_description.max_wire_version < 8
       raise Mongo::Error.new "The hint option is not supported by MongoDB servers < 4.2"
     end
 
+    # Mix the ollection/database/client/options read preferences.
     args = WithReadPreference.mix_read_preference(cmd, args, read_preference, topology, server_description)
 
+    # Determine whether the request is acknowledged and eventually prohibit some operations.
     unacknowledged = false
     if concern = args["options"]?.try(&.["write_concern"]?)
       unacknowledged = concern.w == 0 && !concern.j
@@ -170,9 +179,11 @@ class Mongo::Client
       raise Mongo::Error.new("Option #{prohibited_option} is prohibited when performing an unacknowledged write.") if prohibited_option
     end
 
+    # Extract the actual BSON depending on the target command.
     body, sequences = cmd.command(**args)
     flag_bits = unacknowledged ? Messages::OpMsg::Flags::MoreToCome : Messages::OpMsg::Flags::None
 
+    # Apply session rules.
     if topology.supports_sessions?
       if unacknowledged && session
         raise Mongo::Error.new("Unacknowledged writes are incompatible with sessions.")
@@ -184,27 +195,91 @@ class Mongo::Client
       body["$clusterTime"] = cluster_time if cluster_time
     end
 
-    # Also check if the command is unacknowledged and potentially raise!!
-
+    # Create the OP_MSG message to send.
     op_msg = Messages::OpMsg.new(body, flag_bits: flag_bits)
     sequences.try &.each { |key, documents|
       op_msg.sequence(key.to_s, contents: documents)
     }
 
-    connection.send(op_msg)
+    # Command monitoring related variables.
+    duration_start = Time.monotonic
+    request_id = uninitialized Int64
+    command_name = cmd.name
+    address = connection.server_description.address
 
-    return nil if unacknowledged
+    # Send the command.
+    connection.send(op_msg) { |message|
+      # Monitor by sending a CommandStartedEvent
+      if has_subscribers?
+        request_id = message.header.request_id.to_i64
 
-    op_msg = connection.receive(ignore_errors: ignore_errors)
+        self.broadcast(Monitoring::CommandStartedEvent.new(
+          command_name: command_name,
+          request_id: request_id,
+          operation_id: operation_id,
+          address: address,
+          command: op_msg.safe_payload(cmd),
+          database_name: op_msg.body["$db"].as(String)
+        ))
+      end
+    }
 
+    # If the write is unacknowledged - early return.
+    if unacknowledged
+      self.broadcast(Monitoring::CommandSucceededEvent.new(
+        command_name: command_name,
+        request_id: request_id,
+        operation_id: operation_id,
+        address: address,
+        duration: Time.monotonic - duration_start,
+        reply: BSON.new({ ok: 1 })
+      ))
+
+      return nil
+    end
+
+    # Receive the server sent OP_MSG.
+    op_msg = connection.receive(ignore_errors: ignore_errors) { |message|
+      op_msg = message.contents.as(Messages::OpMsg)
+      duration = Time.monotonic - duration_start
+
+      # Monitor.
+      if has_subscribers?
+        if op_msg.valid?
+          self.broadcast(Monitoring::CommandSucceededEvent.new(
+            command_name: command_name,
+            request_id: message.header.request_id.to_i64,
+            operation_id: operation_id,
+            address: address,
+            duration: duration,
+            reply: op_msg.safe_payload(cmd)
+          ))
+        else
+          error = op_msg.validate.not_nil!
+          self.broadcast(Monitoring::CommandFailedEvent.new(
+            command_name: command_name,
+            request_id: message.header.request_id.to_i64,
+            operation_id: operation_id,
+            address: address,
+            duration: duration,
+            reply: op_msg.safe_payload(cmd),
+            failure: error
+          ))
+        end
+      end
+    }
+
+    # Parse as a custom Result type.
     result = cmd.result(op_msg.body)
 
+    # Update the stored cluster time.
     if cluster_time = Commands::Common::BaseResult.from_bson(op_msg.body).cluster_time
       @cluster_time = cluster_time if !@cluster_time || @cluster_time.try &.< cluster_time
       session.advance_cluster_time(cluster_time) if session
     end
 
     if result.is_a? Cursor
+      # Bind the Cursor to the same server for its lifetime.
       result.server_description = server_description
     elsif session && session.implicit?
       session.end

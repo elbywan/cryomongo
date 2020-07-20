@@ -190,11 +190,12 @@ struct Mongo::Bulk
     group = [] of BSON
     group_bytesize = 0
     index_offset = 0
+    operation_id = 0_i64
     results = WriteResult.new
 
     models.each { |model|
       if model.class != group_type
-        index_offset = process_group(group_type, group, results, index_offset, options)
+        index_offset = process_group(group_type, group, results, index_offset, options, operation_id)
         return results if early_return?(results)
         group_type = model.class
         group_bytesize = 0
@@ -203,16 +204,17 @@ struct Mongo::Bulk
       bson = format_bson(model)
 
       if group_bytesize + bson.size >= @max_bson_object_size || group.size >= @max_bson_object_size
-        index_offset = process_group(group_type, group, results, index_offset, options)
+        index_offset = process_group(group_type, group, results, index_offset, options, operation_id)
         return results if early_return?(results)
         group_bytesize = 0
       end
 
       group << bson
       group_bytesize += bson.size
+      operation_id += 1_i64
     }
 
-    process_group(group_type, group, results, index_offset, options)
+    process_group(group_type, group, results, index_offset, options, operation_id)
 
     results
   end
@@ -284,7 +286,7 @@ struct Mongo::Bulk
     end.not_nil!
   end
 
-  private def process_group(type, group : Array(BSON), results, index_offset, options) : Int32
+  private def process_group(type, group : Array(BSON), results, index_offset, options, operation_id) : Int32
     return 0 if group.size < 1
 
     options = options.merge({
@@ -292,17 +294,17 @@ struct Mongo::Bulk
     })
 
     if type == InsertOne
-      result = @collection.command(Commands::Insert, documents: group, options: options, session: @session)
+      result = @collection.command(Commands::Insert, documents: group, options: options, session: @session, operation_id: operation_id)
     elsif type == DeleteOne
-      result = @collection.command(Commands::Delete, deletes: group, options: options, session: @session)
+      result = @collection.command(Commands::Delete, deletes: group, options: options, session: @session, operation_id: operation_id)
     elsif type == DeleteMany
-      result = @collection.command(Commands::Delete, deletes: group, options: options, session: @session)
+      result = @collection.command(Commands::Delete, deletes: group, options: options, session: @session, operation_id: operation_id)
     elsif type == ReplaceOne
-      result = @collection.command(Commands::Update, updates: group, options: options, session: @session)
+      result = @collection.command(Commands::Update, updates: group, options: options, session: @session, operation_id: operation_id)
     elsif type == UpdateOne
-      result = @collection.command(Commands::Update, updates: group, options: options, session: @session)
+      result = @collection.command(Commands::Update, updates: group, options: options, session: @session, operation_id: operation_id)
     elsif type == UpdateMany
-      result = @collection.command(Commands::Update, updates: group, options: options, session: @session)
+      result = @collection.command(Commands::Update, updates: group, options: options, session: @session, operation_id: operation_id)
     else
       raise Mongo::Bulk::Error.new "Invalid Operation"
     end

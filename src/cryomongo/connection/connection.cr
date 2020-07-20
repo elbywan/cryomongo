@@ -110,8 +110,9 @@ struct Mongo::Connection
     end
   end
 
-  def send(op_msg : Messages::OpMsg)
+  def send(op_msg : Messages::OpMsg, &block)
     message = Messages::Message.new(op_msg)
+
     Log.debug {
       "Sending: #{message.header.inspect}"
     }
@@ -123,16 +124,27 @@ struct Mongo::Connection
         "Seq[#{key}]: #{contents.to_json}"
       }
     }
+
+    yield message
+
     message.to_io(socket)
   end
 
-  def receive(*, ignore_errors = false)
+  def send(op_msg : Messages::OpMsg)
+    send(op_msg) {}
+  end
+
+  def receive(*, ignore_errors = false, &block)
     loop do
       message = Mongo::Messages::Message.new(socket)
+
       Log.debug {
         "Receiving: #{message.header.inspect}"
       }
+
       op_msg = message.contents.as(Messages::OpMsg)
+      more_to_come = op_msg.flag_bits.more_to_come?
+
       Log.trace {
         op_msg.body.to_json
       }
@@ -141,19 +153,19 @@ struct Mongo::Connection
           "Seq[#{key}]: #{contents.to_json}"
         }
       }
-      unless op_msg.body["ok"] == 1
-        err_msg = op_msg.body["errmsg"]?.as(String)
-        err_code = op_msg.body["code"]?
-        Log.error {
-          "Received error code: #{err_code} - #{err_msg}"
-        }
-        raise Mongo::Error::Command.new(err_code, err_msg) unless ignore_errors
+
+      yield message unless more_to_come
+
+      if error = op_msg.validate
+        raise error unless ignore_errors
       end
-      if errors = op_msg.body["writeErrors"]?
-        raise Mongo::Error::CommandWrite.new(errors.as(BSON))
-      end
-      return op_msg unless op_msg.flag_bits.more_to_come?
+
+      return op_msg unless more_to_come
     end
+  end
+
+  def receive(*, ignore_errors = false)
+    receive(ignore_errors: ignore_errors) {}
   end
 
   def before_checkout

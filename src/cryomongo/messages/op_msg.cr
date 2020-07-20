@@ -127,4 +127,33 @@ struct Mongo::Messages::OpMsg < Mongo::Messages::Part
       )
     )
   end
+
+  def valid?
+    self.body["ok"] == 1
+  end
+
+  def validate : Exception?
+    if self.valid?
+      if errors = self.body["writeErrors"]?
+        Mongo::Error::CommandWrite.new(errors.as(BSON))
+      end
+    else
+      err_msg = self.body["errmsg"]?.as(String)
+      err_code = self.body["code"]?
+      Mongo::Error::Command.new(err_code, err_msg)
+    end
+  end
+
+  def safe_payload(command)
+    # see: https://github.com/mongodb/specifications/blob/master/source/command-monitoring/command-monitoring.rst#security
+    if command.is_a?(Commands::IsMaster) && self.body["speculativeAuthenticate"]?
+      BSON.new
+    else
+      payload = BSON.new(self.body)
+      self.each_sequence { |key, contents|
+        payload[key] = contents
+      }
+      payload
+    end
+  end
 end

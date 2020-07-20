@@ -13,7 +13,7 @@
 
 *Compatible with MongoDB 3.6+. Tested against: 4.0 and 4.2.*
 
-**⚠️ BETA state.**
+**⚠️ BETA state, but should work decently enough for most purposes.**
 
 > If you are looking for a higher-level object-document mapper library, you might want to check out the [`moongoon`](https://github.com/elbywan/moongoon) shard.
 
@@ -449,17 +449,17 @@ The goal is to to be compliant with most of the [official MongoDB set of specifi
 - https://github.com/mongodb/specifications/blob/master/source/index-management.rst (no IndexView fluid syntax)
 - https://github.com/mongodb/specifications/tree/master/source/gridfs
 - https://github.com/mongodb/specifications/tree/master/source/change-streams
+- https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst
+- https://github.com/mongodb/specifications/tree/master/source/command-monitoring
 
 **⏳Next**
 
 The following specifications are to be implemented next:
 
 - https://github.com/mongodb/specifications/tree/master/source/causal-consistency
-- https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst
 - https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst
 - https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst
 - https://github.com/mongodb/specifications/tree/master/source/transactions
-- https://github.com/mongodb/specifications/tree/master/source/command-monitoring
 - https://github.com/mongodb/specifications/tree/master/source/compression
 
 ## Contributing
