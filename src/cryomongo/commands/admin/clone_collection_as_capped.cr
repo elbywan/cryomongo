@@ -10,7 +10,7 @@ module Mongo::Commands::CloneCollectionAsCapped
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(database : String, collection : Collection::CollectionKey, to_collection : Collection::CollectionKey, size : Int64, options)
+  def command(database : String, collection : Collection::CollectionKey, to_collection : Collection::CollectionKey, size : Int64, options = nil)
     Commands.make({
       cloneCollectionAsCapped: collection,
       toCollection:            to_collection,

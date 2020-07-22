@@ -9,7 +9,7 @@ module Mongo::Commands::Explain
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(database : String, explain, options)
+  def command(database : String, explain, options = nil)
     Commands.make({
       explain: BSON.new(explain),
       "$db":   database,

@@ -11,7 +11,7 @@ module Mongo::Commands::RenameCollection
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(database : String, collection : Collection::CollectionKey, to : String, options)
+  def command(database : String, collection : Collection::CollectionKey, to : String, options = nil)
     Commands.make({
       renameCollection: "#{database}.#{collection}",
       to:               to,

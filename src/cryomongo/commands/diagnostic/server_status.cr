@@ -10,7 +10,7 @@ module Mongo::Commands::ServerStatus
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(options)
+  def command(options = nil)
     Commands.make({
       serverStatus: 1,
       "$db":        "admin",

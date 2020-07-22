@@ -9,7 +9,7 @@ module Mongo::Commands::DropIndexes
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(database : String, collection : Collection::CollectionKey, index, options)
+  def command(database : String, collection : Collection::CollectionKey, index, options = nil)
     Commands.make({
       dropIndexes: collection,
       index:       index,

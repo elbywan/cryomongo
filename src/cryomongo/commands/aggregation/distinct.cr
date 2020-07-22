@@ -10,7 +10,7 @@ module Mongo::Commands::Distinct
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(database : String, collection : Collection::CollectionKey, key : String, options)
+  def command(database : String, collection : Collection::CollectionKey, key : String, options = nil)
     Commands.make({
       distinct: collection,
       key:      key,

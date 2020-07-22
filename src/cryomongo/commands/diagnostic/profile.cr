@@ -10,7 +10,7 @@ module Mongo::Commands::Profile
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(level : Int32, options)
+  def command(level : Int32, options = nil)
     Commands.make({
       profile: level,
       "$db":   "admin",

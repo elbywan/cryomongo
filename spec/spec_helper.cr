@@ -37,7 +37,7 @@ def start_mongo(topology : MongoLaunchTopology = :single)
 
   mongo_path = ENV["MONGODB_PATH"]?
   binary_path_option = mongo_path ? "--binarypath #{mongo_path}" : ""
-  puts `mlaunch init #{topology_argument} #{binary_path_option}`
+  puts `mlaunch init --setParameter enableTestCommands=1 #{topology_argument} #{binary_path_option}`
 end
 
 def stop_mongo
@@ -67,3 +67,5 @@ def with_mongo(&block : ((-> Mongo::Client), MongoLaunchTopology) -> Nil)
     end
   }
 end
+
+require "./runner"

@@ -383,6 +383,12 @@ result = client.command(Mongo::Commands::ServerStatus, options: {
   repl: 0
 })
 puts result.to_bson
+
+# The .command method can also be called against a Database…
+client["database"].command(Mongo::Commands::Create, name: "collection")
+client["database"].command(Mongo::Commands::Drop, name: "collection")
+# …or a Collection.
+client["database"]["collection"].command(Mongo::Commands::Validate)
 ```
 **Links**
 

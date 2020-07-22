@@ -9,7 +9,7 @@ module Mongo::Commands::DataSize
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(database : String, collection : Collection::CollectionKey, options)
+  def command(database : String, collection : Collection::CollectionKey, options = nil)
     Commands.make({
       dataSize: collection,
       "$db":    database,

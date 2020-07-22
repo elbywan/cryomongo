@@ -11,7 +11,7 @@ module Mongo::Commands::FindAndModify
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(database : String, collection : Collection::CollectionKey, filter, options)
+  def command(database : String, collection : Collection::CollectionKey, filter, options = nil)
     Commands.make({
       findAndModify: collection,
       query:         BSON.new(filter),

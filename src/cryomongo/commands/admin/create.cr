@@ -9,7 +9,7 @@ module Mongo::Commands::Create
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(database : String, name : Collection::CollectionKey, options)
+  def command(database : String, name : Collection::CollectionKey, options = nil)
     Commands.make({
       create: name,
       "$db":  database,

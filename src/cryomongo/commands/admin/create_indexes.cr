@@ -9,7 +9,7 @@ module Mongo::Commands::CreateIndexes
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(database : String, collection : Collection::CollectionKey, indexes : Array, options)
+  def command(database : String, collection : Collection::CollectionKey, indexes : Array, options = nil)
     Commands.make({
       createIndexes: collection,
       indexes:       indexes.map { |index| BSON.new(index) },

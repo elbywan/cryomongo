@@ -9,7 +9,7 @@ module Mongo::Commands::CurrentOp
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(options)
+  def command(options = nil)
     Commands.make({
       currentOp: 1,
       "$db":     "admin",

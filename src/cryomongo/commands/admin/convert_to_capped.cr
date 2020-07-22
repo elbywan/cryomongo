@@ -9,7 +9,7 @@ module Mongo::Commands::ConvertToCapped
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(database : String, collection : Collection::CollectionKey, size : Int64, options)
+  def command(database : String, collection : Collection::CollectionKey, size : Int64, options = nil)
     Commands.make({
       convertToCapped: collection,
       size:            size,

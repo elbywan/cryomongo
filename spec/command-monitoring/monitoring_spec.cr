@@ -1,7 +1,4 @@
 require "../spec_helper"
-require "../crud/spec_helper"
-
-include Crud::Helpers
 
 describe Mongo::Monitoring do
   with_mongo { |get_client, topology|
@@ -72,7 +69,7 @@ describe Mongo::Monitoring do
               case event
               when Mongo::Monitoring::CommandStartedEvent
                 event.database_name.should eq result["database_name"]
-                compare_json(result["command"], JSON.parse(event.command.to_json)) { |a, b|
+                Runner.compare_json(result["command"], JSON.parse(event.command.to_json)) { |a, b|
                   if a == 42
                     b.should eq cursor_id
                   else
@@ -80,7 +77,7 @@ describe Mongo::Monitoring do
                   end
                 }
               when Mongo::Monitoring::CommandSucceededEvent
-                compare_json(result["reply"], JSON.parse(event.reply.to_json)) { |a, b|
+                Runner.compare_json(result["reply"], JSON.parse(event.reply.to_json)) { |a, b|
                   if a == 42
                     b.should_not be_nil
                     cursor_id = b.as_i64
@@ -99,7 +96,7 @@ describe Mongo::Monitoring do
             end
 
             begin
-              result = spec_operation(global_database, local_database, collection, operation, outcome: nil)
+              result = Runner.spec_operation(client, local_database, collection, operation)
               if result.is_a? Mongo::Cursor
                 result.to_a
               end

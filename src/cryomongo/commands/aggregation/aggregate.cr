@@ -10,7 +10,7 @@ module Mongo::Commands::Aggregate
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(database : String, collection : Collection::CollectionKey, pipeline : Array, options)
+  def command(database : String, collection : Collection::CollectionKey, pipeline : Array, options = nil)
     need_cursor = true
     body, sequences = Commands.make({
       "aggregate": collection,

@@ -11,7 +11,7 @@ module Mongo::Commands::Delete
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(database : String, collection : Collection::CollectionKey, deletes : Array, options)
+  def command(database : String, collection : Collection::CollectionKey, deletes : Array, options = nil)
     Commands.make({
       delete: collection,
       "$db":  database,
