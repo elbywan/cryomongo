@@ -41,9 +41,9 @@ struct Mongo::Options
   # The name of the replica set to connect to
   getter replica_set : String? = nil
   # Enables retryable reads on server 3.6+
-  getter retry_reads : Bool? = nil
+  getter retry_reads : Bool? = true
   # Enables retryable writes on server 3.6+
-  getter retry_writes : Bool? = nil
+  getter retry_writes : Bool? = true
   # A timeout in milliseconds to block for server selection before raising an error
   property server_selection_timeout : Time::Span = 30.seconds
   # Scan the topology only once after a server selection failure instead of repeatedly until the server selection times out

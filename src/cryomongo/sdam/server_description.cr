@@ -139,4 +139,10 @@ class Mongo::SDAM::ServerDescription
   def unknown_or_ghost?
     self.type.unknown? || self.type.rs_ghost?
   end
+
+  def supports_retryable_writes?
+    self.max_wire_version >= 6 &&
+    self.logical_session_timeout_minutes &&
+    !self.type.standalone?
+  end
 end

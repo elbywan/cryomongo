@@ -136,6 +136,8 @@ struct Mongo::Messages::OpMsg < Mongo::Messages::Part
     if self.valid?
       if errors = self.body["writeErrors"]?
         Mongo::Error::CommandWrite.new(errors.as(BSON))
+      elsif write_error = self.body["writeConcernError"]?
+        Mongo::Error::WriteConcern.new(write_error.as(BSON))
       end
     else
       err_msg = self.body["errmsg"]?.as(String)

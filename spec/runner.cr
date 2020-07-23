@@ -81,7 +81,7 @@ module Runner
             sessions = {session0, session1}
 
             counter_ref = Pointer(Int32).malloc(1, 0)
-            subscription = validate_expectations(expectations, counter_ref, local_client, sessions: sessions)
+            subscription = validate_expectations(expectations, counter_ref, local_client, sessions: sessions, command_started_only: true)
 
             operation = test["operation"]?.try &.as_h
             operations = operation.try { |o| [o] } || test["operations"].as_a.map(&.as_h)
@@ -129,7 +129,7 @@ module Runner
             validate_outcome(outcome, global_database, global_database[collection_name])
           ensure
             local_client.try { |c|
-              subscription.try { |s| c.unsubscribe(s) }
+              subscription.try { |s| c.unsubscribe_commands(s) }
               c.close
             }
             if (c = client) && (fp = fail_point)
@@ -198,8 +198,9 @@ module Runner
       }
     elsif a.as_h?
       a.as_h.each { |k, v|
-        # Todo: support transactions…
-        if k != "txnNumber" && v != nil
+        if k == "txnNumber"
+          v.as_h["$numberLong"].as_s.to_i64.should eq b["txnNumber"]
+        elsif v != nil
           compare_json(v, b.as_h[k], &block)
         elsif v == nil
           b.as_h[k]?.should be_nil
@@ -242,17 +243,17 @@ module Runner
       when "assertSessionDirty"
         session_name = operation.dig("arguments", "session").as_s
         session = if session_name == "session0"
-          sessions[0]
+          sessions.not_nil![0]
         elsif session_name == "session1"
-          sessions[1]
+          sessions.not_nil![1]
         end
         session.try &.dirty.should be_true
       when "assertSessionNotDirty"
         session_name = operation.dig("arguments", "session").as_s
         session = if session_name == "session0"
-          sessions[0]
+          sessions.not_nil![0]
         elsif session_name == "session1"
-          sessions[1]
+          sessions.not_nil![1]
         end
         session.try &.dirty.should be_false
       when "targetedFailPoint"
@@ -291,9 +292,9 @@ module Runner
       if operation_name == "endSession"
         case operation_object
         when "session0"
-          sessions[0].end
+          sessions.not_nil![0].end
         when "session1"
-          sessions[1].end
+          sessions.not_nil![1].end
         end
       end
 
@@ -669,26 +670,29 @@ module Runner
     end
   end
 
-  def validate_expectations(expectations, counter_ref, client, sessions = nil)
+  def validate_expectations(expectations, counter_ref, client, sessions = nil, *, command_started_only = false)
     return unless expectations
 
     cursor_id = nil
 
-    client.subscribe do |event|
+    client.subscribe_commands do |event|
+      event = event.as(Mongo::Monitoring::Commands::Event)
       counter = counter_ref.value
       next if expectations.not_nil!.size <= counter
-      counter_ref.value += 1
       expectation = expectations.not_nil![counter].as_h
 
       result = case event
-        when Mongo::Monitoring::CommandStartedEvent
+        when Mongo::Monitoring::Commands::CommandStartedEvent
           expectation["command_started_event"]?
-        when Mongo::Monitoring::CommandSucceededEvent
+        when Mongo::Monitoring::Commands::CommandSucceededEvent
+          next if command_started_only
           expectation["command_succeeded_event"]?
-        when Mongo::Monitoring::CommandFailedEvent
+        when Mongo::Monitoring::Commands::CommandFailedEvent
+          next if command_started_only
           expectation["command_failed_event"]?
       end
 
+      counter_ref.value += 1
 
       # result.should_not be_nil
 
@@ -699,7 +703,7 @@ module Runner
       event.command_name.should eq result["command_name"] if result["command_name"]?
 
       case event
-      when Mongo::Monitoring::CommandStartedEvent
+      when Mongo::Monitoring::Commands::CommandStartedEvent
         event.database_name.should eq result["database_name"] if result["database_name"]?
         Runner.compare_json(result["command"], JSON.parse(event.command.to_json)) { |a, b|
           if a == 42
@@ -712,7 +716,7 @@ module Runner
             a.should eq b
           end
         }
-      when Mongo::Monitoring::CommandSucceededEvent
+      when Mongo::Monitoring::Commands::CommandSucceededEvent
         Runner.compare_json(result["reply"], JSON.parse(event.reply.to_json)) { |a, b|
           if a == 42
             b.should_not be_nil
@@ -723,7 +727,7 @@ module Runner
             a.should eq b
           end
         }
-      when Mongo::Monitoring::CommandFailedEvent
+      when Mongo::Monitoring::Commands::CommandFailedEvent
         # nothing special to do
       end
     rescue e

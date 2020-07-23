@@ -18,6 +18,38 @@ module Mongo::Commands
     end
   end
 
+  module WriteCommand
+    macro extended
+      extend Command
+    end
+
+    def write_command?(**args)
+      true
+    end
+  end
+
+  module ReadCommand
+    macro extended
+      extend Command
+    end
+
+    def read_command?(**args)
+      true
+    end
+  end
+
+  module MayUseSecondary
+    def may_use_secondary?(**args)
+      true
+    end
+  end
+
+  module Retryable
+    def retryable?(**args)
+      true
+    end
+  end
+
   # Common results.
   module Common
     # :nodoc:
@@ -57,6 +89,7 @@ module Mongo::Commands
     result(WriteConcernError, root: false) {
       property code : Int32
       property errmsg : String
+      property err_info : BSON?
     }
 
     # Cursor bson sub-document.

@@ -393,7 +393,7 @@ client["database"]["collection"].command(Mongo::Commands::Validate)
 **Links**
 
 - [Mongo::Commands](https://elbywan.github.io/cryomongo/Mongo/Commands.html)
-- [Mongo::Client#command](https://elbywan.github.io/cryomongo/Mongo/Client.html#command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,ignore_errors=false,**args)-instance-method)
+- [Mongo::Client#command](https://elbywan.github.io/cryomongo/Mongo/Client.html#command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,**args)-instance-method)
 - [Mongo::Database#command](https://elbywan.github.io/cryomongo/Mongo/Database.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,**args)-instance-method)
 - [Mongo::Collection#command](https://elbywan.github.io/cryomongo/Mongo/Collection.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,**args)-instance-method)
 
@@ -430,7 +430,7 @@ collection.find(
 - [Mongo::WriteConcern](https://elbywan.github.io/cryomongo/Mongo/WriteConcern.html)
 - [Mongo::ReadPreference](https://elbywan.github.io/cryomongo/Mongo/ReadPreference.html)
 
-## Command Monitoring
+## Commands Monitoring
 
 ```crystal
 require "cryomongo"
@@ -439,13 +439,13 @@ client = Mongo::Client.new
 
 # A simple logging subscriber.
 
-subscription = client.subscribe { |event|
+subscription = client.subscribe_commands { |event|
   case event
-  when Mongo::Monitoring::CommandStartedEvent
+  when Mongo::Monitoring::Commands::CommandStartedEvent
     Log.info { "COMMAND.#{event.command_name} #{event.address} STARTED: #{event.command.to_json}" }
-  when Mongo::Monitoring::CommandSucceededEvent
+  when Mongo::Monitoring::Commands::CommandSucceededEvent
     Log.info { "COMMAND.#{event.command_name} #{event.address} COMPLETED: #{event.reply.to_json} (#{event.duration}s)" }
-  when Mongo::Monitoring::CommandFailedEvent
+  when Mongo::Monitoring::Commands::CommandFailedEvent
     Log.info { "COMMAND.#{event.command_name} #{event.address} FAILED: #{event.failure.inspect} (#{event.duration}s)" }
   end
 }
@@ -454,7 +454,7 @@ subscription = client.subscribe { |event|
 client["database_name"]["collection_name"].find({ hello: "world" })
 
 # …and eventually at some point, unsubscribe the logger.
-client.unsubscribe(subscription)
+client.unsubscribe_commands(subscription)
 ```
 
 **Links**
@@ -492,14 +492,14 @@ The goal is to to be compliant with most of the [official MongoDB set of specifi
 - https://github.com/mongodb/specifications/tree/master/source/change-streams
 - https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst
 - https://github.com/mongodb/specifications/tree/master/source/command-monitoring
+- https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst
 
 **⏳Next**
 
 The following specifications are to be implemented next:
 
-- https://github.com/mongodb/specifications/tree/master/source/causal-consistency
 - https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst
-- https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst
+- https://github.com/mongodb/specifications/tree/master/source/causal-consistency
 - https://github.com/mongodb/specifications/tree/master/source/transactions
 - https://github.com/mongodb/specifications/tree/master/source/compression
 

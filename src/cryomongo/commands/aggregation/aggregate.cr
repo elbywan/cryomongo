@@ -6,7 +6,9 @@ require "../commands"
 #
 # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/aggregate/).
 module Mongo::Commands::Aggregate
-  extend Command
+  extend WriteCommand
+  extend ReadCommand
+  extend MayUseSecondary
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
@@ -28,5 +30,17 @@ module Mongo::Commands::Aggregate
   def result(bson : BSON)
     raise Mongo::Error.new "Explain is not supported" unless bson["cursor"]?
     Common::QueryResult.from_bson bson
+  end
+
+  def write_command?(**args)
+    args["pipeline"]?.try { |pipeline|
+      pipeline.as(Array).map { |elt| BSON.new(elt) }.any? { |stage|
+        stage["$out"]? || stage["$merge"]?
+      }
+    }
+  end
+
+  def may_use_secondary?(**args)
+    !write_command?(**args)
   end
 end

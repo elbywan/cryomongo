@@ -7,7 +7,8 @@ require "../commands"
 #
 # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/delete/).
 module Mongo::Commands::Delete
-  extend Command
+  extend WriteCommand
+  extend Retryable
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
@@ -23,5 +24,9 @@ module Mongo::Commands::Delete
   # Transforms the server result.
   def result(bson : BSON)
     Common::DeleteResult.from_bson bson
+  end
+
+  def retryable?(**args)
+    args.dig?(:options, :limit).try &.== 1
   end
 end

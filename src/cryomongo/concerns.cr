@@ -47,28 +47,8 @@ module Mongo
       property write_concern : WriteConcern? = nil
     end
 
-    WRITE_COMMANDS = {
-      Commands::Aggregate,
-      Commands::Insert,
-      Commands::Update,
-      Commands::Delete,
-      Commands::FindAndModify,
-      Commands::Create,
-      Commands::CreateIndexes,
-      Commands::Drop,
-      Commands::DropDatabase,
-      Commands::DropIndexes,
-      # Commands::CreateUser,
-      # Commands::UpdateUser,
-      # Commands::DropUser,
-      # Commands::MapReduce,
-      # Commands::CopyDb,
-      # Commands::Clone,
-      # Commands::CloneCollection,
-    }
-
     protected def self.mix_write_concern(command, args, write_concern : WriteConcern?)
-      if (options = args["options"]?) && WRITE_COMMANDS.includes?(command)
+      if (options = args["options"]?) && command.is_a?(Commands::WriteCommand) && command.write_command?(**args)
         if options["write_concern"]?
           args
         else
@@ -92,16 +72,8 @@ module Mongo
       property read_concern : ReadConcern? = nil
     end
 
-    READ_COMMANDS = {
-      Commands::Aggregate,
-      Commands::FindAndModify,
-      Commands::Count,
-      Commands::Distinct,
-      Commands::Find,
-    }
-
     protected def self.mix_read_concern(command, args, read_concern : ReadConcern?)
-      if (options = args["options"]?) && READ_COMMANDS.includes?(command)
+      if (options = args["options"]?) && command.is_a?(Commands::ReadCommand) && command.read_command?(**args)
         if options["read_concern"]?
           args
         else

@@ -7,7 +7,8 @@ require "../commands"
 #
 # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/findAndModify/).
 module Mongo::Commands::FindAndModify
-  extend Command
+  extend WriteCommand
+  extend Retryable
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.

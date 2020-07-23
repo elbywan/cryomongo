@@ -48,16 +48,16 @@ describe Mongo::Monitoring do
 
             cursor_id = nil
 
-            subscription = local_client.subscribe do |event|
+            subscription = local_client.subscribe_commands do |event|
               expectation = expectations[counter].as_h
               counter += 1
 
               result = case event
-                when Mongo::Monitoring::CommandStartedEvent
+                when Mongo::Monitoring::Commands::CommandStartedEvent
                   expectation["command_started_event"]?
-                when Mongo::Monitoring::CommandSucceededEvent
+                when Mongo::Monitoring::Commands::CommandSucceededEvent
                   expectation["command_succeeded_event"]?
-                when Mongo::Monitoring::CommandFailedEvent
+                when Mongo::Monitoring::Commands::CommandFailedEvent
                   expectation["command_failed_event"]?
               end
 
@@ -67,7 +67,7 @@ describe Mongo::Monitoring do
               event.command_name.should eq result["command_name"]
 
               case event
-              when Mongo::Monitoring::CommandStartedEvent
+              when Mongo::Monitoring::Commands::CommandStartedEvent
                 event.database_name.should eq result["database_name"]
                 Runner.compare_json(result["command"], JSON.parse(event.command.to_json)) { |a, b|
                   if a == 42
@@ -76,7 +76,7 @@ describe Mongo::Monitoring do
                     a.should eq b
                   end
                 }
-              when Mongo::Monitoring::CommandSucceededEvent
+              when Mongo::Monitoring::Commands::CommandSucceededEvent
                 Runner.compare_json(result["reply"], JSON.parse(event.reply.to_json)) { |a, b|
                   if a == 42
                     b.should_not be_nil
@@ -87,7 +87,7 @@ describe Mongo::Monitoring do
                     a.should eq b
                   end
                 }
-              when Mongo::Monitoring::CommandFailedEvent
+              when Mongo::Monitoring::Commands::CommandFailedEvent
                 # nothing special to do
               end
             rescue e
@@ -106,7 +106,7 @@ describe Mongo::Monitoring do
 
             counter.should eq expectations.size
           ensure
-            subscription.try { |s| local_client.try &.unsubscribe(s) }
+            subscription.try { |s| local_client.try &.unsubscribe_commands(s) }
             local_client.try &.close
           end
         }

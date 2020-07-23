@@ -41,7 +41,8 @@ module Mongo::Session
     @ended = false
     @lock = Mutex.new
 
-    delegate :dirty, :dirty=, to: @server_session
+    delegate :dirty, :txn_number, to: @server_session
+    protected delegate :dirty=, to: @server_session
 
     def initialize(@client : Mongo::Client, @implicit = true, **options : **U) forall U
       {% begin %}
@@ -77,8 +78,10 @@ module Mongo::Session
       @client.topology.logical_session_timeout_minutes.try(&.minutes) || 30.minutes
     end
 
-    def finalize
-      self.end unless @ended
+    def increment_txn_number
+      @lock.synchronize {
+        @server_session.txn_number += 1
+      }
     end
   end
 
@@ -86,6 +89,7 @@ module Mongo::Session
     getter session_id : SessionId
     getter last_use : Time? = nil
     property dirty : Bool = false
+    property txn_number : Int64 = 0
 
     def initialize
       @session_id = SessionId.new(id: UUID.random)
