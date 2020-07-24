@@ -85,7 +85,7 @@ module Mongo::Session
     end
   end
 
-  struct ServerSession
+  class ServerSession
     getter session_id : SessionId
     getter last_use : Time? = nil
     property dirty : Bool = false

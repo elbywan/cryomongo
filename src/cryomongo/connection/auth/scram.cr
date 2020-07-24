@@ -52,7 +52,7 @@ class Mongo::Auth::Scram
         payload:   client_first_payload.to_slice,
       })
     end
-    connection.send(request)
+    connection.send(request, "saslStart")
     # 2.
     response = connection.receive
     reply_document = response.body
@@ -81,7 +81,7 @@ class Mongo::Auth::Scram
       "$db":          source,
       payload:        client_final_message(auth_message).to_slice,
     })
-    connection.send(request)
+    connection.send(request, "saslContinue")
 
     # 4.
     response = connection.receive
@@ -100,7 +100,7 @@ class Mongo::Auth::Scram
         "$db":          source,
         payload:        "",
       })
-      connection.send(request)
+      connection.send(request, "saslContinue")
       response = connection.receive
       reply_document = response.body
     end

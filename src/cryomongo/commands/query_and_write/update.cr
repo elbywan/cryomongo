@@ -26,6 +26,8 @@ module Mongo::Commands::Update
   end
 
   def retryable?(**args)
-    args.dig?(:options, :multi).try &.== false
+    if updates = args["updates"]?
+      updates.size == 1 && updates[0]["multi"]? == false
+    end
   end
 end

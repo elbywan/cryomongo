@@ -138,8 +138,11 @@ class Mongo::Client
     # Create an implicit session
     session ||= Session::ClientSession.new(self)
 
+    # Determine whether the request is acknowledged and prohibit some operations.
+    acknowledged = acknowledged?(args)
+
     result = begin
-      if command.is_a?(Commands::Retryable) && command.retryable?
+      if acknowledged && command.is_a?(Commands::Retryable) && command.retryable?(**args)
         if @options.retry_writes && command.is_a?(Commands::WriteCommand) && command.write_command?
           execute_retryable_write(
             command,
@@ -335,8 +338,8 @@ class Mongo::Client
     # Mix the collection/database/client/options read preferences.
     args = WithReadPreference.mix_read_preference(command, args, read_preference, topology, server_description)
 
-    # Determine whether the request is acknowledged and eventually prohibit some operations.
-    unacknowledged = !acknowledged?(args)
+    # Determine whether the request is acknowledged.
+    unacknowledged = !acknowledged?(args, validate: false)
 
     # Extract the actual BSON depending on the target command.
     body, sequences = command.command(**args)
@@ -344,14 +347,14 @@ class Mongo::Client
 
     # Apply session rules.
     if topology.supports_sessions?
-      if unacknowledged && !session.implicit?
+      if unacknowledged
         # Sessions are not compatible with unacknowledged writes
-        raise Mongo::Error.new("Unacknowledged writes are incompatible with sessions.")
+        raise Mongo::Error.new("Unacknowledged writes are incompatible with sessions.") unless session.implicit?
+      else
+        body["lsid"] = session.session_id if session
+        cluster_time = gossip_cluster_time(session)
+        body["$clusterTime"] = cluster_time if cluster_time
       end
-
-      body["lsid"] = session.session_id if session
-      cluster_time = gossip_cluster_time(session)
-      body["$clusterTime"] = cluster_time if cluster_time
     end
 
     body = (yield body) || body
@@ -369,7 +372,7 @@ class Mongo::Client
     address = connection.server_description.address
 
     # Send the command.
-    connection.send(op_msg) { |message|
+    connection.send(op_msg, command) { |message|
       # Monitor by sending a CommandStartedEvent
       if @commands_observable.has_subscribers?
         request_id = message.header.request_id.to_i64
@@ -441,9 +444,10 @@ class Mongo::Client
 
     result
   rescue error : IO::Error
-    Mongo::Log.error { "Client error: #{error}" }
+    Mongo::Log.error(exception: error) { "Client error"} unless server_description
     # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-monitoring.rst#network-or-command-error-during-server-check
     server_description.try { |desc|
+      Mongo::Log.error(exception: error) { "I/O error with server address: #{desc.address}" }
       description = SDAM::ServerDescription.new(desc.address)
       description.error = error.message
       description.last_update_time = desc.last_update_time
@@ -525,6 +529,7 @@ class Mongo::Client
       if topology.supports_sessions?
         body["txnNumber"] = session.txn_number
       end
+      body
     }
 
     begin
@@ -534,8 +539,10 @@ class Mongo::Client
     rescue error : Mongo::Error::Command
       if error.code == 20 && error.message.try &.starts_with? "Transaction numbers"
         raise error
-      else
+      elsif error.retryable?
         original_error = error
+      else
+        raise error
       end
     end
 
@@ -575,13 +582,19 @@ class Mongo::Client
   end
 
   private def release_connection(connection : Mongo::Connection)
-    @pools[connection.server_description]?.try &.release(connection)
+    @@lock.synchronize {
+      @pools[connection.server_description]?.try &.release(connection)
+    }
   end
 
   protected def close_connection_pool(server_description : SDAM::ServerDescription)
     @@lock.synchronize {
-      pool = @pools.delete(server_description)
-      pool.try &.close
+      @pools.delete_if { |desc, pool|
+        if desc == server_description
+          pool.close
+          true
+        end
+      }
     }
   end
 
@@ -737,13 +750,13 @@ class Mongo::Client
     "array_filters",
   }
 
-  private def acknowledged?(args)
+  private def acknowledged?(args, validate = true)
     unacknowledged = false
     if concern = args["options"]?.try(&.["write_concern"]?)
       unacknowledged = concern.w == 0 && !concern.j
     end
 
-    if unacknowledged
+    if unacknowledged && validate
       prohibited_option = nil
       UNACKNOWLEDGED_WRITE_PROHIBITED_OPTIONS.each { |option|
         if opt = args["options"]?.try(&.has_key? option)

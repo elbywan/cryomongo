@@ -25,4 +25,6 @@ before_script:
   - mongod --version
 
 script:
-  - crystal spec
+  - crystal spec --tag single
+  - crystal spec --tag replicaset
+  - crystal spec --tag sharded

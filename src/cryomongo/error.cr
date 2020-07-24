@@ -87,7 +87,7 @@ module Mongo
     getter details : BSON?
 
     def initialize(error : BSON)
-      @code = error["code"]?.try &.as(Int32) || 0
+      @code = error["code"]?.try(&.as(Int64).to_i32) || 0
       @message = error["errmsg"]?.try(&.as(String)) || ""
       @details = error["err_info"]?.try &.as(BSON)
     end

@@ -27,6 +27,8 @@ module Mongo::Commands::Delete
   end
 
   def retryable?(**args)
-    args.dig?(:options, :limit).try &.== 1
+    if deletes = args["deletes"]?
+      deletes.size == 1 && deletes[0]["limit"]? == 1
+    end
   end
 end

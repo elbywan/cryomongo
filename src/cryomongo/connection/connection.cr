@@ -59,7 +59,7 @@ struct Mongo::Connection
 
     response = uninitialized Mongo::Messages::OpMsg
     round_trip_time = Time.measure {
-      send(request)
+      send(request, Commands::IsMaster)
       response = receive
     }
     result = Commands::IsMaster.result(response.body)
@@ -110,18 +110,23 @@ struct Mongo::Connection
     end
   end
 
-  def send(op_msg : Messages::OpMsg, &block)
+  def send(op_msg : Messages::OpMsg, command = nil, &block)
     message = Messages::Message.new(op_msg)
 
     Log.debug {
-      "Sending: #{message.header.inspect}"
-    }
+      ">> #{"[#{message.header.request_id}]".ljust(8)} #{command}"
+    } if command
+
     Log.trace {
-      op_msg.body.to_json
+      ">> #{"[#{message.header.request_id}]".ljust(8)} Header: #{message.header.inspect}"
+    }
+
+    Log.trace {
+      ">> #{"[#{message.header.request_id}]".ljust(8)} Body: #{op_msg.body.to_json}"
     }
     op_msg.each_sequence { |key, contents|
       Log.trace {
-        "Seq[#{key}]: #{contents.to_json}"
+        ">> #{"[#{message.header.request_id}]".ljust(8)} Seq(#{key}): #{contents.to_json}"
       }
     }
 
@@ -130,8 +135,8 @@ struct Mongo::Connection
     message.to_io(socket)
   end
 
-  def send(op_msg : Messages::OpMsg)
-    send(op_msg) {}
+  def send(op_msg : Messages::OpMsg, command = nil)
+    send(op_msg, command) {}
   end
 
   def receive(*, ignore_errors = false, &block)
@@ -139,18 +144,18 @@ struct Mongo::Connection
       message = Mongo::Messages::Message.new(socket)
 
       Log.debug {
-        "Receiving: #{message.header.inspect}"
+        "<< #{"[#{message.header.response_to}]".ljust(8)} Header: #{message.header.inspect}"
       }
 
       op_msg = message.contents.as(Messages::OpMsg)
       more_to_come = op_msg.flag_bits.more_to_come?
 
       Log.trace {
-        op_msg.body.to_json
+        "<< #{"[#{message.header.response_to}]".ljust(8)} Body: #{op_msg.body.to_json}"
       }
       op_msg.each_sequence { |key, contents|
         Log.trace {
-          "Seq[#{key}]: #{contents.to_json}"
+          "<< #{"[#{message.header.response_to}]".ljust(8)} Seq(#{key}): #{contents.to_json}"
         }
       }
 

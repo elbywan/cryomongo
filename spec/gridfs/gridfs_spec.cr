@@ -13,7 +13,6 @@ describe Mongo::GridFS do
   after_all {
     client.close
     stop_mongo
-    sleep 1
     `rm -Rf ./data`
   }
 

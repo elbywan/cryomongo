@@ -67,8 +67,8 @@ module Runner
             end
 
             if fp = fail_point
-              fp_mode = BSON.from_json fp["mode"].to_json
-              fp_data = BSON.from_json fp["data"].to_json
+              fp_mode = fp["mode"].as_s? || BSON.from_json fp["mode"].to_json
+              fp_data = fp["data"]?.try { |fp_data_json| BSON.from_json(fp_data_json.to_json) }
               client.command(Mongo::Commands::ConfigureFailPoint, fail_point: fp["configureFailPoint"].as_s, mode: fp_mode, options: { data: fp_data })
             end
 
@@ -316,7 +316,7 @@ module Runner
     replacement = bson_arg "replacement"
     document = bson_arg "document"
     documents = bson_array_arg "documents"
-    upsert = bool_arg "upsert"
+    upsert = bool_arg "upsert", default: false
     sort = bson_arg "sort"
     projection = bson_arg "projection"
     hint = arguments["hint"]?.try { |h|
@@ -428,7 +428,7 @@ module Runner
       collection.update_one(
         filter: filter.not_nil!,
         update: update.not_nil!,
-        upsert: upsert || false,
+        upsert: upsert,
         array_filters: array_filters,
         collation: collation,
         hint: hint,
@@ -441,7 +441,7 @@ module Runner
       collection.update_many(
         filter: filter.not_nil!,
         update: update.not_nil!,
-        upsert: upsert || false,
+        upsert: upsert,
         array_filters: array_filters,
         collation: collation,
         hint: hint,
@@ -454,7 +454,7 @@ module Runner
       collection.replace_one(
         filter: filter.not_nil!,
         replacement: replacement.not_nil!,
-        upsert: upsert || false,
+        upsert: upsert,
         collation: collation,
         hint: hint,
         ordered: ordered,
@@ -666,7 +666,7 @@ module Runner
         read_preference: Mongo::ReadPreference.new(mode: "primary"),
         read_concern: Mongo::ReadConcern.new("local")
       ).to_a
-      outcome_data.to_json.should eq collection_data.to_json
+      collection_data.to_json.should eq outcome_data.to_json
     end
   end
 

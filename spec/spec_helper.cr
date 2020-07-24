@@ -59,7 +59,6 @@ def with_mongo(&block : ((-> Mongo::Client), MongoLaunchTopology) -> Nil)
       after_all {
         client.close
         stop_mongo
-        sleep 5
         `rm -Rf ./data`
       }
 
