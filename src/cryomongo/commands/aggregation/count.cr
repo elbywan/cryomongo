@@ -8,6 +8,7 @@ require "../commands"
 module Mongo::Commands::Count
   extend ReadCommand
   extend MayUseSecondary
+  extend Retryable
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.

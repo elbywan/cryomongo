@@ -69,6 +69,7 @@ puts collection.count_documents # => 0
 - **[Collation](https://docs.mongodb.com/manual/reference/collation/index.html)**
 - **Standalone, [Sharded](https://docs.mongodb.com/manual/sharding/) or [ReplicaSet](https://docs.mongodb.com/manual/replication/) topologies**
 - **[Command monitoring](https://github.com/mongodb/specifications/blob/master/source/command-monitoring/command-monitoring.rst)**
+- **Retryable [reads](https://docs.mongodb.com/manual/core/retryable-reads/) and [writes](https://docs.mongodb.com/manual/core/retryable-writes/)**
 
 ## Conventions
 
@@ -493,12 +494,12 @@ The goal is to to be compliant with most of the [official MongoDB set of specifi
 - https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst
 - https://github.com/mongodb/specifications/tree/master/source/command-monitoring
 - https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst
+- https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst
 
 **⏳Next**
 
 The following specifications are to be implemented next:
 
-- https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst
 - https://github.com/mongodb/specifications/tree/master/source/causal-consistency
 - https://github.com/mongodb/specifications/tree/master/source/transactions
 - https://github.com/mongodb/specifications/tree/master/source/compression
