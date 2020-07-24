@@ -53,10 +53,15 @@ module Runner
 
             begin
               client.command(Mongo::Commands::KillAllSessions, users: [] of String)
+            rescue
+              # Ignore (https://jira.mongodb.org/browse/SERVER-38335)
+            end
+
+            begin
               global_database.command(Mongo::Commands::Drop, name: collection_name, write_concern: majority_write_concern)
               global_database.command(Mongo::Commands::Create, name: collection_name, write_concern: majority_write_concern)
-            rescue e
-              # Ignore (https://jira.mongodb.org/browse/SERVER-38335)
+            rescue
+              # Ignore because collection namespace might not exist
             end
 
             if (d = data) && d.size > 0
@@ -125,7 +130,9 @@ module Runner
             session0.end
             session1.end
 
-            counter_ref.value.should eq e.size if e = expectations
+            if e = expectations
+              counter_ref.value.should eq e.size
+            end
 
             validate_outcome(outcome, global_database, global_database[collection_name])
           ensure
