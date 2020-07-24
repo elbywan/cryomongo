@@ -105,6 +105,14 @@ class Mongo::SDAM::ServerDescription
     end
   end
 
+  def update(other : ServerDescription)
+    {% begin %}
+      {% for ivar in @type.instance_vars %}
+        @{{ivar.id}} = other.{{ivar.id}}
+      {% end %}
+    {% end %}
+  end
+
   def ==(other : ServerDescription)
     other.address == @address &&
       other.error == @error &&

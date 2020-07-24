@@ -5,6 +5,11 @@ require "../src/cryomongo"
 
 SERVER_VERSION = SemanticVersion.parse(ENV["MONGODB_VERSION"]? || "4.2.0")
 
+class Mongo::Client
+  # speeds up tests in replica set mode - see: https://github.com/mongodb/specifications/tree/master/source/retryable-reads/tests#speeding-up-tests
+  @min_heartbeat_frequency = 50.milliseconds
+end
+
 def semantic(str)
   split = str.split(".")
   full_version = ""

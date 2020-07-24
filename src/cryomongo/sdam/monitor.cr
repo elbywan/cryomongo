@@ -7,7 +7,6 @@ module Mongo::SDAM
     getter server_description : ServerDescription
 
     @heartbeat_frequency : Time::Span = 10.seconds
-    @cooldown : Time::Span = 500.milliseconds
     @topology : TopologyDescription
     @connection : Mongo::Connection? = nil
     @closed : Bool = false
@@ -44,7 +43,7 @@ module Mongo::SDAM
       loop do
         break if @closed
         # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-monitoring.rst#multi-threaded-or-asynchronous-monitoring
-        before_cooldown = Time.utc + @cooldown
+        before_cooldown = Time.utc + @client.min_heartbeat_frequency
         server_to_check = @topology.servers.find(&.address.== @server_description.address)
 
         break if server_to_check.nil? || @closed

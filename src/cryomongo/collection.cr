@@ -102,7 +102,7 @@ class Mongo::Collection
     read_preference : ReadPreference? = nil,
     session : Session::ClientSession? = nil
   ) : Int32 forall H
-    pipeline = !filter || filter.empty? ? [] of BSON : [BSON.new({"$match": BSON.new(filter)})]
+    pipeline = !filter || filter.empty? ? [BSON.new({"$match": BSON.new})] : [BSON.new({"$match": BSON.new(filter)})]
     skip.try { pipeline << BSON.new({"$skip": skip}) }
     limit.try { pipeline << BSON.new({"$limit": limit}) }
     pipeline << BSON.new({"$group": {"_id": 1, "n": {"$sum": 1}}})

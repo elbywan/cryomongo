@@ -9,11 +9,6 @@ module Runner
         file.gets_to_end
       })
 
-      tests = test_file["tests"].as_a
-      data = test_file["data"]?.try &.as_a.map { |elt| BSON.from_json(elt.to_json) }
-      collection_name = test_file["collection_name"]?.try(&.as_s) || "collection"
-      database_name = test_file["database_name"]?.try(&.as_s) || "database"
-
       skip_test = if run_on = test_file["runOn"]?.try(&.as_a)
         run_on.all? { |constraint|
           check_constraints(constraint, topology)
@@ -28,125 +23,164 @@ module Runner
       end
 
       context "#{file_path}" do
-        tests.each { |test|
-          client_options = test["clientOptions"]?.try &.as_h
-
-          if client_options
-            client_uri = "#{uri}?#{query_options(client_options)}"
-          else
-            client_uri = uri
-          end
-
-          description = test["description"].as_s
-          focus = test["focus"]?.try(&.as_bool) || false
-          fail_point = test["failPoint"]?.try &.as_h
-          skip_reason = test["skipReason"]?.try &.as_s
-          outcome = test["outcome"]?.try &.as_h
-          expectations = test["expectations"]?.try &.as_a
-
-          next if skip_reason
-
-          it "#{description} (#{file_path})", focus: focus do
-            client = get_client.call
-            global_database = client[database_name]
-            majority_write_concern = Mongo::WriteConcern.new(w: "majority")
-
-            begin
-              client.command(Mongo::Commands::KillAllSessions, users: [] of String)
-            rescue
-              # Ignore (https://jira.mongodb.org/browse/SERVER-38335)
-            end
-
-            begin
-              global_database.command(Mongo::Commands::Drop, name: collection_name, write_concern: majority_write_concern)
-              global_database.command(Mongo::Commands::Create, name: collection_name, write_concern: majority_write_concern)
-            rescue
-              # Ignore because collection namespace might not exist
-            end
-
-            if (d = data) && d.size > 0
-              global_database[collection_name].insert_many(
-                d,
-                write_concern: majority_write_concern
-              )
-            end
-
-            if fp = fail_point
-              fp_mode = fp["mode"].as_s? || BSON.from_json fp["mode"].to_json
-              fp_data = fp["data"]?.try { |fp_data_json| BSON.from_json(fp_data_json.to_json) }
-              client.command(Mongo::Commands::ConfigureFailPoint, fail_point: fp["configureFailPoint"].as_s, mode: fp_mode, options: { data: fp_data })
-            end
-
-            local_client = Mongo::Client.new(client_uri)
-            local_database = local_client[database_name]
-
-            # Todo: session options
-            session0 = local_client.start_session
-            session1 = local_client.start_session
-            sessions = {session0, session1}
-
-            counter_ref = Pointer(Int32).malloc(1, 0)
-            lsid_list = [] of BSON
-            subscription = validate_expectations(expectations, counter_ref, local_client, lsid_list: lsid_list, sessions: sessions, command_started_only: true)
-
-            operation = test["operation"]?.try &.as_h
-            operations = operation.try { |o| [o] } || test["operations"].as_a.map(&.as_h)
-            operations.each { |o|
-              expect_error = o["error"]?.try &.as_bool || outcome.try &.["error"]?.try &.as_bool
-              result = o["result"]? || outcome.try(&.["result"]?)
-              collection = local_client[database_name][collection_name]
-
-              if collection_options = o["collectionOptions"]?
-                if read_concern = collection_options["readConcern"]?
-                  collection.read_concern = Mongo::ReadConcern.from_bson(BSON.from_json(read_concern.to_json))
-                end
-                if write_concern = collection_options["writeConcern"]?
-                  collection.write_concern = Mongo::WriteConcern.from_bson(BSON.from_json(write_concern.to_json))
-                end
-              end
-
-              if database_options = o["databaseOptions"]?
-                if read_concern = database_options["readConcern"]?
-                  local_database.read_concern = Mongo::ReadConcern.from_bson(BSON.from_json(read_concern.to_json))
-                end
-                if write_concern = database_options["writeConcern"]?
-                  local_database.write_concern = Mongo::WriteConcern.from_bson(BSON.from_json(write_concern.to_json))
-                end
-              end
-
-              begin
-                if expect_error
-                  expect_raises(Exception) {
-                    spec_operation(client, local_database, collection, o, outcome_result: result, sessions: sessions, lsid_list: lsid_list)
-                  }
-                else
-                  spec_operation(client, local_database, collection, o, outcome_result: result, sessions: sessions, lsid_list: lsid_list)
-                end
-              rescue error : IO::Error
-                # caused by the fail points
-              end
-            }
-
-            session0.end
-            session1.end
-
-            if e = expectations
-              counter_ref.value.should eq e.size
-            end
-
-            validate_outcome(outcome, global_database, global_database[collection_name])
-          ensure
-            local_client.try { |c|
-              subscription.try { |s| c.unsubscribe_commands(s) }
-              c.close
-            }
-            if (c = client) && (fp = fail_point)
-              c.command(Mongo::Commands::ConfigureFailPoint, fail_point: fp["configureFailPoint"].as_s, mode: "off")
-            end
-          end
-        }
+        run(test_file, file_path, get_client, topology, uri)
       end
     end
+  end
+
+  private def check_constraints(version_root, topology)
+    min_server_version = version_root["minServerVersion"]?.try { |v| semantic(v.as_s) } || SERVER_VERSION
+    max_server_version = version_root["maxServerVersion"]?.try { |v| semantic(v.as_s) } || SERVER_VERSION
+    topologies = version_root["topology"]?.try &.as_a
+
+    skip = max_server_version < SERVER_VERSION ||
+    min_server_version > SERVER_VERSION ||
+    (topologies && !topology.to_s.underscore.in?(topologies))
+
+    skip
+  end
+
+  def run(test_file, file_path, get_client, topology, uri)
+    tests = test_file["tests"].as_a
+    bucket_name = test_file["bucket_name"]?.try &.as_s
+    collection_name = test_file["collection_name"]?.try(&.as_s) || "collection"
+    database_name = test_file["database_name"]?.try(&.as_s) || "database"
+
+    tests.each { |test|
+      client_options = test["clientOptions"]?.try &.as_h
+
+      if client_options
+        client_uri = "#{uri}?#{query_options(client_options)}"
+      else
+        client_uri = uri
+      end
+
+      description = test["description"].as_s
+      focus = test["focus"]?.try(&.as_bool) || false
+      fail_point = test["failPoint"]?.try &.as_h
+      skip_reason = test["skipReason"]?.try &.as_s
+      outcome = test["outcome"]?.try &.as_h
+      expectations = test["expectations"]?.try &.as_a
+
+      next if skip_reason
+
+      it "#{description} (#{file_path})", focus: focus do
+        client = get_client.call
+        local_client = Mongo::Client.new(client_uri)
+        global_database = client[database_name]
+        local_database = local_client[database_name]
+        majority_write_concern = Mongo::WriteConcern.new(w: "majority")
+
+        begin
+          client.command(Mongo::Commands::KillAllSessions, users: [] of String)
+        rescue
+          # Ignore (https://jira.mongodb.org/browse/SERVER-38335)
+        end
+
+        begin
+          if bucket_name
+            global_database.command(Mongo::Commands::Drop, name: "#{bucket_name}.files", write_concern: majority_write_concern)
+            global_database.command(Mongo::Commands::Drop, name: "#{bucket_name}.chunks", write_concern: majority_write_concern)
+            global_database.command(Mongo::Commands::Create, name: "#{bucket_name}.files", write_concern: majority_write_concern)
+            global_database.command(Mongo::Commands::Create, name: "#{bucket_name}.chunks", write_concern: majority_write_concern)
+          else
+            global_database.command(Mongo::Commands::Drop, name: collection_name, write_concern: majority_write_concern)
+            global_database.command(Mongo::Commands::Create, name: collection_name, write_concern: majority_write_concern)
+          end
+        rescue
+          # Ignore because collection namespace might not exist
+        end
+
+        if bn = bucket_name
+          gridfs = local_database.grid_fs(bucket_name: bn)#, chunk_size_bytes: chunk_size)
+          if (d = test_file["data"].as_h)
+            files = d["fs.files"].as_a.map { |elt| BSON.from_json(elt.to_json) }
+            chunks = d["fs.chunks"].as_a.map { |elt| BSON.from_json(elt.to_json) }
+            global_database["#{bn}.files"].insert_many(files) if files.size > 0
+            global_database["#{bn}.chunks"].insert_many(chunks) if chunks.size > 0
+          end
+        else
+          data = test_file["data"]?.try &.as_a.map { |elt| BSON.from_json(elt.to_json) }
+          if (d = data) && d.size > 0
+            global_database[collection_name].insert_many(
+              d,
+              write_concern: majority_write_concern
+            )
+          end
+        end
+
+
+        if fp = fail_point
+          fp_mode = fp["mode"].as_s? || BSON.from_json fp["mode"].to_json
+          fp_data = fp["data"]?.try { |fp_data_json| BSON.from_json(fp_data_json.to_json) }
+          client.command(Mongo::Commands::ConfigureFailPoint, fail_point: fp["configureFailPoint"].as_s, mode: fp_mode, options: { data: fp_data })
+        end
+
+        # Todo: session options
+        session0 = local_client.start_session
+        session1 = local_client.start_session
+        sessions = {session0, session1}
+
+        counter_ref = Pointer(Int32).malloc(1, 0)
+        lsid_list = [] of BSON
+        subscription = validate_expectations(expectations, counter_ref, local_client, lsid_list: lsid_list, sessions: sessions, command_started_only: true)
+
+        operation = test["operation"]?.try &.as_h
+        operations = operation.try { |o| [o] } || test["operations"].as_a.map(&.as_h)
+        operations.each { |o|
+          expect_error = o["error"]?.try &.as_bool || outcome.try &.["error"]?.try &.as_bool
+          result = o["result"]? || outcome.try(&.["result"]?)
+          collection = local_client[database_name][collection_name]
+
+          if collection_options = o["collectionOptions"]?
+            if read_concern = collection_options["readConcern"]?
+              collection.read_concern = Mongo::ReadConcern.from_bson(BSON.from_json(read_concern.to_json))
+            end
+            if write_concern = collection_options["writeConcern"]?
+              collection.write_concern = Mongo::WriteConcern.from_bson(BSON.from_json(write_concern.to_json))
+            end
+          end
+
+          if database_options = o["databaseOptions"]?
+            if read_concern = database_options["readConcern"]?
+              local_database.read_concern = Mongo::ReadConcern.from_bson(BSON.from_json(read_concern.to_json))
+            end
+            if write_concern = database_options["writeConcern"]?
+              local_database.write_concern = Mongo::WriteConcern.from_bson(BSON.from_json(write_concern.to_json))
+            end
+          end
+
+          begin
+            if expect_error
+              expect_raises(Exception) {
+                spec_operation(local_client, local_database, collection, o, outcome_result: result, sessions: sessions, lsid_list: lsid_list, gridfs: gridfs)
+              }
+            else
+              spec_operation(local_client, local_database, collection, o, outcome_result: result, sessions: sessions, lsid_list: lsid_list, gridfs: gridfs)
+            end
+          rescue error : IO::Error
+            # caused by the fail points
+          end
+        }
+
+        session0.end
+        session1.end
+
+        if e = expectations
+          counter_ref.value.should eq e.size
+        end
+
+        validate_outcome(outcome, global_database, global_database[collection_name])
+      ensure
+        local_client.try { |c|
+          subscription.try { |s| c.unsubscribe_commands(s) }
+          c.close
+        }
+        if (c = client) && (fp = fail_point)
+          c.command(Mongo::Commands::ConfigureFailPoint, fail_point: fp["configureFailPoint"].as_s, mode: "off")
+        end
+      end
+    }
   end
 
   private macro bson_arg(name)
@@ -225,20 +259,8 @@ module Runner
     }.join("&")
   end
 
-  private def check_constraints(version_root, topology)
-    min_server_version = version_root["minServerVersion"]?.try { |v| semantic(v.as_s) } || SERVER_VERSION
-    max_server_version = version_root["maxServerVersion"]?.try { |v| semantic(v.as_s) } || SERVER_VERSION
-    topologies = version_root["topology"]?.try &.as_a
-
-    skip = max_server_version < SERVER_VERSION ||
-    min_server_version > SERVER_VERSION ||
-    (topologies && !topology.to_s.underscore.in?(topologies))
-
-    skip
-  end
-
   # Test an operation.
-  def spec_operation(client, db, collection, operation, *, outcome_result = nil, sessions = nil, lsid_list = [] of BSON)
+  def spec_operation(client, db, collection, operation, *, outcome_result = nil, sessions = nil, lsid_list = [] of BSON, gridfs = nil)
     operation_name = operation["name"].as_s
     operation_object = operation["object"]?.try &.as_s || "collection"
 
@@ -316,13 +338,36 @@ module Runner
       return
     end
 
+
+    # Arguments
     arguments = operation["arguments"]?.try(&.as_h) || ({} of String => JSON::Any)
     arguments["options"]?.try { |options|
       arguments = arguments.merge(options.as_h)
     }
 
-    # Arguments
+    # Gridfs operations
+    if operation_object == "gridfsbucket"
+      gridfs = gridfs.not_nil!
+      case operation_name
+      when "delete"
+        id = BSON::ObjectId.new(arguments["id"].as_h["$oid"].as_s)
+        gridfs.delete(id)
+      when "download"
+        id = BSON::ObjectId.new(arguments["id"].as_h["$oid"].as_s)
+        stream = IO::Memory.new
+        gridfs.download_to_stream(id, stream)
+      when "download_by_name"
+        filename = arguments["filename"].as_s
+        stream = IO::Memory.new
+        gridfs.download_to_stream_by_name(filename, destination: stream)
+      else
+        raise "Unknown GridFS operation: #{operation}"
+      end
 
+      return
+    end
+
+    # Arguments parsing
     collation = arguments["collation"]?.try { |c|
       Mongo::Collation.from_bson(BSON.from_json(c.to_json))
     }
@@ -411,6 +456,16 @@ module Runner
         collation: collation,
         session: session
       )
+    when "findOne"
+      collection.find_one(
+        filter: filter.not_nil!,
+        sort: sort,
+        projection: projection,
+        hint: hint,
+        skip: skip,
+        collation: collation,
+        session: session
+      )
     when "aggregate"
       if operation_object == "database"
         db.aggregate(
@@ -438,6 +493,14 @@ module Runner
           write_concern: write_concern,
           session: session
         )
+      end
+    when "watch"
+      if operation_object == "database"
+        db.watch
+      elsif operation_object == "collection"
+        collection.watch
+      else
+        client.watch
       end
     when "updateOne"
       collection.update_one(
@@ -553,6 +616,30 @@ module Runner
         max_time_ms: max_time_ms,
         session: session
       )
+    when "listDatabases"
+      client.list_databases
+    when "listCollections"
+      db.list_collections
+    when "listIndexes"
+      collection.list_indexes
+    when "listCollectionNames"
+      # not implemented
+      return
+    when "listDatabaseNames"
+      # not implemented
+      return
+    when "listIndexNames"
+      # not implemented
+      return
+    when "mapReduce"
+      # not implemented
+      return
+    when "listCollectionObjects"
+      # not implemented
+      return
+    when "listDatabaseObjects"
+      # not implemented
+      return
     when "bulkWrite"
       requests = Array(Mongo::Bulk::WriteModel).new
       arguments["requests"].as_a.each { |req|
@@ -719,7 +806,7 @@ module Runner
       case event
       when Mongo::Monitoring::Commands::CommandStartedEvent
         event.database_name.should eq result["database_name"] if result["database_name"]?
-        Runner.compare_json(result["command"], JSON.parse(event.command.to_json)) { |a, b|
+        self.compare_json(result["command"], JSON.parse(event.command.to_json)) { |a, b|
           if a == 42
             b.should eq cursor_id
           elsif (s = sessions) && a == "session0"
@@ -731,7 +818,7 @@ module Runner
           end
         }
       when Mongo::Monitoring::Commands::CommandSucceededEvent
-        Runner.compare_json(result["reply"], JSON.parse(event.reply.to_json)) { |a, b|
+        self.compare_json(result["reply"], JSON.parse(event.reply.to_json)) { |a, b|
           if a == 42
             b.should_not be_nil
             cursor_id = b.as_i64

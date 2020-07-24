@@ -31,13 +31,14 @@ class Mongo::Client
   getter cluster_time : Session::ClusterTime?
   # :nodoc:
   getter session_pool : Session::Pool = Session::Pool.new
+  # :nodoc:
+  protected getter min_heartbeat_frequency : Time::Span = 500.milliseconds
 
   @@lock = Mutex.new(:reentrant)
   @pools : Hash(SDAM::ServerDescription, DB::Pool(Mongo::Connection)) = Hash(SDAM::ServerDescription, DB::Pool(Mongo::Connection)).new
   @monitors : Array(SDAM::Monitor) = Array(SDAM::Monitor).new
   @socket_check_interval : Time::Span = 5.seconds
   @last_scan : Time = Time::UNIX_EPOCH
-  @min_heartbeat_frequency : Time::Span = 500.milliseconds
   @topology_update = Channel(Nil).new
   @commands_observable = Monitoring::Observable(Monitoring::Commands::Event).new
 
@@ -162,21 +163,31 @@ class Mongo::Client
             **args
           )
         else
+           # Select a suitable server and retrieve the underlying connection.
+          server_description ||= server_selection(command, args, read_preference)
+          connection = get_connection(server_description)
+
           execute_command(
             command,
             session,
             read_preference,
             server_description,
+            connection,
             operation_id,
             **args
           )
         end
       else
+         # Select a suitable server and retrieve the underlying connection.
+        server_description ||= server_selection(command, args, read_preference)
+        connection = get_connection(server_description)
+
         execute_command(
           command,
           session,
           read_preference,
           server_description,
+          connection,
           operation_id,
           **args
         )
@@ -320,25 +331,23 @@ class Mongo::Client
     command,
     session : Session::ClientSession,
     read_preference : ReadPreference,
-    server_description : SDAM::ServerDescription? = nil,
+    server_description : SDAM::ServerDescription,
+    connection : Mongo::Connection,
     operation_id : Int64? = nil,
     **args
   )
-    execute_command(command, session, read_preference, server_description, operation_id, **args) {}
+    execute_command(command, session, read_preference, server_description, connection, operation_id, **args) {}
   end
 
   private def execute_command(
     command,
     session : Session::ClientSession,
     read_preference : ReadPreference,
-    server_description : SDAM::ServerDescription? = nil,
+    server_description : SDAM::ServerDescription,
+    connection : Mongo::Connection,
     operation_id : Int64? = nil,
     **args
   )
-    # Select a suitable server and retrieve the underlying connection.
-    server_description ||= server_selection(command, args, read_preference)
-    connection = get_connection(server_description)
-
     # Reject for this special case.
     if command == Mongo::Commands::FindAndModify && args["options"]?.try(&.["hint"]?) && server_description.max_wire_version < 8
       raise Mongo::Error.new "The hint option is not supported by MongoDB servers < 4.2"
@@ -527,9 +536,10 @@ class Mongo::Client
     **args
   )
     server_description ||= server_selection(command, args, read_preference)
+    connection = get_connection(server_description)
 
     if !topology.supports_sessions? || !server_description.supports_retryable_writes?
-      return execute_command(command, session, read_preference, server_description, operation_id, **args)
+      return execute_command(command, session, read_preference, server_description, connection, operation_id, **args)
     end
 
     session.increment_txn_number
@@ -542,7 +552,7 @@ class Mongo::Client
     }
 
     begin
-      return execute_command(command, session, read_preference, server_description, operation_id, **args, &txn_block)
+      return execute_command(command, session, read_preference, server_description, connection, operation_id, **args, &txn_block)
     rescue error : IO::Error
       original_error = error
     rescue error : Mongo::Error::Command
@@ -557,6 +567,7 @@ class Mongo::Client
 
     begin
       server_description = server_selection(command, args, read_preference)
+      connection = get_connection(server_description)
     rescue
       raise original_error.not_nil!
     end
@@ -566,7 +577,7 @@ class Mongo::Client
     end
 
     begin
-      execute_command(command, session, read_preference, server_description, operation_id, **args, &txn_block)
+      execute_command(command, session, read_preference, server_description, connection, operation_id, **args, &txn_block)
     rescue error : Mongo::Error
       raise error
     end
@@ -582,13 +593,14 @@ class Mongo::Client
     **args
   )
     server_description ||= server_selection(command, args, read_preference)
+    connection = get_connection(server_description)
 
     if !topology.supports_sessions? || !server_description.supports_retryable_reads?
-      return execute_command(command, session, read_preference, server_description, operation_id, **args)
+      return execute_command(command, session, read_preference, server_description, connection, operation_id, **args)
     end
 
     begin
-      return execute_command(command, session, read_preference, server_description, operation_id, **args)
+      return execute_command(command, session, read_preference, server_description, connection, operation_id, **args)
     rescue error : IO::Error
       original_error = error
     rescue error : Mongo::Error::Command
@@ -601,6 +613,7 @@ class Mongo::Client
 
     begin
       server_description = server_selection(command, args, read_preference)
+      connection = get_connection(server_description)
     rescue
       raise original_error.not_nil!
     end
@@ -610,7 +623,7 @@ class Mongo::Client
     end
 
     begin
-      execute_command(command, session, read_preference, server_description, operation_id, **args)
+      execute_command(command, session, read_preference, server_description, connection, operation_id, **args)
     rescue error : Mongo::Error
       raise error
     end
@@ -629,6 +642,7 @@ class Mongo::Client
       new_rtt = Connection.average_round_trip_time(round_trip_time, server_description.round_trip_time)
       new_description = SDAM::ServerDescription.new(server_description.address, result, new_rtt)
       topology.update(server_description, new_description)
+      server_description.update(new_description)
       connection
     end
     @pools[server_description].checkout
