@@ -13,7 +13,7 @@
 
 *Compatible with MongoDB 3.6+. Tested against: 4.0 and 4.2.*
 
-**⚠️ BETA state, but should work decently enough for most purposes.**
+**⚠️ BETA state.**
 
 > If you are looking for a higher-level object-document mapper library, you might want to check out the [`moongoon`](https://github.com/elbywan/moongoon) shard.
 
