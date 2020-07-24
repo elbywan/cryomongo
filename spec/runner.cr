@@ -81,7 +81,8 @@ module Runner
             sessions = {session0, session1}
 
             counter_ref = Pointer(Int32).malloc(1, 0)
-            subscription = validate_expectations(expectations, counter_ref, local_client, sessions: sessions, command_started_only: true)
+            lsid_list = [] of BSON
+            subscription = validate_expectations(expectations, counter_ref, local_client, lsid_list: lsid_list, sessions: sessions, command_started_only: true)
 
             operation = test["operation"]?.try &.as_h
             operations = operation.try { |o| [o] } || test["operations"].as_a.map(&.as_h)
@@ -111,10 +112,10 @@ module Runner
               begin
                 if expect_error
                   expect_raises(Exception) {
-                    spec_operation(client, local_database, collection, o, outcome_result: result, sessions: sessions)
+                    spec_operation(client, local_database, collection, o, outcome_result: result, sessions: sessions, lsid_list: lsid_list)
                   }
                 else
-                  spec_operation(client, local_database, collection, o, outcome_result: result, sessions: sessions)
+                  spec_operation(client, local_database, collection, o, outcome_result: result, sessions: sessions, lsid_list: lsid_list)
                 end
               rescue error : IO::Error
                 # caused by the fail points
@@ -230,7 +231,7 @@ module Runner
   end
 
   # Test an operation.
-  def spec_operation(client, db, collection, operation, *, outcome_result = nil, sessions = nil)
+  def spec_operation(client, db, collection, operation, *, outcome_result = nil, sessions = nil, lsid_list = [] of BSON)
     operation_name = operation["name"].as_s
     operation_object = operation["object"]?.try &.as_s || "collection"
 
@@ -239,7 +240,11 @@ module Runner
     if operation_object == "testRunner"
       case operation_name
       when "assertDifferentLsidOnLastTwoCommands"
+        lsid_list.size.should be >= 2
+        lsid_list[-1].should_not eq lsid_list[-2]
       when "assertSameLsidOnLastTwoCommands"
+        lsid_list.size.should be >= 2
+        lsid_list[-1].should eq lsid_list[-2]
       when "assertSessionDirty"
         session_name = operation.dig("arguments", "session").as_s
         session = if session_name == "session0"
@@ -258,8 +263,11 @@ module Runner
         session.try &.dirty.should be_false
       when "targetedFailPoint"
       when "assertSessionTransactionState"
+        # todo: later on, for transaction specs
       when "assertSessionPinned"
+        # todo: later on, for transaction specs
       when "assertSessionUnpinned"
+        # todo: later on, for transaction specs
       when "assertCollectionExists"
         database_name = operation.dig("arguments", "database").as_s
         collection_name = operation.dig("arguments", "collection").as_s
@@ -670,31 +678,30 @@ module Runner
     end
   end
 
-  def validate_expectations(expectations, counter_ref, client, sessions = nil, *, command_started_only = false)
-    return unless expectations
-
+  def validate_expectations(expectations, counter_ref, client, sessions = nil, *, lsid_list = [] of BSON, command_started_only = false)
     cursor_id = nil
 
     client.subscribe_commands do |event|
       event = event.as(Mongo::Monitoring::Commands::Event)
       counter = counter_ref.value
-      next if expectations.not_nil!.size <= counter
-      expectation = expectations.not_nil![counter].as_h
+      next if expectations.try &.size.<= counter
+      expectation = expectations.try &.[counter].as_h
 
       result = case event
         when Mongo::Monitoring::Commands::CommandStartedEvent
-          expectation["command_started_event"]?
+          if lsid = event.command["lsid"]?
+            lsid_list << lsid.as(BSON)
+          end
+          expectation.try &.["command_started_event"]?
         when Mongo::Monitoring::Commands::CommandSucceededEvent
           next if command_started_only
-          expectation["command_succeeded_event"]?
+          expectation.try &.["command_succeeded_event"]?
         when Mongo::Monitoring::Commands::CommandFailedEvent
           next if command_started_only
-          expectation["command_failed_event"]?
+          expectation.try &.["command_failed_event"]?
       end
 
       counter_ref.value += 1
-
-      # result.should_not be_nil
 
       next unless result
 

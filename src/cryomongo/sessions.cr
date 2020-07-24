@@ -92,7 +92,8 @@ module Mongo::Session
     property txn_number : Int64 = 0
 
     def initialize
-      @session_id = SessionId.new(id: UUID.random)
+      id = UUID.random
+      @session_id = SessionId.new(id: id)
     end
 
     def use
@@ -120,9 +121,7 @@ module Mongo::Session
               return session
             end
           else
-            session = ServerSession.new
-            @pool << session
-            return session
+            return ServerSession.new
           end
         end
       }
