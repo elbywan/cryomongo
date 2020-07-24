@@ -84,7 +84,9 @@ module Runner
             global_database.command(Mongo::Commands::Create, name: "#{bucket_name}.files", write_concern: majority_write_concern)
             global_database.command(Mongo::Commands::Create, name: "#{bucket_name}.chunks", write_concern: majority_write_concern)
           else
-            global_database.command(Mongo::Commands::Drop, name: collection_name, write_concern: majority_write_concern)
+            begin
+              global_database.command(Mongo::Commands::Drop, name: collection_name, write_concern: majority_write_concern)
+            rescue; end
             global_database.command(Mongo::Commands::Create, name: collection_name, write_concern: majority_write_concern)
           end
         rescue
