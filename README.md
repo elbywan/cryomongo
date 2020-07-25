@@ -52,6 +52,64 @@ collection.delete_one({ two: 2 })
 puts collection.count_documents # => 0
 ```
 
+### Example with serialization
+
+```crystal
+require "cryomongo"
+
+DATABASE_NAME = "database"
+
+# We take advantage of the BSON serialization capabilities provided by the `bson.cr` shard.
+record User, name : String, banned : Bool? = false, _id : BSON::ObjectId = BSON::ObjectId.new, creation_date : Time = Time.utc do
+  include BSON::Serializable
+  include JSON::Serializable
+end
+
+# Initialize Client, Database and Collection.
+client = Mongo::Client.new
+database = client[DATABASE_NAME]
+users = database["users"]
+
+# We set majority read and write at the Database level.
+database.read_concern = Mongo::ReadConcern.new(level: "majority")
+database.write_concern = Mongo::WriteConcern.new(w: "majority")
+
+# Drop and recreate the Collection to ensure that we read later only the documents we inserted in this example.
+{ Mongo::Commands::Drop, Mongo::Commands::Create }.each { |command|
+  database.command(command, name: "users")
+}
+
+# Insert User structures that are automatically serialized to BSON.
+users.insert_many({ "John", "Jane" }.map { |name|
+  User.new(name: name)
+}.to_a)
+
+# Fetch a Cursor pointing to the Users.
+cursor = users.find
+
+# Iterate the cursor and use `.of(User)` to deserialize the user as the cursor gets iterated.
+# Then iterate all the users and push them into an array that gets pretty printed.
+puts cursor.of(User).to_a.to_pretty_json
+# => [
+#   {
+#     "name": "John",
+#     "banned": false,
+#     "_id": {
+#       "$oid": "f2001c5fb0a33e0264e2ea05"
+#     },
+#     "creation_date": "2020-07-25T09:52:50Z"
+#   },
+#   {
+#     "name": "Jane",
+#     "banned": false,
+#     "_id": {
+#       "$oid": "f2001c5fb0a33e0264e2ea07"
+#     },
+#     "creation_date": "2020-07-25T09:52:50Z"
+#   }
+# ]
+```
+
 ## Features
 
 - **[CRUD operations](https://docs.mongodb.com/manual/crud/index.html)**
