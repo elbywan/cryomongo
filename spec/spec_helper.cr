@@ -49,8 +49,9 @@ def stop_mongo
   puts `mlaunch stop`
 end
 
-def with_mongo(&block : ((-> Mongo::Client), MongoLaunchTopology) -> Nil)
+def with_mongo(topologies = nil, &block : ((-> Mongo::Client), MongoLaunchTopology) -> Nil)
   MongoLaunchTopology.each { |topology|
+    next if topologies.try { |t| !topology.in?(t) }
     context "in #{topology} mode", tags: "#{topology.to_s.underscore}" do
       client = uninitialized Mongo::Client
       get_client : -> Mongo::Client = -> { client }

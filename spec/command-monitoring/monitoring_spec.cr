@@ -69,7 +69,7 @@ describe Mongo::Monitoring do
               case event
               when Mongo::Monitoring::Commands::CommandStartedEvent
                 event.database_name.should eq result["database_name"]
-                Runner.compare_json(result["command"], JSON.parse(event.command.to_json)) { |a, b|
+                Mongo::Spec::Runner.compare_json(result["command"], JSON.parse(event.command.to_json)) { |a, b|
                   if a == 42
                     b.should eq cursor_id
                   else
@@ -77,7 +77,7 @@ describe Mongo::Monitoring do
                   end
                 }
               when Mongo::Monitoring::Commands::CommandSucceededEvent
-                Runner.compare_json(result["reply"], JSON.parse(event.reply.to_json)) { |a, b|
+                Mongo::Spec::Runner.compare_json(result["reply"], JSON.parse(event.reply.to_json)) { |a, b|
                   if a == 42
                     b.should_not be_nil
                     cursor_id = b.as_i64
@@ -96,7 +96,7 @@ describe Mongo::Monitoring do
             end
 
             begin
-              result = Runner.spec_operation(client, local_database, collection, operation)
+              result = Mongo::Spec::Runner.spec_operation(client, local_database, collection, operation)
               if result.is_a? Mongo::Cursor
                 result.to_a
               end

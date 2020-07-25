@@ -7,7 +7,7 @@ describe Mongo do
       v2
     ).each do |version|
       context "[#{version}]" do
-        Runner.run_tests("./spec/crud/tests/#{version}/**/*.json", get_client, topology)
+        Mongo::Spec::Runner.run_tests("./spec/crud/tests/#{version}/**/*.json", get_client, topology)
       end
     end
   }

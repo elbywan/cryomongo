@@ -1,4 +1,4 @@
-module Runner
+module Mongo::Spec::Runner
   extend self
 
   # Runs a battery of tests conform to the transactions test suite format.
