@@ -56,7 +56,8 @@ module Mongo::Commands
     module Result
       macro included
         property ok : Float64
-        property operation_time : BSON::Timestamp?
+        @[BSON::Field(key: "operationTime")]
+        property operation_time : BSON::Timestamp? = nil
         @[BSON::Field(key: "$clusterTime")]
         property cluster_time : Session::ClusterTime?
       end

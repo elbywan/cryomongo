@@ -28,14 +28,17 @@ module Mongo
   # such as waiting for stronger consistency guarantees, or loosening consistency requirements to provide higher availability.
   #
   # See: [the official documentation](https://docs.mongodb.com/manual/reference/read-concern/index.html)
+  @[BSON::Options(camelize: "lower")]
   struct ReadConcern
     include BSON::Serializable
 
     # The read concern level.
     property level : String? = nil
+    # :nodoc:
+    property after_cluster_time : BSON::Timestamp? = nil
 
     # Create a ReadConcern instance.
-    def initialize(@level = nil)
+    def initialize(@level = nil, @after_cluster_time = nil)
     end
   end
 
@@ -72,14 +75,23 @@ module Mongo
       property read_concern : ReadConcern? = nil
     end
 
-    protected def self.mix_read_concern(command, args, read_concern : ReadConcern?)
+    protected def self.mix_read_concern(command, args, read_concern : ReadConcern?, *, session : Session::ClientSession)
       if (options = args["options"]?) && command.is_a?(Commands::ReadCommand) && command.read_command?(**args)
-        if options["read_concern"]?
-          args
+        concern : ReadConcern? = options["read_concern"]? || read_concern
+        after_cluster_time = session.operation_time
+
+        if after_cluster_time
+          concern = concern || read_concern || ReadConcern.new
+          concern.after_cluster_time = after_cluster_time
+          args.merge({
+            options: options.merge({
+              read_concern: concern,
+            }),
+          })
         else
           args.merge({
             options: options.merge({
-              read_concern: read_concern.try(&.to_bson),
+              read_concern: read_concern,
             }),
           })
         end

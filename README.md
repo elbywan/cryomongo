@@ -70,6 +70,7 @@ puts collection.count_documents # => 0
 - **Standalone, [Sharded](https://docs.mongodb.com/manual/sharding/) or [ReplicaSet](https://docs.mongodb.com/manual/replication/) topologies**
 - **[Command monitoring](https://github.com/mongodb/specifications/blob/master/source/command-monitoring/command-monitoring.rst)**
 - **Retryable [reads](https://docs.mongodb.com/manual/core/retryable-reads/) and [writes](https://docs.mongodb.com/manual/core/retryable-writes/)**
+- **[Causal consistency](https://docs.mongodb.com/manual/core/read-isolation-consistency-recency/#client-sessions-and-causal-consistency-guarantees)**
 
 ## Conventions
 
@@ -465,6 +466,48 @@ client.unsubscribe_commands(subscription)
 - [Mongo::Monitoring::CommandSucceededEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandSucceededEvent.html)
 - [Mongo::Monitoring::CommandFailedEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandFailedEvent.html)
 
+## Causal Consistency
+
+```crystal
+require "cryomongo"
+
+client = Mongo::Client.new
+
+# To provide causal consistency, MongoDB enables causal consistency in client sessions.
+session = client.start_session
+# It is important to ensure that both read and writes are performed with "majority" concern.
+client.read_concern = Mongo::ReadConcern.new(level: "majority")
+client.write_concern = Mongo::WriteConcern.new(w: "majority")
+
+# Reusing the original Mongodb example.
+# See: https://docs.mongodb.com/manual/core/read-isolation-consistency-recency/#examples
+
+current_date = Time.utc
+items = client["test"]["items"]
+
+# Using a causally consistent session ensures that the update occurs before the insert.
+items.update_one(
+  { sku: "111", end: nil },
+  { "$set": { end: current_date }},
+  session: session
+)
+items.insert_one(
+  { sku: "nuts-111", name: "Pecans", start: current_date },
+  session: session
+)
+
+puts items.find(session: session).to_a.to_pretty_json
+
+# End the session
+session.end
+client.close
+```
+
+**Links**
+
+- [Mongo::Session](https://elbywan.github.io/cryomongo/Mongo/Session.html)
+- [Mongo::Client#start_session](https://elbywan.github.io/cryomongo/Mongo/Client.html#start_session)
+
 ## Specifications
 
 The goal is to to be compliant with most of the [official MongoDB set of specifications](https://github.com/mongodb/specifications).
@@ -495,12 +538,12 @@ The goal is to to be compliant with most of the [official MongoDB set of specifi
 - https://github.com/mongodb/specifications/tree/master/source/command-monitoring
 - https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst
 - https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst
+- https://github.com/mongodb/specifications/tree/master/source/causal-consistency
 
 **⏳Next**
 
 The following specifications are to be implemented next:
 
-- https://github.com/mongodb/specifications/tree/master/source/causal-consistency
 - https://github.com/mongodb/specifications/tree/master/source/transactions
 - https://github.com/mongodb/specifications/tree/master/source/compression
 

@@ -59,8 +59,8 @@ struct Mongo::Connection
 
     response = uninitialized Mongo::Messages::OpMsg
     round_trip_time = Time.measure {
-      send(request, Commands::IsMaster)
-      response = receive
+      send(request, Commands::IsMaster, log: false)
+      response = receive(log: false)
     }
     result = Commands::IsMaster.result(response.body)
 
@@ -110,24 +110,24 @@ struct Mongo::Connection
     end
   end
 
-  def send(op_msg : Messages::OpMsg, command = nil, &block)
+  def send(op_msg : Messages::OpMsg, command = nil, log = true, &block)
     message = Messages::Message.new(op_msg)
 
     Log.debug {
       ">> #{"[#{message.header.request_id}]".ljust(8)} #{command}"
-    } if command
+    } if command && log
 
     Log.trace {
       ">> #{"[#{message.header.request_id}]".ljust(8)} Header: #{message.header.inspect}"
-    }
+    } if log
 
     Log.trace {
       ">> #{"[#{message.header.request_id}]".ljust(8)} Body: #{op_msg.body.to_json}"
-    }
+    } if log
     op_msg.each_sequence { |key, contents|
       Log.trace {
         ">> #{"[#{message.header.request_id}]".ljust(8)} Seq(#{key}): #{contents.to_json}"
-      }
+      } if log
     }
 
     yield message
@@ -135,42 +135,39 @@ struct Mongo::Connection
     message.to_io(socket)
   end
 
-  def send(op_msg : Messages::OpMsg, command = nil)
-    send(op_msg, command) {}
+  def send(op_msg : Messages::OpMsg, command = nil, log = true)
+    send(op_msg, command, log) {}
   end
 
-  def receive(*, ignore_errors = false, &block)
+  def receive(log = true, &block)
     loop do
       message = Mongo::Messages::Message.new(socket)
 
       Log.debug {
         "<< #{"[#{message.header.response_to}]".ljust(8)} Header: #{message.header.inspect}"
-      }
+      } if log
 
       op_msg = message.contents.as(Messages::OpMsg)
       more_to_come = op_msg.flag_bits.more_to_come?
 
       Log.trace {
         "<< #{"[#{message.header.response_to}]".ljust(8)} Body: #{op_msg.body.to_json}"
-      }
+      } if log
       op_msg.each_sequence { |key, contents|
         Log.trace {
           "<< #{"[#{message.header.response_to}]".ljust(8)} Seq(#{key}): #{contents.to_json}"
         }
-      }
+      } if log
 
-      yield message unless more_to_come
-
-      if error = op_msg.validate
-        raise error unless ignore_errors
+      unless more_to_come
+        yield message
+        return op_msg
       end
-
-      return op_msg unless more_to_come
     end
   end
 
-  def receive(*, ignore_errors = false)
-    receive(ignore_errors: ignore_errors) {}
+  def receive(log = false)
+    receive(log: log) {}
   end
 
   def before_checkout

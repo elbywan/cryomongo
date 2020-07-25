@@ -55,6 +55,7 @@ class Mongo::Auth::Scram
     connection.send(request, "saslStart")
     # 2.
     response = connection.receive
+    if error = response.validate; raise error; end
     reply_document = response.body
     @id = reply_document["conversationId"].as(Int32)
     payload_data = String.new(reply_document["payload"].as(Bytes))
@@ -85,6 +86,7 @@ class Mongo::Auth::Scram
 
     # 4.
     response = connection.receive
+    if error = response.validate; raise error; end
     reply_document = response.body
     payload_data = String.new(reply_document["payload"].as(Bytes))
     parsed_data = parse_payload(payload_data)
@@ -102,6 +104,7 @@ class Mongo::Auth::Scram
       })
       connection.send(request, "saslContinue")
       response = connection.receive
+      if error = response.validate; raise error; end
       reply_document = response.body
     end
   end

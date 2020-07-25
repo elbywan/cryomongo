@@ -18,7 +18,9 @@ class Mongo::Client
     connection = get_connection(server_description)
     op_msg = Messages::OpMsg.new(body)
     connection.send(op_msg)
-    connection.receive
+    op_msg = connection.receive
+    if error = op_msg.validate; raise error; end
+    op_msg
   end
 end
 

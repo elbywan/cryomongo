@@ -30,16 +30,18 @@ module Mongo::Session
     getter id : UUID
   end
 
-  record Options
+  record Options, causal_consistency : Bool? = nil
 
   class ClientSession
     @client : Mongo::Client
     @server_session : ServerSession
+    @released = false
+    @lock = Mutex.new
+
     getter cluster_time : ClusterTime? = nil
+    getter operation_time : BSON::Timestamp? = nil
     getter options : Options
     getter? implicit : Bool = true
-    @ended = false
-    @lock = Mutex.new
 
     delegate :dirty, :txn_number, to: @server_session
     protected delegate :dirty=, to: @server_session
@@ -67,9 +69,17 @@ module Mongo::Session
       end
     end
 
+    def advance_operation_time(operation_time : BSON::Timestamp)
+      self_operation_time = @operation_time
+      if !self_operation_time || self_operation_time < operation_time
+        @operation_time = operation_time
+      end
+    end
+
     def end
+      return if @released
       @lock.synchronize {
-        @ended = true
+        @released = true
         @client.session_pool.release(@client, @server_session, logical_timeout)
       }
     end

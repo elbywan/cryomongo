@@ -125,9 +125,12 @@ class Mongo::Client
     operation_id : Int64? = nil,
     **args
   )
+    # Create an implicit session
+    session ||= Session::ClientSession.new(self)
+
     # Mix collection/database/client/options read and write concerns considering the precedence rules.
     args = WithWriteConcern.mix_write_concern(command, args, write_concern || @write_concern)
-    args = WithReadConcern.mix_read_concern(command, args, read_concern || @read_concern)
+    args = WithReadConcern.mix_read_concern(command, args, read_concern || @read_concern, session: session)
 
     # Determines the read preference to apply to the command
     if WithReadPreference.must_use_primary_command?(command, args)
@@ -135,9 +138,6 @@ class Mongo::Client
     else
       read_preference = read_preference || @read_preference || ReadPreference.new(mode: "primary")
     end
-
-    # Create an implicit session
-    session ||= Session::ClientSession.new(self)
 
     # Determine whether the request is acknowledged and prohibit some operations.
     acknowledged = acknowledged?(args)
@@ -280,11 +280,11 @@ class Mongo::Client
   end
 
   # Starts a new logical session for a sequence of operations.
-  def start_session(**options) : Session::ClientSession
+  def start_session(*, causal_consistency : Bool = true) : Session::ClientSession
     Session::ClientSession.new(
-      **options,
       client: self,
-      implicit: false
+      implicit: false,
+      causal_consistency: causal_consistency
     )
   end
 
@@ -451,16 +451,24 @@ class Mongo::Client
       end
     end
 
-    # Parse as a custom Result type.
-    result = command.result(op_msg.body)
+    # Parse as a base result.
+    base_result = Commands::Common::BaseResult.from_bson(op_msg.body)
 
     # Update the stored cluster time.
-    if cluster_time = Commands::Common::BaseResult.from_bson(op_msg.body).cluster_time
+    if cluster_time = base_result.cluster_time
       @cluster_time = cluster_time if !@cluster_time || @cluster_time.try &.< cluster_time
       session.advance_cluster_time(cluster_time) if session
     end
 
-    result
+    if operation_time = base_result.operation_time
+      session.advance_operation_time(operation_time) if session
+    end
+
+    # Raise if the server replied with an error.
+    if error = op_msg.validate; raise error; end
+
+    # Parse and return the body as a custom Result type.
+    command.result(op_msg.body)
   rescue error : IO::Error
     Mongo::Log.error(exception: error) { "Client error"} unless server_description
     # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-monitoring.rst#network-or-command-error-during-server-check
@@ -826,14 +834,14 @@ class Mongo::Client
     if unacknowledged && validate
       prohibited_option = nil
       UNACKNOWLEDGED_WRITE_PROHIBITED_OPTIONS.each { |option|
-        if opt = args["options"]?.try(&.has_key? option)
-          prohibited_option = opt
+        if args["options"]?.try { |item| item.has_key?(option) && !item[option]?.nil? }
+          prohibited_option = option
           break
-        elsif opt = args["updates"]?.try(&.any? &.has_key? option)
-          prohibited_option = opt
+        elsif args["updates"]?.try(&.any? { |item| item.has_key?(option) && !item[option]?.nil? })
+          prohibited_option = option
           break
-        elsif opt = args["deletes"]?.try(&.any? &.has_key? option)
-          prohibited_option = opt
+        elsif args["deletes"]?.try(&.any? { |item| item.has_key?(option) && !item[option]?.nil? })
+          prohibited_option = option
           break
         end
       }
