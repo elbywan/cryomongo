@@ -84,11 +84,11 @@ users.insert_many({ "John", "Jane" }.map { |name|
   User.new(name: name)
 }.to_a)
 
-# Fetch a Cursor pointing to the Users.
+# Fetch a Cursor pointing to the users collection.
 cursor = users.find
 
-# Iterate the cursor and use `.of(User)` to deserialize the user as the cursor gets iterated.
-# Then iterate all the users and push them into an array that gets pretty printed.
+# Iterate the cursor and use `.of(User)` to deserialize as the cursor gets iterated.
+# Then push the users into an array that gets pretty printed.
 puts cursor.of(User).to_a.to_pretty_json
 # => [
 #   {
