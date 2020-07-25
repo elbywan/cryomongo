@@ -68,6 +68,9 @@ puts collection.count_documents # => 0
 - **[Tailable and Awaitable cursors](https://docs.mongodb.com/manual/core/tailable-cursors/index.html)**
 - **[Collation](https://docs.mongodb.com/manual/reference/collation/index.html)**
 - **Standalone, [Sharded](https://docs.mongodb.com/manual/sharding/) or [ReplicaSet](https://docs.mongodb.com/manual/replication/) topologies**
+- **[Command monitoring](https://github.com/mongodb/specifications/blob/master/source/command-monitoring/command-monitoring.rst)**
+- **Retryable [reads](https://docs.mongodb.com/manual/core/retryable-reads/) and [writes](https://docs.mongodb.com/manual/core/retryable-writes/)**
+- **[Causal consistency](https://docs.mongodb.com/manual/core/read-isolation-consistency-recency/#client-sessions-and-causal-consistency-guarantees)**
 
 ## Conventions
 
@@ -142,14 +145,18 @@ collection = client["database_name"]["collection_name"]
 ## Create
 
 # Insert a single document
-collection.insert_one({key: "value"})
+collection.insert_one({ key: "value" })
 # Insert multiple documents
 collection.insert_many((1..100).map{|i| { count: i }}.to_a)
+
+# To track the _id, generate and pass it as a property
+id = BSON::ObjectId.new
+collection.insert_one({ _id: id, key: "value" })
 
 ## Read
 
 # Find a single document
-document = collection.find_one({ _id: BSON::ObjectId.new("5eed35600000000000000000") })
+document = collection.find_one({ _id: id })
 document.try { |d| puts d.to_json }
 # Find multiple documents.
 cursor = collection.find({ qty: { "$gt": 4 }})
@@ -378,13 +385,19 @@ result = client.command(Mongo::Commands::ServerStatus, options: {
   repl: 0
 })
 puts result.to_bson
+
+# The .command method can also be called against a Database…
+client["database"].command(Mongo::Commands::Create, name: "collection")
+client["database"].command(Mongo::Commands::Drop, name: "collection")
+# …or a Collection.
+client["database"]["collection"].command(Mongo::Commands::Validate)
 ```
 **Links**
 
 - [Mongo::Commands](https://elbywan.github.io/cryomongo/Mongo/Commands.html)
-- [Mongo::Client#command](https://elbywan.github.io/cryomongo/Mongo/Client.html#command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,ignore_errors=false,**args)-instance-method)
-- [Mongo::Database#command](https://elbywan.github.io/cryomongo/Mongo/Database.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,**args)-instance-method)
-- [Mongo::Collection#command](https://elbywan.github.io/cryomongo/Mongo/Collection.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,**args)-instance-method)
+- [Mongo::Client#command](https://elbywan.github.io/cryomongo/Mongo/Client.html#command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method)
+- [Mongo::Database#command](https://elbywan.github.io/cryomongo/Mongo/Database.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil,**args)-instance-method)
+- [Mongo::Collection#command](https://elbywan.github.io/cryomongo/Mongo/Collection.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil,**args)-instance-method)
 
 ## Concerns and Preference
 
@@ -419,6 +432,84 @@ collection.find(
 - [Mongo::WriteConcern](https://elbywan.github.io/cryomongo/Mongo/WriteConcern.html)
 - [Mongo::ReadPreference](https://elbywan.github.io/cryomongo/Mongo/ReadPreference.html)
 
+## Commands Monitoring
+
+```crystal
+require "cryomongo"
+
+client = Mongo::Client.new
+
+# A simple logging subscriber.
+
+subscription = client.subscribe_commands { |event|
+  case event
+  when Mongo::Monitoring::Commands::CommandStartedEvent
+    Log.info { "COMMAND.#{event.command_name} #{event.address} STARTED: #{event.command.to_json}" }
+  when Mongo::Monitoring::Commands::CommandSucceededEvent
+    Log.info { "COMMAND.#{event.command_name} #{event.address} COMPLETED: #{event.reply.to_json} (#{event.duration}s)" }
+  when Mongo::Monitoring::Commands::CommandFailedEvent
+    Log.info { "COMMAND.#{event.command_name} #{event.address} FAILED: #{event.failure.inspect} (#{event.duration}s)" }
+  end
+}
+
+# Make some queries…
+client["database_name"]["collection_name"].find({ hello: "world" })
+
+# …and eventually at some point, unsubscribe the logger.
+client.unsubscribe_commands(subscription)
+```
+
+**Links**
+
+- [Mongo::Client#subscribe_commands](https://elbywan.github.io/cryomongo/Mongo/Client.html#subscribe_commands(&callback:Monitoring::Commands::Event->Nil):Monitoring::Commands::Event->Nil-instance-method)
+- [Mongo::Client#unsubscribe_commands](https://elbywan.github.io/cryomongo/Mongo/Client.html#unsubscribe_commands(callback:Monitoring::Commands::Event->Nil):Nil-instance-method)
+- [Mongo::Monitoring::Observable](https://elbywan.github.io/cryomongo/Mongo/Monitoring/Observable.html)
+- [Mongo::Monitoring::CommandStartedEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandStartedEvent.html)
+- [Mongo::Monitoring::CommandSucceededEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandSucceededEvent.html)
+- [Mongo::Monitoring::CommandFailedEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandFailedEvent.html)
+
+## Causal Consistency
+
+```crystal
+require "cryomongo"
+
+client = Mongo::Client.new
+
+# To provide causal consistency, MongoDB enables causal consistency in client sessions.
+session = client.start_session
+# It is important to ensure that both read and writes are performed with "majority" concern.
+client.read_concern = Mongo::ReadConcern.new(level: "majority")
+client.write_concern = Mongo::WriteConcern.new(w: "majority")
+
+# Reusing the original Mongodb example.
+# See: https://docs.mongodb.com/manual/core/read-isolation-consistency-recency/#examples
+
+current_date = Time.utc
+items = client["test"]["items"]
+
+# Using a causally consistent session ensures that the update occurs before the insert.
+items.update_one(
+  { sku: "111", end: nil },
+  { "$set": { end: current_date }},
+  session: session
+)
+items.insert_one(
+  { sku: "nuts-111", name: "Pecans", start: current_date },
+  session: session
+)
+
+puts items.find(session: session).to_a.to_pretty_json
+
+# End the session
+session.end
+client.close
+```
+
+**Links**
+
+- [Mongo::Session](https://elbywan.github.io/cryomongo/Mongo/Session.html)
+- [Mongo::Client#start_session](https://elbywan.github.io/cryomongo/Mongo/Client.html#start_session)
+
 ## Specifications
 
 The goal is to to be compliant with most of the [official MongoDB set of specifications](https://github.com/mongodb/specifications).
@@ -445,17 +536,17 @@ The goal is to to be compliant with most of the [official MongoDB set of specifi
 - https://github.com/mongodb/specifications/blob/master/source/index-management.rst (no IndexView fluid syntax)
 - https://github.com/mongodb/specifications/tree/master/source/gridfs
 - https://github.com/mongodb/specifications/tree/master/source/change-streams
+- https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst
+- https://github.com/mongodb/specifications/tree/master/source/command-monitoring
+- https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst
+- https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst
+- https://github.com/mongodb/specifications/tree/master/source/causal-consistency
 
 **⏳Next**
 
 The following specifications are to be implemented next:
 
-- https://github.com/mongodb/specifications/tree/master/source/causal-consistency
-- https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst
-- https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst
-- https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst
 - https://github.com/mongodb/specifications/tree/master/source/transactions
-- https://github.com/mongodb/specifications/tree/master/source/command-monitoring
 - https://github.com/mongodb/specifications/tree/master/source/compression
 
 ## Contributing
@@ -472,4 +563,4 @@ The following specifications are to be implemented next:
 
 ## Credit
 
-- Icon made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [www.flaticon.com](www.flaticon.com).
+- Icon made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [www.flaticon.com](https://www.flaticon.com).

@@ -52,9 +52,10 @@ class Mongo::Auth::Scram
         payload:   client_first_payload.to_slice,
       })
     end
-    connection.send(request)
+    connection.send(request, "saslStart")
     # 2.
     response = connection.receive
+    if error = response.validate; raise error; end
     reply_document = response.body
     @id = reply_document["conversationId"].as(Int32)
     payload_data = String.new(reply_document["payload"].as(Bytes))
@@ -81,10 +82,11 @@ class Mongo::Auth::Scram
       "$db":          source,
       payload:        client_final_message(auth_message).to_slice,
     })
-    connection.send(request)
+    connection.send(request, "saslContinue")
 
     # 4.
     response = connection.receive
+    if error = response.validate; raise error; end
     reply_document = response.body
     payload_data = String.new(reply_document["payload"].as(Bytes))
     parsed_data = parse_payload(payload_data)
@@ -100,8 +102,9 @@ class Mongo::Auth::Scram
         "$db":          source,
         payload:        "",
       })
-      connection.send(request)
+      connection.send(request, "saslContinue")
       response = connection.receive
+      if error = response.validate; raise error; end
       reply_document = response.body
     end
   end
@@ -146,7 +149,7 @@ class Mongo::Auth::Scram
   def h(string)
     @digest.reset
     @digest.update(string)
-    @digest.digest
+    @digest.dup.final
   end
 
   # ClientKey := HMAC(SaltedPassword, "Client Key")

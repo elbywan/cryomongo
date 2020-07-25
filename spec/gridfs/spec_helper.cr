@@ -13,12 +13,14 @@ end
 
 class Mongo::Client
   def run_command(body : BSON)
-    # Dummy arguments
+    # Dummy arguments - always pick primary
     server_description = server_selection(Commands::Insert, NamedTuple.new, read_preference: ReadPreference.new(mode: "primary"))
     connection = get_connection(server_description)
     op_msg = Messages::OpMsg.new(body)
     connection.send(op_msg)
-    connection.receive
+    op_msg = connection.receive
+    if error = op_msg.validate; raise error; end
+    op_msg
   end
 end
 

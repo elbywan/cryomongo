@@ -105,6 +105,14 @@ class Mongo::SDAM::ServerDescription
     end
   end
 
+  def update(other : ServerDescription)
+    {% begin %}
+      {% for ivar in @type.instance_vars %}
+        @{{ivar.id}} = other.{{ivar.id}}
+      {% end %}
+    {% end %}
+  end
+
   def ==(other : ServerDescription)
     other.address == @address &&
       other.error == @error &&
@@ -138,5 +146,15 @@ class Mongo::SDAM::ServerDescription
 
   def unknown_or_ghost?
     self.type.unknown? || self.type.rs_ghost?
+  end
+
+  def supports_retryable_writes?
+    self.max_wire_version >= 6 &&
+    self.logical_session_timeout_minutes &&
+    !self.type.standalone?
+  end
+
+  def supports_retryable_reads?
+    self.max_wire_version >= 6
   end
 end

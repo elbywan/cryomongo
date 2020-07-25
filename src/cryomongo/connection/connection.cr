@@ -59,8 +59,8 @@ struct Mongo::Connection
 
     response = uninitialized Mongo::Messages::OpMsg
     round_trip_time = Time.measure {
-      send(request)
-      response = receive
+      send(request, Commands::IsMaster, log: false)
+      response = receive(log: false)
     }
     result = Commands::IsMaster.result(response.body)
 
@@ -110,50 +110,64 @@ struct Mongo::Connection
     end
   end
 
-  def send(op_msg : Messages::OpMsg)
+  def send(op_msg : Messages::OpMsg, command = nil, log = true, &block)
     message = Messages::Message.new(op_msg)
+
     Log.debug {
-      "Sending: #{message.header.inspect}"
-    }
+      ">> #{"[#{message.header.request_id}]".ljust(8)} #{command}"
+    } if command && log
+
     Log.trace {
-      op_msg.body.to_json
-    }
+      ">> #{"[#{message.header.request_id}]".ljust(8)} Header: #{message.header.inspect}"
+    } if log
+
+    Log.trace {
+      ">> #{"[#{message.header.request_id}]".ljust(8)} Body: #{op_msg.body.to_json}"
+    } if log
     op_msg.each_sequence { |key, contents|
       Log.trace {
-        "Seq[#{key}]: #{contents.to_json}"
-      }
+        ">> #{"[#{message.header.request_id}]".ljust(8)} Seq(#{key}): #{contents.to_json}"
+      } if log
     }
+
+    yield message
+
     message.to_io(socket)
   end
 
-  def receive(*, ignore_errors = false)
+  def send(op_msg : Messages::OpMsg, command = nil, log = true)
+    send(op_msg, command, log) {}
+  end
+
+  def receive(log = true, &block)
     loop do
       message = Mongo::Messages::Message.new(socket)
+
       Log.debug {
-        "Receiving: #{message.header.inspect}"
-      }
+        "<< #{"[#{message.header.response_to}]".ljust(8)} Header: #{message.header.inspect}"
+      } if log
+
       op_msg = message.contents.as(Messages::OpMsg)
+      more_to_come = op_msg.flag_bits.more_to_come?
+
       Log.trace {
-        op_msg.body.to_json
-      }
+        "<< #{"[#{message.header.response_to}]".ljust(8)} Body: #{op_msg.body.to_json}"
+      } if log
       op_msg.each_sequence { |key, contents|
         Log.trace {
-          "Seq[#{key}]: #{contents.to_json}"
+          "<< #{"[#{message.header.response_to}]".ljust(8)} Seq(#{key}): #{contents.to_json}"
         }
-      }
-      unless op_msg.body["ok"] == 1
-        err_msg = op_msg.body["errmsg"]?.as(String)
-        err_code = op_msg.body["code"]?
-        Log.error {
-          "Received error code: #{err_code} - #{err_msg}"
-        }
-        raise Mongo::Error::Command.new(err_code, err_msg) unless ignore_errors
+      } if log
+
+      unless more_to_come
+        yield message
+        return op_msg
       end
-      if errors = op_msg.body["writeErrors"]?
-        raise Mongo::Error::CommandWrite.new(errors.as(BSON))
-      end
-      return op_msg unless op_msg.flag_bits.more_to_come?
     end
+  end
+
+  def receive(log = false)
+    receive(log: log) {}
   end
 
   def before_checkout

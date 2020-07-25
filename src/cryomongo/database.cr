@@ -28,8 +28,23 @@ class Mongo::Database
   # Will automatically set the *database* arguments.
   #
   # See: `Mongo::Client.command`
-  def command(operation, write_concern : WriteConcern? = nil, read_concern : ReadConcern? = nil, read_preference : ReadPreference? = nil, **args)
-    @client.command(operation, **args, database: @name, write_concern: write_concern || @write_concern, read_concern: read_concern || @read_concern, read_preference: read_preference || @read_preference)
+  def command(
+    operation,
+    write_concern : WriteConcern? = nil,
+    read_concern : ReadConcern? = nil,
+    read_preference : ReadPreference? = nil,
+    session : Session::ClientSession? = nil,
+    **args
+  )
+    @client.command(
+      operation,
+      **args,
+      database: @name,
+      write_concern: write_concern || @write_concern,
+      read_concern: read_concern || @read_concern,
+      read_preference: read_preference || @read_preference,
+      session: session
+    )
   end
 
   # Get a newly allocated `Mongo::Collection` for the collection named *name*.
@@ -57,9 +72,10 @@ class Mongo::Database
     collation : Collation? = nil,
     hint : (String | H)? = nil,
     comment : String? = nil,
-    write_concern : WriteConcern? = nil
+    write_concern : WriteConcern? = nil,
+    session : Session::ClientSession? = nil
   ) : Mongo::Cursor? forall H
-    maybe_result = self.command(Commands::Aggregate, collection: 1, pipeline: pipeline, options: {
+    maybe_result = self.command(Commands::Aggregate, collection: 1, pipeline: pipeline, session: session, options: {
       allow_disk_use:             allow_disk_use,
       cursor:                     batch_size.try { {batch_size: batch_size} },
       bypass_document_validation: bypass_document_validation,
@@ -67,9 +83,9 @@ class Mongo::Database
       collation:                  collation,
       hint:                       hint.is_a?(String) ? hint : BSON.new(hint),
       comment:                    comment,
-      write_concern:              write_concern,
+      write_concern:              write_concern
     })
-    maybe_result.try { |result| Cursor.new(@client, result) }
+    maybe_result.try { |result| Cursor.new(@client, result, batch_size: batch_size, session: session) }
   end
 
   # Retrieve information, i.e. the name and options, about the collections and views in a database.
@@ -81,14 +97,15 @@ class Mongo::Database
     *,
     filter = nil,
     name_only : Bool? = nil,
-    authorized_collections : Bool? = nil
+    authorized_collections : Bool? = nil,
+    session : Session::ClientSession? = nil
   ) : Mongo::Cursor
-    result = self.command(Commands::ListCollections, options: {
+    result = self.command(Commands::ListCollections, session: session, options: {
       filter:                 filter,
       name_only:              name_only,
-      authorized_collections: authorized_collections,
+      authorized_collections: authorized_collections
     }).not_nil!
-    Cursor.new(@client, result)
+    Cursor.new(@client, result, session: session)
   end
 
   # Returns a `Mongo::GridFS` instance configured with the arguments provided.
@@ -145,14 +162,15 @@ class Mongo::Database
     pipeline : Array = [] of BSON,
     *,
     full_document : String? = nil,
-    resume_after = nil,
+    resume_after : BSON? = nil,
     max_await_time_ms : Int64? = nil,
     batch_size : Int32? = nil,
     collation : Collation? = nil,
     start_at_operation_time : Time? = nil,
-    start_after = nil,
+    start_after  : BSON? = nil,
     read_concern : ReadConcern? = nil,
-    read_preference : ReadPreference? = nil
+    read_preference : ReadPreference? = nil,
+    session : Session::ClientSession? = nil
   ) : Mongo::ChangeStream::Cursor
     ChangeStream::Cursor.new(
       client: @client,
@@ -168,6 +186,7 @@ class Mongo::Database
       max_time_ms: max_await_time_ms,
       batch_size: batch_size,
       collation: collation,
+      session: session
     )
   end
 

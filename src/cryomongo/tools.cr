@@ -28,13 +28,11 @@ module Mongo::Tools
           {% if ivar.type.nilable? %}
             @{{ivar.id}} = args["{{ivar.id}}"]? {% if ivar.has_default_value? %}|| {{ default_value }}{% end %}
           {% else %}
-            if value = args["{{ivar.id}}"]?
-              @{{ivar.id}} = value
             {% if ivar.has_default_value? %}
-            else
-              @{{ivar.id}} = {{ default_value }}
+              @{{ivar.id}} = args["{{ivar.id}}"]? || {{ default_value }}
+            {% else %}
+              @{{ivar.id}} = args["{{ivar.id}}"]
             {% end %}
-            end
           {% end %}
         {% end %}
       end

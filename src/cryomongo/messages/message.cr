@@ -2,15 +2,20 @@ require "./header"
 require "./message_part"
 
 struct Mongo::Messages::Message
-  @@id : Atomic(Int32) = Atomic(Int32).new(0)
+  @@id : Int32 = 0
+  @@mutex = Mutex.new
 
   getter header : Header
   getter contents : Part
 
   def initialize(contents : Part, response_to = 0)
+    request_id = @@mutex.synchronize {
+      @@id = (@@id + 1) % Int32::MAX
+      @@id
+    }
     @header = Header.new(
       message_length: 16 + contents.part_size,
-      request_id: @@id.add(1),
+      request_id: request_id,
       response_to: response_to,
       op_code: contents.op_code
     )

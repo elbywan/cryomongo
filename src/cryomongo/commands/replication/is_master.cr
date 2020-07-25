@@ -5,6 +5,7 @@ require "../commands"
 #
 # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/isMaster/).
 module Mongo::Commands::IsMaster
+  extend Command
   extend self
 
   OS_TYPE = {% if host_flag?(:linux) %} "Linux" {% elsif host_flag?(:darwin) %} "Darwin" {% elsif host_flag?(:win32) %} "Windows" {% else %} "Unknown" {% end %}

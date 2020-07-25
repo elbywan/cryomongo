@@ -486,7 +486,7 @@ module Mongo::GridFS
       end
 
       def get_chunk(id : FileID, n : Int64) forall FileID
-        chunk = chunks.find_one({files_id: id, n: n}, read_preference: read_preference, read_concern: read_concern)
+        chunk = chunks.find_one({files_id: id, n: n}, sort: { n: 1 }, read_preference: read_preference, read_concern: read_concern)
         raise Mongo::Error.new "Chunk not found" unless chunk
         Chunk(FileID).from_bson(chunk)
       end

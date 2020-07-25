@@ -6,10 +6,14 @@ require "../commands"
 #
 # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/aggregate/).
 module Mongo::Commands::Aggregate
+  extend ReadCommand
+  extend WriteCommand
+  extend MayUseSecondary
+  extend Retryable
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(database : String, collection : Collection::CollectionKey, pipeline : Array, options)
+  def command(database : String, collection : Collection::CollectionKey, pipeline : Array, options = nil)
     need_cursor = true
     body, sequences = Commands.make({
       "aggregate": collection,
@@ -27,5 +31,21 @@ module Mongo::Commands::Aggregate
   def result(bson : BSON)
     raise Mongo::Error.new "Explain is not supported" unless bson["cursor"]?
     Common::QueryResult.from_bson bson
+  end
+
+  def write_command?(**args)
+    args["pipeline"]?.try { |pipeline|
+      pipeline.as(Array).map { |elt| BSON.new(elt) }.any? { |stage|
+        stage["$out"]? || stage["$merge"]?
+      }
+    }
+  end
+
+  def may_use_secondary?(**args)
+    !write_command?(**args)
+  end
+
+  def retryable?(**args)
+    !write_command?(**args)
   end
 end

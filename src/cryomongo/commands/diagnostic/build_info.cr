@@ -5,7 +5,13 @@ require "../commands"
 #
 # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/buildInfo/).
 module Mongo::Commands::BuildInfo
+  extend Command
   extend self
+
+  # The command name.
+  def name
+    "buildInfo"
+  end
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
   def command

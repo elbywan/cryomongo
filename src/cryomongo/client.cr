@@ -8,6 +8,7 @@ require "./concerns"
 require "./read_preference"
 require "./sdam/**"
 require "./uri"
+require "./monitoring"
 
 # The client which provides access to a MongoDB server, replica set, or sharded cluster.
 #
@@ -23,25 +24,23 @@ class Mongo::Client
   MAX_WIRE_VERSION = 8
 
   # :nodoc:
-  UNACKNOWLEDGED_WRITE_PROHIBITED_OPTIONS = {
-    "hint",
-    "collation",
-    "bypass_document_validation",
-    "array_filters",
-  }
-
-  # :nodoc:
   getter! topology : SDAM::TopologyDescription
   # The set of driver options.
   getter options : Options
+  # The current highest seen cluster time for the deployment
+  getter cluster_time : Session::ClusterTime?
+  # :nodoc:
+  getter session_pool : Session::Pool = Session::Pool.new
+  # :nodoc:
+  protected getter min_heartbeat_frequency : Time::Span = 500.milliseconds
 
   @@lock = Mutex.new(:reentrant)
   @pools : Hash(SDAM::ServerDescription, DB::Pool(Mongo::Connection)) = Hash(SDAM::ServerDescription, DB::Pool(Mongo::Connection)).new
   @monitors : Array(SDAM::Monitor) = Array(SDAM::Monitor).new
   @socket_check_interval : Time::Span = 5.seconds
   @last_scan : Time = Time::UNIX_EPOCH
-  @min_heartbeat_frequency : Time::Span = 500.milliseconds
   @topology_update = Channel(Nil).new
+  @commands_observable = Monitoring::Observable(Monitoring::Commands::Event).new
 
   # Create a mongodb client instance from a mongodb URL.
   #
@@ -92,6 +91,7 @@ class Mongo::Client
     @pools.each { |_, pool|
       pool.close
     }
+    @session_pool.close(self)
     @monitors.each &.close
   end
 
@@ -116,101 +116,93 @@ class Mongo::Client
   # client.command(Mongo::Commands::DropDatabase, database: "database_name")
   # ```
   def command(
-    command cmd,
+    command,
     write_concern : WriteConcern? = nil,
     read_concern : ReadConcern? = nil,
     read_preference : ReadPreference? = nil,
     server_description : SDAM::ServerDescription? = nil,
-    ignore_errors = false,
+    session : Session::ClientSession? = nil,
+    operation_id : Int64? = nil,
     **args
   )
-    args = WithWriteConcern.mix_write_concern(cmd, args, write_concern || @write_concern)
-    args = WithReadConcern.mix_read_concern(cmd, args, read_concern || @read_concern)
+    # Create an implicit session
+    session ||= Session::ClientSession.new(self)
 
-    if WithReadPreference.must_use_primary_command?(cmd, args)
+    # Mix collection/database/client/options read and write concerns considering the precedence rules.
+    args = WithWriteConcern.mix_write_concern(command, args, write_concern || @write_concern)
+    args = WithReadConcern.mix_read_concern(command, args, read_concern || @read_concern, session: session)
+
+    # Determines the read preference to apply to the command
+    if WithReadPreference.must_use_primary_command?(command, args)
       read_preference = ReadPreference.new(mode: "primary")
     else
       read_preference = read_preference || @read_preference || ReadPreference.new(mode: "primary")
     end
 
-    server_description ||= server_selection(cmd, args, read_preference)
-    connection = get_connection(server_description)
+    # Determine whether the request is acknowledged and prohibit some operations.
+    acknowledged = acknowledged?(args)
 
-    if cmd == Mongo::Commands::FindAndModify && args["options"]?.try(&.["hint"]?) && server_description.max_wire_version < 8
-      raise Mongo::Error.new "The hint option is not supported by MongoDB servers < 4.2"
-    end
+    result = begin
+      if acknowledged && command.is_a?(Commands::Retryable) && command.retryable?(**args)
+        if @options.retry_writes && command.is_a?(Commands::WriteCommand) && command.write_command?
+          execute_retryable_write(
+            command,
+            session,
+            read_preference,
+            server_description,
+            operation_id,
+            **args
+          )
+        elsif @options.retry_reads && command.is_a?(Commands::ReadCommand) && command.read_command?
+          execute_retryable_read(
+            command,
+            session,
+            read_preference,
+            server_description,
+            operation_id,
+            **args
+          )
+        else
+           # Select a suitable server and retrieve the underlying connection.
+          server_description ||= server_selection(command, args, read_preference)
+          connection = get_connection(server_description)
 
-    args = WithReadPreference.mix_read_preference(cmd, args, read_preference, topology, server_description)
-
-    unacknowledged = false
-    if concern = args["options"]?.try(&.["write_concern"]?)
-      unacknowledged = concern.w == 0 && !concern.j
-    end
-
-    if unacknowledged
-      prohibited_option = nil
-      UNACKNOWLEDGED_WRITE_PROHIBITED_OPTIONS.each { |option|
-        if opt = args["options"]?.try(&.has_key? option)
-          prohibited_option = opt
-          break
-        elsif opt = args["updates"]?.try(&.any? &.has_key? option)
-          prohibited_option = opt
-          break
-        elsif opt = args["deletes"]?.try(&.any? &.has_key? option)
-          prohibited_option = opt
-          break
+          execute_command(
+            command,
+            session,
+            read_preference,
+            server_description,
+            connection,
+            operation_id,
+            **args
+          )
         end
-      }
-      raise Mongo::Error.new("Option #{prohibited_option} is prohibited when performing an unacknowledged write.") if prohibited_option
-    end
+      else
+         # Select a suitable server and retrieve the underlying connection.
+        server_description ||= server_selection(command, args, read_preference)
+        connection = get_connection(server_description)
 
-    body, sequences = cmd.command(**args)
-    flag_bits = unacknowledged ? Messages::OpMsg::Flags::MoreToCome : Messages::OpMsg::Flags::None
-    op_msg = Messages::OpMsg.new(body, flag_bits: flag_bits)
-    sequences.try &.each { |key, documents|
-      op_msg.sequence(key.to_s, contents: documents)
-    }
-
-    connection.send(op_msg)
-
-    return nil if unacknowledged
-
-    op_msg = connection.receive(ignore_errors: ignore_errors)
-
-    result = cmd.result(op_msg.body)
-
-    if result.is_a? Cursor
-      result.server_description = server_description
+        execute_command(
+          command,
+          session,
+          read_preference,
+          server_description,
+          connection,
+          operation_id,
+          **args
+        )
+      end
     end
 
     result
-  rescue error : IO::Error
-    Mongo::Log.error { "Client error: #{error}" }
-    # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-monitoring.rst#network-or-command-error-during-server-check
-    server_description.try { |desc|
-      description = SDAM::ServerDescription.new(desc.address)
-      description.error = error.message
-      description.last_update_time = desc.last_update_time
-      topology.update(desc, description)
-      close_connection_pool(desc)
-    }
-    raise error
-  rescue error : Mongo::Error::Command
-    Mongo::Log.error { "Server error: #{error}" }
-    # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-discovery-and-monitoring.rst#not-master-and-node-is-recovering
-    if error.state_change?
-      server_description.try { |desc|
-        description = SDAM::ServerDescription.new(desc.address)
-        description.error = error.message
-        description.last_update_time = desc.last_update_time
-        topology.update(desc, description)
-        close_connection_pool(desc) if error.shutdown?
-        @monitors.find(&.server_description.address.== desc.address).try &.request_immediate_scan
-      }
-    end
-    raise error
   ensure
-    release_connection(connection) if connection
+    if result && result.is_a? Cursor
+      # Bind the Cursor to the same server for its lifetime.
+      result.server_description = server_description
+    else
+      # End the session if implicit
+      session.try &.end if session.try(&.implicit?)
+    end
   end
 
   # Provides a list of all existing databases along with basic statistics about them.
@@ -220,9 +212,10 @@ class Mongo::Client
     *,
     filter = nil,
     name_only : Bool? = nil,
-    authorized_databases : Bool? = nil
+    authorized_databases : Bool? = nil,
+    session : Session::ClientSession? = nil
   ) : Commands::ListDatabases::Result
-    self.command(Commands::ListDatabases, options: {
+    self.command(Commands::ListDatabases, session: session, options: {
       filter:               filter,
       name_only:            name_only,
       authorized_databases: authorized_databases,
@@ -232,8 +225,8 @@ class Mongo::Client
   # Returns a document that provides an overview of the database’s state.
   #
   # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/serverStatus/).
-  def status(*, repl : Int32? = nil, metrics : Int32? = nil, locks : Int32? = nil, mirrored_reads : Int32? = nil, latch_analysis : Int32? = nil) : BSON?
-    self.command(Commands::ServerStatus, options: {
+  def status(*, repl : Int32? = nil, metrics : Int32? = nil, locks : Int32? = nil, mirrored_reads : Int32? = nil, latch_analysis : Int32? = nil, session : Session::ClientSession? = nil) : BSON?
+    self.command(Commands::ServerStatus, session: session, options: {
       repl:           repl,
       metrics:        metrics,
       locks:          locks,
@@ -258,14 +251,15 @@ class Mongo::Client
     pipeline : Array = [] of BSON,
     *,
     full_document : String? = nil,
-    resume_after = nil,
+    resume_after : BSON? = nil,
     max_await_time_ms : Int64? = nil,
     batch_size : Int32? = nil,
     collation : Collation? = nil,
     start_at_operation_time : Time? = nil,
-    start_after = nil,
+    start_after : BSON? = nil,
     read_concern : ReadConcern? = nil,
-    read_preference : ReadPreference? = nil
+    read_preference : ReadPreference? = nil,
+    session : Session::ClientSession? = nil
   ) : Mongo::ChangeStream::Cursor
     ChangeStream::Cursor.new(
       client: self,
@@ -281,12 +275,232 @@ class Mongo::Client
       max_time_ms: max_await_time_ms,
       batch_size: batch_size,
       collation: collation,
+      session: session
     )
+  end
+
+  # Starts a new logical session for a sequence of operations.
+  def start_session(*, causal_consistency : Bool = true) : Session::ClientSession
+    Session::ClientSession.new(
+      client: self,
+      implicit: false,
+      causal_consistency: causal_consistency
+    )
+  end
+
+  # Subscribe to monitoring command events.
+  #
+  # ```
+  # client = Mongo::Client.new
+  #
+  # client.subscribe_commands { |event|
+  #   case event
+  #   when Mongo::Monitoring::Commands::CommandStartedEvent
+  #     Log.info { "COMMAND.#{event.command_name} #{event.address} STARTED: #{event.command.to_json}" }
+  #   when Mongo::Monitoring::Commands::CommandSucceededEvent
+  #     Log.info { "COMMAND.#{event.command_name} #{event.address} COMPLETED: #{event.reply.to_json} (#{event.duration}s)" }
+  #   when Mongo::Monitoring::Commands::CommandFailedEvent
+  #     Log.info { "COMMAND.#{event.command_name} #{event.address} FAILED: #{event.failure.inspect} (#{event.duration}s)" }
+  #   end
+  # }
+  # ```
+  def subscribe_commands(&callback : Monitoring::Commands::Event -> Nil) : Monitoring::Commands::Event -> Nil
+    @commands_observable.subscribe(&callback)
+  end
+
+  # Ends the subscription for command events.
+  #
+  # ```
+  # client = Mongo::Client.new
+  #
+  # subscription = client.subscribe_commands { |event|
+  #   puts event
+  # }
+  #
+  # client.unsubscribe_commands(subscription)
+  # ```
+  def unsubscribe_commands(callback : Monitoring::Commands::Event -> Nil) : Nil
+    @commands_observable.unsubscribe(callback)
   end
 
   ############
   # Internal #
   ############
+
+  private def execute_command(
+    command,
+    session : Session::ClientSession,
+    read_preference : ReadPreference,
+    server_description : SDAM::ServerDescription,
+    connection : Mongo::Connection,
+    operation_id : Int64? = nil,
+    **args
+  )
+    execute_command(command, session, read_preference, server_description, connection, operation_id, **args) {}
+  end
+
+  private def execute_command(
+    command,
+    session : Session::ClientSession,
+    read_preference : ReadPreference,
+    server_description : SDAM::ServerDescription,
+    connection : Mongo::Connection,
+    operation_id : Int64? = nil,
+    **args
+  )
+    # Reject for this special case.
+    if command == Mongo::Commands::FindAndModify && args["options"]?.try(&.["hint"]?) && server_description.max_wire_version < 8
+      raise Mongo::Error.new "The hint option is not supported by MongoDB servers < 4.2"
+    end
+
+    # Mix the collection/database/client/options read preferences.
+    args = WithReadPreference.mix_read_preference(command, args, read_preference, topology, server_description)
+
+    # Determine whether the request is acknowledged.
+    unacknowledged = !acknowledged?(args, validate: false)
+
+    # Extract the actual BSON depending on the target command.
+    body, sequences = command.command(**args)
+    flag_bits = unacknowledged ? Messages::OpMsg::Flags::MoreToCome : Messages::OpMsg::Flags::None
+
+    # Apply session rules.
+    if topology.supports_sessions?
+      if unacknowledged
+        # Sessions are not compatible with unacknowledged writes
+        raise Mongo::Error.new("Unacknowledged writes are incompatible with sessions.") unless session.implicit?
+      else
+        body["lsid"] = session.session_id if session
+        if topology.supports_cluster_time?
+          cluster_time = gossip_cluster_time(session)
+          body["$clusterTime"] = cluster_time if cluster_time
+        end
+      end
+    end
+
+    body = (yield body) || body
+
+    # Create the OP_MSG message to send.
+    op_msg = Messages::OpMsg.new(body, flag_bits: flag_bits)
+    sequences.try &.each { |key, documents|
+      op_msg.sequence(key.to_s, contents: documents)
+    }
+
+    # Command monitoring related variables.
+    duration_start = Time.monotonic
+    request_id = uninitialized Int64
+    command_name = command.name
+    address = connection.server_description.address
+
+    # Send the command.
+    connection.send(op_msg, command) { |message|
+      # Monitor by sending a CommandStartedEvent
+      if @commands_observable.has_subscribers?
+        request_id = message.header.request_id.to_i64
+
+        @commands_observable.broadcast(Monitoring::Commands::CommandStartedEvent.new(
+          command_name: command_name,
+          request_id: request_id,
+          operation_id: operation_id,
+          address: address,
+          command: op_msg.safe_payload(command),
+          database_name: op_msg.body["$db"].as(String)
+        ))
+      end
+    }
+
+    # If the write is unacknowledged - early return.
+    if unacknowledged
+      @commands_observable.broadcast(Monitoring::Commands::CommandSucceededEvent.new(
+        command_name: command_name,
+        request_id: request_id,
+        operation_id: operation_id,
+        address: address,
+        duration: Time.monotonic - duration_start,
+        reply: BSON.new({ ok: 1 })
+      ))
+
+      return nil
+    end
+
+    # Receive the server sent OP_MSG.
+    op_msg = connection.receive do |message|
+      op_msg = message.contents.as(Messages::OpMsg)
+      duration = Time.monotonic - duration_start
+
+      # Monitor.
+      if @commands_observable.has_subscribers?
+        if op_msg.valid?
+          @commands_observable.broadcast(Monitoring::Commands::CommandSucceededEvent.new(
+            command_name: command_name,
+            request_id: message.header.request_id.to_i64,
+            operation_id: operation_id,
+            address: address,
+            duration: duration,
+            reply: op_msg.safe_payload(command)
+          ))
+        else
+          error = op_msg.validate.not_nil!
+          @commands_observable.broadcast(Monitoring::Commands::CommandFailedEvent.new(
+            command_name: command_name,
+            request_id: message.header.request_id.to_i64,
+            operation_id: operation_id,
+            address: address,
+            duration: duration,
+            reply: op_msg.safe_payload(command),
+            failure: error
+          ))
+        end
+      end
+    end
+
+    # Parse as a base result.
+    base_result = Commands::Common::BaseResult.from_bson(op_msg.body)
+
+    # Update the stored cluster time.
+    if cluster_time = base_result.cluster_time
+      @cluster_time = cluster_time if !@cluster_time || @cluster_time.try &.< cluster_time
+      session.advance_cluster_time(cluster_time) if session
+    end
+
+    if operation_time = base_result.operation_time
+      session.advance_operation_time(operation_time) if session
+    end
+
+    # Raise if the server replied with an error.
+    if error = op_msg.validate; raise error; end
+
+    # Parse and return the body as a custom Result type.
+    command.result(op_msg.body)
+  rescue error : IO::Error
+    Mongo::Log.error(exception: error) { "Client error"} unless server_description
+    # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-monitoring.rst#network-or-command-error-during-server-check
+    server_description.try { |desc|
+      Mongo::Log.error(exception: error) { "I/O error with server address: #{desc.address}" }
+      description = SDAM::ServerDescription.new(desc.address)
+      description.error = error.message
+      description.last_update_time = desc.last_update_time
+      topology.update(desc, description)
+      close_connection_pool(desc)
+    }
+    session.try &.dirty = true
+    raise error
+  rescue error : Mongo::Error::Command
+    Mongo::Log.error { "Command error: #{error}" }
+    # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-discovery-and-monitoring.rst#not-master-and-node-is-recovering
+    if error.state_change?
+      server_description.try { |desc|
+        description = SDAM::ServerDescription.new(desc.address)
+        description.error = error.message
+        description.last_update_time = desc.last_update_time
+        topology.update(desc, description)
+        close_connection_pool(desc) if error.shutdown?
+        @monitors.find(&.server_description.address.== desc.address).try &.request_immediate_scan
+      }
+    end
+    raise error
+  ensure
+    release_connection(connection) if connection
+  end
 
   private def server_selection(command, args, read_preference : ReadPreference) : SDAM::ServerDescription
     # See: https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst#multi-threaded-or-asynchronous-server-selection
@@ -322,6 +536,109 @@ class Mongo::Client
     end
   end
 
+  # See: https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst#executing-retryable-write-commands
+  private def execute_retryable_write(
+    command,
+    session : Session::ClientSession,
+    read_preference : ReadPreference,
+    server_description : SDAM::ServerDescription? = nil,
+    operation_id : Int64? = nil,
+    **args
+  )
+    server_description ||= server_selection(command, args, read_preference)
+    connection = get_connection(server_description)
+
+    if !topology.supports_sessions? || !server_description.supports_retryable_writes?
+      return execute_command(command, session, read_preference, server_description, connection, operation_id, **args)
+    end
+
+    session.increment_txn_number
+
+    txn_block = ->(body : BSON) {
+      if topology.supports_sessions?
+        body["txnNumber"] = session.txn_number
+      end
+      body
+    }
+
+    begin
+      return execute_command(command, session, read_preference, server_description, connection, operation_id, **args, &txn_block)
+    rescue error : IO::Error
+      original_error = error
+    rescue error : Mongo::Error::Command
+      if error.code == 20 && error.message.try &.starts_with? "Transaction numbers"
+        raise error
+      elsif error.retryable?
+        original_error = error
+      else
+        raise error
+      end
+    end
+
+    begin
+      server_description = server_selection(command, args, read_preference)
+      connection = get_connection(server_description)
+    rescue
+      raise original_error.not_nil!
+    end
+
+    if !topology.supports_sessions? || !server_description.supports_retryable_writes?
+      raise original_error.not_nil!
+    end
+
+    begin
+      execute_command(command, session, read_preference, server_description, connection, operation_id, **args, &txn_block)
+    rescue error : Mongo::Error
+      raise error
+    end
+  end
+
+  # See: https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst#implementing-retryable-reads
+  private def execute_retryable_read(
+    command,
+    session : Session::ClientSession,
+    read_preference : ReadPreference,
+    server_description : SDAM::ServerDescription? = nil,
+    operation_id : Int64? = nil,
+    **args
+  )
+    server_description ||= server_selection(command, args, read_preference)
+    connection = get_connection(server_description)
+
+    if !topology.supports_sessions? || !server_description.supports_retryable_reads?
+      return execute_command(command, session, read_preference, server_description, connection, operation_id, **args)
+    end
+
+    begin
+      return execute_command(command, session, read_preference, server_description, connection, operation_id, **args)
+    rescue error : IO::Error
+      original_error = error
+    rescue error : Mongo::Error::Command
+      if error.retryable?
+        original_error = error
+      else
+        raise error
+      end
+    end
+
+    begin
+      server_description = server_selection(command, args, read_preference)
+      connection = get_connection(server_description)
+    rescue
+      raise original_error.not_nil!
+    end
+
+    if !topology.supports_sessions? || !server_description.supports_retryable_reads?
+      raise original_error.not_nil!
+    end
+
+    begin
+      execute_command(command, session, read_preference, server_description, connection, operation_id, **args)
+    rescue error : Mongo::Error
+      raise error
+    end
+  end
+
   protected def get_connection(server_description : SDAM::ServerDescription) : Mongo::Connection
     @pools[server_description] ||= DB::Pool(Mongo::Connection).new(
       initial_pool_size: @options.min_pool_size,
@@ -335,19 +652,26 @@ class Mongo::Client
       new_rtt = Connection.average_round_trip_time(round_trip_time, server_description.round_trip_time)
       new_description = SDAM::ServerDescription.new(server_description.address, result, new_rtt)
       topology.update(server_description, new_description)
+      server_description.update(new_description)
       connection
     end
     @pools[server_description].checkout
   end
 
   private def release_connection(connection : Mongo::Connection)
-    @pools[connection.server_description]?.try &.release(connection)
+    @@lock.synchronize {
+      @pools[connection.server_description]?.try &.release(connection)
+    }
   end
 
   protected def close_connection_pool(server_description : SDAM::ServerDescription)
     @@lock.synchronize {
-      pool = @pools.delete(server_description)
-      pool.try &.close
+      @pools.delete_if { |desc, pool|
+        if desc == server_description
+          pool.close
+          true
+        end
+      }
     }
   end
 
@@ -478,5 +802,54 @@ class Mongo::Client
     if start_monitoring
       spawn monitor.scan
     end
+  end
+
+  private def gossip_cluster_time(session : Session::ClientSession? = nil)
+    # see: https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst#gossipping-the-cluster-time
+    if session
+      client_time = @cluster_time
+      session_time = session.cluster_time
+      if !client_time || (session_time && client_time < session_time)
+        session_time
+      else
+        client_time
+      end
+    else
+      @cluster_time
+    end
+  end
+
+  # :nodoc:
+  UNACKNOWLEDGED_WRITE_PROHIBITED_OPTIONS = {
+    "hint",
+    "collation",
+    "bypass_document_validation",
+    "array_filters",
+  }
+
+  private def acknowledged?(args, validate = true)
+    unacknowledged = false
+    if concern = args["options"]?.try(&.["write_concern"]?)
+      unacknowledged = concern.w == 0 && !concern.j
+    end
+
+    if unacknowledged && validate
+      prohibited_option = nil
+      UNACKNOWLEDGED_WRITE_PROHIBITED_OPTIONS.each { |option|
+        if args["options"]?.try { |item| item.has_key?(option) && !item[option]?.nil? }
+          prohibited_option = option
+          break
+        elsif args["updates"]?.try(&.any? { |item| item.has_key?(option) && !item[option]?.nil? })
+          prohibited_option = option
+          break
+        elsif args["deletes"]?.try(&.any? { |item| item.has_key?(option) && !item[option]?.nil? })
+          prohibited_option = option
+          break
+        end
+      }
+      raise Mongo::Error.new("Option #{prohibited_option} is prohibited when performing an unacknowledged write.") if prohibited_option
+    end
+
+    !unacknowledged
   end
 end

@@ -21,27 +21,8 @@ module Mongo
       property read_preference : ReadPreference? = nil
     end
 
-    MAY_USE_SECONDARY = {
-      # Commands::Aggregate, # without a write stage (e.g. $out, $merge)
-      Commands::CollStats,
-      Commands::Count,
-      Commands::DbStats,
-      Commands::Distinct,
-      Commands::Find,
-      # Commands::GeoNear,
-      # Commands::GeoSearch,
-      # Commands::Group,
-      # Commands::MapReduce, # where the out option is { inline: 1 }
-      # Commands:: ParallelCollectionScean
-    }
-
     protected def self.must_use_primary_command?(command, command_args)
-      !MAY_USE_SECONDARY.includes?(command) ||
-        command == Commands::Aggregate && command_args["pipeline"]?.try { |pipeline|
-          pipeline.as(Array).map { |elt| BSON.new(elt) }.any? { |stage|
-            stage["$out"]? || stage["$merge"]?
-          }
-        }
+      !command.is_a?(Commands::MayUseSecondary) || command.may_use_secondary?
     end
 
     private def self.mix(args, read_preference)

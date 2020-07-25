@@ -5,10 +5,11 @@ require "../commands"
 #
 # NOTE: [for more details, please check the official MongoDB documentation](https://docs.mongodb.com/manual/reference/command/createIndexes/).
 module Mongo::Commands::CreateIndexes
+  extend WriteCommand
   extend self
 
   # Returns a pair of OP_MSG body and sequences associated with the command and arguments.
-  def command(database : String, collection : Collection::CollectionKey, indexes : Array, options)
+  def command(database : String, collection : Collection::CollectionKey, indexes : Array, options = nil)
     Commands.make({
       createIndexes: collection,
       indexes:       indexes.map { |index| BSON.new(index) },

@@ -1,16 +1,65 @@
 require "../tools"
+require "../sessions"
 
 # This module contains the [Database Commands](https://docs.mongodb.com/manual/reference/command/) supported by the `cryomongo` driver.
 module Mongo::Commands
+
+  # Base command class.
+  module Command
+    # Transforms the server result.
+    def result(bson : BSON)
+      Common::BaseResult.from_bson bson
+    end
+
+    macro extended
+      def self.name
+        \{{@type.name.split("::")[-1].camelcase(lower: true)}}
+      end
+    end
+  end
+
+  module WriteCommand
+    macro extended
+      extend Command
+    end
+
+    def write_command?(**args)
+      true
+    end
+  end
+
+  module ReadCommand
+    macro extended
+      extend Command
+    end
+
+    def read_command?(**args)
+      true
+    end
+  end
+
+  module MayUseSecondary
+    def may_use_secondary?(**args)
+      true
+    end
+  end
+
+  module Retryable
+    def retryable?(**args)
+      true
+    end
+  end
+
   # Common results.
   module Common
     # :nodoc:
     module Result
       macro included
         property ok : Float64
-        property operation_time : BSON::Timestamp?
+        @[BSON::Field(key: "operationTime")]
+        property operation_time : BSON::Timestamp? = nil
         @[BSON::Field(key: "$clusterTime")]
-        property cluster_time : BSON?
+        property cluster_time : Session::ClusterTime?
       end
     end
 
@@ -41,6 +90,7 @@ module Mongo::Commands
     result(WriteConcernError, root: false) {
       property code : Int32
       property errmsg : String
+      property err_info : BSON?
     }
 
     # Cursor bson sub-document.
