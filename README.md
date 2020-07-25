@@ -395,9 +395,9 @@ client["database"]["collection"].command(Mongo::Commands::Validate)
 **Links**
 
 - [Mongo::Commands](https://elbywan.github.io/cryomongo/Mongo/Commands.html)
-- [Mongo::Client#command](https://elbywan.github.io/cryomongo/Mongo/Client.html#command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,**args)-instance-method)
-- [Mongo::Database#command](https://elbywan.github.io/cryomongo/Mongo/Database.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,**args)-instance-method)
-- [Mongo::Collection#command](https://elbywan.github.io/cryomongo/Mongo/Collection.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,**args)-instance-method)
+- [Mongo::Client#command](https://elbywan.github.io/cryomongo/Mongo/Client.html#command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method)
+- [Mongo::Database#command](https://elbywan.github.io/cryomongo/Mongo/Database.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil,**args)-instance-method)
+- [Mongo::Collection#command](https://elbywan.github.io/cryomongo/Mongo/Collection.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil,**args)-instance-method)
 
 ## Concerns and Preference
 
@@ -461,6 +461,8 @@ client.unsubscribe_commands(subscription)
 
 **Links**
 
+- [Mongo::Client#subscribe_commands](https://elbywan.github.io/cryomongo/Mongo/Client.html#subscribe_commands(&callback:Monitoring::Commands::Event->Nil):Monitoring::Commands::Event->Nil-instance-method)
+- [Mongo::Client#unsubscribe_commands](https://elbywan.github.io/cryomongo/Mongo/Client.html#unsubscribe_commands(callback:Monitoring::Commands::Event->Nil):Nil-instance-method)
 - [Mongo::Monitoring::Observable](https://elbywan.github.io/cryomongo/Mongo/Monitoring/Observable.html)
 - [Mongo::Monitoring::CommandStartedEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandStartedEvent.html)
 - [Mongo::Monitoring::CommandSucceededEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandSucceededEvent.html)

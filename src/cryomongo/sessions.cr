@@ -1,7 +1,12 @@
 require "uuid"
 
+# Contains all the logic related to server or client sessions.
+#
+# Version 3.6 of the server introduces the concept of logical sessions for clients.
+# A session is an abstract concept that represents a set of sequential operations executed by an application that are related in some way.
+#
+# See: [https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst](https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst)
 module Mongo::Session
-  # see: https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst
 
   @[BSON::Options(camelize: "lower")]
   struct ClusterTime
@@ -32,21 +37,28 @@ module Mongo::Session
 
   record Options, causal_consistency : Bool? = nil
 
+  # A client session used to logically bind operations together.
   class ClientSession
     @client : Mongo::Client
     @server_session : ServerSession
     @released = false
     @lock = Mutex.new
 
+    # This property returns the most recent cluster time seen by this session.
+    # If no operations have been executed using this session this value will be null unless advanceClusterTime has been called.
+    # This value will also be null when a cluster does not report cluster times.
     getter cluster_time : ClusterTime? = nil
+    # This property returns the operation time of the most recent operation performed using this session.
+    # If no operations have been performed using this session the value will be null unless advanceOperationTime has been called.
+    # This value will also be null when the cluster does not report operation times.
     getter operation_time : BSON::Timestamp? = nil
+    # The session options used when creating the session.
     getter options : Options
-    getter? implicit : Bool = true
 
-    delegate :dirty, :txn_number, to: @server_session
-    protected delegate :dirty=, to: @server_session
+    protected getter? implicit : Bool = true
+    protected delegate :dirty, :dirty=, :txn_number, :session_id, to: @server_session
 
-    def initialize(@client : Mongo::Client, @implicit = true, **options : **U) forall U
+    protected def initialize(@client : Mongo::Client, @implicit = true, **options : **U) forall U
       {% begin %}
       {{ @type }} # see: https://github.com/crystal-lang/crystal/issues/2731
       @options = Options.new(
@@ -58,10 +70,9 @@ module Mongo::Session
       {% end %}
     end
 
-    def session_id
-      @server_session.session_id
-    end
-
+    # This method advances the *cluster_time*.
+    #
+    # NOTE: this method is a no-op if the provider cluster time is less than the current cluster time.
     def advance_cluster_time(cluster_time : ClusterTime)
       self_cluster_time = @cluster_time
       if !self_cluster_time || self_cluster_time < cluster_time
@@ -69,6 +80,9 @@ module Mongo::Session
       end
     end
 
+    # This method advances the *operation_time*.
+    #
+    # NOTE: this method is a no-op if the provider operation time is less than the current operation time.
     def advance_operation_time(operation_time : BSON::Timestamp)
       self_operation_time = @operation_time
       if !self_operation_time || self_operation_time < operation_time
@@ -76,6 +90,7 @@ module Mongo::Session
       end
     end
 
+    # Terminate the session and return it to the pool.
     def end
       return if @released
       @lock.synchronize {
@@ -84,18 +99,18 @@ module Mongo::Session
       }
     end
 
-    def logical_timeout
+    protected def logical_timeout
       @client.topology.logical_session_timeout_minutes.try(&.minutes) || 30.minutes
     end
 
-    def increment_txn_number
+    protected def increment_txn_number
       @lock.synchronize {
         @server_session.txn_number += 1
       }
     end
   end
 
-  class ServerSession
+  private class ServerSession
     getter session_id : SessionId
     getter last_use : Time? = nil
     property dirty : Bool = false
@@ -115,6 +130,7 @@ module Mongo::Session
     end
   end
 
+  # :nodoc:
   # see: https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst#server-session-pool
   class Pool
     @mutex = Mutex.new(:reentrant)
