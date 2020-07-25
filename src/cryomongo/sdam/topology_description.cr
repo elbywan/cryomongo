@@ -331,6 +331,10 @@ class Mongo::SDAM::TopologyDescription
   end
 
   def supports_sessions?
-    !@type.unknown? && !@type.single? && !@logical_session_timeout_minutes.nil?
+    !@type.unknown? && !@logical_session_timeout_minutes.nil?
+  end
+
+  def supports_cluster_time?
+    !@type.unknown? && !@type.single?
   end
 end

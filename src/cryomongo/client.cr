@@ -370,8 +370,10 @@ class Mongo::Client
         raise Mongo::Error.new("Unacknowledged writes are incompatible with sessions.") unless session.implicit?
       else
         body["lsid"] = session.session_id if session
-        cluster_time = gossip_cluster_time(session)
-        body["$clusterTime"] = cluster_time if cluster_time
+        if topology.supports_cluster_time?
+          cluster_time = gossip_cluster_time(session)
+          body["$clusterTime"] = cluster_time if cluster_time
+        end
       end
     end
 
