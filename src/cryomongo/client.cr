@@ -280,6 +280,25 @@ class Mongo::Client
   end
 
   # Starts a new logical session for a sequence of operations.
+  #
+  # ```
+  # client = Mongo::Client.new
+  #
+  # # First, create a ClientSession which is by default causally consistent.
+  # session = client.start_session
+  # collection = client["db"]["coll"]
+  #
+  # # On a side note, it is important to ensure that both read and writes are performed with "majority" concern.
+  # collection.read_concern = Mongo::ReadConcern.new(level: "majority")
+  # collection.write_concern = Mongo::WriteConcern.new(w: "majority")
+  #
+  # # Then pass session as the *session* named argument…
+  # collection.insert_one({ a: 1 }, session: session)
+  # collection.find_one({ a: 1 }, session: session)
+  #
+  # # …and always end the session after using it.
+  # session.end
+  # ```
   def start_session(*, causal_consistency : Bool = true) : Session::ClientSession
     Session::ClientSession.new(
       client: self,

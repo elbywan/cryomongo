@@ -532,9 +532,6 @@ client.unsubscribe_commands(subscription)
 require "cryomongo"
 
 client = Mongo::Client.new
-
-# To provide causal consistency, MongoDB enables causal consistency in client sessions.
-session = client.start_session
 # It is important to ensure that both read and writes are performed with "majority" concern.
 client.read_concern = Mongo::ReadConcern.new(level: "majority")
 client.write_concern = Mongo::WriteConcern.new(w: "majority")
@@ -545,21 +542,18 @@ client.write_concern = Mongo::WriteConcern.new(w: "majority")
 current_date = Time.utc
 items = client["test"]["items"]
 
-# Using a causally consistent session ensures that the update occurs before the insert.
-items.update_one(
-  { sku: "111", end: nil },
-  { "$set": { end: current_date }},
-  session: session
-)
-items.insert_one(
-  { sku: "nuts-111", name: "Pecans", start: current_date },
-  session: session
-)
+# MongoDB enables causal consistency in client sessions by default.
+# This is the block syntax that creates, ends and pass the session to collection methods automatically.
+items_collection.with_session do |items|
+  # Using a causally consistent session ensures that the update occurs before the insert.
+  items.update_one(
+    { sku: "111", end: nil },
+    { "$set": { end: current_date }}
+  )
+  items.insert_one({ sku: "nuts-111", name: "Pecans", start: current_date })
+  puts items.find.to_a.to_pretty_json
+end
 
-puts items.find(session: session).to_a.to_pretty_json
-
-# End the session
-session.end
 client.close
 ```
 
@@ -567,6 +561,7 @@ client.close
 
 - [Mongo::Session](https://elbywan.github.io/cryomongo/Mongo/Session.html)
 - [Mongo::Client#start_session](https://elbywan.github.io/cryomongo/Mongo/Client.html#start_session)
+- [Mongo::Collection#with_session](https://elbywan.github.io/cryomongo/Mongo/Collection.html#with_session(**args,&)-instance-method)
 
 ## Specifications
 

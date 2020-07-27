@@ -78,7 +78,7 @@ module Mongo
     protected def self.mix_read_concern(command, args, read_concern : ReadConcern?, *, session : Session::ClientSession)
       if (options = args["options"]?) && command.is_a?(Commands::ReadCommand) && command.read_command?(**args)
         concern : ReadConcern? = options["read_concern"]? || read_concern
-        after_cluster_time = session.operation_time
+        after_cluster_time = session.operation_time if session.options.causal_consistency
 
         if after_cluster_time
           concern = concern || read_concern || ReadConcern.new
