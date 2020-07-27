@@ -7,7 +7,6 @@ require "uuid"
 #
 # See: [https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst](https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst)
 module Mongo::Session
-
   @[BSON::Options(camelize: "lower")]
   struct ClusterTime
     include Comparable(ClusterTime)

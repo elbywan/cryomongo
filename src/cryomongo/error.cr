@@ -23,9 +23,9 @@ module Mongo
     NOT_MASTER_MESSAGES = {"not master"}
     SHUTDOWN_CODES      = {11600, 91}
     # See: https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst#determining-retryable-errors
-    RETRYABLE_CODES     = {6, 7, 89, 91, 189, 262, 9001, 10107, 11600, 11602, 13435, 13436}
+    RETRYABLE_CODES = {6, 7, 89, 91, 189, 262, 9001, 10107, 11600, 11602, 13435, 13436}
     # See: https://github.com/mongodb/specifications/blob/f1fcb6aa9751e5ed7eb8e64c0f08f1edf10a859a/source/change-streams/change-streams.rst#resumable-error
-    RESUMABLE_CODES     = {63, 133, 150, 234, 13388, 133} + RETRYABLE_CODES
+    RESUMABLE_CODES = {63, 133, 150, 234, 13388, 133} + RETRYABLE_CODES
 
     def initialize(code, message)
       @code = code.try &.as(Int32) || 0

@@ -3,7 +3,6 @@ require "../sessions"
 
 # This module contains the [Database Commands](https://docs.mongodb.com/manual/reference/command/) supported by the `cryomongo` driver.
 module Mongo::Commands
-
   # Base command class.
   module Command
     # Transforms the server result.

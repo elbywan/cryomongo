@@ -136,7 +136,7 @@ struct Mongo::Connection
   end
 
   def send(op_msg : Messages::OpMsg, command = nil, log = true)
-    send(op_msg, command, log) {}
+    send(op_msg, command, log) { }
   end
 
   def receive(log = true, &block)
@@ -167,7 +167,7 @@ struct Mongo::Connection
   end
 
   def receive(log = false)
-    receive(log: log) {}
+    receive(log: log) { }
   end
 
   def before_checkout

@@ -12,7 +12,7 @@ module Mongo::Commands::RefreshSessions
   def command(ids : Array)
     Commands.make({
       refreshSessions: ids,
-      "$db":  "admin",
+      "$db":           "admin",
     })
   end
 end

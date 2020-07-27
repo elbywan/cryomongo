@@ -12,7 +12,7 @@ module Mongo::Commands::KillAllSessionsByPattern
   def command(patterns : Array)
     Commands.make({
       killAllSessionsByPattern: patterns,
-      "$db":  "admin",
+      "$db":                    "admin",
     })
   end
 end

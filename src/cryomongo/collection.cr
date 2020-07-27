@@ -81,7 +81,7 @@ class Mongo::Collection
       comment:                    comment,
       read_concern:               read_concern,
       write_concern:              write_concern,
-      read_preference:            read_preference
+      read_preference:            read_preference,
     })
     maybe_result.try { |result| Cursor.new(@database.client, result, batch_size: batch_size, session: session) }
   end
@@ -110,7 +110,7 @@ class Mongo::Collection
       collation:       collation,
       hint:            hint.is_a?(String) ? hint : BSON.new(hint),
       max_time_ms:     max_time_ms,
-      read_preference: read_preference
+      read_preference: read_preference,
     }).not_nil!
     cursor = Cursor.new(@database.client, result, limit: limit, session: session)
     if (item = cursor.next).is_a? BSON
@@ -298,7 +298,7 @@ class Mongo::Collection
     self.command(Commands::Insert, documents: [document], session: session, options: {
       write_concern:              write_concern,
       bypass_document_validation: bypass_document_validation,
-      ordered: true
+      ordered:                    true,
     })
   end
 
@@ -775,8 +775,9 @@ class Mongo::Collection
 
   private class SessionProxy
     def initialize(@collection : Collection, @session : Session::ClientSession); end
+
     macro method_missing(call)
-      @collection.{{call.name.id}}({% for arg in call.args%}{{arg}},{%end%}session: @session)
+      @collection.{{call.name.id}}({% for arg in call.args %}{{arg}},{% end %}session: @session)
     end
   end
 
@@ -792,8 +793,8 @@ class Mongo::Collection
   # collection.with_session(causal_consistency: true) do |collection, session|
   #   5.times { |idx|
   #     # No need to provide: `session: session`.
-  #     collection.insert_one({ number: idx })
-  #     collection.find_one({ number: idx })
+  #     collection.insert_one({number: idx})
+  #     collection.find_one({number: idx})
   #   }
   # end
   # ```

@@ -31,14 +31,13 @@ end
 
 def start_mongo(topology : MongoLaunchTopology = :single)
   topology_argument = case topology
-  when MongoLaunchTopology::Single
-    "--single"
-  when MongoLaunchTopology::Replicaset
-    "--replicaset"
-  when MongoLaunchTopology::Sharded
-    "--replicaset --sharded 2 --port 27017"
-  end
-
+                      when MongoLaunchTopology::Single
+                        "--single"
+                      when MongoLaunchTopology::Replicaset
+                        "--replicaset"
+                      when MongoLaunchTopology::Sharded
+                        "--replicaset --sharded 2 --port 27017"
+                      end
 
   mongo_path = ENV["MONGODB_PATH"]?
   binary_path_option = mongo_path ? "--binarypath #{mongo_path}" : ""
@@ -49,12 +48,12 @@ def stop_mongo
   puts `mlaunch stop`
 end
 
-def with_mongo(topologies = nil, &block : ((-> Mongo::Client), MongoLaunchTopology) -> Nil)
+def with_mongo(topologies = nil, &block : (Proc(Mongo::Client), MongoLaunchTopology) -> Nil)
   MongoLaunchTopology.each { |topology|
     next if topologies.try { |t| !topology.in?(t) }
     context "in #{topology} mode", tags: "#{topology.to_s.underscore}" do
       client = uninitialized Mongo::Client
-      get_client : -> Mongo::Client = -> { client }
+      get_client : -> Mongo::Client = ->{ client }
 
       before_all {
         `rm -Rf ./data`

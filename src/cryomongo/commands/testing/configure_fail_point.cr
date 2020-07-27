@@ -15,8 +15,8 @@ module Mongo::Commands::ConfigureFailPoint
   def command(fail_point : String, mode, options = nil)
     Commands.make({
       configureFailPoint: fail_point,
-      mode: mode,
-      "$db":  "admin",
+      mode:               mode,
+      "$db":              "admin",
     }, options)
   end
 end

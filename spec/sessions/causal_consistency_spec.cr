@@ -36,9 +36,12 @@ describe Mongo::Session do
             operation_time = event.reply["operationTime"]?
           end
         }
-        client["db"]["coll"].insert_one({ a: 1 }, session: session)
+        client["db"]["coll"].insert_one({a: 1}, session: session)
         session.operation_time.should eq operation_time
-        begin client["db"]["coll"].find({ a: 1 }, limit: -1, session: session); rescue; end
+        begin
+          client["db"]["coll"].find({a: 1}, limit: -1, session: session)
+        rescue
+        end
         session.operation_time.should eq operation_time
       end
 
@@ -54,7 +57,7 @@ describe Mongo::Session do
             end
           end
         }
-        client["db"]["coll"].find_one({ a: 1 }, session: session)
+        client["db"]["coll"].find_one({a: 1}, session: session)
         client["db"]["coll"].estimated_document_count(session: session)
       end
 
@@ -70,7 +73,7 @@ describe Mongo::Session do
             end
           end
         }
-        client["db"]["coll"].insert_one({ a: 1 }, session: session)
+        client["db"]["coll"].insert_one({a: 1}, session: session)
         client["db"]["coll"].estimated_document_count(session: session)
       end
 
@@ -81,7 +84,7 @@ describe Mongo::Session do
         client.subscribe_commands { |event|
           case event
           when Mongo::Monitoring::Commands::CommandStartedEvent
-              event.command["readConcern"]?.should be_nil
+            event.command["readConcern"]?.should be_nil
           end
         }
         client["db"]["coll"].stats(session: session)
@@ -99,7 +102,7 @@ describe Mongo::Session do
             end
           end
         }
-        client["db"]["coll"].insert_one({ a: 1 }, session: session)
+        client["db"]["coll"].insert_one({a: 1}, session: session)
         client["db"]["coll"].estimated_document_count(session: session)
       end
 
@@ -116,7 +119,7 @@ describe Mongo::Session do
             end
           end
         }
-        client["db"]["coll"].insert_one({ a: 1 }, session: session)
+        client["db"]["coll"].insert_one({a: 1}, session: session)
         client["db"]["coll"].estimated_document_count(session: session)
       end
     end

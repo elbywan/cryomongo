@@ -83,7 +83,7 @@ class Mongo::Database
       collation:                  collation,
       hint:                       hint.is_a?(String) ? hint : BSON.new(hint),
       comment:                    comment,
-      write_concern:              write_concern
+      write_concern:              write_concern,
     })
     maybe_result.try { |result| Cursor.new(@client, result, batch_size: batch_size, session: session) }
   end
@@ -103,7 +103,7 @@ class Mongo::Database
     result = self.command(Commands::ListCollections, session: session, options: {
       filter:                 filter,
       name_only:              name_only,
-      authorized_collections: authorized_collections
+      authorized_collections: authorized_collections,
     }).not_nil!
     Cursor.new(@client, result, session: session)
   end
@@ -167,7 +167,7 @@ class Mongo::Database
     batch_size : Int32? = nil,
     collation : Collation? = nil,
     start_at_operation_time : Time? = nil,
-    start_after  : BSON? = nil,
+    start_after : BSON? = nil,
     read_concern : ReadConcern? = nil,
     read_preference : ReadPreference? = nil,
     session : Session::ClientSession? = nil

@@ -180,7 +180,7 @@ class Mongo::Bulk
     }
 
     if bypass_document_validation
-      options.merge({ bypass_document_validation: bypass_document_validation })
+      options.merge({bypass_document_validation: bypass_document_validation})
     end
 
     models = @models

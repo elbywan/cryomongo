@@ -53,13 +53,13 @@ describe Mongo::Monitoring do
               counter += 1
 
               result = case event
-                when Mongo::Monitoring::Commands::CommandStartedEvent
-                  expectation["command_started_event"]?
-                when Mongo::Monitoring::Commands::CommandSucceededEvent
-                  expectation["command_succeeded_event"]?
-                when Mongo::Monitoring::Commands::CommandFailedEvent
-                  expectation["command_failed_event"]?
-              end
+                       when Mongo::Monitoring::Commands::CommandStartedEvent
+                         expectation["command_started_event"]?
+                       when Mongo::Monitoring::Commands::CommandSucceededEvent
+                         expectation["command_succeeded_event"]?
+                       when Mongo::Monitoring::Commands::CommandFailedEvent
+                         expectation["command_failed_event"]?
+                       end
 
               result.should_not be_nil
               result = result.not_nil!

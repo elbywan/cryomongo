@@ -163,7 +163,7 @@ class Mongo::Client
             **args
           )
         else
-           # Select a suitable server and retrieve the underlying connection.
+          # Select a suitable server and retrieve the underlying connection.
           server_description ||= server_selection(command, args, read_preference)
           connection = get_connection(server_description)
 
@@ -178,7 +178,7 @@ class Mongo::Client
           )
         end
       else
-         # Select a suitable server and retrieve the underlying connection.
+        # Select a suitable server and retrieve the underlying connection.
         server_description ||= server_selection(command, args, read_preference)
         connection = get_connection(server_description)
 
@@ -293,8 +293,8 @@ class Mongo::Client
   # collection.write_concern = Mongo::WriteConcern.new(w: "majority")
   #
   # # Then pass session as the *session* named argument…
-  # collection.insert_one({ a: 1 }, session: session)
-  # collection.find_one({ a: 1 }, session: session)
+  # collection.insert_one({a: 1}, session: session)
+  # collection.find_one({a: 1}, session: session)
   #
   # # …and always end the session after using it.
   # session.end
@@ -355,7 +355,7 @@ class Mongo::Client
     operation_id : Int64? = nil,
     **args
   )
-    execute_command(command, session, read_preference, server_description, connection, operation_id, **args) {}
+    execute_command(command, session, read_preference, server_description, connection, operation_id, **args) { }
   end
 
   private def execute_command(
@@ -435,7 +435,7 @@ class Mongo::Client
         operation_id: operation_id,
         address: address,
         duration: Time.monotonic - duration_start,
-        reply: BSON.new({ ok: 1 })
+        reply: BSON.new({ok: 1})
       ))
 
       return nil
@@ -486,12 +486,14 @@ class Mongo::Client
     end
 
     # Raise if the server replied with an error.
-    if error = op_msg.validate; raise error; end
+    if error = op_msg.validate
+      raise error
+    end
 
     # Parse and return the body as a custom Result type.
     command.result(op_msg.body)
   rescue error : IO::Error
-    Mongo::Log.error(exception: error) { "Client error"} unless server_description
+    Mongo::Log.error(exception: error) { "Client error" } unless server_description
     # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-monitoring.rst#network-or-command-error-during-server-check
     server_description.try { |desc|
       Mongo::Log.error(exception: error) { "I/O error with server address: #{desc.address}" }

@@ -14,7 +14,7 @@ module Mongo::Commands::KillSessions
   def command(ids : Array)
     Commands.make({
       killSessions: ids,
-      "$db":  "admin",
+      "$db":        "admin",
     })
   end
 end

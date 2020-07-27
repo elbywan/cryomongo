@@ -150,8 +150,8 @@ class Mongo::SDAM::ServerDescription
 
   def supports_retryable_writes?
     self.max_wire_version >= 6 &&
-    self.logical_session_timeout_minutes &&
-    !self.type.standalone?
+      self.logical_session_timeout_minutes &&
+      !self.type.standalone?
   end
 
   def supports_retryable_reads?

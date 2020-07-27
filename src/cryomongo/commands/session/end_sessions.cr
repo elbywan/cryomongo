@@ -12,7 +12,7 @@ module Mongo::Commands::EndSessions
   def command(ids : Array)
     Commands.make({
       endSessions: ids,
-      "$db":  "admin",
+      "$db":       "admin",
     })
   end
 end

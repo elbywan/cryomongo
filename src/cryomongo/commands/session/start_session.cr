@@ -12,9 +12,9 @@ module Mongo::Commands::StartSession
   def command(cluster_time = nil)
     Commands.make({
       startSession: 1,
-      "$db":  "admin",
+      "$db":        "admin",
     }, options: {
-      "$clusterTime": cluster_time
+      "$clusterTime": cluster_time,
     })
   end
 

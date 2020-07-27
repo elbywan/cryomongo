@@ -10,12 +10,12 @@ module Mongo::Spec::Runner
       })
 
       skip_test = if run_on = test_file["runOn"]?.try(&.as_a)
-        run_on.all? { |constraint|
-          check_constraints(constraint, topology)
-        }
-      else
-        check_constraints(test_file, topology)
-      end
+                    run_on.all? { |constraint|
+                      check_constraints(constraint, topology)
+                    }
+                  else
+                    check_constraints(test_file, topology)
+                  end
 
       if skip_test
         # puts "Skipping #{file_path} for topology #{topology} and version #{SERVER_VERSION}."
@@ -34,8 +34,8 @@ module Mongo::Spec::Runner
     topologies = version_root["topology"]?.try &.as_a
 
     skip = max_server_version < SERVER_VERSION ||
-    min_server_version > SERVER_VERSION ||
-    (topologies && !topology.to_s.underscore.in?(topologies))
+           min_server_version > SERVER_VERSION ||
+           (topologies && !topology.to_s.underscore.in?(topologies))
 
     skip
   end
@@ -86,7 +86,8 @@ module Mongo::Spec::Runner
           else
             begin
               global_database.command(Mongo::Commands::Drop, name: collection_name, write_concern: majority_write_concern)
-            rescue; end
+            rescue
+            end
             global_database.command(Mongo::Commands::Create, name: collection_name, write_concern: majority_write_concern)
           end
         rescue
@@ -94,7 +95,7 @@ module Mongo::Spec::Runner
         end
 
         if bn = bucket_name
-          gridfs = local_database.grid_fs(bucket_name: bn)#, chunk_size_bytes: chunk_size)
+          gridfs = local_database.grid_fs(bucket_name: bn) # , chunk_size_bytes: chunk_size)
           if (d = test_file["data"].as_h)
             files = d["fs.files"].as_a.map { |elt| BSON.from_json(elt.to_json) }
             chunks = d["fs.chunks"].as_a.map { |elt| BSON.from_json(elt.to_json) }
@@ -111,11 +112,10 @@ module Mongo::Spec::Runner
           end
         end
 
-
         if fp = fail_point
           fp_mode = fp["mode"].as_s? || BSON.from_json fp["mode"].to_json
           fp_data = fp["data"]?.try { |fp_data_json| BSON.from_json(fp_data_json.to_json) }
-          client.command(Mongo::Commands::ConfigureFailPoint, fail_point: fp["configureFailPoint"].as_s, mode: fp_mode, options: { data: fp_data })
+          client.command(Mongo::Commands::ConfigureFailPoint, fail_point: fp["configureFailPoint"].as_s, mode: fp_mode, options: {data: fp_data})
         end
 
         # Todo: session options
@@ -279,18 +279,18 @@ module Mongo::Spec::Runner
       when "assertSessionDirty"
         session_name = operation.dig("arguments", "session").as_s
         session = if session_name == "session0"
-          sessions.not_nil![0]
-        elsif session_name == "session1"
-          sessions.not_nil![1]
-        end
+                    sessions.not_nil![0]
+                  elsif session_name == "session1"
+                    sessions.not_nil![1]
+                  end
         session.try &.dirty.should be_true
       when "assertSessionNotDirty"
         session_name = operation.dig("arguments", "session").as_s
         session = if session_name == "session0"
-          sessions.not_nil![0]
-        elsif session_name == "session1"
-          sessions.not_nil![1]
-        end
+                    sessions.not_nil![0]
+                  elsif session_name == "session1"
+                    sessions.not_nil![1]
+                  end
         session.try &.dirty.should be_false
       when "targetedFailPoint"
       when "assertSessionTransactionState"
@@ -302,12 +302,12 @@ module Mongo::Spec::Runner
       when "assertCollectionExists"
         database_name = operation.dig("arguments", "database").as_s
         collection_name = operation.dig("arguments", "collection").as_s
-        cursor = client[database_name].list_collections(filter: { name: collection_name })
+        cursor = client[database_name].list_collections(filter: {name: collection_name})
         cursor.to_a.size.should eq 1
       when "assertCollectionNotExists"
         database_name = operation.dig("arguments", "database").as_s
         collection_name = operation.dig("arguments", "collection").as_s
-        cursor = client[database_name].list_collections(filter: { name: collection_name })
+        cursor = client[database_name].list_collections(filter: {name: collection_name})
         cursor.to_a.size.should eq 0
       when "assertIndexExists"
         database_name = operation.dig("arguments", "database").as_s
@@ -339,7 +339,6 @@ module Mongo::Spec::Runner
 
       return
     end
-
 
     # Arguments
     arguments = operation["arguments"]?.try(&.as_h) || ({} of String => JSON::Any)
@@ -415,301 +414,301 @@ module Mongo::Spec::Runner
     # Database operations
 
     result = case operation_name
-    when "estimatedDocumentCount"
-      collection.estimated_document_count(
-        max_time_ms: max_time_ms.try &.to_i64,
-        session: session
-      )
-    when "countDocuments"
-      collection.count_documents(
-        filter: filter,
-        skip: skip,
-        limit: limit,
-        collation: collation,
-        hint: hint,
-        max_time_ms: max_time_ms,
-        session: session
-      )
-    when "count"
-      collection.command(Mongo::Commands::Count, session: session, options: {
-        query: filter,
-        skip: skip,
-        limit: limit,
-        collation: collation,
-      }).not_nil!.["n"].as(Int32)
-    when "distinct"
-      collection.distinct(
-        key: arguments["fieldName"].as_s,
-        filter: filter,
-        collation: collation,
-        session: session
-      )
-    when "find"
-      collection.find(
-        filter: filter.not_nil!,
-        sort: sort,
-        projection: projection,
-        hint: hint,
-        skip: skip,
-        limit: limit,
-        batch_size: batch_size,
-        single_batch: single_batch,
-        max_time_ms: max_time_ms.try &.to_i64,
-        collation: collation,
-        session: session
-      )
-    when "findOne"
-      collection.find_one(
-        filter: filter.not_nil!,
-        sort: sort,
-        projection: projection,
-        hint: hint,
-        skip: skip,
-        collation: collation,
-        session: session
-      )
-    when "aggregate"
-      if operation_object == "database"
-        db.aggregate(
-          pipeline: pipeline.not_nil!,
-          allow_disk_use: allow_disk_use,
-          batch_size: batch_size,
-          max_time_ms: max_time_ms,
-          bypass_document_validation: bypass_document_validation,
-          read_concern: read_concern,
-          collation: collation,
-          hint: hint,
-          write_concern: write_concern,
-          session: session
-        )
-      else
-        collection.aggregate(
-          pipeline: pipeline.not_nil!,
-          allow_disk_use: allow_disk_use,
-          batch_size: batch_size,
-          max_time_ms: max_time_ms,
-          bypass_document_validation: bypass_document_validation,
-          read_concern: read_concern,
-          collation: collation,
-          hint: hint,
-          write_concern: write_concern,
-          session: session
-        )
-      end
-    when "watch"
-      if operation_object == "database"
-        db.watch
-      elsif operation_object == "collection"
-        collection.watch
-      else
-        client.watch
-      end
-    when "updateOne"
-      collection.update_one(
-        filter: filter.not_nil!,
-        update: update.not_nil!,
-        upsert: upsert,
-        array_filters: array_filters,
-        collation: collation,
-        hint: hint,
-        ordered: ordered,
-        write_concern: write_concern,
-        bypass_document_validation: bypass_document_validation,
-        session: session
-      )
-    when "updateMany"
-      collection.update_many(
-        filter: filter.not_nil!,
-        update: update.not_nil!,
-        upsert: upsert,
-        array_filters: array_filters,
-        collation: collation,
-        hint: hint,
-        ordered: ordered,
-        write_concern: write_concern,
-        bypass_document_validation: bypass_document_validation,
-        session: session
-      )
-    when "replaceOne"
-      collection.replace_one(
-        filter: filter.not_nil!,
-        replacement: replacement.not_nil!,
-        upsert: upsert,
-        collation: collation,
-        hint: hint,
-        ordered: ordered,
-        write_concern: write_concern,
-        bypass_document_validation: bypass_document_validation,
-        session: session
-      )
-    when "insertOne"
-      collection.insert_one(
-        document: document.not_nil!,
-        write_concern: write_concern,
-        bypass_document_validation: bypass_document_validation,
-        session: session
-      )
-    when "insertMany"
-      collection.insert_many(
-        documents: documents.not_nil!,
-        ordered: ordered,
-        write_concern: write_concern,
-        bypass_document_validation: bypass_document_validation,
-        session: session
-      )
-    when "deleteOne"
-      collection.delete_one(
-        filter: filter.not_nil!,
-        collation: collation,
-        hint: hint,
-        ordered: ordered,
-        write_concern: write_concern,
-        session: session
-      )
-    when "deleteMany"
-      collection.delete_many(
-        filter: filter.not_nil!,
-        collation: collation,
-        hint: hint,
-        ordered: ordered,
-        write_concern: write_concern
-      )
-    when "findOneAndUpdate"
-      collection.find_one_and_update(
-        filter: filter.not_nil!,
-        update: update.not_nil!,
-        sort: sort,
-        new: new_,
-        fields: fields,
-        upsert: upsert,
-        bypass_document_validation: bypass_document_validation,
-        write_concern: write_concern,
-        collation: collation,
-        array_filters: array_filters,
-        hint: hint,
-        max_time_ms: max_time_ms,
-        session: session
-      )
-    when "findOneAndReplace"
-      collection.find_one_and_replace(
-        filter: filter.not_nil!,
-        replacement: replacement.not_nil!,
-        sort: sort,
-        new: new_,
-        fields: fields,
-        upsert: upsert,
-        bypass_document_validation: bypass_document_validation,
-        write_concern: write_concern,
-        collation: collation,
-        array_filters: array_filters,
-        hint: hint,
-        max_time_ms: max_time_ms,
-        session: session
-      )
-    when "findOneAndDelete"
-      collection.find_one_and_delete(
-        filter: filter.not_nil!,
-        sort: sort,
-        fields: fields,
-        bypass_document_validation: bypass_document_validation,
-        write_concern: write_concern,
-        collation: collation,
-        hint: hint,
-        max_time_ms: max_time_ms,
-        session: session
-      )
-    when "listDatabases"
-      client.list_databases
-    when "listCollections"
-      db.list_collections
-    when "listIndexes"
-      collection.list_indexes
-    when "listCollectionNames"
-      # not implemented
-      return
-    when "listDatabaseNames"
-      # not implemented
-      return
-    when "listIndexNames"
-      # not implemented
-      return
-    when "mapReduce"
-      # not implemented
-      return
-    when "listCollectionObjects"
-      # not implemented
-      return
-    when "listDatabaseObjects"
-      # not implemented
-      return
-    when "bulkWrite"
-      requests = Array(Mongo::Bulk::WriteModel).new
-      arguments["requests"].as_a.each { |req|
-        name = req["name"].as_s
-        arguments = req["arguments"].as_h
-        collation = arguments["collation"]?.try { |c|
-          Mongo::Collation.from_bson(BSON.from_json(c.to_json))
-        }
-        hint = arguments["hint"]?.try { |h|
-          next h.as_s if h.as_s?
-          BSON.from_json(h.to_json)
-        }
-        case name
-        when "insertOne"
-          requests << Mongo::Bulk::InsertOne.new(
-            document: bson_arg("document").not_nil!
-          )
-        when "deleteOne"
-          requests << Mongo::Bulk::DeleteOne.new(
-            filter: bson_arg("filter").not_nil!,
-            collation: collation,
-            hint: hint
-          )
-        when "deleteMany"
-          requests << Mongo::Bulk::DeleteMany.new(
-            filter: bson_arg("filter").not_nil!,
-            collation: collation,
-            hint: hint
-          )
-        when "replaceOne"
-          requests << Mongo::Bulk::ReplaceOne.new(
-            filter: bson_arg("filter").not_nil!,
-            replacement: bson_arg("replacement").not_nil!,
-            collation: collation,
-            hint: hint,
-            upsert: bool_arg("upsert")
-          )
-        when "updateOne"
-          requests << Mongo::Bulk::UpdateOne.new(
-            filter: bson_arg("filter").not_nil!,
-            update: bson_or_array_arg("update").not_nil!,
-            array_filters: bson_array_arg("arrayFilters"),
-            collation: collation,
-            hint: hint,
-            upsert: bool_arg("upsert")
-          )
-        when "updateMany"
-          requests << Mongo::Bulk::UpdateMany.new(
-            filter: bson_arg("filter").not_nil!,
-            update: bson_or_array_arg("update").not_nil!,
-            array_filters: bson_array_arg("arrayFilters"),
-            collation: collation,
-            hint: hint,
-            upsert: bool_arg("upsert")
-          )
-        else
-          puts "Not supported (bulk): #{name}"
-        end
-      }
-      collection.bulk_write(
-        requests: requests,
-        ordered: ordered,
-        bypass_document_validation: bypass_document_validation,
-        session: session
-      )
-    else
-      puts "Not supported: #{operation_name}"
-    end
+             when "estimatedDocumentCount"
+               collection.estimated_document_count(
+                 max_time_ms: max_time_ms.try &.to_i64,
+                 session: session
+               )
+             when "countDocuments"
+               collection.count_documents(
+                 filter: filter,
+                 skip: skip,
+                 limit: limit,
+                 collation: collation,
+                 hint: hint,
+                 max_time_ms: max_time_ms,
+                 session: session
+               )
+             when "count"
+               collection.command(Mongo::Commands::Count, session: session, options: {
+                 query:     filter,
+                 skip:      skip,
+                 limit:     limit,
+                 collation: collation,
+               }).not_nil!.["n"].as(Int32)
+             when "distinct"
+               collection.distinct(
+                 key: arguments["fieldName"].as_s,
+                 filter: filter,
+                 collation: collation,
+                 session: session
+               )
+             when "find"
+               collection.find(
+                 filter: filter.not_nil!,
+                 sort: sort,
+                 projection: projection,
+                 hint: hint,
+                 skip: skip,
+                 limit: limit,
+                 batch_size: batch_size,
+                 single_batch: single_batch,
+                 max_time_ms: max_time_ms.try &.to_i64,
+                 collation: collation,
+                 session: session
+               )
+             when "findOne"
+               collection.find_one(
+                 filter: filter.not_nil!,
+                 sort: sort,
+                 projection: projection,
+                 hint: hint,
+                 skip: skip,
+                 collation: collation,
+                 session: session
+               )
+             when "aggregate"
+               if operation_object == "database"
+                 db.aggregate(
+                   pipeline: pipeline.not_nil!,
+                   allow_disk_use: allow_disk_use,
+                   batch_size: batch_size,
+                   max_time_ms: max_time_ms,
+                   bypass_document_validation: bypass_document_validation,
+                   read_concern: read_concern,
+                   collation: collation,
+                   hint: hint,
+                   write_concern: write_concern,
+                   session: session
+                 )
+               else
+                 collection.aggregate(
+                   pipeline: pipeline.not_nil!,
+                   allow_disk_use: allow_disk_use,
+                   batch_size: batch_size,
+                   max_time_ms: max_time_ms,
+                   bypass_document_validation: bypass_document_validation,
+                   read_concern: read_concern,
+                   collation: collation,
+                   hint: hint,
+                   write_concern: write_concern,
+                   session: session
+                 )
+               end
+             when "watch"
+               if operation_object == "database"
+                 db.watch
+               elsif operation_object == "collection"
+                 collection.watch
+               else
+                 client.watch
+               end
+             when "updateOne"
+               collection.update_one(
+                 filter: filter.not_nil!,
+                 update: update.not_nil!,
+                 upsert: upsert,
+                 array_filters: array_filters,
+                 collation: collation,
+                 hint: hint,
+                 ordered: ordered,
+                 write_concern: write_concern,
+                 bypass_document_validation: bypass_document_validation,
+                 session: session
+               )
+             when "updateMany"
+               collection.update_many(
+                 filter: filter.not_nil!,
+                 update: update.not_nil!,
+                 upsert: upsert,
+                 array_filters: array_filters,
+                 collation: collation,
+                 hint: hint,
+                 ordered: ordered,
+                 write_concern: write_concern,
+                 bypass_document_validation: bypass_document_validation,
+                 session: session
+               )
+             when "replaceOne"
+               collection.replace_one(
+                 filter: filter.not_nil!,
+                 replacement: replacement.not_nil!,
+                 upsert: upsert,
+                 collation: collation,
+                 hint: hint,
+                 ordered: ordered,
+                 write_concern: write_concern,
+                 bypass_document_validation: bypass_document_validation,
+                 session: session
+               )
+             when "insertOne"
+               collection.insert_one(
+                 document: document.not_nil!,
+                 write_concern: write_concern,
+                 bypass_document_validation: bypass_document_validation,
+                 session: session
+               )
+             when "insertMany"
+               collection.insert_many(
+                 documents: documents.not_nil!,
+                 ordered: ordered,
+                 write_concern: write_concern,
+                 bypass_document_validation: bypass_document_validation,
+                 session: session
+               )
+             when "deleteOne"
+               collection.delete_one(
+                 filter: filter.not_nil!,
+                 collation: collation,
+                 hint: hint,
+                 ordered: ordered,
+                 write_concern: write_concern,
+                 session: session
+               )
+             when "deleteMany"
+               collection.delete_many(
+                 filter: filter.not_nil!,
+                 collation: collation,
+                 hint: hint,
+                 ordered: ordered,
+                 write_concern: write_concern
+               )
+             when "findOneAndUpdate"
+               collection.find_one_and_update(
+                 filter: filter.not_nil!,
+                 update: update.not_nil!,
+                 sort: sort,
+                 new: new_,
+                 fields: fields,
+                 upsert: upsert,
+                 bypass_document_validation: bypass_document_validation,
+                 write_concern: write_concern,
+                 collation: collation,
+                 array_filters: array_filters,
+                 hint: hint,
+                 max_time_ms: max_time_ms,
+                 session: session
+               )
+             when "findOneAndReplace"
+               collection.find_one_and_replace(
+                 filter: filter.not_nil!,
+                 replacement: replacement.not_nil!,
+                 sort: sort,
+                 new: new_,
+                 fields: fields,
+                 upsert: upsert,
+                 bypass_document_validation: bypass_document_validation,
+                 write_concern: write_concern,
+                 collation: collation,
+                 array_filters: array_filters,
+                 hint: hint,
+                 max_time_ms: max_time_ms,
+                 session: session
+               )
+             when "findOneAndDelete"
+               collection.find_one_and_delete(
+                 filter: filter.not_nil!,
+                 sort: sort,
+                 fields: fields,
+                 bypass_document_validation: bypass_document_validation,
+                 write_concern: write_concern,
+                 collation: collation,
+                 hint: hint,
+                 max_time_ms: max_time_ms,
+                 session: session
+               )
+             when "listDatabases"
+               client.list_databases
+             when "listCollections"
+               db.list_collections
+             when "listIndexes"
+               collection.list_indexes
+             when "listCollectionNames"
+               # not implemented
+               return
+             when "listDatabaseNames"
+               # not implemented
+               return
+             when "listIndexNames"
+               # not implemented
+               return
+             when "mapReduce"
+               # not implemented
+               return
+             when "listCollectionObjects"
+               # not implemented
+               return
+             when "listDatabaseObjects"
+               # not implemented
+               return
+             when "bulkWrite"
+               requests = Array(Mongo::Bulk::WriteModel).new
+               arguments["requests"].as_a.each { |req|
+                 name = req["name"].as_s
+                 arguments = req["arguments"].as_h
+                 collation = arguments["collation"]?.try { |c|
+                   Mongo::Collation.from_bson(BSON.from_json(c.to_json))
+                 }
+                 hint = arguments["hint"]?.try { |h|
+                   next h.as_s if h.as_s?
+                   BSON.from_json(h.to_json)
+                 }
+                 case name
+                 when "insertOne"
+                   requests << Mongo::Bulk::InsertOne.new(
+                     document: bson_arg("document").not_nil!
+                   )
+                 when "deleteOne"
+                   requests << Mongo::Bulk::DeleteOne.new(
+                     filter: bson_arg("filter").not_nil!,
+                     collation: collation,
+                     hint: hint
+                   )
+                 when "deleteMany"
+                   requests << Mongo::Bulk::DeleteMany.new(
+                     filter: bson_arg("filter").not_nil!,
+                     collation: collation,
+                     hint: hint
+                   )
+                 when "replaceOne"
+                   requests << Mongo::Bulk::ReplaceOne.new(
+                     filter: bson_arg("filter").not_nil!,
+                     replacement: bson_arg("replacement").not_nil!,
+                     collation: collation,
+                     hint: hint,
+                     upsert: bool_arg("upsert")
+                   )
+                 when "updateOne"
+                   requests << Mongo::Bulk::UpdateOne.new(
+                     filter: bson_arg("filter").not_nil!,
+                     update: bson_or_array_arg("update").not_nil!,
+                     array_filters: bson_array_arg("arrayFilters"),
+                     collation: collation,
+                     hint: hint,
+                     upsert: bool_arg("upsert")
+                   )
+                 when "updateMany"
+                   requests << Mongo::Bulk::UpdateMany.new(
+                     filter: bson_arg("filter").not_nil!,
+                     update: bson_or_array_arg("update").not_nil!,
+                     array_filters: bson_array_arg("arrayFilters"),
+                     collation: collation,
+                     hint: hint,
+                     upsert: bool_arg("upsert")
+                   )
+                 else
+                   puts "Not supported (bulk): #{name}"
+                 end
+               }
+               collection.bulk_write(
+                 requests: requests,
+                 ordered: ordered,
+                 bypass_document_validation: bypass_document_validation,
+                 session: session
+               )
+             else
+               puts "Not supported: #{operation_name}"
+             end
 
     # Validation
     if outcome_result
@@ -738,8 +737,8 @@ module Mongo::Spec::Runner
       elsif result.is_a? Mongo::Commands::Common::InsertResult
         inserted_count =
           (outcome_result["insertedCount"]?.try &.as_i) ||
-          (outcome_result["insertedId"]?.try { 1 }) ||
-          (outcome_result["insertedIds"].as_h.size)
+            (outcome_result["insertedId"]?.try { 1 }) ||
+            (outcome_result["insertedIds"].as_h.size)
         result.n.should eq inserted_count
       elsif result.is_a? Mongo::Commands::Common::DeleteResult
         deleted_count = outcome_result["deletedCount"]?.try(&.as_i) || 0
@@ -766,7 +765,7 @@ module Mongo::Spec::Runner
       outcome_collection_name = outcome.dig?("collection", "name").try &.as_s
       outcome_collection = outcome_collection_name ? database[outcome_collection_name] : collection
       collection_data = outcome_collection.find(
-        sort: { _id: 1 },
+        sort: {_id: 1},
         read_preference: Mongo::ReadPreference.new(mode: "primary"),
         read_concern: Mongo::ReadConcern.new("local")
       ).to_a
@@ -784,18 +783,18 @@ module Mongo::Spec::Runner
       expectation = expectations.try &.[counter].as_h
 
       result = case event
-        when Mongo::Monitoring::Commands::CommandStartedEvent
-          if lsid = event.command["lsid"]?
-            lsid_list << lsid.as(BSON)
-          end
-          expectation.try &.["command_started_event"]?
-        when Mongo::Monitoring::Commands::CommandSucceededEvent
-          next if command_started_only
-          expectation.try &.["command_succeeded_event"]?
-        when Mongo::Monitoring::Commands::CommandFailedEvent
-          next if command_started_only
-          expectation.try &.["command_failed_event"]?
-      end
+               when Mongo::Monitoring::Commands::CommandStartedEvent
+                 if lsid = event.command["lsid"]?
+                   lsid_list << lsid.as(BSON)
+                 end
+                 expectation.try &.["command_started_event"]?
+               when Mongo::Monitoring::Commands::CommandSucceededEvent
+                 next if command_started_only
+                 expectation.try &.["command_succeeded_event"]?
+               when Mongo::Monitoring::Commands::CommandFailedEvent
+                 next if command_started_only
+                 expectation.try &.["command_failed_event"]?
+               end
 
       counter_ref.value += 1
 

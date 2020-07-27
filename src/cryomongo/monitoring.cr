@@ -17,7 +17,6 @@
 # client.unsubscribe_commands(subscription)
 # ```
 module Mongo::Monitoring
-
   enum Type
     Commands
   end
@@ -52,7 +51,6 @@ module Mongo::Monitoring
   end
 
   module Commands
-
     # Contains common event fields.
     abstract struct Event
       macro inherited
