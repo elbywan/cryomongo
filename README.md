@@ -547,7 +547,7 @@ items = client["test"]["items"]
 items_collection.with_session do |items|
   # Using a causally consistent session ensures that the update occurs before the insert.
   items.update_one(
-    { sku: "111", end: nil },
+    { sku: "111", end: { "$exists": false } },
     { "$set": { end: current_date }}
   )
   items.insert_one({ sku: "nuts-111", name: "Pecans", start: current_date })
