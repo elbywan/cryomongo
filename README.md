@@ -560,7 +560,7 @@ client.close
 **Links**
 
 - [Mongo::Session](https://elbywan.github.io/cryomongo/Mongo/Session.html)
-- [Mongo::Client#start_session](https://elbywan.github.io/cryomongo/Mongo/Client.html#start_session)
+- [Mongo::Client#start_session](https://elbywan.github.io/cryomongo/Mongo/Client.html#start_session(*,causal_consistency:Bool=true):Session::ClientSession-instance-method)
 - [Mongo::Collection#with_session](https://elbywan.github.io/cryomongo/Mongo/Collection.html#with_session(**args,&)-instance-method)
 
 ## Specifications
