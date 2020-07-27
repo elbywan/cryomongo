@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="sessions-support-dev">
+<meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
 
@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="cryomongo">
-  <title>Mongo::Client - cryomongo sessions-support-dev</title>
+  <title>Mongo::Client - cryomongo master-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        sessions-support-dev
+        master-dev
       </span>
     </div>
   </div>
@@ -1491,6 +1491,23 @@ client.command(<span class="t">Mongo</span><span class="t">::</span><span class=
         <div class="doc">
           
           <p>Starts a new logical session for a sequence of operations.</p>
+
+<pre><code>client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+
+<span class="c"># First, create a ClientSession which is by default causally consistent.</span>
+session <span class="o">=</span> client.start_session
+collection <span class="o">=</span> client[<span class="s">&quot;db&quot;</span>][<span class="s">&quot;coll&quot;</span>]
+
+<span class="c"># On a side note, it is important to ensure that both read and writes are performed with &quot;majority&quot; concern.</span>
+collection.read_concern <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">ReadConcern</span>.<span class="k">new</span>(level: <span class="s">&quot;majority&quot;</span>)
+collection.write_concern <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">WriteConcern</span>.<span class="k">new</span>(w: <span class="s">&quot;majority&quot;</span>)
+
+<span class="c"># Then pass session as the *session* named argument…</span>
+collection.insert_one({ a: <span class="n">1</span> }, session: session)
+collection.find_one({ a: <span class="n">1</span> }, session: session)
+
+<span class="c"># …and always end the session after using it.</span>
+session.<span class="k">end</span></code></pre>
         </div>
       
       <br/>

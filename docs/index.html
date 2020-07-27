@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="sessions-support-dev">
+<meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
 
@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="cryomongo">
-  <title>cryomongo sessions-support-dev</title>
+  <title>cryomongo master-dev</title>
   <script type="text/javascript">
   CrystalDocs.base_path = "";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        sessions-support-dev
+        master-dev
       </span>
     </div>
   </div>
@@ -949,6 +949,66 @@ puts bson.not_nil!.[<span class="s">&quot;two&quot;</span>] <span class="c"># =&
 collection.delete_one({ two: <span class="n">2</span> })
 puts collection.count_documents <span class="c"># =&gt; 0</span></code></pre>
 
+<h3><a id="example-with-serialization" class="anchor" href="#example-with-serialization">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Example with serialization</h3>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
+
+<span class="t">DATABASE_NAME</span> <span class="o">=</span> <span class="s">&quot;database&quot;</span>
+
+<span class="c"># We take advantage of the BSON serialization capabilities provided by the `bson.cr` shard.</span>
+record <span class="t">User</span>, name : <span class="t">String</span>, banned : <span class="t">Bool</span>? <span class="o">=</span> <span class="n">false</span>, _id : <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span> <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.<span class="k">new</span>, creation_date : <span class="t">Time</span> <span class="o">=</span> <span class="t">Time</span>.utc <span class="k">do</span>
+  <span class="k">include</span> <span class="t">BSON</span><span class="t">::</span><span class="t">Serializable</span>
+  <span class="k">include</span> <span class="t">JSON</span><span class="t">::</span><span class="t">Serializable</span>
+<span class="k">end</span>
+
+<span class="c"># Initialize Client, Database and Collection.</span>
+client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+database <span class="o">=</span> client[<span class="t">DATABASE_NAME</span>]
+users <span class="o">=</span> database[<span class="s">&quot;users&quot;</span>]
+
+<span class="c"># We set majority read and write at the Database level.</span>
+database.read_concern <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">ReadConcern</span>.<span class="k">new</span>(level: <span class="s">&quot;majority&quot;</span>)
+database.write_concern <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">WriteConcern</span>.<span class="k">new</span>(w: <span class="s">&quot;majority&quot;</span>)
+
+<span class="c"># Drop and recreate the Collection to ensure that we read later only the documents we inserted in this example.</span>
+{ <span class="t">Mongo</span><span class="t">::</span><span class="t">Commands</span><span class="t">::</span><span class="t">Drop</span>, <span class="t">Mongo</span><span class="t">::</span><span class="t">Commands</span><span class="t">::</span><span class="t">Create</span> }.each { <span class="o">|</span>command<span class="o">|</span>
+  database.command(command, name: <span class="s">&quot;users&quot;</span>)
+}
+
+<span class="c"># Insert User structures that are automatically serialized to BSON.</span>
+users.insert_many({ <span class="s">&quot;John&quot;</span>, <span class="s">&quot;Jane&quot;</span> }.map { <span class="o">|</span>name<span class="o">|</span>
+  <span class="t">User</span>.<span class="k">new</span>(name: name)
+}.to_a)
+
+<span class="c"># Fetch a Cursor pointing to the users collection.</span>
+cursor <span class="o">=</span> users.find
+
+<span class="c"># Iterate the cursor and use `.of(User)` to deserialize as the cursor gets iterated.</span>
+<span class="c"># Then push the users into an array that gets pretty printed.</span>
+puts cursor.<span class="k">of</span>(<span class="t">User</span>).to_a.to_pretty_json
+<span class="c"># =&gt; [</span>
+<span class="c">#   {</span>
+<span class="c">#     &quot;name&quot;: &quot;John&quot;,</span>
+<span class="c">#     &quot;banned&quot;: false,</span>
+<span class="c">#     &quot;_id&quot;: {</span>
+<span class="c">#       &quot;$oid&quot;: &quot;f2001c5fb0a33e0264e2ea05&quot;</span>
+<span class="c">#     },</span>
+<span class="c">#     &quot;creation_date&quot;: &quot;2020-07-25T09:52:50Z&quot;</span>
+<span class="c">#   },</span>
+<span class="c">#   {</span>
+<span class="c">#     &quot;name&quot;: &quot;Jane&quot;,</span>
+<span class="c">#     &quot;banned&quot;: false,</span>
+<span class="c">#     &quot;_id&quot;: {</span>
+<span class="c">#       &quot;$oid&quot;: &quot;f2001c5fb0a33e0264e2ea07&quot;</span>
+<span class="c">#     },</span>
+<span class="c">#     &quot;creation_date&quot;: &quot;2020-07-25T09:52:50Z&quot;</span>
+<span class="c">#   }</span>
+<span class="c"># ]</span></code></pre>
+
 <h2><a id="features" class="anchor" href="#features">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -1375,9 +1435,6 @@ client.unsubscribe_commands(subscription)</code></pre>
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
 
 client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
-
-<span class="c"># To provide causal consistency, MongoDB enables causal consistency in client sessions.</span>
-session <span class="o">=</span> client.start_session
 <span class="c"># It is important to ensure that both read and writes are performed with &quot;majority&quot; concern.</span>
 client.read_concern <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">ReadConcern</span>.<span class="k">new</span>(level: <span class="s">&quot;majority&quot;</span>)
 client.write_concern <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">WriteConcern</span>.<span class="k">new</span>(w: <span class="s">&quot;majority&quot;</span>)
@@ -1388,26 +1445,23 @@ client.write_concern <span class="o">=</span> <span class="t">Mongo</span><span 
 current_date <span class="o">=</span> <span class="t">Time</span>.utc
 items <span class="o">=</span> client[<span class="s">&quot;test&quot;</span>][<span class="s">&quot;items&quot;</span>]
 
-<span class="c"># Using a causally consistent session ensures that the update occurs before the insert.</span>
-items.update_one(
-  { sku: <span class="s">&quot;111&quot;</span>, <span class="k">end</span>: <span class="n">nil</span> },
-  { <span class="s">&quot;$set&quot;</span>: { <span class="k">end</span>: current_date }},
-  session: session
-)
-items.insert_one(
-  { sku: <span class="s">&quot;nuts-111&quot;</span>, name: <span class="s">&quot;Pecans&quot;</span>, start: current_date },
-  session: session
-)
+<span class="c"># MongoDB enables causal consistency in client sessions by default.</span>
+<span class="c"># This is the block syntax that creates, ends and pass the session to collection methods automatically.</span>
+items_collection.with_session <span class="k">do</span> <span class="o">|</span>items<span class="o">|</span>
+  <span class="c"># Using a causally consistent session ensures that the update occurs before the insert.</span>
+  items.update_one(
+    { sku: <span class="s">&quot;111&quot;</span>, <span class="k">end</span>: <span class="n">nil</span> },
+    { <span class="s">&quot;$set&quot;</span>: { <span class="k">end</span>: current_date }}
+  )
+  items.insert_one({ sku: <span class="s">&quot;nuts-111&quot;</span>, name: <span class="s">&quot;Pecans&quot;</span>, start: current_date })
+  puts items.find.to_a.to_pretty_json
+<span class="k">end</span>
 
-puts items.find(session: session).to_a.to_pretty_json
-
-<span class="c"># End the session</span>
-session.<span class="k">end</span>
 client.close</code></pre>
 
 <p><strong>Links</strong></p>
 
-<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Session.html" target="_blank">Mongo::Session</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#start_session" target="_blank">Mongo::Client#start_session</a></li></ul>
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Session.html" target="_blank">Mongo::Session</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#start_session" target="_blank">Mongo::Client#start_session</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Collection.html#with_session(**args,&" target="_blank">Mongo::Collection#with_session</a>-instance-method)</li></ul>
 
 <h2><a id="specifications" class="anchor" href="#specifications">
   <svg class="octicon-link" aria-hidden="true">

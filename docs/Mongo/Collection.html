@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="sessions-support-dev">
+<meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
 
@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="cryomongo">
-  <title>Mongo::Collection - cryomongo sessions-support-dev</title>
+  <title>Mongo::Collection - cryomongo master-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        sessions-support-dev
+        master-dev
       </span>
     </div>
   </div>
@@ -1192,6 +1192,13 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#with_session(**args,&)-instance-method" class="signature"><strong>#with_session</strong>(**args, &)</a>
+        
+          <div class="summary"><p>Initialize a session that has the same lifetime as the block.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#write_concern:WriteConcern?-instance-method" class="signature"><strong>#write_concern</strong> : WriteConcern?</a>
         
           <div class="summary"><p>Write concern accessor.</p></div>
@@ -1972,6 +1979,38 @@ spawn {
 sleep</code></pre>
 
 <p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/changeStreams/index.html" target="_blank">for more details, please check the official manual</a>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="with_session(**args,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>with_session</strong>(**args, &)
+
+        <a class="method-permalink" href="#with_session(**args,&)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Initialize a session that has the same lifetime as the block.</p>
+
+<ul><li>First block argument is a reflection of the Collection instance with the <em>session</em> method argument already provided.</li><li>Second block argument is the ClientSession.</li></ul>
+
+<pre><code>client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+collection <span class="o">=</span> client[<span class="s">&quot;db&quot;</span>][<span class="s">&quot;coll&quot;</span>]
+
+collection.with_session(causal_consistency: <span class="n">true</span>) <span class="k">do</span> <span class="o">|</span>collection, session<span class="o">|</span>
+  <span class="n">5</span>.times { <span class="o">|</span>idx<span class="o">|</span>
+    <span class="c"># No need to provide: `session: session`.</span>
+    collection.insert_one({ number: idx })
+    collection.find_one({ number: idx })
+  }
+<span class="k">end</span></code></pre>
         </div>
       
       <br/>
