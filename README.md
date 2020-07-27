@@ -522,9 +522,9 @@ client.unsubscribe_commands(subscription)
 - [Mongo::Client#subscribe_commands](https://elbywan.github.io/cryomongo/Mongo/Client.html#subscribe_commands(&callback:Monitoring::Commands::Event->Nil):Monitoring::Commands::Event->Nil-instance-method)
 - [Mongo::Client#unsubscribe_commands](https://elbywan.github.io/cryomongo/Mongo/Client.html#unsubscribe_commands(callback:Monitoring::Commands::Event->Nil):Nil-instance-method)
 - [Mongo::Monitoring::Observable](https://elbywan.github.io/cryomongo/Mongo/Monitoring/Observable.html)
-- [Mongo::Monitoring::CommandStartedEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandStartedEvent.html)
-- [Mongo::Monitoring::CommandSucceededEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandSucceededEvent.html)
-- [Mongo::Monitoring::CommandFailedEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandFailedEvent.html)
+- [Mongo::Monitoring::CommandStartedEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/Commands/CommandStartedEvent.html)
+- [Mongo::Monitoring::CommandSucceededEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/Commands/CommandSucceededEvent.html)
+- [Mongo::Monitoring::CommandFailedEvent](https://elbywan.github.io/cryomongo/Mongo/Monitoring/Commands/CommandFailedEvent.html)
 
 ## Causal Consistency
 
