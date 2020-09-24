@@ -54,10 +54,7 @@ module Mongo::URI
     }
 
     options.mix_with_query_params(parsed_uri.query_params)
-    source = ::URI.decode(database[1..])
-    if source.empty?
-      source = options.auth_source
-    end
+    source = options.auth_source || ::URI.decode(database[1..])
     credentials = Mongo::Credentials.new(
       username: parsed_uri.user,
       password: parsed_uri.password,
