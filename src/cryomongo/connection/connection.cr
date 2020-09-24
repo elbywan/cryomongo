@@ -14,6 +14,7 @@ struct Mongo::Connection
       socket = UNIXSocket.new(@server_description.address)
     else
       split = @server_description.address.split(':')
+      host = split[0]
       socket = TCPSocket.new(split[0], split[1]? || 27017)
     end
 
@@ -36,7 +37,7 @@ struct Mongo::Connection
         NO_COMPRESSION,
         NO_SESSION_RESUMPTION_ON_RENEGOTIATION
       ))
-      socket = OpenSSL::SSL::Socket::Client.new(socket, context, sync_close: true)
+      socket = OpenSSL::SSL::Socket::Client.new(socket, context, sync_close: true, hostname: host)
     end
 
     @socket = socket

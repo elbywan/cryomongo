@@ -72,7 +72,6 @@ describe Mongo::GridFS do
       gridfs_file.chunk_size.should eq chunk_size
       gridfs_file.upload_date.should be < Time.utc
       gridfs_file.upload_date.should be > (Time.utc - 5.seconds)
-
       stream = IO::Memory.new
       gridfs.download_to_stream(id, stream)
       stream.rewind.gets_to_end.should eq file_contents
