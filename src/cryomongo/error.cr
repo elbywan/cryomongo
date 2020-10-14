@@ -1,3 +1,5 @@
+require "bson"
+
 module Mongo
   class Error < Exception
   end

@@ -2,6 +2,7 @@ require "openssl"
 require "openssl/hmac"
 require "base64"
 require "digest/md5"
+require "../../error"
 require "../credentials"
 
 class Mongo::Auth::Scram
@@ -182,7 +183,12 @@ class Mongo::Auth::Scram
 
   # SaltedPassword := Hi(Normalize(password), salt, i)
   def salted_password(salt, iterations)
-    hi(mongo_hashed_password, salt, iterations)
+    if @mechanism.scram_sha1?
+      # See: https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst#scram-sha-1
+      hi(mongo_hashed_password, salt, iterations)
+    else
+      hi(@credentials.password, salt, iterations)
+    end
   end
 
   def mongo_hashed_password
