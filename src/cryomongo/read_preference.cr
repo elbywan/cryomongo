@@ -22,7 +22,7 @@ module Mongo
     end
 
     protected def self.must_use_primary_command?(command, command_args)
-      !command.is_a?(Commands::MayUseSecondary) || command.may_use_secondary?
+      !command.is_a?(Commands::MayUseSecondary) || !command.may_use_secondary?(**command_args)
     end
 
     private def self.mix(args, read_preference)
