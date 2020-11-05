@@ -37,7 +37,7 @@ class Mongo::Client
   protected getter min_heartbeat_frequency : Time::Span = 500.milliseconds
 
   @@lock = Mutex.new(:reentrant)
-  @pools : Hash(SDAM::ServerDescription, DB::Pool(Mongo::Connection)) = Hash(SDAM::ServerDescription, DB::Pool(Mongo::Connection)).new
+  @pools : Hash(String, DB::Pool(Mongo::Connection)) = Hash(String, DB::Pool(Mongo::Connection)).new
   @monitors : Array(SDAM::Monitor) = Array(SDAM::Monitor).new
   @socket_check_interval : Time::Span = 5.seconds
   @last_scan : Time = Time::UNIX_EPOCH
@@ -531,6 +531,8 @@ class Mongo::Client
     if error.state_change?
       server_description.try { |desc|
         description = SDAM::ServerDescription.new(desc.address)
+        description.min_wire_version = desc.min_wire_version
+        description.max_wire_version = desc.max_wire_version
         description.error = error.message
         description.last_update_time = desc.last_update_time
         topology.update(desc, description)
@@ -669,6 +671,10 @@ class Mongo::Client
       raise original_error.not_nil!
     end
 
+    Log.info { @pools.keys }
+    Log.info { topology.servers }
+    Log.info { server_description.inspect }
+
     if !topology.supports_sessions? || !server_description.supports_retryable_reads?
       raise original_error.not_nil!
     end
@@ -681,7 +687,7 @@ class Mongo::Client
   end
 
   protected def get_connection(server_description : SDAM::ServerDescription) : Mongo::Connection
-    @pools[server_description] ||= DB::Pool(Mongo::Connection).new(
+    @pools[server_description.address] ||= DB::Pool(Mongo::Connection).new(
       initial_pool_size: @options.min_pool_size,
       max_pool_size: @options.max_pool_size,
       max_idle_pool_size: @options.max_pool_size,
@@ -695,24 +701,23 @@ class Mongo::Client
       topology.update(server_description, new_description)
       server_description.update(new_description)
       connection
+      rescue e
+        connection.try &.close
+        raise e
     end
-    @pools[server_description].checkout
+    @pools[server_description.address].checkout
   end
 
   private def release_connection(connection : Mongo::Connection)
     @@lock.synchronize {
-      @pools[connection.server_description]?.try &.release(connection)
+      @pools[connection.server_description.address]?.try &.release(connection)
     }
   end
 
   protected def close_connection_pool(server_description : SDAM::ServerDescription)
     @@lock.synchronize {
-      @pools.delete_if { |desc, pool|
-        if desc == server_description
-          pool.close
-          true
-        end
-      }
+      @pools[server_description.address]?.try &.close
+      @pools.delete server_description.address
     }
   end
 

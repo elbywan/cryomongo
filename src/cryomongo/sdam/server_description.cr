@@ -29,8 +29,8 @@ class Mongo::SDAM::ServerDescription
   property type : ServerType = :unknown
   # The wire protocol version range supported by the server.
   # Use min and maxWireVersion only to determine compatibility.
-  getter min_wire_version : Int32 = 0
-  getter max_wire_version : Int32 = 0
+  property min_wire_version : Int32 = 0
+  property max_wire_version : Int32 = 0
   # The hostname or IP, and the port number, that this server was configured with in the replica set.
   getter me : String? = nil
   # Sets of addresses. This server's opinion of the replica set's members, if any.
@@ -113,28 +113,9 @@ class Mongo::SDAM::ServerDescription
     {% end %}
   end
 
-  def ==(other : ServerDescription)
-    other.address == @address &&
-      other.error == @error &&
-      other.type == @type &&
-      other.min_wire_version == @min_wire_version &&
-      other.max_wire_version == @max_wire_version &&
-      other.me == @me &&
-      other.hosts == @hosts &&
-      other.passives == @passives &&
-      other.arbiters == @arbiters &&
-      other.tags == @tags &&
-      other.set_name == @set_name &&
-      other.set_version == @set_version &&
-      other.election_id == @election_id &&
-      other.primary == @primary &&
-      other.logical_session_timeout_minutes == @logical_session_timeout_minutes &&
-      other.topology_version == @topology_version
-  end
-
-  def !=(other : ServerDescription)
-    !self.==(other)
-  end
+  def_equals @address, @error, @type, @min_wire_version, @max_wire_version,
+   @me, @hosts, @passives, @arbiters, @tags, @set_name, @set_version, @election_id,
+   @primary, @logical_session_timeout_minutes, @topology_version
 
   def data_bearing?
     @type.mongos? || @type.rs_primary? || @type.rs_secondary? || @type.standalone?
