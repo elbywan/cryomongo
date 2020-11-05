@@ -665,7 +665,7 @@ class Mongo::Client
       initial_pool_size: @options.min_pool_size,
       max_pool_size: @options.max_pool_size,
       max_idle_pool_size: @options.max_pool_size,
-      checkout_timeout: @options.wait_queue_timeout.try(&.milliseconds.to_f64) || 5.0
+      checkout_timeout: @options.wait_queue_timeout.try(&.seconds.to_f64) || 5.0
     ) do
       connection = Mongo::Connection.new(server_description, @credentials, @options)
       result, round_trip_time = connection.handshake(send_metadata: true, appname: @options.appname)
