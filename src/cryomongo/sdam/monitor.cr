@@ -88,7 +88,7 @@ module Mongo::SDAM
       description.error = error.message
       description.last_update_time = server_description.last_update_time
       close_connection(server_description)
-      if known_state && error.is_a? IO::Error
+      if known_state && error.is_a? Client::NetworkError
         check(description)
       else
         description

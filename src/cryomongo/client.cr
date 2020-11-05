@@ -18,6 +18,8 @@ class Mongo::Client
   include WithWriteConcern
   include WithReadPreference
 
+  alias NetworkError = IO::Error | Socket::Error
+
   # The mininum wire protocol version supported by this driver.
   MIN_WIRE_VERSION = 6
   # The maximum wire protocol version supported by this driver.
@@ -510,7 +512,7 @@ class Mongo::Client
 
     # Parse and return the body as a custom Result type.
     command.result(op_msg.body)
-  rescue error : IO::Error
+  rescue error : NetworkError
     Mongo::Log.error(exception: error) { "Client error" } unless server_description
     # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-monitoring.rst#network-or-command-error-during-server-check
     server_description.try { |desc|
@@ -602,7 +604,7 @@ class Mongo::Client
 
     begin
       return execute_command(command, session, read_preference, server_description, connection, operation_id, **args, &txn_block)
-    rescue error : IO::Error
+    rescue error : NetworkError
       original_error = error
     rescue error : Mongo::Error::Command
       if error.code == 20 && error.message.try &.starts_with? "Transaction numbers"
@@ -650,7 +652,7 @@ class Mongo::Client
 
     begin
       return execute_command(command, session, read_preference, server_description, connection, operation_id, **args)
-    rescue error : IO::Error
+    rescue error : NetworkError
       original_error = error
     rescue error : Mongo::Error::Command
       if error.retryable?
