@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="cryomongo">
-  <title>Mongo::Commands::Validate - cryomongo 0.3.1-dev</title>
+  <title>Mongo::Client::NetworkError - cryomongo 0.3.1-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -141,12 +141,12 @@
       
     </li>
   
-  <li class="parent " data-id="cryomongo/Mongo/Client" data-name="mongo::client">
+  <li class="parent open current" data-id="cryomongo/Mongo/Client" data-name="mongo::client">
       <a href="../../Mongo/Client.html">Client</a>
       
         <ul>
   
-  <li class=" " data-id="cryomongo/Mongo/Client/NetworkError" data-name="mongo::client::networkerror">
+  <li class=" current" data-id="cryomongo/Mongo/Client/NetworkError" data-name="mongo::client::networkerror">
       <a href="../../Mongo/Client/NetworkError.html">NetworkError</a>
       
     </li>
@@ -176,7 +176,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="cryomongo/Mongo/Commands" data-name="mongo::commands">
+  <li class="parent " data-id="cryomongo/Mongo/Commands" data-name="mongo::commands">
       <a href="../../Mongo/Commands.html">Commands</a>
       
         <ul>
@@ -686,7 +686,7 @@
       
     </li>
   
-  <li class=" current" data-id="cryomongo/Mongo/Commands/Validate" data-name="mongo::commands::validate">
+  <li class=" " data-id="cryomongo/Mongo/Commands/Validate" data-name="mongo::commands::validate">
       <a href="../../Mongo/Commands/Validate.html">Validate</a>
       
     </li>
@@ -895,7 +895,7 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">module</span> Mongo::Commands::Validate
+  <span class="kind">alias</span> Mongo::Client::NetworkError
 
 </h1>
 
@@ -903,40 +903,21 @@
 
 
 
+
+
   <h2>
-    <a id="overview" class="anchor" href="#overview">
+    <a id="alias-definition" class="anchor" href="#alias-definition">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Overview
+    Alias Definition
   </h2>
-
-  <p>The <em>validate</em> command checks a collection’s data and indexes for correctness and returns the results.</p>
-
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/validate/" target="_blank">for more details, please check the official MongoDB documentation</a>.</p>
+  <code>IO::Error</code>
 
 
 
 
-
-
-
-  <h2>
-    <a id="extended-modules" class="anchor" href="#extended-modules">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Extended Modules
-  </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type"><a href="../../Mongo/Commands/Command.html">Mongo::Commands::Command</a></li>
-    
-      <li class="other-type"><a href="../../Mongo/Commands/Validate.html">Mongo::Commands::Validate</a></li>
-    
-  </ul>
 
 
 
@@ -961,50 +942,7 @@
 
 
 
-  <h2>
-    <a id="class-method-summary" class="anchor" href="#class-method-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Class Method Summary
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#name-class-method" class="signature"><strong>.name</strong></a>
-        
-      </li>
-    
-  </ul>
 
-
-
-  <h2>
-    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Summary
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#command(database:String,collection:Collection::CollectionKey,options=nil)-instance-method" class="signature"><strong>#command</strong>(database : String, collection : Collection::CollectionKey, options = <span class="n">nil</span>)</a>
-        
-          <div class="summary"><p>Returns a pair of OP_MSG body and sequences associated with the command and arguments.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#result(bson:BSON)-instance-method" class="signature"><strong>#result</strong>(bson : BSON)</a>
-        
-          <div class="summary"><p>Transforms the server result.</p></div>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -1017,79 +955,7 @@
 
 
 
-  <h2>
-    <a id="class-method-detail" class="anchor" href="#class-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Class Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="name-class-method">
-      <div class="signature">
-        
-        def self.<strong>name</strong>
 
-        <a class="method-permalink" href="#name-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-
-
-
-  <h2>
-    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="command(database:String,collection:Collection::CollectionKey,options=nil)-instance-method">
-      <div class="signature">
-        
-        def <strong>command</strong>(database : String, collection : <a href="../../Mongo/Collection/CollectionKey.html">Collection::CollectionKey</a>, options = <span class="n">nil</span>)
-
-        <a class="method-permalink" href="#command(database:String,collection:Collection::CollectionKey,options=nil)-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns a pair of OP_MSG body and sequences associated with the command and arguments.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="result(bson:BSON)-instance-method">
-      <div class="signature">
-        
-        def <strong>result</strong>(bson : BSON)
-
-        <a class="method-permalink" href="#result(bson:BSON)-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Transforms the server result.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
 
 
 

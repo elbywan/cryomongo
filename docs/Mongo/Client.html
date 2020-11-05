@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="crystal_docs.project_version" content="0.3.1-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
 
@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="cryomongo">
-  <title>Mongo::Client - cryomongo master-dev</title>
+  <title>Mongo::Client - cryomongo 0.3.1-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        master-dev
+        0.3.1-dev
       </span>
     </div>
   </div>
@@ -141,8 +141,18 @@
       
     </li>
   
-  <li class=" current" data-id="cryomongo/Mongo/Client" data-name="mongo::client">
+  <li class="parent open current" data-id="cryomongo/Mongo/Client" data-name="mongo::client">
       <a href="../Mongo/Client.html">Client</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Client/NetworkError" data-name="mongo::client::networkerror">
+      <a href="../Mongo/Client/NetworkError.html">NetworkError</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -1040,7 +1050,14 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method" class="signature"><strong>#command</strong>(command, write_concern : WriteConcern? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, server_description : SDAM::ServerDescription? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args)</a>
+        <a href="#command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method" class="signature"><strong>#command</strong>(command cmd, write_concern : WriteConcern? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, server_description : SDAM::ServerDescription? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args)</a>
+        
+          <div class="summary"><p>Execute a command on the server.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args,&)-instance-method" class="signature"><strong>#command</strong>(command, write_concern : WriteConcern? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, server_description : SDAM::ServerDescription? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args, &)</a>
         
           <div class="summary"><p>Execute a command on the server.</p></div>
         
@@ -1315,12 +1332,34 @@ client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</
       </div>
     </div>
   
-    <div class="entry-detail" id="command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method">
+    <div class="entry-detail" id="command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method">
       <div class="signature">
         
-        def <strong>command</strong>(command, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, server_description : <a href="../Mongo/SDAM/ServerDescription.html">SDAM::ServerDescription</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args)
+        def <strong>command</strong>(command cmd, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, server_description : <a href="../Mongo/SDAM/ServerDescription.html">SDAM::ServerDescription</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args)
 
-        <a class="method-permalink" href="#command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method">#</a>
+        <a class="method-permalink" href="#command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a command on the server.</p>
+
+<pre><code><span class="c"># First argument is the `Mongo::Commands`.</span>
+client.command(<span class="t">Mongo</span><span class="t">::</span><span class="t">Commands</span><span class="t">::</span><span class="t">DropDatabase</span>, database: <span class="s">&quot;database_name&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>command</strong>(command, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, server_description : <a href="../Mongo/SDAM/ServerDescription.html">SDAM::ServerDescription</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args, &)
+
+        <a class="method-permalink" href="#command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args,&)-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1503,8 +1542,8 @@ collection.read_concern <span class="o">=</span> <span class="t">Mongo</span><sp
 collection.write_concern <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">WriteConcern</span>.<span class="k">new</span>(w: <span class="s">&quot;majority&quot;</span>)
 
 <span class="c"># Then pass session as the *session* named argument…</span>
-collection.insert_one({ a: <span class="n">1</span> }, session: session)
-collection.find_one({ a: <span class="n">1</span> }, session: session)
+collection.insert_one({a: <span class="n">1</span>}, session: session)
+collection.find_one({a: <span class="n">1</span>}, session: session)
 
 <span class="c"># …and always end the session after using it.</span>
 session.<span class="k">end</span></code></pre>

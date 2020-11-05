@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="crystal_docs.project_version" content="0.3.1-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
 
@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="cryomongo">
-  <title>cryomongo master-dev</title>
+  <title>cryomongo 0.3.1-dev</title>
   <script type="text/javascript">
   CrystalDocs.base_path = "";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        master-dev
+        0.3.1-dev
       </span>
     </div>
   </div>
@@ -141,8 +141,18 @@
       
     </li>
   
-  <li class=" " data-id="cryomongo/Mongo/Client" data-name="mongo::client">
+  <li class="parent " data-id="cryomongo/Mongo/Client" data-name="mongo::client">
       <a href="Mongo/Client.html">Client</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Client/NetworkError" data-name="mongo::client::networkerror">
+      <a href="Mongo/Client/NetworkError.html">NetworkError</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -1424,7 +1434,7 @@ client.unsubscribe_commands(subscription)</code></pre>
 
 <p><strong>Links</strong></p>
 
-<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#subscribe_commands(&callback:Monitoring::Commands::Event->Nil" target="_blank">Mongo::Client#subscribe_commands</a>:Monitoring::Commands::Event->Nil-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#unsubscribe_commands(callback:Monitoring::Commands::Event->Nil" target="_blank">Mongo::Client#unsubscribe_commands</a>:Nil-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/Observable.html" target="_blank">Mongo::Monitoring::Observable</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandStartedEvent.html" target="_blank">Mongo::Monitoring::CommandStartedEvent</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandSucceededEvent.html" target="_blank">Mongo::Monitoring::CommandSucceededEvent</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/CommandFailedEvent.html" target="_blank">Mongo::Monitoring::CommandFailedEvent</a></li></ul>
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#subscribe_commands(&callback:Monitoring::Commands::Event->Nil" target="_blank">Mongo::Client#subscribe_commands</a>:Monitoring::Commands::Event->Nil-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#unsubscribe_commands(callback:Monitoring::Commands::Event->Nil" target="_blank">Mongo::Client#unsubscribe_commands</a>:Nil-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/Observable.html" target="_blank">Mongo::Monitoring::Observable</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/Commands/CommandStartedEvent.html" target="_blank">Mongo::Monitoring::CommandStartedEvent</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/Commands/CommandSucceededEvent.html" target="_blank">Mongo::Monitoring::CommandSucceededEvent</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/Commands/CommandFailedEvent.html" target="_blank">Mongo::Monitoring::CommandFailedEvent</a></li></ul>
 
 <h2><a id="causal-consistency" class="anchor" href="#causal-consistency">
   <svg class="octicon-link" aria-hidden="true">
@@ -1450,7 +1460,7 @@ items <span class="o">=</span> client[<span class="s">&quot;test&quot;</span>][<
 items_collection.with_session <span class="k">do</span> <span class="o">|</span>items<span class="o">|</span>
   <span class="c"># Using a causally consistent session ensures that the update occurs before the insert.</span>
   items.update_one(
-    { sku: <span class="s">&quot;111&quot;</span>, <span class="k">end</span>: <span class="n">nil</span> },
+    { sku: <span class="s">&quot;111&quot;</span>, <span class="k">end</span>: { <span class="s">&quot;$exists&quot;</span>: <span class="n">false</span> } },
     { <span class="s">&quot;$set&quot;</span>: { <span class="k">end</span>: current_date }}
   )
   items.insert_one({ sku: <span class="s">&quot;nuts-111&quot;</span>, name: <span class="s">&quot;Pecans&quot;</span>, start: current_date })
@@ -1461,7 +1471,7 @@ client.close</code></pre>
 
 <p><strong>Links</strong></p>
 
-<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Session.html" target="_blank">Mongo::Session</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#start_session" target="_blank">Mongo::Client#start_session</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Collection.html#with_session(**args,&" target="_blank">Mongo::Collection#with_session</a>-instance-method)</li></ul>
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Session.html" target="_blank">Mongo::Session</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#start_session(*,causal_consistency:Bool=true" target="_blank">Mongo::Client#start_session</a>:Session::ClientSession-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Collection.html#with_session(**args,&" target="_blank">Mongo::Collection#with_session</a>-instance-method)</li></ul>
 
 <h2><a id="specifications" class="anchor" href="#specifications">
   <svg class="octicon-link" aria-hidden="true">

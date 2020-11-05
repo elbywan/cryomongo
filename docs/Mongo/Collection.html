@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="crystal_docs.project_version" content="0.3.1-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
 
@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="cryomongo">
-  <title>Mongo::Collection - cryomongo master-dev</title>
+  <title>Mongo::Collection - cryomongo 0.3.1-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        master-dev
+        0.3.1-dev
       </span>
     </div>
   </div>
@@ -141,8 +141,18 @@
       
     </li>
   
-  <li class=" " data-id="cryomongo/Mongo/Client" data-name="mongo::client">
+  <li class="parent " data-id="cryomongo/Mongo/Client" data-name="mongo::client">
       <a href="../Mongo/Client.html">Client</a>
+      
+        <ul>
+  
+  <li class=" " data-id="cryomongo/Mongo/Client/NetworkError" data-name="mongo::client::networkerror">
+      <a href="../Mongo/Client/NetworkError.html">NetworkError</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -996,6 +1006,13 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil,**args,&)-instance-method" class="signature"><strong>#command</strong>(operation, write_concern : WriteConcern? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>, **args, &)</a>
+        
+          <div class="summary"><p>Execute a command on the server targeting the collection.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#count_documents(filter=BSON.new,*,skip:Int32?=nil,limit:Int32?=nil,collation:Collation?=nil,hint:String%7CH?=nil,max_time_ms:Int64?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil):Int32forallH-instance-method" class="signature"><strong>#count_documents</strong>(filter = <span class="t">BSON</span>.<span class="k">new</span>, *, skip : Int32? = <span class="n">nil</span>, limit : Int32? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Int32 forall H</a>
         
           <div class="summary"><p>Count the number of documents in a collection that match the given filter.</p></div>
@@ -1115,7 +1132,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#list_indexes(session:Session::ClientSession?=nil):Mongo::Cursor-instance-method" class="signature"><strong>#list_indexes</strong>(session : Session::ClientSession? = <span class="n">nil</span>) : Mongo::Cursor</a>
+        <a href="#list_indexes(session:Session::ClientSession?=nil):Mongo::Cursor?-instance-method" class="signature"><strong>#list_indexes</strong>(session : Session::ClientSession? = <span class="n">nil</span>) : Mongo::Cursor?</a>
         
           <div class="summary"><p>Gets index information for all indexes in the collection.</p></div>
         
@@ -1363,7 +1380,30 @@
 
 <p>Will automatically set the <em>collection</em> and <em>database</em> arguments.</p>
 
-<p>See: <code><a href="../Mongo/Client.html#command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method">Mongo::Client.command</a></code></p>
+<p>See: <code><a href="../Mongo/Client.html#command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method">Mongo::Client.command</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil,**args,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>command</strong>(operation, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>, **args, &)
+
+        <a class="method-permalink" href="#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil,**args,&)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a command on the server targeting the collection.</p>
+
+<p>Will automatically set the <em>collection</em> and <em>database</em> arguments.</p>
+
+<p>See: <code><a href="../Mongo/Client.html#command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method">Mongo::Client.command</a></code></p>
         </div>
       
       <br/>
@@ -1736,12 +1776,12 @@ document. The document to return may be nil.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="list_indexes(session:Session::ClientSession?=nil):Mongo::Cursor-instance-method">
+    <div class="entry-detail" id="list_indexes(session:Session::ClientSession?=nil):Mongo::Cursor?-instance-method">
       <div class="signature">
         
-        def <strong>list_indexes</strong>(session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Cursor.html">Mongo::Cursor</a>
+        def <strong>list_indexes</strong>(session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Cursor.html">Mongo::Cursor</a>?
 
-        <a class="method-permalink" href="#list_indexes(session:Session::ClientSession?=nil):Mongo::Cursor-instance-method">#</a>
+        <a class="method-permalink" href="#list_indexes(session:Session::ClientSession?=nil):Mongo::Cursor?-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2007,8 +2047,8 @@ collection <span class="o">=</span> client[<span class="s">&quot;db&quot;</span>
 collection.with_session(causal_consistency: <span class="n">true</span>) <span class="k">do</span> <span class="o">|</span>collection, session<span class="o">|</span>
   <span class="n">5</span>.times { <span class="o">|</span>idx<span class="o">|</span>
     <span class="c"># No need to provide: `session: session`.</span>
-    collection.insert_one({ number: idx })
-    collection.find_one({ number: idx })
+    collection.insert_one({number: idx})
+    collection.find_one({number: idx})
   }
 <span class="k">end</span></code></pre>
         </div>
