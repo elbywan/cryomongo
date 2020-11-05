@@ -22,7 +22,8 @@ class Mongo::Cursor
   @counter : Int32
   @limit : Int32? = nil
 
-  private property server_description : SDAM::ServerDescription? = nil
+  protected property server_description : SDAM::ServerDescription? = nil
+  protected property session : Session::ClientSession?
 
   # :nodoc:
   def initialize(

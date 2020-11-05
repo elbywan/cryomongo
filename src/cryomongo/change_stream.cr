@@ -86,6 +86,7 @@ module Mongo::ChangeStream
       @await_time_ms = options["max_time_ms"]?
       @tailable = true
       @counter = 0
+      @session = @session || Session::ClientSession.new(@client)
 
       @cursor_id = 0
       @batch_size = options["batch_size"]?

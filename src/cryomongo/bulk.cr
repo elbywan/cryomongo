@@ -26,10 +26,11 @@ class Mongo::Bulk
   @max_bson_object_size : Int32 = 16 * 1024 * 1024
   @max_write_batch_size : Int32 = 100_000
   @executed = Atomic(UInt8).new(0)
-  @session : Session::ClientSession? = nil
+  @session : Session::ClientSession
 
   # :nodoc:
-  def initialize(@collection, @ordered = true, *, @session = nil)
+  def initialize(@collection, @ordered = true, *, session = nil)
+    @session = session || Session::ClientSession.new(@collection.database.client)
     # handshake_result = @collection.database.client.handshake_reply
     # @max_bson_object_size = handshake_result.max_bson_object_size
     # @max_write_batch_size = handshake_result.max_write_batch_size

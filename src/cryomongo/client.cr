@@ -123,7 +123,8 @@ class Mongo::Client
     server_description : SDAM::ServerDescription? = nil,
     session : Session::ClientSession? = nil,
     operation_id : Int64? = nil,
-    **args
+    **args,
+    &block
   )
     # Create an implicit session
     session ||= Session::ClientSession.new(self)
@@ -194,15 +195,32 @@ class Mongo::Client
       end
     end
 
-    result
+    result = result.try { |r| yield r, session, server_description }
   ensure
-    if result && result.is_a? Cursor
+    if result.is_a? Cursor
       # Bind the Cursor to the same server for its lifetime.
       result.server_description = server_description
+      # Bind the session
+      result.session = session
     else
       # End the session if implicit
       session.try &.end if session.try(&.implicit?)
     end
+  end
+
+  # :ditto:
+  def command(
+    command cmd,
+    write_concern : WriteConcern? = nil,
+    read_concern : ReadConcern? = nil,
+    read_preference : ReadPreference? = nil,
+    server_description : SDAM::ServerDescription? = nil,
+    session : Session::ClientSession? = nil,
+    operation_id : Int64? = nil,
+    **args)
+    self.command(cmd, write_concern, read_concern, read_preference, server_description, session, operation_id, **args) { |result|
+      result
+    }
   end
 
   # Provides a list of all existing databases along with basic statistics about them.

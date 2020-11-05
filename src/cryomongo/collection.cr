@@ -41,7 +41,8 @@ class Mongo::Collection
     read_concern : ReadConcern? = nil,
     read_preference : ReadPreference? = nil,
     session : Session::ClientSession? = nil,
-    **args
+    **args,
+    &block
   )
     @database.command(
       operation,
@@ -51,7 +52,28 @@ class Mongo::Collection
       read_concern: read_concern || @read_concern,
       read_preference: read_preference || @read_preference,
       session: session
-    )
+    ) { |result|
+      yield result
+    }
+  end
+
+  # :ditto:
+  def command(
+    operation,
+    write_concern : WriteConcern? = nil,
+    read_concern : ReadConcern? = nil,
+    read_preference : ReadPreference? = nil,
+    session : Session::ClientSession? = nil,
+    **args
+  )
+    self.command(
+      operation,
+      **args,
+      write_concern: write_concern,
+      read_concern: read_concern,
+      read_preference: read_preference,
+      session: session,
+    ) { |result| result }
   end
 
   # Runs an aggregation framework pipeline.
@@ -72,7 +94,7 @@ class Mongo::Collection
     read_preference : ReadPreference? = nil,
     session : Session::ClientSession? = nil
   ) : Mongo::Cursor? forall H
-    maybe_result = self.command(Commands::Aggregate, pipeline: pipeline, session: session, options: {
+    self.command(Commands::Aggregate, pipeline: pipeline, session: session, options: {
       allow_disk_use:             allow_disk_use,
       cursor:                     batch_size.try { {batchSize: batch_size} },
       bypass_document_validation: bypass_document_validation,
@@ -82,8 +104,9 @@ class Mongo::Collection
       read_concern:               read_concern,
       write_concern:              write_concern,
       read_preference:            read_preference,
-    })
-    maybe_result.try { |result| Cursor.new(@database.client, result, batch_size: batch_size, session: session) }
+    }) { |result|
+      Cursor.new(@database.client, result, batch_size: batch_size, session: session)
+    }
   end
 
   # Count the number of documents in a collection that match the given filter.
@@ -106,14 +129,15 @@ class Mongo::Collection
     skip.try { pipeline << BSON.new({"$skip": skip}) }
     limit.try { pipeline << BSON.new({"$limit": limit}) }
     pipeline << BSON.new({"$group": {"_id": 1, "n": {"$sum": 1}}})
-    result = self.command(Commands::Aggregate, pipeline: pipeline, session: session, options: {
+    cursor = self.command(Commands::Aggregate, pipeline: pipeline, session: session, options: {
       collation:       collation,
       hint:            hint.is_a?(String) ? hint : BSON.new(hint),
       max_time_ms:     max_time_ms,
       read_preference: read_preference,
-    }).not_nil!
-    cursor = Cursor.new(@database.client, result, limit: limit, session: session)
-    if (item = cursor.next).is_a? BSON
+    }) { |result|
+      Cursor.new(@database.client, result, limit: limit, session: session)
+    }
+    if (item = cursor.try(&.next)).is_a? BSON
       item["n"].as(Int32)
     else
       0
@@ -186,7 +210,7 @@ class Mongo::Collection
     read_preference : ReadPreference? = nil,
     session : Session::ClientSession? = nil
   ) : Mongo::Cursor forall H
-    result = self.command(Commands::Find, filter: filter, session: session, options: {
+    self.command(Commands::Find, filter: filter, session: session, options: {
       sort:                  sort.try { BSON.new(sort) },
       projection:            projection.try { BSON.new(projection) },
       hint:                  hint.is_a?(String) ? hint : BSON.new(hint),
@@ -209,16 +233,17 @@ class Mongo::Collection
       allow_disk_use:        allow_disk_use,
       collation:             collation,
       read_preference:       read_preference,
-    }).not_nil!
-    Cursor.new(
-      @database.client,
-      result,
-      await_time_ms: tailable && await_data ? max_time_ms : nil,
-      tailable: tailable || false,
-      batch_size: batch_size,
-      limit: limit,
-      session: session
-    )
+    }) { |result|
+      Cursor.new(
+        @database.client,
+        result,
+        await_time_ms: tailable && await_data ? max_time_ms : nil,
+        tailable: tailable || false,
+        batch_size: batch_size,
+        limit: limit,
+        session: session
+      )
+  }.not_nil!
   end
 
   # Finds the document matching the model.
@@ -269,8 +294,8 @@ class Mongo::Collection
       collation: collation,
       read_preference: read_preference,
       session: session
-    ).not_nil!
-    element = cursor.next
+    )
+    element = cursor.try &.next
     return element if element.is_a? BSON
     nil
   end
@@ -702,9 +727,10 @@ class Mongo::Collection
   # Gets index information for all indexes in the collection.
   #
   # NOTE: [for more details, please check the official documentation](https://docs.mongodb.com/manual/reference/command/listIndexes/).
-  def list_indexes(session : Session::ClientSession? = nil) : Mongo::Cursor
-    result = self.command(Commands::ListIndexes, session: session).not_nil!
-    Cursor.new(@database.client, result, session: session)
+  def list_indexes(session : Session::ClientSession? = nil) : Mongo::Cursor?
+    self.command(Commands::ListIndexes, session: session) { |result|
+      Cursor.new(@database.client, result, session: session)
+    }.not_nil!
   end
 
   # Returns a `ChangeStream::Cursor` watching a specific collection.
