@@ -671,10 +671,6 @@ class Mongo::Client
       raise original_error.not_nil!
     end
 
-    Log.info { @pools.keys }
-    Log.info { topology.servers }
-    Log.info { server_description.inspect }
-
     if !topology.supports_sessions? || !server_description.supports_retryable_reads?
       raise original_error.not_nil!
     end
