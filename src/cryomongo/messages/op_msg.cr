@@ -8,7 +8,7 @@ struct Mongo::Messages::OpMsg < Mongo::Messages::Part
   getter op_code : OpCode = OpCode::Msg
 
   @[Flags]
-  enum Flags : UInt32
+  enum Flags : Int32
     # The message ends with 4 bytes containing a CRC-32C checksum.
     ChecksumPresent
     # Another message will follow this one without further action from the receiver.
