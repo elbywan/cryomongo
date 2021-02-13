@@ -71,7 +71,7 @@ struct Mongo::Options
   # Relax TLS constraints as much as possible (e.g. allowing invalid certificates or hostname mismatches); drivers must document the exact constraints which are relaxed by this option being true
   getter tls_insecure : Bool? = nil
   # Default write concern "w" field for the client
-  getter w : Int32? = nil
+  getter w : (Int32 | String)? = nil
   # The maximum amount of time a fiber can wait for a connection to become available
   getter wait_queue_timeout : Time::Span? = nil
   # Default write concern "wtimeout" field for the client
@@ -123,7 +123,11 @@ struct Mongo::Options
                 @{{ivar.name.id}} = raw.fetch_all({{option_name}})
               {% end %}
             rescue e
-              ::Mongo::Log.warn { %(option "#{{{option_name}}}" has invalid value: "#{option}".) }
+              {% if types.includes? String %}
+                @{{ivar.name.id}} = option
+              {% else %}
+                ::Mongo::Log.warn { %(option "#{{{option_name}}}" has invalid value: "#{option}".) }
+              {% end %}
             end
           end
         end
