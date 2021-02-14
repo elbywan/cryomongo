@@ -594,11 +594,13 @@ The goal is to to be compliant with most of the [official MongoDB set of specifi
 - https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst
 - https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst
 - https://github.com/mongodb/specifications/tree/master/source/causal-consistency
+- https://github.com/mongodb/specifications/blob/master/source/initial-dns-seedlist-discovery
 
 **⏳Next**
 
 The following specifications are to be implemented next:
 
+- https://github.com/mongodb/specifications/blob/master/source/polling-srv-records-for-mongos-discovery
 - https://github.com/mongodb/specifications/tree/master/source/transactions
 - https://github.com/mongodb/specifications/tree/master/source/compression
 
