@@ -54,7 +54,7 @@ module Mongo::SDAM
 
         select
         when resume_scan.receive
-        # Immediate scan requested
+          # Immediate scan requested
           sleep(before_cooldown - Time.utc) if Time.utc < before_cooldown
         when timeout @heartbeat_frequency
         end
@@ -69,7 +69,7 @@ module Mongo::SDAM
     def request_immediate_scan
       select
       when resume_scan.send nil
-      # Fiber.yield
+        # Fiber.yield
       else # Ignore - scan is in progress already
       end
     end

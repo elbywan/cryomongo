@@ -1,3 +1,5 @@
+require "durian"
+
 # A set of options used to configure the driver.
 #
 # NOTE: [For more details, see the uri options specification document](https://github.com/mongodb/specifications/blob/master/source/uri-options/uri-options.rst).
@@ -11,7 +13,7 @@ struct Mongo::Options
   # Additional options provided for authentication (e.g. to enable hostname canonicalization for GSSAPI)
   getter auth_mechanism_properties : String? = nil
   # The database that connections should authenticate against
-  getter auth_source : String? = nil
+  property auth_source : String? = nil
   # The list of allowed compression types for wire protocol messages sent or received from the server
   getter compressors : String? = nil
   # Amount of time to wait for a single TCP socket connection to the server to be established before erroring; note that this applies to SDAM isMaster operations
@@ -39,7 +41,7 @@ struct Mongo::Options
   # Default read preference tags for the client; only valid if the read preference mode is not primary
   getter read_preference_tags : Array(String) = [] of String
   # The name of the replica set to connect to
-  getter replica_set : String? = nil
+  property replica_set : String? = nil
   # Enables retryable reads on server 3.6+
   getter retry_reads : Bool? = true
   # Enables retryable writes on server 3.6+
@@ -51,7 +53,7 @@ struct Mongo::Options
   # Amount of time spent attempting to send or receive on a socket before timing out; note that this only applies to application operations, not SDAM
   getter socket_timeout : Time::Span? = nil
   # Alias of "tls"; required to ensure that Atlas connection strings continue to work
-  getter ssl : Bool? = nil
+  property ssl : Bool? = nil
   # Whether or not to require TLS for connections to the server
   getter tls : Bool? = nil
   # Specifies whether or not the driver should error when the server’s TLS certificate is invalid
@@ -78,6 +80,19 @@ struct Mongo::Options
   getter w_timeout : Time::Span? = nil
   # Specifies the level of compression when using zlib to compress wire protocol messages; -1 signifies the default level, 0 signifies no compression, 1 signifies the fastest speed, and 9 signifies the best compression
   getter zlib_compression_level : Int32? = nil
+
+  # Use custom dns resolver.
+  # Non-standard.
+  #
+  # By default, the Cloudflare public DNS is used. (`1.1.1.1`)
+  getter dns_resolver : Durian::Resolver = begin
+    Durian::Resolver.new.tap { |resolver|
+      resolver.dnsServers = [
+        Durian::Resolver::Server.new ipAddress: Socket::IPAddress.new("1.1.1.1", 53_i32),
+      ]
+      resolver.record_cache = Durian::Cache::Record.new
+    }
+  end
 
   getter! raw : HTTP::Params
 
