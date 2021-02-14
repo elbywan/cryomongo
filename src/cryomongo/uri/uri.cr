@@ -1,4 +1,5 @@
 require "uri"
+require "./srv"
 require "./seed"
 require "./options"
 require "../connection/*"
@@ -31,6 +32,41 @@ module Mongo::URI
 
     raise Mongo::Error.new "Trailing slash is required with options." if !parsed_uri.query.nil? && rest && rest.empty?
 
+    query_params = parsed_uri.query_params
+
+    if scheme == "mongodb+srv"
+      if seeds.size > 1
+        raise Mongo::Error.new "Cannot specify more than one host name in a connection string with the mongodb+srv protocol."
+      end
+      if parsed_uri.port
+        raise Mongo::Error.new "Cannot specify a port in a connection string with the mongodb+srv protocol."
+      end
+      srv = Mongo::SRV.new(options.dns_resolver, parsed_uri.host.not_nil!)
+      srv_records, txt_record = srv.resolve
+      seeds = srv_records.map { |srv_record|
+        "#{srv_record.target}:#{srv_record.port}"
+      }
+
+      query_params["ssl"] = "true" unless query_params.has_key? "ssl"
+      txt_record.try { |txt|
+        txt_options = ::URI::Params.parse(txt.txt)
+        {"authSource", "replicaSet"}.each { |key|
+          if txt_options.has_key?(key) && !query_params.has_key?(key)
+            query_params[key] = txt_options[key]
+          end
+        }
+        txt_options.each { |option, _|
+          case option
+          when "authSource"
+          when "replicaSet"
+            # ok
+          else
+            raise Mongo::Error.new("Invalid TXT record option: #{option}")
+          end
+        }
+      }
+    end
+
     database = parsed_uri.path
     database_has_forbidden_chars = false
     database.each_char { |char|
@@ -53,7 +89,7 @@ module Mongo::URI
       )
     }
 
-    options.mix_with_query_params(parsed_uri.query_params)
+    options.mix_with_query_params(query_params)
     source = options.auth_source || ::URI.decode(database[1..])
     credentials = Mongo::Credentials.new(
       username: parsed_uri.user,

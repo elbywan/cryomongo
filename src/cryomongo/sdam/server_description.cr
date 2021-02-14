@@ -114,8 +114,8 @@ class Mongo::SDAM::ServerDescription
   end
 
   def_equals @address, @error, @type, @min_wire_version, @max_wire_version,
-   @me, @hosts, @passives, @arbiters, @tags, @set_name, @set_version, @election_id,
-   @primary, @logical_session_timeout_minutes, @topology_version
+    @me, @hosts, @passives, @arbiters, @tags, @set_name, @set_version, @election_id,
+    @primary, @logical_session_timeout_minutes, @topology_version
 
   def data_bearing?
     @type.mongos? || @type.rs_primary? || @type.rs_secondary? || @type.standalone?

@@ -219,7 +219,8 @@ class Mongo::Client
     server_description : SDAM::ServerDescription? = nil,
     session : Session::ClientSession? = nil,
     operation_id : Int64? = nil,
-    **args)
+    **args
+  )
     self.command(cmd, write_concern, read_concern, read_preference, server_description, session, operation_id, **args) { |result|
       result
     }
@@ -697,9 +698,9 @@ class Mongo::Client
       topology.update(server_description, new_description)
       server_description.update(new_description)
       connection
-      rescue e
-        connection.try &.close
-        raise e
+    rescue e
+      connection.try &.close
+      raise e
     end
     @pools[server_description.address].checkout
   end
@@ -727,7 +728,7 @@ class Mongo::Client
     loop do
       select
       when @topology_update.send nil
-      # Fiber.yield
+        # Fiber.yield
       else
         break
       end

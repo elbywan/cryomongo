@@ -243,7 +243,7 @@ class Mongo::Collection
         limit: limit,
         session: session
       )
-  }.not_nil!
+    }.not_nil!
   end
 
   # Finds the document matching the model.
