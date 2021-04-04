@@ -29,6 +29,21 @@ enum MongoLaunchTopology
   Sharded
 end
 
+def try(command, *, times = 3, delay = 1.seconds)
+  i = 0
+  while i < times
+    process = Process.new(command, shell: true, input: Process::Redirect::Inherit, output: Process::Redirect::Pipe, error: Process::Redirect::Inherit)
+    output = process.output.gets_to_end
+    exit_status = process.wait
+    puts output
+    break if exit_status.normal_exit?
+    puts "Exit code in error: #{exit_status.exit_code}"
+    puts "Retrying in ${delay}…"
+    sleep delay
+    i += 1
+  end
+end
+
 def start_mongo(topology : MongoLaunchTopology = :single)
   topology_argument = case topology
                       when MongoLaunchTopology::Single
@@ -36,7 +51,7 @@ def start_mongo(topology : MongoLaunchTopology = :single)
                       when MongoLaunchTopology::Replicaset
                         "--replicaset"
                       when MongoLaunchTopology::Sharded
-                        "--replicaset --sharded 2 --port 27017"
+                        "--replicaset --sharded 3 --config 3 --port 27017"
                       end
 
   mongo_path = ENV["MONGODB_PATH"]?
@@ -45,7 +60,9 @@ def start_mongo(topology : MongoLaunchTopology = :single)
 end
 
 def stop_mongo
-  puts `mlaunch stop`
+  try("mlaunch stop")
+  puts `mlaunch kill --signal SIGKILL`
+  sleep 1.seconds
 end
 
 def with_mongo(topologies = nil, &block : (Proc(Mongo::Client), MongoLaunchTopology) -> Nil)
