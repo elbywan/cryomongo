@@ -3,8 +3,9 @@ language: crystal
 
 env:
   matrix:
-    - MONGODB_VERSION=4.0.18 MONGODB_RELEASE=4.0
-    - MONGODB_VERSION=4.2.8  MONGODB_RELEASE=4.2
+    - MONGODB_VERSION=4.0.23 MONGODB_RELEASE=4.0
+    - MONGODB_VERSION=4.2.13  MONGODB_RELEASE=4.2
+    # - MONGODB_VERSION=4.4.4  MONGODB_RELEASE=4.4
 
 addons:
   apt:
@@ -17,15 +18,16 @@ addons:
 install:
   - wget https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/${MONGODB_RELEASE}/multiverse/binary-amd64/mongodb-org-server_${MONGODB_VERSION}_amd64.deb
   - sudo dpkg -i mongodb-org-server_${MONGODB_VERSION}_amd64.deb
+  - wget https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/${MONGODB_RELEASE}/multiverse/binary-amd64/mongodb-org-mongos_${MONGODB_VERSION}_amd64.deb
+  - sudo dpkg -i mongodb-org-mongos_${MONGODB_VERSION}_amd64.deb
   - python3 -m pip install mtools[all]
 
 before_script:
-  - shards install --ignore-crystal-version
+  - shards install
   - which mongod
   - mongod --version
 
 script:
   - crystal spec --tag single
   - crystal spec --tag replicaset
-  # starting mongo in sharded mode with mlaunch seems to be unstable and fails randomly
-  # - crystal spec --tag sharded
+  - crystal spec --tag sharded
