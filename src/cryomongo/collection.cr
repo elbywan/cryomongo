@@ -396,7 +396,7 @@ class Mongo::Collection
     })
   end
 
-  private def validate_replacement!(replacement)
+  protected def self.validate_replacement!(replacement)
     replacement = BSON.new(replacement)
     first_element = replacement.each.next
     raise Mongo::Error.new "The replacement document must not be an array" if replacement.is_a? Array
@@ -410,7 +410,7 @@ class Mongo::Collection
     replacement
   end
 
-  private def validate_update!(update)
+  protected def self.validate_update!(update)
     unless update.is_a? Array
       update = BSON.new(update)
       first_element = update.each.next
@@ -441,7 +441,7 @@ class Mongo::Collection
     updates = [
       Tools.merge_bson({
         q:      BSON.new(filter),
-        u:      validate_replacement!(replacement),
+        u:      self.class.validate_replacement!(replacement),
         multi:  false,
         upsert: upsert,
       }, {
@@ -475,7 +475,7 @@ class Mongo::Collection
     updates = [
       Tools.merge_bson({
         q:      BSON.new(filter),
-        u:      validate_update!(update),
+        u:      self.class.validate_update!(update),
         multi:  false,
         upsert: upsert,
       }, {
@@ -510,7 +510,7 @@ class Mongo::Collection
     updates = [
       Tools.merge_bson({
         q:      BSON.new(filter),
-        u:      validate_update!(update),
+        u:      self.class.validate_update!(update),
         multi:  true,
         upsert: upsert,
       }, {
@@ -586,7 +586,7 @@ class Mongo::Collection
     max_time_ms : Int64? = nil,
     session : Session::ClientSession? = nil
   ) : BSON? forall H
-    replacement = validate_replacement!(replacement)
+    replacement = self.class.validate_replacement!(replacement)
     result = self.command(Commands::FindAndModify, filter: filter, session: session, options: {
       update:                     replacement,
       sort:                       sort.try { BSON.new(sort) },
@@ -623,7 +623,7 @@ class Mongo::Collection
     max_time_ms : Int64? = nil,
     session : Session::ClientSession? = nil
   ) : BSON? forall H
-    update = validate_update!(update)
+    update = self.class.validate_update!(update)
     result = self.command(Commands::FindAndModify, filter: filter, session: session, options: {
       update:                     update,
       sort:                       sort.try { BSON.new(sort) },

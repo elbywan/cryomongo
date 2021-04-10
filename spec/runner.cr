@@ -210,11 +210,15 @@ module Mongo::Spec::Runner
   end
 
   private macro int32_arg(name)
-    arguments["{{name.id}}"]?.try &.as_i
+    arguments["{{name.id}}"]?.try { |i|
+      i.as_i? || i.as_h["$numberLong"].as_s.to_i
+    }
   end
 
   private macro int64_arg(name)
-    arguments["{{name.id}}"]?.try &.as_i64
+    arguments["{{name.id}}"]?.try { |i|
+      i.as_i64? || i.as_h["$numberLong"].as_s.to_i64
+    }
   end
 
   private macro string_arg(name)
@@ -241,15 +245,17 @@ module Mongo::Spec::Runner
         compare_json(elt, b[index], &block)
       }
     elsif a.as_h?
-      a.as_h.each { |k, v|
-        if k == "txnNumber"
-          v.as_h["$numberLong"].as_s.to_i64.should eq b["txnNumber"]
-        elsif v != nil
-          compare_json(v, b.as_h[k], &block)
-        elsif v == nil
-          b.as_h[k]?.should be_nil
-        end
-      }
+      if (a_nb = a["$numberLong"]?) && b.as_i64?
+        yield JSON::Any.new(a_nb.as_s.to_i64), b
+      else
+        a.as_h.each { |k, v|
+          if v != nil
+            compare_json(v, b.as_h[k], &block)
+          elsif v == nil
+            b.as_h[k]?.should be_nil
+          end
+        }
+      end
     else
       yield a, b
     end
@@ -455,7 +461,8 @@ module Mongo::Spec::Runner
                  single_batch: single_batch,
                  max_time_ms: max_time_ms.try &.to_i64,
                  collation: collation,
-                 session: session
+                 session: session,
+                 allow_disk_use: allow_disk_use
                )
              when "findOne"
                collection.find_one(
