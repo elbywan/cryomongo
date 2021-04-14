@@ -101,6 +101,7 @@ class Mongo::Collection
       collation:                  collation,
       hint:                       hint.is_a?(String) ? hint : BSON.new(hint),
       comment:                    comment,
+      max_time_ms:                max_time_ms,
       read_concern:               read_concern,
       write_concern:              write_concern,
       read_preference:            read_preference,
@@ -531,8 +532,12 @@ class Mongo::Collection
     if last_error_object = result["last_error_object"]?
       last_error_object = last_error_object.as(BSON)
       code = last_error_object["code"]?
-      err_msg = last_error_object["errmsg"]?
-      raise Mongo::Error::Command.new(code, err_msg)
+      code_name = last_error_object["codeName"]?.try &.as(String)
+      msg = last_error_object["errmsg"]?.try &.as(String)
+      labels = last_error_object["errorLabels"]?.try { |l|
+        Array(String).from_bson(l)
+      } || [] of String
+      raise Mongo::Error::Command.new(code, code_name, msg, error_labels: Set(String).new(labels))
     end
 
     result["value"]?.try &.as(BSON)
@@ -799,7 +804,7 @@ class Mongo::Collection
     self.command(Commands::CollStats, session: session, options: {scale: scale})
   end
 
-  private class SessionProxy
+  private struct SessionProxy
     def initialize(@collection : Collection, @session : Session::ClientSession); end
 
     macro method_missing(call)

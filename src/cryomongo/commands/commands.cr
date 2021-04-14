@@ -44,6 +44,22 @@ module Mongo::Commands
   end
 
   module Retryable
+    def prevent_retry(args)
+      # Do not retry within a transaction.
+      # In MongoDB 4.0 the only supported retryable write commands within a transaction are commitTransaction and abortTransaction.
+      # Therefore drivers MUST NOT retry write commands within transactions even when retryWrites has been enabled on the MongoClient.
+      # https://github.com/mongodb/specifications/blob/46918b8c9c21d88fb930f06fd8d496bc024cdd7f/source/transactions/transactions.rst#interaction-with-retryable-writes
+      args["session"]?.try(&.is_transaction?)
+    end
+
+    def retryable?(**args)
+      true unless prevent_retry(args)
+    end
+  end
+
+  module AlwaysRetryable
+    include Retryable
+
     def retryable?(**args)
       true
     end
@@ -59,6 +75,8 @@ module Mongo::Commands
         property operation_time : BSON::Timestamp? = nil
         @[BSON::Field(key: "$clusterTime")]
         property cluster_time : Session::ClusterTime?
+        @[BSON::Field(key: "recoveryToken")]
+        property recovery_token : BSON?
       end
     end
 
@@ -150,7 +168,7 @@ module Mongo::Commands
       if skip_key == false && (skip_nil == false || !value.nil?)
         if key.to_s == "read_preference"
           bson["$readPreference"] = value
-        elsif key.to_s == "max_time_ms"
+        elsif key.to_s == "max_time_ms" || key.to_s == "max_commit_time_ms"
           bson["maxTimeMS"] = value
         else
           bson[key.to_s.camelcase(lower: true)] = value

@@ -107,6 +107,7 @@ class Mongo::Database
       collation:                  collation,
       hint:                       hint.is_a?(String) ? hint : BSON.new(hint),
       comment:                    comment,
+      max_time_ms:                max_time_ms,
       write_concern:              write_concern,
     }).try { |result|
       Cursor.new(@client, result, batch_size: batch_size, session: session)

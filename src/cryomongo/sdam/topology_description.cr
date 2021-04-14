@@ -54,7 +54,7 @@ class Mongo::SDAM::TopologyDescription
     erase_logical_session_timeout = false
     if new_description.data_bearing?
       min_logical_session_timeout = new_description.logical_session_timeout_minutes
-      erase_logical_session_timeout = new_description.null_logical_session_timeout_minutes
+      erase_logical_session_timeout = new_description.logical_session_timeout_minutes.nil?
     end
 
     # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-discovery-and-monitoring.rst#logical-session-timeout
@@ -65,7 +65,7 @@ class Mongo::SDAM::TopologyDescription
             min_logical_session_timeout = lstm if lstm < min
           }
         }
-        erase_logical_session_timeout = true if desc.null_logical_session_timeout_minutes
+        erase_logical_session_timeout = true if desc.logical_session_timeout_minutes.nil?
       end
 
       if desc.address == old_description.address

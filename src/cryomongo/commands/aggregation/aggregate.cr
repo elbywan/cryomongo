@@ -46,6 +46,6 @@ module Mongo::Commands::Aggregate
   end
 
   def retryable?(**args)
-    !write_command?(**args)
+    !write_command?(**args) unless self.prevent_retry(args)
   end
 end

@@ -91,7 +91,7 @@ describe Mongo::Monitoring do
                 # nothing special to do
               end
             rescue e
-              puts e.inspect_with_backtrace
+              # puts e.inspect_with_backtrace
               raise e
             end
 

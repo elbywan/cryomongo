@@ -1,4 +1,7 @@
 require "uuid"
+require "bson"
+require "../tools"
+require "../client"
 
 # Contains all the logic related to server or client sessions.
 #
@@ -34,7 +37,10 @@ module Mongo::Session
     getter id : UUID
   end
 
-  record Options, causal_consistency : Bool? = nil
+  record Options,
+    causal_consistency : Bool? = nil,
+    # The default TransactionOptions to use for transactions started on this session.
+    default_transaction_options : TransactionOptions? = nil
 
   # A client session used to logically bind operations together.
   class ClientSession
@@ -103,9 +109,9 @@ module Mongo::Session
     end
 
     protected def increment_txn_number
-      @lock.synchronize {
-        @server_session.txn_number += 1
-      }
+      # @lock.synchronize {
+      @server_session.txn_number += 1
+      # }
     end
   end
 
@@ -132,14 +138,14 @@ module Mongo::Session
   # :nodoc:
   # see: https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst#server-session-pool
   class Pool
-    @mutex = Mutex.new(:reentrant)
+    @lock = Mutex.new(:reentrant)
     @closed : Bool = false
     @pool : Deque(ServerSession) = Deque(ServerSession).new
 
     def acquire(logical_timeout : Time::Span)
       raise Mongo::Error.new("Client is closed.") if @closed
       # see: https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst#algorithm-to-acquire-a-serversession-instance-from-the-server-session-pool
-      @mutex.synchronize {
+      @lock.synchronize {
         loop do
           if session = @pool.shift?
             unless session.stale?(logical_timeout)
@@ -162,7 +168,7 @@ module Mongo::Session
         return
       end
       # see: https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst#algorithm-to-return-a-serversession-instance-to-the-server-session-pool
-      @mutex.synchronize {
+      @lock.synchronize {
         loop do
           if (last = @pool.last?) && last.stale?(logical_timeout)
             @pool.pop
@@ -181,12 +187,15 @@ module Mongo::Session
       return if @closed
       # see: https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst#endsessions
       # close the pool and end the sessions - by batches of 10_000
-      @mutex.synchronize {
+      @lock.synchronize do
         @pool.each.map(&.session_id).each_slice(10_000) do |ids|
           client.command(Commands::EndSessions, ids: ids)
         end
+      ensure
         @closed = true
-      }
+      end
     end
   end
 end
+
+require "./transactions"

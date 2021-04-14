@@ -67,15 +67,10 @@ module Mongo::Commands::IsMaster
     property election_id : BSON::ObjectId?
     property last_write : BSON?
     property isreplicaset : Bool?
-
-    # Custom
-    property null_logical_session_timeout_minutes : Bool = false
   }
 
   # Transforms the server result.
   def result(bson : BSON)
-    result = Result.from_bson(bson)
-    result.null_logical_session_timeout_minutes = bson.has_key?("logicalSessionTimeoutMinutes") && result.logical_session_timeout_minutes.nil?
-    result
+    Result.from_bson(bson)
   end
 end

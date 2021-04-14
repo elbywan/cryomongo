@@ -26,8 +26,10 @@ module Mongo::Commands::Update
   end
 
   def retryable?(**args)
-    if updates = args["updates"]?
-      updates.size == 1 && updates[0]["multi"]? == false
+    !prevent_retry(args) && begin
+      if updates = args["updates"]?
+        updates.size == 1 && updates[0]["multi"]? == false
+      end
     end
   end
 end

@@ -14,11 +14,16 @@ module Mongo
     # The *w* option requests acknowledgment that the write operation has propagated to a specified number of mongod instances or to mongod instances with specified tags.
     property w : (Int32 | String)? = nil
     # This option specifies a time limit, in milliseconds, for the write concern. *wtimeout* is only applicable for w values greater than 1.
+    @[BSON::Field(key: "wtimeout")]
     property w_timeout : Int64? = nil
 
     # Create a WriteConcern instance.
     def initialize(@j : Bool? = nil, @w : (Int32? | String)? = nil, @w_timeout : Int64? = nil)
       raise Mongo::Error.new "Invalid write concern" if @j == true && w == 0
+    end
+
+    def unacknowledged?
+      @w == 0 && !@j
     end
   end
 
@@ -50,8 +55,23 @@ module Mongo
       property write_concern : WriteConcern? = nil
     end
 
-    protected def self.mix_write_concern(command, args, write_concern : WriteConcern?)
-      if (options = args["options"]?) && command.is_a?(Commands::WriteCommand) && command.write_command?(**args)
+    protected def self.mix_write_concern(command, args, write_concern : WriteConcern?, *, session : Session::ClientSession)
+      options = args["options"]?
+
+      if options && session.is_transaction?
+        if command.is_a?(Commands::CommitTransaction) || command.is_a?(Commands::AbortTransaction)
+          write_concern = options["write_concern"]? || session.current_transaction_options.write_concern
+          args.merge({
+            options: options.merge({
+              write_concern: write_concern,
+            }),
+          })
+        elsif options["write_concern"]?
+          raise Error::Transaction.new("Cannot set write concern after starting a transaction.")
+        else
+          args
+        end
+      elsif options && command.is_a?(Commands::WriteCommand) && command.write_command?(**args)
         if options["write_concern"]?
           args
         else
@@ -76,8 +96,34 @@ module Mongo
     end
 
     protected def self.mix_read_concern(command, args, read_concern : ReadConcern?, *, session : Session::ClientSession)
-      if (options = args["options"]?) && command.is_a?(Commands::ReadCommand) && command.read_command?(**args)
-        concern : ReadConcern? = options["read_concern"]? || read_concern
+      options = args["options"]?
+
+      if options && session.is_transaction?
+        if options["read_concern"]?
+          raise Error::Transaction.new("Cannot set read concern after starting a transaction.")
+        end
+
+        if session.transitions_from.try &.starting?
+          concern = options["read_concern"]? || session.current_transaction_options.read_concern
+          if session.options.causal_consistency
+            # Drivers MUST add readConcern.afterClusterTime to the command that starts a transaction in a causally consistent session -- even if the command is a write.
+            # https://github.com/mongodb/specifications/blob/master/source/transactions/transactions.rst#interaction-with-causal-consistency
+            if after_cluster_time = session.operation_time
+              concern ||= ReadConcern.new
+              concern.after_cluster_time = after_cluster_time
+            end
+          end
+
+          args.merge({
+            options: options.merge({
+              read_concern: concern,
+            }),
+          })
+        else
+          args
+        end
+      elsif options && command.is_a?(Commands::ReadCommand) && command.read_command?(**args)
+        concern = options["read_concern"]? || read_concern
         after_cluster_time = session.operation_time if session.options.causal_consistency
 
         if after_cluster_time

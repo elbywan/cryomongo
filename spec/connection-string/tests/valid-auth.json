@@ -241,6 +241,7 @@
       }
     },
     {
+      "ignore": true,
       "description": "Subdelimiters in user/pass don't need escaping (MONGODB-CR)",
       "uri": "mongodb://!$&'()*+,;=:!$&'()*+,;=@127.0.0.1/admin?authMechanism=MONGODB-CR",
       "valid": true,
@@ -283,6 +284,7 @@
       }
     },
     {
+      "ignore": true,
       "description": "Escaped username (GSSAPI)",
       "uri": "mongodb://user%40EXAMPLE.COM:secret@localhost/?authMechanismProperties=SERVICE_NAME:other,CANONICALIZE_HOST_NAME:true&authMechanism=GSSAPI",
       "valid": true,
