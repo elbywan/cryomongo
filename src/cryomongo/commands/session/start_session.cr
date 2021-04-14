@@ -23,7 +23,7 @@ module Mongo::Commands::StartSession
     property timeout_minutes : Int32?
 
     Common.result(ID, root: false) {
-      id : String
+      property id : String
     }
   }
 
