@@ -44,6 +44,11 @@ class Mongo::Client
   @topology_update = Channel(Nil).new
   @commands_observable = Monitoring::Observable(Monitoring::Commands::Event).new
 
+  # The default auth database is optionally provided as a part of the connection string uri.
+  #
+  # see: https://docs.mongodb.com/manual/reference/connection-string/
+  getter default_auth_db : String
+
   # Create a mongodb client instance from a mongodb URL.
   #
   # ```
@@ -57,7 +62,7 @@ class Mongo::Client
 
   # :nodoc:
   def initialize(connection_string : String = "mongodb://localhost:27017", *, options : Mongo::Options = Mongo::Options.new, start_monitoring = true)
-    seeds, @options, @credentials = Mongo::URI.parse(connection_string, options)
+    seeds, @options, @credentials, @default_auth_db = Mongo::URI.parse(connection_string, options)
 
     if (w = @options.w) || (w_timeout = @options.w_timeout) || (journal = @options.journal)
       @write_concern = WriteConcern.new(w: w, w_timeout: w_timeout.try &.milliseconds.to_i64, j: journal)
@@ -104,6 +109,14 @@ class Mongo::Client
   # Get a newly allocated `Mongo::Database` for the database named *name*.
   def database(name : String) : Database
     Database.new(self, name)
+  end
+
+  # Get a newly allocated `Mongo::Database`using the default auth database string
+  # optionally provided as a part of the connection string uri.
+  #
+  # see: https://docs.mongodb.com/manual/reference/connection-string/
+  def default_database : Database?
+    self.database(name: @default_auth_db) unless @default_auth_db.empty?
   end
 
   # :ditto:

@@ -13,10 +13,10 @@ module Mongo::URI
     '\\',
     ' ',
     '"',
-    "$",
+    '$',
   }
 
-  def parse(uri : String, options : Mongo::Options) : Tuple(Array(Seed), Mongo::Options, Mongo::Credentials)
+  def parse(uri : String, options : Mongo::Options) : Tuple(Array(Seed), Mongo::Options, Mongo::Credentials, String)
     scheme, scheme_rest = uri.split("://")
 
     raise Mongo::Error.new "Invalid scheme" unless scheme == "mongodb" || scheme == "mongodb+srv"
@@ -67,14 +67,14 @@ module Mongo::URI
       }
     end
 
-    database = parsed_uri.path
-    database_has_forbidden_chars = false
-    database.each_char { |char|
-      next if database_has_forbidden_chars
-      database_has_forbidden_chars = char == FORBIDDEN_DATABASE_CHARACTERS
+    default_auth_db = ::URI.decode(parsed_uri.path[1..])
+    has_forbidden_chars = false
+    default_auth_db.each_char { |char|
+      break if has_forbidden_chars
+      has_forbidden_chars = char.in?(FORBIDDEN_DATABASE_CHARACTERS)
     }
 
-    raise Mongo::Error.new "Invalid database" if database_has_forbidden_chars
+    raise Mongo::Error.new "Invalid database" if has_forbidden_chars
 
     # Validate by parsing every host
     seeds = seeds.map { |seed|
@@ -90,7 +90,7 @@ module Mongo::URI
     }
 
     options.mix_with_query_params(query_params)
-    source = options.auth_source || ::URI.decode(database[1..])
+    source = options.auth_source || default_auth_db
     credentials = Mongo::Credentials.new(
       username: parsed_uri.user,
       password: parsed_uri.password,
@@ -101,7 +101,7 @@ module Mongo::URI
 
     raise Mongo::Error.new "directConnection=true cannot be provided with multiple seeds" if options.direct_connection && seeds.size > 1
 
-    {seeds, options, credentials}
+    {seeds, options, credentials, default_auth_db}
   rescue e
     raise Mongo::Error.new "Invalid uri: #{uri}, #{e}"
   end

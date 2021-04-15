@@ -18,7 +18,7 @@ describe Mongo::URI do
         it "#{description}", focus: focus do
           uri = test["uri"].as_s
           if test["valid"]? == true
-            seeds, mongo_options, credentials = Mongo::URI.parse(uri, Mongo::Options.new)
+            seeds, mongo_options, credentials, db = Mongo::URI.parse(uri, Mongo::Options.new)
             # Hosts
             if hosts = test["hosts"].as_a?
               hosts.each { |host|
@@ -33,6 +33,7 @@ describe Mongo::URI do
             if auth = test["auth"].as_h?
               credentials.username.should eq auth["username"]?
               credentials.password.should eq auth["password"]?
+              db.should eq (auth["db"]?.try(&.as_s?) || "")
               credentials.source.should eq (auth["db"]?.try(&.as_s?) || "")
             end
             # Options
