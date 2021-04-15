@@ -52,22 +52,24 @@ collection.delete_one({ two: 2 })
 puts collection.count_documents # => 0
 ```
 
-### Example with serialization
+### Complex example with serialization
 
 ```crystal
 require "cryomongo"
 
-DATABASE_NAME = "database"
-
 # We take advantage of the BSON serialization capabilities provided by the `bson.cr` shard.
-record User, name : String, banned : Bool? = false, _id : BSON::ObjectId = BSON::ObjectId.new, creation_date : Time = Time.utc do
+record User,
+  name : String,
+  banned : Bool? = false,
+  _id : BSON::ObjectId = BSON::ObjectId.new,
+  creation_date : Time = Time.utc do
   include BSON::Serializable
   include JSON::Serializable
 end
 
 # Initialize Client, Database and Collection.
 client = Mongo::Client.new
-database = client[DATABASE_NAME]
+database = client["database"]
 users = database["users"]
 
 # We set majority read and write at the Database level.
@@ -75,9 +77,11 @@ database.read_concern = Mongo::ReadConcern.new(level: "majority")
 database.write_concern = Mongo::WriteConcern.new(w: "majority")
 
 # Drop and recreate the Collection to ensure that we read later only the documents we inserted in this example.
-{ Mongo::Commands::Drop, Mongo::Commands::Create }.each { |command|
+{ Mongo::Commands::Drop, Mongo::Commands::Create }.each do |command|
   database.command(command, name: "users")
-}
+rescue e : Mongo::Error::Command
+  # ignore the server error, drop will fail if the collection has not ben created before.
+end
 
 # Insert User structures that are automatically serialized to BSON.
 users.insert_many({ "John", "Jane" }.map { |name|
@@ -156,9 +160,12 @@ options = Mongo::Options.new(appname: "MyApp")
 client = Mongo::Client.new("mongodb://address:port/database", options)
 # …or both.
 
-# Instantiate objects to interact with a specific database or a collection.
+# Instantiate objects to interact with a specific database or a collection…
 database   = client["database_name"]
 collection = database["collection_name"]
+# …or using `default_database` if the connection uri string contains a default auth database component ("/database").
+database   = client.default_database
+collection = database.not_nil!.collection["collection_name"]
 
 # The overwhelming majority of programs should use a single client and should not bother with closing clients.
 # Otherwise, to free the underlying resources a client must be manually closed.
