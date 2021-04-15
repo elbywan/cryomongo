@@ -3,28 +3,28 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="0.3.1-dev">
+<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="crystal_docs.project_version" content="0.3.6-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
+
 
 
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/doc.js"></script>
 
-<svg class="hidden">
-  <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
-  </symbol>
-</svg>
-
-  <meta id="repository-name" content="cryomongo">
-  <title>Mongo::Client - cryomongo 0.3.1-dev</title>
+  <meta name="repository-name" content="cryomongo">
+  <title>Mongo::Client - cryomongo 0.3.6-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
 </head>
 <body>
 
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -39,12 +39,12 @@
       </h1>
 
       <span class="project-version">
-        0.3.1-dev
+        0.3.6-dev
       </span>
     </div>
   </div>
 
-  <div class="search-results" class="hidden">
+  <div class="search-results hidden">
     <ul class="search-list"></ul>
   </div>
 
@@ -876,6 +876,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/SRV" data-name="mongo::srv">
+      <a href="../Mongo/SRV.html">SRV</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/WriteConcern" data-name="mongo::writeconcern">
       <a href="../Mongo/WriteConcern.html">WriteConcern</a>
       
@@ -958,6 +963,11 @@
     Defined in:
   </h2>
   
+    
+      cryomongo/client.cr
+    
+    <br/>
+  
 
 
 
@@ -1031,7 +1041,7 @@
       <li class="entry-summary">
         <a href="#[](name:String):Database-instance-method" class="signature"><strong>#[]</strong>(name : String) : Database</a>
         
-          <div class="summary"><p>Get a newly allocated <code><a href="../Mongo/Database.html">Mongo::Database</a></code> for the database named <em>name</em>.</p></div>
+          <div class="summary"><p>Get a newly allocated <code><a href="../Mongo/Database.html">Mongo::Database</a></code>using the default auth database string optionally provided as a part of the connection string uri.</p></div>
         
       </li>
     
@@ -1067,6 +1077,20 @@
         <a href="#database(name:String):Database-instance-method" class="signature"><strong>#database</strong>(name : String) : Database</a>
         
           <div class="summary"><p>Get a newly allocated <code><a href="../Mongo/Database.html">Mongo::Database</a></code> for the database named <em>name</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#default_auth_db:String-instance-method" class="signature"><strong>#default_auth_db</strong> : String</a>
+        
+          <div class="summary"><p>The default auth database is optionally provided as a part of the connection string uri.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#default_database:Database?-instance-method" class="signature"><strong>#default_database</strong> : Database?</a>
+        
+          <div class="summary"><p>Get a newly allocated <code><a href="../Mongo/Database.html">Mongo::Database</a></code>using the default auth database string optionally provided as a part of the connection string uri.</p></div>
         
       </li>
     
@@ -1250,7 +1274,7 @@
           
           <p>Create a mongodb client instance from a mongodb URL.</p>
 
-<pre><code><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
 
 client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span> <span class="s">&quot;mongodb://127.0.0.1/?appname=client-example&quot;</span></code></pre>
         </div>
@@ -1285,7 +1309,10 @@ client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</
       
         <div class="doc">
           
-          <p>Get a newly allocated <code><a href="../Mongo/Database.html">Mongo::Database</a></code> for the database named <em>name</em>.</p>
+          <p>Get a newly allocated <code><a href="../Mongo/Database.html">Mongo::Database</a></code>using the default auth database string
+optionally provided as a part of the connection string uri.</p>
+
+<p>see: https://docs.mongodb.com/manual/reference/connection-string/</p>
         </div>
       
       <br/>
@@ -1335,7 +1362,7 @@ client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</
     <div class="entry-detail" id="command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method">
       <div class="signature">
         
-        def <strong>command</strong>(command cmd, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, server_description : <a href="../Mongo/SDAM/ServerDescription.html">SDAM::ServerDescription</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args)
+        def <strong>command</strong>(command cmd, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, server_description : SDAM::ServerDescription? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args)
 
         <a class="method-permalink" href="#command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method">#</a>
       </div>
@@ -1344,7 +1371,7 @@ client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</
           
           <p>Execute a command on the server.</p>
 
-<pre><code><span class="c"># First argument is the `Mongo::Commands`.</span>
+<pre><code class="language-crystal"><span class="c"># First argument is the `Mongo::Commands`.</span>
 client.command(<span class="t">Mongo</span><span class="t">::</span><span class="t">Commands</span><span class="t">::</span><span class="t">DropDatabase</span>, database: <span class="s">&quot;database_name&quot;</span>)</code></pre>
         </div>
       
@@ -1357,7 +1384,7 @@ client.command(<span class="t">Mongo</span><span class="t">::</span><span class=
     <div class="entry-detail" id="command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args,&)-instance-method">
       <div class="signature">
         
-        def <strong>command</strong>(command, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, server_description : <a href="../Mongo/SDAM/ServerDescription.html">SDAM::ServerDescription</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args, &)
+        def <strong>command</strong>(command, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, server_description : SDAM::ServerDescription? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args, &)
 
         <a class="method-permalink" href="#command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args,&)-instance-method">#</a>
       </div>
@@ -1366,7 +1393,7 @@ client.command(<span class="t">Mongo</span><span class="t">::</span><span class=
           
           <p>Execute a command on the server.</p>
 
-<pre><code><span class="c"># First argument is the `Mongo::Commands`.</span>
+<pre><code class="language-crystal"><span class="c"># First argument is the `Mongo::Commands`.</span>
 client.command(<span class="t">Mongo</span><span class="t">::</span><span class="t">Commands</span><span class="t">::</span><span class="t">DropDatabase</span>, database: <span class="s">&quot;database_name&quot;</span>)</code></pre>
         </div>
       
@@ -1395,6 +1422,49 @@ client.command(<span class="t">Mongo</span><span class="t">::</span><span class=
       </div>
     </div>
   
+    <div class="entry-detail" id="default_auth_db:String-instance-method">
+      <div class="signature">
+        
+        def <strong>default_auth_db</strong> : String
+
+        <a class="method-permalink" href="#default_auth_db:String-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>The default auth database is optionally provided as a part of the connection string uri.</p>
+
+<p>see: https://docs.mongodb.com/manual/reference/connection-string/</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="default_database:Database?-instance-method">
+      <div class="signature">
+        
+        def <strong>default_database</strong> : <a href="../Mongo/Database.html">Database</a>?
+
+        <a class="method-permalink" href="#default_database:Database?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Get a newly allocated <code><a href="../Mongo/Database.html">Mongo::Database</a></code>using the default auth database string
+optionally provided as a part of the connection string uri.</p>
+
+<p>see: https://docs.mongodb.com/manual/reference/connection-string/</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="list_databases(*,filter=nil,name_only:Bool?=nil,authorized_databases:Bool?=nil,session:Session::ClientSession?=nil):Commands::ListDatabases::Result-instance-method">
       <div class="signature">
         
@@ -1407,7 +1477,7 @@ client.command(<span class="t">Mongo</span><span class="t">::</span><span class=
           
           <p>Provides a list of all existing databases along with basic statistics about them.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/listDatabases" target="_blank">for more details, please check the official MongoDB documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/listDatabases">for more details, please check the official MongoDB documentation</a>.</p>
         </div>
       
       <br/>
@@ -1447,7 +1517,7 @@ client.command(<span class="t">Mongo</span><span class="t">::</span><span class=
           
           <p>Read concern accessor.</p>
 
-<p>See: <a href="https://docs.mongodb.com/manual/reference/read-concern/index.html" target="_blank">the official documentation</a></p>
+<p>See: <a href="https://docs.mongodb.com/manual/reference/read-concern/index.html">the official documentation</a></p>
         </div>
       
       <br/>
@@ -1468,7 +1538,7 @@ client.command(<span class="t">Mongo</span><span class="t">::</span><span class=
           
           <p>Read concern accessor.</p>
 
-<p>See: <a href="https://docs.mongodb.com/manual/reference/read-concern/index.html" target="_blank">the official documentation</a></p>
+<p>See: <a href="https://docs.mongodb.com/manual/reference/read-concern/index.html">the official documentation</a></p>
         </div>
       
       <br/>
@@ -1489,7 +1559,7 @@ client.command(<span class="t">Mongo</span><span class="t">::</span><span class=
           
           <p>ReadPreference accessor.</p>
 
-<p>See: <a href="https://docs.mongodb.com/manual/core/read-preference/index.html" target="_blank">the official documentation</a>.</p>
+<p>See: <a href="https://docs.mongodb.com/manual/core/read-preference/index.html">the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1510,7 +1580,7 @@ client.command(<span class="t">Mongo</span><span class="t">::</span><span class=
           
           <p>ReadPreference accessor.</p>
 
-<p>See: <a href="https://docs.mongodb.com/manual/core/read-preference/index.html" target="_blank">the official documentation</a>.</p>
+<p>See: <a href="https://docs.mongodb.com/manual/core/read-preference/index.html">the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1531,7 +1601,7 @@ client.command(<span class="t">Mongo</span><span class="t">::</span><span class=
           
           <p>Starts a new logical session for a sequence of operations.</p>
 
-<pre><code>client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
 
 <span class="c"># First, create a ClientSession which is by default causally consistent.</span>
 session <span class="o">=</span> client.start_session
@@ -1567,7 +1637,7 @@ session.<span class="k">end</span></code></pre>
           
           <p>Returns a document that provides an overview of the database’s state.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/serverStatus/" target="_blank">for more details, please check the official MongoDB documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/serverStatus/">for more details, please check the official MongoDB documentation</a>.</p>
         </div>
       
       <br/>
@@ -1588,7 +1658,7 @@ session.<span class="k">end</span></code></pre>
           
           <p>Subscribe to monitoring command events.</p>
 
-<pre><code>client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
 
 client.subscribe_commands { <span class="o">|</span>event<span class="o">|</span>
   <span class="k">case</span> event
@@ -1620,7 +1690,7 @@ client.subscribe_commands { <span class="o">|</span>event<span class="o">|</span
           
           <p>An administrative command that returns usage statistics for each collection.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/top" target="_blank">for more details, please check the official MongoDB documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/top">for more details, please check the official MongoDB documentation</a>.</p>
         </div>
       
       <br/>
@@ -1641,7 +1711,7 @@ client.subscribe_commands { <span class="o">|</span>event<span class="o">|</span
           
           <p>Ends the subscription for command events.</p>
 
-<pre><code>client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
 
 subscription <span class="o">=</span> client.subscribe_commands { <span class="o">|</span>event<span class="o">|</span>
   puts event
@@ -1691,7 +1761,7 @@ client.unsubscribe_commands(subscription)</code></pre>
           
           <p>Write concern accessor.</p>
 
-<p>See: <a href="https://docs.mongodb.com/manual/reference/write-concern/index.html" target="_blank">the official documentation</a></p>
+<p>See: <a href="https://docs.mongodb.com/manual/reference/write-concern/index.html">the official documentation</a></p>
         </div>
       
       <br/>
@@ -1712,7 +1782,7 @@ client.unsubscribe_commands(subscription)</code></pre>
           
           <p>Write concern accessor.</p>
 
-<p>See: <a href="https://docs.mongodb.com/manual/reference/write-concern/index.html" target="_blank">the official documentation</a></p>
+<p>See: <a href="https://docs.mongodb.com/manual/reference/write-concern/index.html">the official documentation</a></p>
         </div>
       
       <br/>

@@ -3,28 +3,28 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="0.3.1-dev">
+<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="crystal_docs.project_version" content="0.3.6-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
+
 
 
 <link href="../../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../../js/doc.js"></script>
 
-<svg class="hidden">
-  <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
-  </symbol>
-</svg>
-
-  <meta id="repository-name" content="cryomongo">
-  <title>Mongo::GridFS::Bucket - cryomongo 0.3.1-dev</title>
+  <meta name="repository-name" content="cryomongo">
+  <title>Mongo::GridFS::Bucket - cryomongo 0.3.6-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
 </head>
 <body>
 
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -39,12 +39,12 @@
       </h1>
 
       <span class="project-version">
-        0.3.1-dev
+        0.3.6-dev
       </span>
     </div>
   </div>
 
-  <div class="search-results" class="hidden">
+  <div class="search-results hidden">
     <ul class="search-list"></ul>
   </div>
 
@@ -876,6 +876,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/SRV" data-name="mongo::srv">
+      <a href="../../Mongo/SRV.html">SRV</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/WriteConcern" data-name="mongo::writeconcern">
       <a href="../../Mongo/WriteConcern.html">WriteConcern</a>
       
@@ -951,6 +956,11 @@
 </a>
     Defined in:
   </h2>
+  
+    
+      cryomongo/gridfs.cr
+    
+    <br/>
   
 
 
@@ -1216,7 +1226,7 @@
           
           <p>Given an <em>id</em>, delete this stored file’s files collection document and associated chunks from a GridFS bucket.</p>
 
-<pre><code>gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
+<pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 id <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.<span class="k">new</span>(<span class="s">&quot;5eed35600000000000000000&quot;</span>)
 gridfs.delete(id)</code></pre>
         </div>
@@ -1240,7 +1250,7 @@ gridfs.delete(id)</code></pre>
           <p>Downloads the contents of the stored file specified by <em>id</em> and writes
 the contents to the <em>destination</em> Stream.</p>
 
-<pre><code>gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
+<pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 stream <span class="o">=</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>
 id <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.<span class="k">new</span>(<span class="s">&quot;5eed35600000000000000000&quot;</span>)
 gridfs.download_to_stream(id, stream)
@@ -1267,7 +1277,7 @@ puts stream.rewind.gets_to_end</code></pre>
 
 <p>See: <code><a href="../../Mongo/GridFS/Bucket.html#open_download_stream_by_name(filename:String,revision:Int32=-1):IO-instance-method">#open_download_stream_by_name</a></code> for how the revision is calculated.</p>
 
-<pre><code>gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
+<pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 io <span class="o">=</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>
 gridfs.download_to_stream_by_name(<span class="s">&quot;file&quot;</span>, io, revision: <span class="n">-1</span>)
 puts io.to_s</code></pre>
@@ -1291,7 +1301,7 @@ puts io.to_s</code></pre>
           
           <p>Drops the files and chunks collections associated with this bucket.</p>
 
-<pre><code>gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
+<pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 gridfs.drop</code></pre>
         </div>
       
@@ -1313,7 +1323,7 @@ gridfs.drop</code></pre>
           
           <p>Find and return the files collection documents that match <em>filter</em>.</p>
 
-<pre><code>gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
+<pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 gridfs.find({
   length: {<span class="s">&quot;$gte&quot;</span>: <span class="n">5000</span>},
 })</code></pre>
@@ -1340,7 +1350,7 @@ specified by <em>id</em>.</p>
 
 <p>Returns a <code>IO</code> stream.</p>
 
-<pre><code>gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
+<pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 id <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.<span class="k">new</span>(<span class="s">&quot;5eed35600000000000000000&quot;</span>)
 stream <span class="o">=</span> gridfs.open_download_stream(id)
 puts stream.gets_to_end
@@ -1370,7 +1380,7 @@ specified by <em>filename</em> and an optional <em>revision</em>.</p>
 
 <p><span class="flag purple">NOTE</span>  It is the responsbility of the caller to close the stream.</p>
 
-<pre><code>gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
+<pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 stream <span class="o">=</span> gridfs.open_download_stream_by_name(<span class="s">&quot;file&quot;</span>, revision: <span class="n">2</span>)
 puts stream.gets_to_end
 stream.close</code></pre>
@@ -1413,7 +1423,7 @@ of the file to retrieve. Defaults to -1 (the most recent revision).</p>
 
 <p><span class="flag purple">NOTE</span>  It is the responsbility of the caller to flush and close the stream.</p>
 
-<pre><code>gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
+<pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 io <span class="o">=</span> gridfs.open_upload_stream(filename: <span class="s">&quot;file.txt&quot;</span>, chunk_size_bytes: <span class="n">1024</span>, metadata: {hello: <span class="s">&quot;world&quot;</span>})
 io <span class="o">&lt;&lt;</span> <span class="s">&quot;some&quot;</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;text&quot;</span>
 io.flush
@@ -1441,7 +1451,7 @@ sleep <span class="n">1</span></code></pre>
 
 <p><span class="flag purple">NOTE</span>  Will flush and close the stream after the block gets executed.</p>
 
-<pre><code>gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
+<pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 gridfs.open_upload_stream(filename: <span class="s">&quot;file.txt&quot;</span>, chunk_size_bytes: <span class="n">1024</span>, metadata: {hello: <span class="s">&quot;world&quot;</span>}) { <span class="o">|</span>io<span class="o">|</span>
   io <span class="o">&lt;&lt;</span> <span class="s">&quot;some text&quot;</span>
 }
@@ -1466,7 +1476,7 @@ sleep <span class="n">1</span></code></pre>
           
           <p>Renames the stored file with the specified <em>id</em>.</p>
 
-<pre><code>gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
+<pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 id <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.<span class="k">new</span>(<span class="s">&quot;5eed35600000000000000000&quot;</span>)
 gridfs.rename(id, new_filename: <span class="s">&quot;new_name.txt&quot;</span>)</code></pre>
         </div>
@@ -1499,7 +1509,7 @@ it creates a files collection document for <em>filename</em> in the files collec
 
 <p><span class="flag purple">NOTE</span>  It is the responsbility of the caller to flush and close the stream.</p>
 
-<pre><code>gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
+<pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 file <span class="o">=</span> <span class="t">File</span>.<span class="k">new</span>(<span class="s">&quot;file.txt&quot;</span>)
 id <span class="o">=</span> gridfs.upload_from_stream(<span class="s">&quot;file.txt&quot;</span>, file)
 file.close

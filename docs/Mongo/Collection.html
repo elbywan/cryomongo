@@ -3,28 +3,28 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="0.3.1-dev">
+<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="crystal_docs.project_version" content="0.3.6-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
+
 
 
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/doc.js"></script>
 
-<svg class="hidden">
-  <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
-  </symbol>
-</svg>
-
-  <meta id="repository-name" content="cryomongo">
-  <title>Mongo::Collection - cryomongo 0.3.1-dev</title>
+  <meta name="repository-name" content="cryomongo">
+  <title>Mongo::Collection - cryomongo 0.3.6-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
 </head>
 <body>
 
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -39,12 +39,12 @@
       </h1>
 
       <span class="project-version">
-        0.3.1-dev
+        0.3.6-dev
       </span>
     </div>
   </div>
 
-  <div class="search-results" class="hidden">
+  <div class="search-results hidden">
     <ul class="search-list"></ul>
   </div>
 
@@ -876,6 +876,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/SRV" data-name="mongo::srv">
+      <a href="../Mongo/SRV.html">SRV</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/WriteConcern" data-name="mongo::writeconcern">
       <a href="../Mongo/WriteConcern.html">WriteConcern</a>
       
@@ -916,7 +921,7 @@
 
   <p>A <code><a href="../Mongo/Collection.html">Collection</a></code> provides access to a MongoDB collection.</p>
 
-<pre><code>collection <span class="o">=</span> client[<span class="s">&quot;database_name&quot;</span>][<span class="s">&quot;collection_name&quot;</span>]</code></pre>
+<pre><code class="language-crystal">collection <span class="o">=</span> client[<span class="s">&quot;database_name&quot;</span>][<span class="s">&quot;collection_name&quot;</span>]</code></pre>
 
 
 
@@ -957,6 +962,11 @@
 </a>
     Defined in:
   </h2>
+  
+    
+      cryomongo/collection.cr
+    
+    <br/>
   
 
 
@@ -1315,7 +1325,7 @@
           
           <p>Runs an aggregation framework pipeline.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/aggregate/" target="_blank">for more details, please check the official MongoDB documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/aggregate/">for more details, please check the official MongoDB documentation</a>.</p>
         </div>
       
       <br/>
@@ -1357,7 +1367,7 @@
 
 <p>An error will be raised if the <em>requests</em> parameter is empty.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://github.com/mongodb/specifications/blob/master/source/driver-bulk-update.rst" target="_blank">for more details, please check the official specifications document</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://github.com/mongodb/specifications/blob/master/source/driver-bulk-update.rst">for more details, please check the official specifications document</a>.</p>
         </div>
       
       <br/>
@@ -1426,7 +1436,7 @@
 Note that an empty filter will force a scan of the entire collection.
 For a fast count of the total documents in a collection see <code><a href="../Mongo/Collection.html#estimated_document_count(*,max_time_ms:Int64?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil):Int32-instance-method">#estimated_document_count</a></code>.</p>
 
-<p>See: <a href="https://github.com/mongodb/specifications/blob/master/source/crud/crud.rst#count-api-details" target="_blank">the specification document</a>.</p>
+<p>See: <a href="https://github.com/mongodb/specifications/blob/master/source/crud/crud.rst#count-api-details">the specification document</a>.</p>
         </div>
       
       <br/>
@@ -1468,7 +1478,7 @@ For a fast count of the total documents in a collection see <code><a href="../Mo
           
           <p>Creates multiple indexes in the collection.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/createIndexes/" target="_blank">for more details, please check the official documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/createIndexes/">for more details, please check the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1508,7 +1518,7 @@ For a fast count of the total documents in a collection see <code><a href="../Mo
           
           <p>Deletes multiple documents.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/delete/" target="_blank">for more details, please check the official documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/delete/">for more details, please check the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1529,7 +1539,7 @@ For a fast count of the total documents in a collection see <code><a href="../Mo
           
           <p>Deletes one document.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/delete/" target="_blank">for more details, please check the official documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/delete/">for more details, please check the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1553,7 +1563,7 @@ For a fast count of the total documents in a collection see <code><a href="../Mo
 <p><span class="flag purple">NOTE</span>  the results are backed by the "values" array in the distinct command's result
 document. This differs from aggregate and find, where results are backed by a cursor.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/distinct/" target="_blank">for more details, please check the official MongoDB documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/distinct/">for more details, please check the official MongoDB documentation</a>.</p>
         </div>
       
       <br/>
@@ -1595,7 +1605,7 @@ document. This differs from aggregate and find, where results are backed by a cu
           
           <p>Drops all indexes in the collection.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/dropIndexes/" target="_blank">for more details, please check the official documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/dropIndexes/">for more details, please check the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1616,7 +1626,7 @@ document. This differs from aggregate and find, where results are backed by a cu
           
           <p>Gets an estimate of the count of documents in a collection using collection metadata.</p>
 
-<p>See: <a href="https://github.com/mongodb/specifications/blob/master/source/crud/crud.rst#count-api-details" target="_blank">the specification document</a>.</p>
+<p>See: <a href="https://github.com/mongodb/specifications/blob/master/source/crud/crud.rst#count-api-details">the specification document</a>.</p>
         </div>
       
       <br/>
@@ -1637,9 +1647,9 @@ document. This differs from aggregate and find, where results are backed by a cu
           
           <p>Finds the documents matching the model.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/find/" target="_blank">for more details, please check the official MongoDB documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/find/">for more details, please check the official MongoDB documentation</a>.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/core/read-operations-introduction/" target="_blank">for an overview of read operations, check the official manual</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/core/read-operations-introduction/">for an overview of read operations, check the official manual</a>.</p>
         </div>
       
       <br/>
@@ -1660,7 +1670,7 @@ document. This differs from aggregate and find, where results are backed by a cu
           
           <p>Finds the document matching the model.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/find/" target="_blank">for more details, please check the official MongoDB documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/find/">for more details, please check the official MongoDB documentation</a>.</p>
         </div>
       
       <br/>
@@ -1681,7 +1691,7 @@ document. This differs from aggregate and find, where results are backed by a cu
           
           <p>Finds a single document and deletes it, returning the original. The document to return may be nil.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/findAndModify/" target="_blank">for more details, please check the official documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/findAndModify/">for more details, please check the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1703,7 +1713,7 @@ document. This differs from aggregate and find, where results are backed by a cu
           <p>Finds a single document and replaces it, returning either the original or the replaced
 document. The document to return may be nil.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/findAndModify/" target="_blank">for more details, please check the official documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/findAndModify/">for more details, please check the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1725,7 +1735,7 @@ document. The document to return may be nil.</p>
           <p>Finds a single document and updates it, returning either the original or the updated
 document. The document to return may be nil.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/findAndModify/" target="_blank">for more details, please check the official documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/findAndModify/">for more details, please check the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1746,7 +1756,7 @@ document. The document to return may be nil.</p>
           
           <p>Inserts the provided document. If any documents are missing an identifier, they will be generated.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/insert/" target="_blank">for more details, please check the official documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/insert/">for more details, please check the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1767,7 +1777,7 @@ document. The document to return may be nil.</p>
           
           <p>Inserts the provided document. If the document is missing an identifier, it will be generated.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/insert/" target="_blank">for more details, please check the official documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/insert/">for more details, please check the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1788,7 +1798,7 @@ document. The document to return may be nil.</p>
           
           <p>Gets index information for all indexes in the collection.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/listIndexes/" target="_blank">for more details, please check the official documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/listIndexes/">for more details, please check the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1828,7 +1838,7 @@ document. The document to return may be nil.</p>
           
           <p>Read concern accessor.</p>
 
-<p>See: <a href="https://docs.mongodb.com/manual/reference/read-concern/index.html" target="_blank">the official documentation</a></p>
+<p>See: <a href="https://docs.mongodb.com/manual/reference/read-concern/index.html">the official documentation</a></p>
         </div>
       
       <br/>
@@ -1849,7 +1859,7 @@ document. The document to return may be nil.</p>
           
           <p>Read concern accessor.</p>
 
-<p>See: <a href="https://docs.mongodb.com/manual/reference/read-concern/index.html" target="_blank">the official documentation</a></p>
+<p>See: <a href="https://docs.mongodb.com/manual/reference/read-concern/index.html">the official documentation</a></p>
         </div>
       
       <br/>
@@ -1870,7 +1880,7 @@ document. The document to return may be nil.</p>
           
           <p>ReadPreference accessor.</p>
 
-<p>See: <a href="https://docs.mongodb.com/manual/core/read-preference/index.html" target="_blank">the official documentation</a>.</p>
+<p>See: <a href="https://docs.mongodb.com/manual/core/read-preference/index.html">the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1891,7 +1901,7 @@ document. The document to return may be nil.</p>
           
           <p>ReadPreference accessor.</p>
 
-<p>See: <a href="https://docs.mongodb.com/manual/core/read-preference/index.html" target="_blank">the official documentation</a>.</p>
+<p>See: <a href="https://docs.mongodb.com/manual/core/read-preference/index.html">the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1912,7 +1922,7 @@ document. The document to return may be nil.</p>
           
           <p>Replaces a single document.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/update/" target="_blank">for more details, please check the official documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/update/">for more details, please check the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1933,7 +1943,7 @@ document. The document to return may be nil.</p>
           
           <p>Returns a variety of storage statistics for the collection.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/collStats/" target="_blank">for more details, please check the official MongoDB documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/collStats/">for more details, please check the official MongoDB documentation</a>.</p>
         </div>
       
       <br/>
@@ -1954,7 +1964,7 @@ document. The document to return may be nil.</p>
           
           <p>Updates multiple documents.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/update/" target="_blank">for more details, please check the official documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/update/">for more details, please check the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1975,7 +1985,7 @@ document. The document to return may be nil.</p>
           
           <p>Updates one document.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/update/" target="_blank">for more details, please check the official documentation</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/update/">for more details, please check the official documentation</a>.</p>
         </div>
       
       <br/>
@@ -1996,7 +2006,7 @@ document. The document to return may be nil.</p>
           
           <p>Returns a <code><a href="../Mongo/ChangeStream/Cursor.html">ChangeStream::Cursor</a></code> watching a specific collection.</p>
 
-<pre><code>client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
 collection <span class="o">=</span> client[<span class="s">&quot;db&quot;</span>][<span class="s">&quot;coll&quot;</span>]
 
 spawn {
@@ -2018,7 +2028,7 @@ spawn {
 
 sleep</code></pre>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/changeStreams/index.html" target="_blank">for more details, please check the official manual</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/changeStreams/index.html">for more details, please check the official manual</a>.</p>
         </div>
       
       <br/>
@@ -2041,7 +2051,7 @@ sleep</code></pre>
 
 <ul><li>First block argument is a reflection of the Collection instance with the <em>session</em> method argument already provided.</li><li>Second block argument is the ClientSession.</li></ul>
 
-<pre><code>client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
 collection <span class="o">=</span> client[<span class="s">&quot;db&quot;</span>][<span class="s">&quot;coll&quot;</span>]
 
 collection.with_session(causal_consistency: <span class="n">true</span>) <span class="k">do</span> <span class="o">|</span>collection, session<span class="o">|</span>
@@ -2071,7 +2081,7 @@ collection.with_session(causal_consistency: <span class="n">true</span>) <span c
           
           <p>Write concern accessor.</p>
 
-<p>See: <a href="https://docs.mongodb.com/manual/reference/write-concern/index.html" target="_blank">the official documentation</a></p>
+<p>See: <a href="https://docs.mongodb.com/manual/reference/write-concern/index.html">the official documentation</a></p>
         </div>
       
       <br/>
@@ -2092,7 +2102,7 @@ collection.with_session(causal_consistency: <span class="n">true</span>) <span c
           
           <p>Write concern accessor.</p>
 
-<p>See: <a href="https://docs.mongodb.com/manual/reference/write-concern/index.html" target="_blank">the official documentation</a></p>
+<p>See: <a href="https://docs.mongodb.com/manual/reference/write-concern/index.html">the official documentation</a></p>
         </div>
       
       <br/>

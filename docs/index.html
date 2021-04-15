@@ -3,28 +3,28 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="0.3.1-dev">
+<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="crystal_docs.project_version" content="0.3.6-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
+
 
 
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/doc.js"></script>
 
-<svg class="hidden">
-  <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
-  </symbol>
-</svg>
-
-  <meta id="repository-name" content="cryomongo">
-  <title>cryomongo 0.3.1-dev</title>
+  <meta name="repository-name" content="cryomongo">
+  <title>cryomongo 0.3.6-dev</title>
   <script type="text/javascript">
   CrystalDocs.base_path = "";
   </script>
 </head>
 <body>
 
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -39,12 +39,12 @@
       </h1>
 
       <span class="project-version">
-        0.3.1-dev
+        0.3.6-dev
       </span>
     </div>
   </div>
 
-  <div class="search-results" class="hidden">
+  <div class="search-results hidden">
     <ul class="search-list"></ul>
   </div>
 
@@ -876,6 +876,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/SRV" data-name="mongo::srv">
+      <a href="Mongo/SRV.html">SRV</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/WriteConcern" data-name="mongo::writeconcern">
       <a href="Mongo/WriteConcern.html">WriteConcern</a>
       
@@ -914,7 +919,7 @@
 
 <p><strong>⚠️ BETA state.</strong></p>
 
-<blockquote>If you are looking for a higher-level object-document mapper library, you might want to check out the <a href="https://github.com/elbywan/moongoon" target="_blank"><code>moongoon</code></a> shard.</blockquote>
+<blockquote>If you are looking for a higher-level object-document mapper library, you might want to check out the <a href="https://github.com/elbywan/moongoon"><code>moongoon</code></a> shard.</blockquote>
 
 <h2><a id="installation" class="anchor" href="#installation">
   <svg class="octicon-link" aria-hidden="true">
@@ -959,25 +964,27 @@ puts bson.not_nil!.[<span class="s">&quot;two&quot;</span>] <span class="c"># =&
 collection.delete_one({ two: <span class="n">2</span> })
 puts collection.count_documents <span class="c"># =&gt; 0</span></code></pre>
 
-<h3><a id="example-with-serialization" class="anchor" href="#example-with-serialization">
+<h3><a id="complex-example-with-serialization" class="anchor" href="#complex-example-with-serialization">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>Example with serialization</h3>
+</a>Complex example with serialization</h3>
 
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
 
-<span class="t">DATABASE_NAME</span> <span class="o">=</span> <span class="s">&quot;database&quot;</span>
-
 <span class="c"># We take advantage of the BSON serialization capabilities provided by the `bson.cr` shard.</span>
-record <span class="t">User</span>, name : <span class="t">String</span>, banned : <span class="t">Bool</span>? <span class="o">=</span> <span class="n">false</span>, _id : <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span> <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.<span class="k">new</span>, creation_date : <span class="t">Time</span> <span class="o">=</span> <span class="t">Time</span>.utc <span class="k">do</span>
+record <span class="t">User</span>,
+  name : <span class="t">String</span>,
+  banned : <span class="t">Bool</span>? <span class="o">=</span> <span class="n">false</span>,
+  _id : <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span> <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.<span class="k">new</span>,
+  creation_date : <span class="t">Time</span> <span class="o">=</span> <span class="t">Time</span>.utc <span class="k">do</span>
   <span class="k">include</span> <span class="t">BSON</span><span class="t">::</span><span class="t">Serializable</span>
   <span class="k">include</span> <span class="t">JSON</span><span class="t">::</span><span class="t">Serializable</span>
 <span class="k">end</span>
 
 <span class="c"># Initialize Client, Database and Collection.</span>
 client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
-database <span class="o">=</span> client[<span class="t">DATABASE_NAME</span>]
+database <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>]
 users <span class="o">=</span> database[<span class="s">&quot;users&quot;</span>]
 
 <span class="c"># We set majority read and write at the Database level.</span>
@@ -985,9 +992,11 @@ database.read_concern <span class="o">=</span> <span class="t">Mongo</span><span
 database.write_concern <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">WriteConcern</span>.<span class="k">new</span>(w: <span class="s">&quot;majority&quot;</span>)
 
 <span class="c"># Drop and recreate the Collection to ensure that we read later only the documents we inserted in this example.</span>
-{ <span class="t">Mongo</span><span class="t">::</span><span class="t">Commands</span><span class="t">::</span><span class="t">Drop</span>, <span class="t">Mongo</span><span class="t">::</span><span class="t">Commands</span><span class="t">::</span><span class="t">Create</span> }.each { <span class="o">|</span>command<span class="o">|</span>
+{ <span class="t">Mongo</span><span class="t">::</span><span class="t">Commands</span><span class="t">::</span><span class="t">Drop</span>, <span class="t">Mongo</span><span class="t">::</span><span class="t">Commands</span><span class="t">::</span><span class="t">Create</span> }.each <span class="k">do</span> <span class="o">|</span>command<span class="o">|</span>
   database.command(command, name: <span class="s">&quot;users&quot;</span>)
-}
+<span class="k">rescue</span> e : <span class="t">Mongo</span><span class="t">::</span><span class="t">Error</span><span class="t">::</span><span class="t">Command</span>
+  <span class="c"># ignore the server error, drop will fail if the collection has not ben created before.</span>
+<span class="k">end</span>
 
 <span class="c"># Insert User structures that are automatically serialized to BSON.</span>
 users.insert_many({ <span class="s">&quot;John&quot;</span>, <span class="s">&quot;Jane&quot;</span> }.map { <span class="o">|</span>name<span class="o">|</span>
@@ -1025,7 +1034,7 @@ puts cursor.<span class="k">of</span>(<span class="t">User</span>).to_a.to_prett
   </svg>
 </a>Features</h2>
 
-<ul><li><strong><a href="https://docs.mongodb.com/manual/crud/index.html" target="_blank">CRUD operations</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/aggregation/" target="_blank">Aggregation</a> (except: Map-Reduce)</strong></li><li><strong><a href="https://docs.mongodb.com/manual/reference/method/Bulk/index.html" target="_blank">Bulk</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/reference/read-concern/index.html" target="_blank">Read</a> and <a href="https://docs.mongodb.com/manual/reference/write-concern/" target="_blank">Write</a> Concerns</strong></li><li><strong><a href="https://docs.mongodb.com/manual/core/read-preference/index.html" target="_blank">Read Preference</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/core/authentication/index.html" target="_blank">Authentication</a> (only: SCRAM mechanisms)</strong></li><li><strong><a href="https://docs.mongodb.com/manual/core/security-transport-encryption/" target="_blank">TLS encryption</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/indexes/index.html" target="_blank">Indexes</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/core/gridfs/index.html" target="_blank">GridFS</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/changeStreams/index.html" target="_blank">Change Streams</a></strong></li><li><strong><a href="https://elbywan.github.io/cryomongo/Mongo/Commands.html" target="_blank">Admin/Diagnostic commands</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/core/tailable-cursors/index.html" target="_blank">Tailable and Awaitable cursors</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/reference/collation/index.html" target="_blank">Collation</a></strong></li><li><strong>Standalone, <a href="https://docs.mongodb.com/manual/sharding/" target="_blank">Sharded</a> or <a href="https://docs.mongodb.com/manual/replication/" target="_blank">ReplicaSet</a> topologies</strong></li><li><strong><a href="https://github.com/mongodb/specifications/blob/master/source/command-monitoring/command-monitoring.rst" target="_blank">Command monitoring</a></strong></li><li><strong>Retryable <a href="https://docs.mongodb.com/manual/core/retryable-reads/" target="_blank">reads</a> and <a href="https://docs.mongodb.com/manual/core/retryable-writes/" target="_blank">writes</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/core/read-isolation-consistency-recency/#client-sessions-and-causal-consistency-guarantees" target="_blank">Causal consistency</a></strong></li></ul>
+<ul><li><strong><a href="https://docs.mongodb.com/manual/crud/index.html">CRUD operations</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/aggregation/">Aggregation</a> (except: Map-Reduce)</strong></li><li><strong><a href="https://docs.mongodb.com/manual/reference/method/Bulk/index.html">Bulk</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/reference/read-concern/index.html">Read</a> and <a href="https://docs.mongodb.com/manual/reference/write-concern/">Write</a> Concerns</strong></li><li><strong><a href="https://docs.mongodb.com/manual/core/read-preference/index.html">Read Preference</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/core/authentication/index.html">Authentication</a> (only: SCRAM mechanisms)</strong></li><li><strong><a href="https://docs.mongodb.com/manual/core/security-transport-encryption/">TLS encryption</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/indexes/index.html">Indexes</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/core/gridfs/index.html">GridFS</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/changeStreams/index.html">Change Streams</a></strong></li><li><strong><a href="https://elbywan.github.io/cryomongo/Mongo/Commands.html">Admin/Diagnostic commands</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/core/tailable-cursors/index.html">Tailable and Awaitable cursors</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/reference/collation/index.html">Collation</a></strong></li><li><strong>Standalone, <a href="https://docs.mongodb.com/manual/sharding/">Sharded</a> or <a href="https://docs.mongodb.com/manual/replication/">ReplicaSet</a> topologies</strong></li><li><strong><a href="https://github.com/mongodb/specifications/blob/master/source/command-monitoring/command-monitoring.rst">Command monitoring</a></strong></li><li><strong>Retryable <a href="https://docs.mongodb.com/manual/core/retryable-reads/">reads</a> and <a href="https://docs.mongodb.com/manual/core/retryable-writes/">writes</a></strong></li><li><strong><a href="https://docs.mongodb.com/manual/core/read-isolation-consistency-recency/#client-sessions-and-causal-consistency-guarantees">Causal consistency</a></strong></li></ul>
 
 <h2><a id="conventions" class="anchor" href="#conventions">
   <svg class="octicon-link" aria-hidden="true">
@@ -1033,7 +1042,7 @@ puts cursor.<span class="k">of</span>(<span class="t">User</span>).to_a.to_prett
   </svg>
 </a>Conventions</h2>
 
-<ul><li>Methods and arguments names are in <strong>snake case</strong>.</li><li>Object arguments can usually be passed as a <strong><a href="https://crystal-lang.org/api/NamedTuple.html" target="_blank">NamedTuple</a></strong>, <strong><a href="https://crystal-lang.org/api/Hash.html" target="_blank">Hash</a></strong>, <strong><a href="https://github.com/elbywan/bson.cr#serialization" target="_blank">BSON::Serializable</a></strong> or a <strong><a href="https://elbywan.github.io/bson.cr/BSON.html" target="_blank">BSON</a></strong> instance.</li></ul>
+<ul><li>Methods and arguments names are in <strong>snake case</strong>.</li><li>Object arguments can usually be passed as a <strong><a href="https://crystal-lang.org/api/NamedTuple.html">NamedTuple</a></strong>, <strong><a href="https://crystal-lang.org/api/Hash.html">Hash</a></strong>, <strong><a href="https://github.com/elbywan/bson.cr#serialization">BSON::Serializable</a></strong> or a <strong><a href="https://elbywan.github.io/bson.cr/BSON.html">BSON</a></strong> instance.</li></ul>
 
 <h2><a id="documentation" class="anchor" href="#documentation">
   <svg class="octicon-link" aria-hidden="true">
@@ -1041,7 +1050,7 @@ puts cursor.<span class="k">of</span>(<span class="t">User</span>).to_a.to_prett
   </svg>
 </a>Documentation</h2>
 
-<p><strong>The generated API documentation is available <a href="https://elbywan.github.io/cryomongo/Mongo.html" target="_blank">here</a>.</strong></p>
+<p><strong>The generated API documentation is available <a href="https://elbywan.github.io/cryomongo/Mongo.html">here</a>.</strong></p>
 
 <h3><a id="connection" class="anchor" href="#connection">
   <svg class="octicon-link" aria-hidden="true">
@@ -1077,7 +1086,7 @@ ssl_client <span class="o">=</span> <span class="t">Mongo</span><span class="t">
 
 <p><strong>Links</strong></p>
 
-<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html" target="_blank">Mongo::Client</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Options.html" target="_blank">Mongo::Options</a></li></ul>
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html">Mongo::Client</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Options.html">Mongo::Options</a></li></ul>
 
 <h3><a id="authentication" class="anchor" href="#authentication">
   <svg class="octicon-link" aria-hidden="true">
@@ -1176,7 +1185,7 @@ counter <span class="o">=</span> collection.estimated_document_count</code></pre
 
 <p><strong>Links</strong></p>
 
-<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Collection.html" target="_blank">Mongo::Collection</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Database.html" target="_blank">Mongo::Database</a></li></ul>
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Collection.html">Mongo::Collection</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Database.html">Mongo::Database</a></li></ul>
 
 <h3><a id="bulk-operations" class="anchor" href="#bulk-operations">
   <svg class="octicon-link" aria-hidden="true">
@@ -1206,7 +1215,7 @@ pp bulk.execute(write_concern: <span class="t">Mongo</span><span class="t">::</s
 
 <p><strong>Links</strong></p>
 
-<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Bulk.html" target="_blank">Mongo::Bulk</a></li></ul>
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Bulk.html">Mongo::Bulk</a></li></ul>
 
 <h3><a id="indexes" class="anchor" href="#indexes">
   <svg class="octicon-link" aria-hidden="true">
@@ -1259,7 +1268,7 @@ collection.create_indexes([
 
 <p><strong>Links</strong></p>
 
-<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Collection.html" target="_blank">Mongo::Collection</a></li></ul>
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Collection.html">Mongo::Collection</a></li></ul>
 
 <h3><a id="grid-fs" class="anchor" href="#grid-fs">
   <svg class="octicon-link" aria-hidden="true">
@@ -1300,7 +1309,7 @@ gridfs.delete(id)
 
 <p><strong>Links</strong></p>
 
-<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/GridFS/Bucket.html" target="_blank">Mongo::GridFS::Bucket</a></li></ul>
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/GridFS/Bucket.html">Mongo::GridFS::Bucket</a></li></ul>
 
 <h3><a id="change-streams" class="anchor" href="#change-streams">
   <svg class="octicon-link" aria-hidden="true">
@@ -1338,7 +1347,7 @@ sleep</code></pre>
 
 <p><strong>Links</strong></p>
 
-<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/ChangeStream/Cursor.html" target="_blank">Mongo::ChangeStream::Cursor</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/ChangeStream/Document.html" target="_blank">Mongo::ChangeStream::Document</a></li></ul>
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/ChangeStream/Cursor.html">Mongo::ChangeStream::Cursor</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/ChangeStream/Document.html">Mongo::ChangeStream::Document</a></li></ul>
 
 <h2><a id="raw-commands" class="anchor" href="#raw-commands">
   <svg class="octicon-link" aria-hidden="true">
@@ -1368,7 +1377,7 @@ client[<span class="s">&quot;database&quot;</span>][<span class="s">&quot;collec
 
 <p><strong>Links</strong></p>
 
-<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Commands.html" target="_blank">Mongo::Commands</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args" target="_blank">Mongo::Client#command</a>-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Database.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil,**args" target="_blank">Mongo::Database#command</a>-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Collection.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil,**args" target="_blank">Mongo::Collection#command</a>-instance-method)</li></ul>
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Commands.html">Mongo::Commands</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args">Mongo::Client#command</a>-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Database.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil,**args">Mongo::Database#command</a>-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Collection.html#command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil,**args">Mongo::Collection#command</a>-instance-method)</li></ul>
 
 <h2><a id="concerns-and-preference" class="anchor" href="#concerns-and-preference">
   <svg class="octicon-link" aria-hidden="true">
@@ -1401,7 +1410,7 @@ collection.find(
 
 <p><strong>Links</strong></p>
 
-<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/ReadConcern.html" target="_blank">Mongo::ReadConcern</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/WriteConcern.html" target="_blank">Mongo::WriteConcern</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/ReadPreference.html" target="_blank">Mongo::ReadPreference</a></li></ul>
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/ReadConcern.html">Mongo::ReadConcern</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/WriteConcern.html">Mongo::WriteConcern</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/ReadPreference.html">Mongo::ReadPreference</a></li></ul>
 
 <h2><a id="commands-monitoring" class="anchor" href="#commands-monitoring">
   <svg class="octicon-link" aria-hidden="true">
@@ -1434,7 +1443,7 @@ client.unsubscribe_commands(subscription)</code></pre>
 
 <p><strong>Links</strong></p>
 
-<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#subscribe_commands(&callback:Monitoring::Commands::Event->Nil" target="_blank">Mongo::Client#subscribe_commands</a>:Monitoring::Commands::Event->Nil-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#unsubscribe_commands(callback:Monitoring::Commands::Event->Nil" target="_blank">Mongo::Client#unsubscribe_commands</a>:Nil-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/Observable.html" target="_blank">Mongo::Monitoring::Observable</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/Commands/CommandStartedEvent.html" target="_blank">Mongo::Monitoring::CommandStartedEvent</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/Commands/CommandSucceededEvent.html" target="_blank">Mongo::Monitoring::CommandSucceededEvent</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/Commands/CommandFailedEvent.html" target="_blank">Mongo::Monitoring::CommandFailedEvent</a></li></ul>
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#subscribe_commands(&callback:Monitoring::Commands::Event->Nil">Mongo::Client#subscribe_commands</a>:Monitoring::Commands::Event->Nil-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#unsubscribe_commands(callback:Monitoring::Commands::Event->Nil">Mongo::Client#unsubscribe_commands</a>:Nil-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/Observable.html">Mongo::Monitoring::Observable</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/Commands/CommandStartedEvent.html">Mongo::Monitoring::CommandStartedEvent</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/Commands/CommandSucceededEvent.html">Mongo::Monitoring::CommandSucceededEvent</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Monitoring/Commands/CommandFailedEvent.html">Mongo::Monitoring::CommandFailedEvent</a></li></ul>
 
 <h2><a id="causal-consistency" class="anchor" href="#causal-consistency">
   <svg class="octicon-link" aria-hidden="true">
@@ -1471,7 +1480,7 @@ client.close</code></pre>
 
 <p><strong>Links</strong></p>
 
-<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Session.html" target="_blank">Mongo::Session</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#start_session(*,causal_consistency:Bool=true" target="_blank">Mongo::Client#start_session</a>:Session::ClientSession-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Collection.html#with_session(**args,&" target="_blank">Mongo::Collection#with_session</a>-instance-method)</li></ul>
+<ul><li><a href="https://elbywan.github.io/cryomongo/Mongo/Session.html">Mongo::Session</a></li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Client.html#start_session(*,causal_consistency:Bool=true">Mongo::Client#start_session</a>:Session::ClientSession-instance-method)</li><li><a href="https://elbywan.github.io/cryomongo/Mongo/Collection.html#with_session(**args,&">Mongo::Collection#with_session</a>-instance-method)</li></ul>
 
 <h2><a id="specifications" class="anchor" href="#specifications">
   <svg class="octicon-link" aria-hidden="true">
@@ -1479,19 +1488,19 @@ client.close</code></pre>
   </svg>
 </a>Specifications</h2>
 
-<p>The goal is to to be compliant with most of the <a href="https://github.com/mongodb/specifications" target="_blank">official MongoDB set of specifications</a>.</p>
+<p>The goal is to to be compliant with most of the <a href="https://github.com/mongodb/specifications">official MongoDB set of specifications</a>.</p>
 
 <p><strong>✅ Implemented</strong></p>
 
 <p>The following specifications are implemented:</p>
 
-<ul><li>https://github.com/mongodb/specifications/tree/master/source/message</li><li>https://github.com/mongodb/specifications/tree/master/source/crud</li><li>https://github.com/mongodb/specifications/blob/master/source/find_getmore_killcursors_commands.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/driver-bulk-update.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/read-write-concern/read-write-concern.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-collections.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-databases.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-indexes.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/connection-string</li><li>https://github.com/mongodb/specifications/tree/master/source/uri-options (except validation)</li><li>https://github.com/mongodb/specifications/tree/master/source/server-discovery-and-monitoring</li><li>https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/max-staleness/max-staleness.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/connection-monitoring-and-pooling (loosely - using the crystal-db pool)</li><li>https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst (SHA1 / SHA256 only - without SASLprep)</li><li>https://github.com/mongodb/specifications/blob/master/source/index-management.rst (no IndexView fluid syntax)</li><li>https://github.com/mongodb/specifications/tree/master/source/gridfs</li><li>https://github.com/mongodb/specifications/tree/master/source/change-streams</li><li>https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/command-monitoring</li><li>https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/causal-consistency</li></ul>
+<ul><li>https://github.com/mongodb/specifications/tree/master/source/message</li><li>https://github.com/mongodb/specifications/tree/master/source/crud</li><li>https://github.com/mongodb/specifications/blob/master/source/find_getmore_killcursors_commands.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/driver-bulk-update.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/read-write-concern/read-write-concern.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-collections.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-databases.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/enumerate-indexes.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/connection-string</li><li>https://github.com/mongodb/specifications/tree/master/source/uri-options (except validation)</li><li>https://github.com/mongodb/specifications/tree/master/source/server-discovery-and-monitoring</li><li>https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/max-staleness/max-staleness.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/connection-monitoring-and-pooling (loosely - using the crystal-db pool)</li><li>https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst (SHA1 / SHA256 only - without SASLprep)</li><li>https://github.com/mongodb/specifications/blob/master/source/index-management.rst (no IndexView fluid syntax)</li><li>https://github.com/mongodb/specifications/tree/master/source/gridfs</li><li>https://github.com/mongodb/specifications/tree/master/source/change-streams</li><li>https://github.com/mongodb/specifications/blob/master/source/sessions/driver-sessions.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/command-monitoring</li><li>https://github.com/mongodb/specifications/blob/master/source/retryable-writes/retryable-writes.rst</li><li>https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst</li><li>https://github.com/mongodb/specifications/tree/master/source/causal-consistency</li><li>https://github.com/mongodb/specifications/blob/master/source/initial-dns-seedlist-discovery</li></ul>
 
 <p><strong>⏳Next</strong></p>
 
 <p>The following specifications are to be implemented next:</p>
 
-<ul><li>https://github.com/mongodb/specifications/tree/master/source/transactions</li><li>https://github.com/mongodb/specifications/tree/master/source/compression</li></ul>
+<ul><li>https://github.com/mongodb/specifications/blob/master/source/polling-srv-records-for-mongos-discovery</li><li>https://github.com/mongodb/specifications/tree/master/source/transactions</li><li>https://github.com/mongodb/specifications/tree/master/source/compression</li></ul>
 
 <h2><a id="contributing" class="anchor" href="#contributing">
   <svg class="octicon-link" aria-hidden="true">
@@ -1507,7 +1516,7 @@ client.close</code></pre>
   </svg>
 </a>Contributors</h2>
 
-<ul><li><a href="https://github.com/elbywan" target="_blank">elbywan</a> - creator and maintainer</li></ul>
+<ul><li><a href="https://github.com/elbywan">elbywan</a> - creator and maintainer</li></ul>
 
 <h2><a id="credit" class="anchor" href="#credit">
   <svg class="octicon-link" aria-hidden="true">
@@ -1515,7 +1524,7 @@ client.close</code></pre>
   </svg>
 </a>Credit</h2>
 
-<ul><li>Icon made by <a href="https://www.flaticon.com/authors/smashicons" target="_blank">Smashicons</a> from <a href="https://www.flaticon.com" target="_blank">www.flaticon.com</a>.</li></ul>
+<ul><li>Icon made by <a href="https://www.flaticon.com/authors/smashicons">Smashicons</a> from <a href="https://www.flaticon.com">www.flaticon.com</a>.</li></ul>
 </div>
 </body>
 </html>

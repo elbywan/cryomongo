@@ -3,28 +3,28 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="0.3.1-dev">
+<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="crystal_docs.project_version" content="0.3.6-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
+
 
 
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/doc.js"></script>
 
-<svg class="hidden">
-  <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
-  </symbol>
-</svg>
-
-  <meta id="repository-name" content="cryomongo">
-  <title>Mongo::Options - cryomongo 0.3.1-dev</title>
+  <meta name="repository-name" content="cryomongo">
+  <title>Mongo::Options - cryomongo 0.3.6-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
 </head>
 <body>
 
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -39,12 +39,12 @@
       </h1>
 
       <span class="project-version">
-        0.3.1-dev
+        0.3.6-dev
       </span>
     </div>
   </div>
 
-  <div class="search-results" class="hidden">
+  <div class="search-results hidden">
     <ul class="search-list"></ul>
   </div>
 
@@ -876,6 +876,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/SRV" data-name="mongo::srv">
+      <a href="../Mongo/SRV.html">SRV</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/WriteConcern" data-name="mongo::writeconcern">
       <a href="../Mongo/WriteConcern.html">WriteConcern</a>
       
@@ -916,7 +921,7 @@
 
   <p>A set of options used to configure the driver.</p>
 
-<p><span class="flag purple">NOTE</span>  <a href="https://github.com/mongodb/specifications/blob/master/source/uri-options/uri-options.rst" target="_blank">For more details, see the uri options specification document</a>.</p>
+<p><span class="flag purple">NOTE</span>  <a href="https://github.com/mongodb/specifications/blob/master/source/uri-options/uri-options.rst">For more details, see the uri options specification document</a>.</p>
 
 
 
@@ -932,7 +937,7 @@
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type"><a href="../Mongo/Tools/Initializer.html">Mongo::Tools::Initializer</a></li>
+      <li class="other-type">Mongo::Tools::Initializer</li>
     
   </ul>
 
@@ -953,6 +958,11 @@
 </a>
     Defined in:
   </h2>
+  
+    
+      cryomongo/uri/options.cr
+    
+    <br/>
   
 
 
@@ -1019,6 +1029,13 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#auth_source=(auth_source:String?)-instance-method" class="signature"><strong>#auth_source=</strong>(auth_source : String?)</a>
+        
+          <div class="summary"><p>The database that connections should authenticate against</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#compressors:String?-instance-method" class="signature"><strong>#compressors</strong> : String?</a>
         
           <div class="summary"><p>The list of allowed compression types for wire protocol messages sent or received from the server</p></div>
@@ -1036,6 +1053,13 @@
         <a href="#direct_connection:Bool?-instance-method" class="signature"><strong>#direct_connection</strong> : Bool?</a>
         
           <div class="summary"><ol><li>seconds Whether to connect to the deployment in Single topology.</li></ol></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dns_resolver:Durian::Resolver-instance-method" class="signature"><strong>#dns_resolver</strong> : Durian::Resolver</a>
+        
+          <div class="summary"><p>Use custom dns resolver.</p></div>
         
       </li>
     
@@ -1139,6 +1163,13 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#replica_set=(replica_set:String?)-instance-method" class="signature"><strong>#replica_set=</strong>(replica_set : String?)</a>
+        
+          <div class="summary"><p>The name of the replica set to connect to</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#retry_reads:Bool?-instance-method" class="signature"><strong>#retry_reads</strong> : Bool?</a>
         
           <div class="summary"><p>Enables retryable reads on server 3.6+</p></div>
@@ -1189,6 +1220,13 @@
     
       <li class="entry-summary">
         <a href="#ssl:Bool?-instance-method" class="signature"><strong>#ssl</strong> : Bool?</a>
+        
+          <div class="summary"><p>Alias of "tls"; required to ensure that Atlas connection strings continue to work</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ssl=(ssl:Bool?)-instance-method" class="signature"><strong>#ssl=</strong>(ssl : Bool?)</a>
         
           <div class="summary"><p>Alias of "tls"; required to ensure that Atlas connection strings continue to work</p></div>
         
@@ -1263,7 +1301,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#w:Int32?-instance-method" class="signature"><strong>#w</strong> : Int32?</a>
+        <a href="#w:Int32%7CString%7CNil-instance-method" class="signature"><strong>#w</strong> : Int32 | String | Nil</a>
         
           <div class="summary"><p>Default write concern "w" field for the client</p></div>
         
@@ -1454,6 +1492,25 @@
       </div>
     </div>
   
+    <div class="entry-detail" id="auth_source=(auth_source:String?)-instance-method">
+      <div class="signature">
+        
+        def <strong>auth_source=</strong>(auth_source : String?)
+
+        <a class="method-permalink" href="#auth_source=(auth_source:String?)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>The database that connections should authenticate against</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="compressors:String?-instance-method">
       <div class="signature">
         
@@ -1507,6 +1564,28 @@ Whether to connect to the deployment in Single topology.
 Whether to connect to the deployment in Single topology.
 Whether to connect to the deployment in Single topology.
 Whether to connect to the deployment in Single topology.</li></ol>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dns_resolver:Durian::Resolver-instance-method">
+      <div class="signature">
+        
+        def <strong>dns_resolver</strong> : Durian::Resolver
+
+        <a class="method-permalink" href="#dns_resolver:Durian::Resolver-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Use custom dns resolver.
+Non-standard.</p>
+
+<p>By default, the Cloudflare public DNS is used. (<code>1.1.1.1</code>)</p>
         </div>
       
       <br/>
@@ -1785,6 +1864,25 @@ Whether to connect to the deployment in Single topology.</li></ol>
       </div>
     </div>
   
+    <div class="entry-detail" id="replica_set=(replica_set:String?)-instance-method">
+      <div class="signature">
+        
+        def <strong>replica_set=</strong>(replica_set : String?)
+
+        <a class="method-permalink" href="#replica_set=(replica_set:String?)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>The name of the replica set to connect to</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="retry_reads:Bool?-instance-method">
       <div class="signature">
         
@@ -1924,6 +2022,25 @@ Whether to connect to the deployment in Single topology.</li></ol>
         def <strong>ssl</strong> : Bool?
 
         <a class="method-permalink" href="#ssl:Bool?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Alias of "tls"; required to ensure that Atlas connection strings continue to work</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ssl=(ssl:Bool?)-instance-method">
+      <div class="signature">
+        
+        def <strong>ssl=</strong>(ssl : Bool?)
+
+        <a class="method-permalink" href="#ssl=(ssl:Bool?)-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2122,12 +2239,12 @@ Whether to connect to the deployment in Single topology.</li></ol>
       </div>
     </div>
   
-    <div class="entry-detail" id="w:Int32?-instance-method">
+    <div class="entry-detail" id="w:Int32|String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>w</strong> : Int32?
+        def <strong>w</strong> : Int32 | String | Nil
 
-        <a class="method-permalink" href="#w:Int32?-instance-method">#</a>
+        <a class="method-permalink" href="#w:Int32%7CString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">

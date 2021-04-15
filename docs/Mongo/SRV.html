@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="cryomongo">
-  <title>Mongo::Error - cryomongo 0.3.6-dev</title>
+  <title>Mongo::SRV - cryomongo 0.3.6-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -721,7 +721,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="cryomongo/Mongo/Error" data-name="mongo::error">
+  <li class="parent " data-id="cryomongo/Mongo/Error" data-name="mongo::error">
       <a href="../Mongo/Error.html">Error</a>
       
         <ul>
@@ -876,7 +876,7 @@
       
     </li>
   
-  <li class=" " data-id="cryomongo/Mongo/SRV" data-name="mongo::srv">
+  <li class=" current" data-id="cryomongo/Mongo/SRV" data-name="mongo::srv">
       <a href="../Mongo/SRV.html">SRV</a>
       
     </li>
@@ -900,12 +900,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Mongo::Error
+  <span class="kind">class</span> Mongo::SRV
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Mongo/Error.html">Mongo::Error</a></li><li class="superclass">Exception</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Mongo/SRV.html">Mongo::SRV</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -917,26 +917,6 @@
 
 
 
-
-  <h2>
-    <a id="direct-known-subclasses" class="anchor" href="#direct-known-subclasses">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Direct Known Subclasses
-  </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type"><a href="../Mongo/Bulk/Error.html">Mongo::Bulk::Error</a></li>
-    
-      <li class="other-type"><a href="../Mongo/Error/Command.html">Mongo::Error::Command</a></li>
-    
-      <li class="other-type"><a href="../Mongo/Error/CommandWrite.html">Mongo::Error::CommandWrite</a></li>
-    
-      <li class="other-type"><a href="../Mongo/Error/ServerSelection.html">Mongo::Error::ServerSelection</a></li>
-    
-  </ul>
 
 
 
@@ -953,7 +933,7 @@
   </h2>
   
     
-      cryomongo/error.cr
+      cryomongo/uri/srv.cr
     
     <br/>
   
@@ -962,9 +942,43 @@
 
 
 
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new(resolver:Durian::Resolver,url:String)-class-method" class="signature"><strong>.new</strong>(resolver : Durian::Resolver, url : String)</a>
+        
+      </li>
+    
+  </ul>
 
 
 
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#resolve-instance-method" class="signature"><strong>#resolve</strong></a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -992,22 +1006,60 @@
 
 
   
-    
-
-
-    
-
-
-    
-
-
-  
 </div>
 
 
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(resolver:Durian::Resolver,url:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(resolver : Durian::Resolver, url : String)
+
+        <a class="method-permalink" href="#new(resolver:Durian::Resolver,url:String)-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="resolve-instance-method">
+      <div class="signature">
+        
+        def <strong>resolve</strong>
+
+        <a class="method-permalink" href="#resolve-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 
