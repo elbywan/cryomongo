@@ -7,7 +7,7 @@ require "./cryomongo/gridfs"
 
 # The main Cryomongo module.
 module Mongo
-  VERSION = "0.3.7"
+  VERSION = "0.3.8"
 
   Log = ::Log.for(self)
 end
