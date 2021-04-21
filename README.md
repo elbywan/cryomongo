@@ -80,7 +80,7 @@ database.write_concern = Mongo::WriteConcern.new(w: "majority")
 { Mongo::Commands::Drop, Mongo::Commands::Create }.each do |command|
   database.command(command, name: "users")
 rescue e : Mongo::Error::Command
-  # ignore the server error, drop will fail if the collection has not ben created before.
+  # ignore the server error, drop will fail if the collection has not been created before.
 end
 
 # Insert User structures that are automatically serialized to BSON.
@@ -133,6 +133,7 @@ puts cursor.of(User).to_a.to_pretty_json
 - **[Command monitoring](https://github.com/mongodb/specifications/blob/master/source/command-monitoring/command-monitoring.rst)**
 - **Retryable [reads](https://docs.mongodb.com/manual/core/retryable-reads/) and [writes](https://docs.mongodb.com/manual/core/retryable-writes/)**
 - **[Causal consistency](https://docs.mongodb.com/manual/core/read-isolation-consistency-recency/#client-sessions-and-causal-consistency-guarantees)**
+- **[Transactions](https://docs.mongodb.com/manual/core/transactions/)**
 
 ## Conventions
 
@@ -540,6 +541,7 @@ require "cryomongo"
 
 client = Mongo::Client.new
 # It is important to ensure that both read and writes are performed with "majority" concern.
+# See: https://docs.mongodb.com/manual/core/causal-consistency-read-write-concerns/
 client.read_concern = Mongo::ReadConcern.new(level: "majority")
 client.write_concern = Mongo::WriteConcern.new(w: "majority")
 
@@ -569,6 +571,79 @@ client.close
 - [Mongo::Session](https://elbywan.github.io/cryomongo/Mongo/Session.html)
 - [Mongo::Client#start_session](https://elbywan.github.io/cryomongo/Mongo/Client.html#start_session(*,causal_consistency:Bool=true):Session::ClientSession-instance-method)
 - [Mongo::Collection#with_session](https://elbywan.github.io/cryomongo/Mongo/Collection.html#with_session(**args,&)-instance-method)
+
+## Transactions
+
+```crystal
+require "cryomongo"
+
+# Initialize Client and Database instances.
+client = Mongo::Client.new
+database = client["db"]
+collection = database["collection"]
+
+# Create the collection.
+{Mongo::Commands::Drop, Mongo::Commands::Create}.each do |command|
+  database.command(command, name: "collection")
+rescue e : Mongo::Error::Command
+  # ignore the server error, drop will fail if the collection has not been created before.
+end
+
+# Set read and write concerns to perform isolated transactions.
+# See: https://docs.mongodb.com/master/core/transactions/#transactions-and-sessions
+transaction_options = Mongo::Session::TransactionOptions.new(
+  read_concern: Mongo::ReadConcern.new(level: "snapshot"),
+  write_concern: Mongo::WriteConcern.new(w: "majority")
+)
+
+# There are two ways to perform transactions:
+
+collection.with_session(default_transaction_options: transaction_options) do |collection, session|
+  puts collection.find.to_a.to_json # => "[]"
+
+  # 1. by calling the `with_transaction` method.
+
+  # `with_transaction` will commit after the block ends.
+  # if the block raises, the transaction will be aborted.
+  session.with_transaction {
+    collection.insert_one({_id: 1})
+    collection.insert_one({_id: 2})
+  }
+  puts collection.find.to_a.to_json # => [{"_id":1},{"_id":2}]
+
+  # The transaction below will be aborted because the block raises an Exception.
+  begin
+    session.with_transaction {
+      collection.insert_one({_id: 3})
+      raise "Interrupted!"
+      collection.insert_one({_id: 4})
+    }
+  rescue e
+    puts e # => Interrupted!
+  end
+  puts collection.find.to_a.to_json # => [{"_id":1},{"_id":2}]
+
+  # 2. by calling the `start_transaction`, `commit_transaction` and `abort_transaction` methods.
+  session.start_transaction
+  collection.insert_one({_id: 3})
+  # The transaction is isolated, reading outside of the session scope does not return documents impacted by the transaction…
+  puts database["collection"].find.to_a.to_json # => [{"_id":1},{"_id":2}]
+  # but reading within the session scope does.
+  puts collection.find.to_a.to_json # => [{"_id":1},{"_id":2},{"_id":3}]
+  session.commit_transaction
+  # The transaction is now committed and visible outside of the transaction scope.
+  puts collection.find.to_a.to_json             # => [{"_id":1},{"_id":2},{"_id":3}]
+  puts database["collection"].find.to_a.to_json # => [{"_id":1},{"_id":2},{"_id":3}]
+end
+```
+
+**Links**
+
+- [Mongo::Session#with_transaction](https://elbywan.github.io/cryomongo/Mongo/Session/ClientSession.html#with_transaction(**options,&)-instance-method)
+- [Mongo::Session#start_transaction](https://elbywan.github.io/cryomongo/Mongo/Session/ClientSession.html#start_transaction(**options)-instance-method)
+- [Mongo::Session#commit_transaction](https://elbywan.github.io/cryomongo/Mongo/Session/ClientSession.html#commit_transaction(*,write_concern:WriteConcern?=nil)-instance-method)
+- [Mongo::Session#abort_transaction](https://elbywan.github.io/cryomongo/Mongo/Session/ClientSession.html#abort_transaction(*,write_concern:WriteConcern?=nil)-instance-method)
+- [Mongo::Session::TransactionOptions](https://elbywan.github.io/cryomongo/Mongo/Session/TransactionOptions.html)
 
 ## Specifications
 
@@ -602,13 +677,13 @@ The goal is to to be compliant with most of the [official MongoDB set of specifi
 - https://github.com/mongodb/specifications/blob/master/source/retryable-reads/retryable-reads.rst
 - https://github.com/mongodb/specifications/tree/master/source/causal-consistency
 - https://github.com/mongodb/specifications/blob/master/source/initial-dns-seedlist-discovery
+- https://github.com/mongodb/specifications/tree/master/source/transactions
 
 **⏳Next**
 
 The following specifications are to be implemented next:
 
 - https://github.com/mongodb/specifications/blob/master/source/polling-srv-records-for-mongos-discovery
-- https://github.com/mongodb/specifications/tree/master/source/transactions
 - https://github.com/mongodb/specifications/tree/master/source/compression
 
 ## Contributing

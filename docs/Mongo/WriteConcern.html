@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.36.1">
-<meta name="crystal_docs.project_version" content="0.3.6-dev">
+<meta name="crystal_docs.project_version" content="transactions-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
 
@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="cryomongo">
-  <title>Mongo::WriteConcern - cryomongo 0.3.6-dev</title>
+  <title>Mongo::WriteConcern - cryomongo transactions-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        0.3.6-dev
+        transactions-dev
       </span>
     </div>
   </div>
@@ -181,8 +181,18 @@
       
         <ul>
   
+  <li class=" " data-id="cryomongo/Mongo/Commands/AbortTransaction" data-name="mongo::commands::aborttransaction">
+      <a href="../Mongo/Commands/AbortTransaction.html">AbortTransaction</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Commands/Aggregate" data-name="mongo::commands::aggregate">
       <a href="../Mongo/Commands/Aggregate.html">Aggregate</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/AlwaysRetryable" data-name="mongo::commands::alwaysretryable">
+      <a href="../Mongo/Commands/AlwaysRetryable.html">AlwaysRetryable</a>
       
     </li>
   
@@ -218,6 +228,11 @@
   
   <li class=" " data-id="cryomongo/Mongo/Commands/Command" data-name="mongo::commands::command">
       <a href="../Mongo/Commands/Command.html">Command</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/CommitTransaction" data-name="mongo::commands::committransaction">
+      <a href="../Mongo/Commands/CommitTransaction.html">CommitTransaction</a>
       
     </li>
   
@@ -726,6 +741,11 @@
       
         <ul>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Client" data-name="mongo::error::client">
+      <a href="../Mongo/Error/Client.html">Client</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Command" data-name="mongo::error::command">
       <a href="../Mongo/Error/Command.html">Command</a>
       
@@ -736,8 +756,23 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
+      <a href="../Mongo/Error/Network.html">Network</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Error/Server" data-name="mongo::error::server">
+      <a href="../Mongo/Error/Server.html">Server</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/ServerSelection" data-name="mongo::error::serverselection">
       <a href="../Mongo/Error/ServerSelection.html">ServerSelection</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Error/Transaction" data-name="mongo::error::transaction">
+      <a href="../Mongo/Error/Transaction.html">Transaction</a>
       
     </li>
   
@@ -868,6 +903,21 @@
   
   <li class=" " data-id="cryomongo/Mongo/Session/SessionId" data-name="mongo::session::sessionid">
       <a href="../Mongo/Session/SessionId.html">SessionId</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Session/TransactionOptions" data-name="mongo::session::transactionoptions">
+      <a href="../Mongo/Session/TransactionOptions.html">TransactionOptions</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Session/TransactionState" data-name="mongo::session::transactionstate">
+      <a href="../Mongo/Session/TransactionState.html">TransactionState</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Session/TransactionStateEvent" data-name="mongo::session::transactionstateevent">
+      <a href="../Mongo/Session/TransactionStateEvent.html">TransactionStateEvent</a>
       
     </li>
   
@@ -1052,6 +1102,11 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#unacknowledged?-instance-method" class="signature"><strong>#unacknowledged?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#w:Int32%7CString%7CNil-instance-method" class="signature"><strong>#w</strong> : Int32 | String | Nil</a>
         
           <div class="summary"><p>The <em>w</em> option requests acknowledgment that the write operation has propagated to a specified number of mongod instances or to mongod instances with specified tags.</p></div>
@@ -1068,14 +1123,10 @@
       <li class="entry-summary">
         <a href="#w_timeout:Int64?-instance-method" class="signature"><strong>#w_timeout</strong> : Int64?</a>
         
-          <div class="summary"><p>This option specifies a time limit, in milliseconds, for the write concern.</p></div>
-        
       </li>
     
       <li class="entry-summary">
         <a href="#w_timeout=(w_timeout:Int64?)-instance-method" class="signature"><strong>#w_timeout=</strong>(w_timeout : Int64?)</a>
-        
-          <div class="summary"><p>This option specifies a time limit, in milliseconds, for the write concern.</p></div>
         
       </li>
     
@@ -1289,6 +1340,20 @@ bson <span class="o">=</span> user.to_bson</code></pre>
       </div>
     </div>
   
+    <div class="entry-detail" id="unacknowledged?-instance-method">
+      <div class="signature">
+        
+        def <strong>unacknowledged?</strong>
+
+        <a class="method-permalink" href="#unacknowledged?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="w:Int32|String|Nil-instance-method">
       <div class="signature">
         
@@ -1335,11 +1400,6 @@ bson <span class="o">=</span> user.to_bson</code></pre>
         <a class="method-permalink" href="#w_timeout:Int64?-instance-method">#</a>
       </div>
       
-        <div class="doc">
-          
-          <p>This option specifies a time limit, in milliseconds, for the write concern. <em>wtimeout</em> is only applicable for w values greater than 1.</p>
-        </div>
-      
       <br/>
       <div>
         
@@ -1353,11 +1413,6 @@ bson <span class="o">=</span> user.to_bson</code></pre>
 
         <a class="method-permalink" href="#w_timeout=(w_timeout:Int64?)-instance-method">#</a>
       </div>
-      
-        <div class="doc">
-          
-          <p>This option specifies a time limit, in milliseconds, for the write concern. <em>wtimeout</em> is only applicable for w values greater than 1.</p>
-        </div>
       
       <br/>
       <div>

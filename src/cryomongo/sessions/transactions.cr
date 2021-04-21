@@ -46,9 +46,22 @@ module Mongo::Session
       !transaction_state.none?
     end
 
-    # Starts a new transaction with the given options. This session's
-    # defaultTransactionOptions is used when options is omitted.
-    # Raises an error if this session is already in a transaction.
+    # Starts a new transaction with the given options.
+    #
+    # This session's `options.default_transaction_options` of type `TransactionOptions` is used when options is omitted.
+    #
+    # NOTE: Raises an error if this session is already in a transaction.
+    #
+    # ```
+    # client = Mongo::Client.new
+    # session = client.start_session
+    #
+    # # transaction options arguments are optional
+    # session.start_transaction(
+    #   read_concern: Mongo::ReadConcern.new(level: "snapshot"),
+    #   write_concern: Mongo::WriteConcern.new(w: "majority")
+    # )
+    # ```
     def start_transaction(**options)
       @current_transaction_options = (@options.default_transaction_options || TransactionOptions.new)
       @current_transaction_options = @current_transaction_options.copy_with(
@@ -71,8 +84,9 @@ module Mongo::Session
     end
 
     # Same as `start_transaction` but will commit the transaction after the block returns.
-    # If an error is thrown, the transaction will be aborted.
-    def start_transaction(**options, &block)
+    #
+    # NOTE: If an error is thrown, the transaction will be aborted.
+    def with_transaction(**options, &block)
       start_transaction(**options)
       yield
       commit_transaction
@@ -82,7 +96,16 @@ module Mongo::Session
     end
 
     # Commits the currently active transaction in this session.
-    # Raises an error if this session has no transaction.
+    #
+    # NOTE: Raises an error if this session has no transaction.
+    #
+    # ```
+    # client = Mongo::Client.new
+    # session = client.start_session
+    # session.start_transaction
+    # client["db"]["collection"].insert_one({_id: 1}, session: session)
+    # session.commit_transaction
+    # ```
     def commit_transaction(*, write_concern : WriteConcern? = nil)
       state_transition(:commit, rollback_status_on_error: false) {
         skip_commit = @transitions_from.try(&.starting?) || false
@@ -100,7 +123,14 @@ module Mongo::Session
     end
 
     # Aborts the currently active transaction in this session.
-    # Raises an error if this session has no transaction.
+    #
+    # NOTE: Raises an error if this session has no transaction.
+    #
+    # client = Mongo::Client.new
+    # session = client.start_session
+    # session.start_transaction
+    # client["db"]["collection"].insert_one({ _id: 1 }, session: session)
+    # session.abort_transaction
     def abort_transaction(*, write_concern : WriteConcern? = nil)
       state_transition(:abort, rollback_status_on_error: false) {
         @client.command(

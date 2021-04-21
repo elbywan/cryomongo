@@ -481,7 +481,7 @@ class Mongo::Client
         body["$clusterTime"] = cluster_time if cluster_time
       end
 
-      if session.is_transaction?
+      if session.is_transaction? && server_description.supports_retryable_writes?
         if session.transitions_from.try(&.starting?)
           body["startTransaction"] = true
         end

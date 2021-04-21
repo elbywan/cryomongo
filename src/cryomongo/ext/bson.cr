@@ -1,3 +1,4 @@
+# :nodoc:
 struct BSON
   # Return a copy of this BSON object having the key/value pairs overriden by those located in the named_tuple argument.
   def copy_with(named_tuple : NamedTuple) : BSON
