@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.36.1">
-<meta name="crystal_docs.project_version" content="transactions-dev">
+<meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
 
@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="cryomongo">
-  <title>Mongo::Session::ClientSession - cryomongo transactions-dev</title>
+  <title>Mongo::Session::ClientSession - cryomongo master-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        transactions-dev
+        master-dev
       </span>
     </div>
   </div>
@@ -1197,11 +1197,14 @@
 
 <p><span class="flag purple">NOTE</span>  Raises an error if this session has no transaction.</p>
 
-<p>client = Mongo::Client.new
-session = client.start_session
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+session <span class="o">=</span> client.start_session
 session.start_transaction
-client["db"]["collection"].insert_one({ <em>id: 1 }, session: session)
-session.abort</em>transaction</p>
+client[<span class="s">&quot;db&quot;</span>][<span class="s">&quot;collection&quot;</span>].tap { <span class="o">|</span>collection<span class="o">|</span>
+  collection.insert_one({_id: <span class="n">1</span>}, session: session)
+  collection.insert_one({_id: <span class="n">2</span>}, session: session)
+}
+session.abort_transaction</code></pre>
         </div>
       
       <br/>
@@ -1290,7 +1293,10 @@ This value will also be null when a cluster does not report cluster times.</p>
 <pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
 session <span class="o">=</span> client.start_session
 session.start_transaction
-client[<span class="s">&quot;db&quot;</span>][<span class="s">&quot;collection&quot;</span>].insert_one({_id: <span class="n">1</span>}, session: session)
+client[<span class="s">&quot;db&quot;</span>][<span class="s">&quot;collection&quot;</span>].tap { <span class="o">|</span>collection<span class="o">|</span>
+  collection.insert_one({_id: <span class="n">1</span>}, session: session)
+  collection.insert_one({_id: <span class="n">2</span>}, session: session)
+}
 session.commit_transaction</code></pre>
         </div>
       
@@ -1532,6 +1538,15 @@ session.start_transaction(
           <p>Same as <code><a href="../../Mongo/Session/ClientSession.html#start_transaction(**options)-instance-method">#start_transaction</a></code> but will commit the transaction after the block returns.</p>
 
 <p><span class="flag purple">NOTE</span>  If an error is thrown, the transaction will be aborted.</p>
+
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+session <span class="o">=</span> client.start_session
+session.with_transaction {
+  client[<span class="s">&quot;db&quot;</span>][<span class="s">&quot;collection&quot;</span>].tap { <span class="o">|</span>collection<span class="o">|</span>
+    collection.insert_one({_id: <span class="n">1</span>}, session: session)
+    collection.insert_one({_id: <span class="n">2</span>}, session: session)
+  }
+}</code></pre>
         </div>
       
       <br/>

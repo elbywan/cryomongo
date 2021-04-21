@@ -86,6 +86,17 @@ module Mongo::Session
     # Same as `start_transaction` but will commit the transaction after the block returns.
     #
     # NOTE: If an error is thrown, the transaction will be aborted.
+    #
+    # ```
+    # client = Mongo::Client.new
+    # session = client.start_session
+    # session.with_transaction {
+    #   client["db"]["collection"].tap { |collection|
+    #     collection.insert_one({_id: 1}, session: session)
+    #     collection.insert_one({_id: 2}, session: session)
+    #   }
+    # }
+    # ```
     def with_transaction(**options, &block)
       start_transaction(**options)
       yield
@@ -103,7 +114,10 @@ module Mongo::Session
     # client = Mongo::Client.new
     # session = client.start_session
     # session.start_transaction
-    # client["db"]["collection"].insert_one({_id: 1}, session: session)
+    # client["db"]["collection"].tap { |collection|
+    #   collection.insert_one({_id: 1}, session: session)
+    #   collection.insert_one({_id: 2}, session: session)
+    # }
     # session.commit_transaction
     # ```
     def commit_transaction(*, write_concern : WriteConcern? = nil)
@@ -126,11 +140,16 @@ module Mongo::Session
     #
     # NOTE: Raises an error if this session has no transaction.
     #
+    # ```
     # client = Mongo::Client.new
     # session = client.start_session
     # session.start_transaction
-    # client["db"]["collection"].insert_one({ _id: 1 }, session: session)
+    # client["db"]["collection"].tap { |collection|
+    #   collection.insert_one({_id: 1}, session: session)
+    #   collection.insert_one({_id: 2}, session: session)
+    # }
     # session.abort_transaction
+    # ```
     def abort_transaction(*, write_concern : WriteConcern? = nil)
       state_transition(:abort, rollback_status_on_error: false) {
         @client.command(
