@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.36.1">
-<meta name="crystal_docs.project_version" content="0.3.6-dev">
+<meta name="crystal_docs.project_version" content="transactions-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
 
@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="cryomongo">
-  <title>Mongo::Session::Options - cryomongo 0.3.6-dev</title>
+  <title>Mongo::Session::Options - cryomongo transactions-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        0.3.6-dev
+        transactions-dev
       </span>
     </div>
   </div>
@@ -181,8 +181,18 @@
       
         <ul>
   
+  <li class=" " data-id="cryomongo/Mongo/Commands/AbortTransaction" data-name="mongo::commands::aborttransaction">
+      <a href="../../Mongo/Commands/AbortTransaction.html">AbortTransaction</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Commands/Aggregate" data-name="mongo::commands::aggregate">
       <a href="../../Mongo/Commands/Aggregate.html">Aggregate</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/AlwaysRetryable" data-name="mongo::commands::alwaysretryable">
+      <a href="../../Mongo/Commands/AlwaysRetryable.html">AlwaysRetryable</a>
       
     </li>
   
@@ -218,6 +228,11 @@
   
   <li class=" " data-id="cryomongo/Mongo/Commands/Command" data-name="mongo::commands::command">
       <a href="../../Mongo/Commands/Command.html">Command</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/CommitTransaction" data-name="mongo::commands::committransaction">
+      <a href="../../Mongo/Commands/CommitTransaction.html">CommitTransaction</a>
       
     </li>
   
@@ -726,6 +741,11 @@
       
         <ul>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Client" data-name="mongo::error::client">
+      <a href="../../Mongo/Error/Client.html">Client</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Command" data-name="mongo::error::command">
       <a href="../../Mongo/Error/Command.html">Command</a>
       
@@ -736,8 +756,23 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
+      <a href="../../Mongo/Error/Network.html">Network</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Error/Server" data-name="mongo::error::server">
+      <a href="../../Mongo/Error/Server.html">Server</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/ServerSelection" data-name="mongo::error::serverselection">
       <a href="../../Mongo/Error/ServerSelection.html">ServerSelection</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Error/Transaction" data-name="mongo::error::transaction">
+      <a href="../../Mongo/Error/Transaction.html">Transaction</a>
       
     </li>
   
@@ -871,6 +906,21 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Session/TransactionOptions" data-name="mongo::session::transactionoptions">
+      <a href="../../Mongo/Session/TransactionOptions.html">TransactionOptions</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Session/TransactionState" data-name="mongo::session::transactionstate">
+      <a href="../../Mongo/Session/TransactionState.html">TransactionState</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Session/TransactionStateEvent" data-name="mongo::session::transactionstateevent">
+      <a href="../../Mongo/Session/TransactionStateEvent.html">TransactionStateEvent</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -933,7 +983,7 @@
   </h2>
   
     
-      cryomongo/sessions.cr
+      cryomongo/sessions/sessions.cr
     
     <br/>
   
@@ -953,7 +1003,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(causal_consistency:Bool?=nil)-class-method" class="signature"><strong>.new</strong>(causal_consistency : Bool? = <span class="n">nil</span>)</a>
+        <a href="#new(causal_consistency:Bool?=nil,default_transaction_options:TransactionOptions?=nil)-class-method" class="signature"><strong>.new</strong>(causal_consistency : Bool? = <span class="n">nil</span>, default_transaction_options : TransactionOptions? = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -984,7 +1034,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#copy_with(causal_consistency_causal_consistency=@causal_consistency)-instance-method" class="signature"><strong>#copy_with</strong>(causal_consistency _causal_consistency = @causal_consistency)</a>
+        <a href="#copy_with(causal_consistency_causal_consistency=@causal_consistency,default_transaction_options_default_transaction_options=@default_transaction_options)-instance-method" class="signature"><strong>#copy_with</strong>(causal_consistency _causal_consistency = @causal_consistency, default_transaction_options _default_transaction_options = @default_transaction_options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#default_transaction_options:TransactionOptions?-instance-method" class="signature"><strong>#default_transaction_options</strong> : TransactionOptions?</a>
         
       </li>
     
@@ -1038,12 +1093,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(causal_consistency:Bool?=nil)-class-method">
+    <div class="entry-detail" id="new(causal_consistency:Bool?=nil,default_transaction_options:TransactionOptions?=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(causal_consistency : Bool? = <span class="n">nil</span>)
+        def self.<strong>new</strong>(causal_consistency : Bool? = <span class="n">nil</span>, default_transaction_options : <a href="../../Mongo/Session/TransactionOptions.html">TransactionOptions</a>? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new(causal_consistency:Bool?=nil)-class-method">#</a>
+        <a class="method-permalink" href="#new(causal_consistency:Bool?=nil,default_transaction_options:TransactionOptions?=nil)-class-method">#</a>
       </div>
       
       <br/>
@@ -1094,12 +1149,26 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="copy_with(causal_consistency_causal_consistency=@causal_consistency)-instance-method">
+    <div class="entry-detail" id="copy_with(causal_consistency_causal_consistency=@causal_consistency,default_transaction_options_default_transaction_options=@default_transaction_options)-instance-method">
       <div class="signature">
         
-        def <strong>copy_with</strong>(causal_consistency _causal_consistency = @causal_consistency)
+        def <strong>copy_with</strong>(causal_consistency _causal_consistency = @causal_consistency, default_transaction_options _default_transaction_options = @default_transaction_options)
 
-        <a class="method-permalink" href="#copy_with(causal_consistency_causal_consistency=@causal_consistency)-instance-method">#</a>
+        <a class="method-permalink" href="#copy_with(causal_consistency_causal_consistency=@causal_consistency,default_transaction_options_default_transaction_options=@default_transaction_options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="default_transaction_options:TransactionOptions?-instance-method">
+      <div class="signature">
+        
+        def <strong>default_transaction_options</strong> : <a href="../../Mongo/Session/TransactionOptions.html">TransactionOptions</a>?
+
+        <a class="method-permalink" href="#default_transaction_options:TransactionOptions?-instance-method">#</a>
       </div>
       
       <br/>

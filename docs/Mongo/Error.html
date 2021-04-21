@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.36.1">
-<meta name="crystal_docs.project_version" content="0.3.6-dev">
+<meta name="crystal_docs.project_version" content="transactions-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
 
@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="cryomongo">
-  <title>Mongo::Error - cryomongo 0.3.6-dev</title>
+  <title>Mongo::Error - cryomongo transactions-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        0.3.6-dev
+        transactions-dev
       </span>
     </div>
   </div>
@@ -181,8 +181,18 @@
       
         <ul>
   
+  <li class=" " data-id="cryomongo/Mongo/Commands/AbortTransaction" data-name="mongo::commands::aborttransaction">
+      <a href="../Mongo/Commands/AbortTransaction.html">AbortTransaction</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Commands/Aggregate" data-name="mongo::commands::aggregate">
       <a href="../Mongo/Commands/Aggregate.html">Aggregate</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/AlwaysRetryable" data-name="mongo::commands::alwaysretryable">
+      <a href="../Mongo/Commands/AlwaysRetryable.html">AlwaysRetryable</a>
       
     </li>
   
@@ -218,6 +228,11 @@
   
   <li class=" " data-id="cryomongo/Mongo/Commands/Command" data-name="mongo::commands::command">
       <a href="../Mongo/Commands/Command.html">Command</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Commands/CommitTransaction" data-name="mongo::commands::committransaction">
+      <a href="../Mongo/Commands/CommitTransaction.html">CommitTransaction</a>
       
     </li>
   
@@ -726,6 +741,11 @@
       
         <ul>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Client" data-name="mongo::error::client">
+      <a href="../Mongo/Error/Client.html">Client</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Command" data-name="mongo::error::command">
       <a href="../Mongo/Error/Command.html">Command</a>
       
@@ -736,8 +756,23 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
+      <a href="../Mongo/Error/Network.html">Network</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Error/Server" data-name="mongo::error::server">
+      <a href="../Mongo/Error/Server.html">Server</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/ServerSelection" data-name="mongo::error::serverselection">
       <a href="../Mongo/Error/ServerSelection.html">ServerSelection</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Error/Transaction" data-name="mongo::error::transaction">
+      <a href="../Mongo/Error/Transaction.html">Transaction</a>
       
     </li>
   
@@ -871,6 +906,21 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Session/TransactionOptions" data-name="mongo::session::transactionoptions">
+      <a href="../Mongo/Session/TransactionOptions.html">TransactionOptions</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Session/TransactionState" data-name="mongo::session::transactionstate">
+      <a href="../Mongo/Session/TransactionState.html">TransactionState</a>
+      
+    </li>
+  
+  <li class=" " data-id="cryomongo/Mongo/Session/TransactionStateEvent" data-name="mongo::session::transactionstateevent">
+      <a href="../Mongo/Session/TransactionStateEvent.html">TransactionStateEvent</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -910,6 +960,17 @@
 
 
 
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>The common error ancestor class.</p>
+
 
 
 
@@ -930,9 +991,9 @@
     
       <li class="other-type"><a href="../Mongo/Bulk/Error.html">Mongo::Bulk::Error</a></li>
     
-      <li class="other-type"><a href="../Mongo/Error/Command.html">Mongo::Error::Command</a></li>
+      <li class="other-type"><a href="../Mongo/Error/Client.html">Mongo::Error::Client</a></li>
     
-      <li class="other-type"><a href="../Mongo/Error/CommandWrite.html">Mongo::Error::CommandWrite</a></li>
+      <li class="other-type"><a href="../Mongo/Error/Server.html">Mongo::Error::Server</a></li>
     
       <li class="other-type"><a href="../Mongo/Error/ServerSelection.html">Mongo::Error::ServerSelection</a></li>
     
@@ -965,6 +1026,68 @@
 
 
 
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#add_error_label(label:String):Nil-instance-method" class="signature"><strong>#add_error_label</strong>(label : String) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#add_retryable_label(wire_version:Int32)-instance-method" class="signature"><strong>#add_retryable_label</strong>(wire_version : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#add_transient_transaction_label-instance-method" class="signature"><strong>#add_transient_transaction_label</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#add_unknown_transaction_label-instance-method" class="signature"><strong>#add_unknown_transaction_label</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#error_labels:Set(String)-instance-method" class="signature"><strong>#error_labels</strong> : Set(String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#has_error_label?(label:String):Bool-instance-method" class="signature"><strong>#has_error_label?</strong>(label : String) : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#retryable_read?-instance-method" class="signature"><strong>#retryable_read?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#retryable_write?-instance-method" class="signature"><strong>#retryable_write?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#transient_transaction?-instance-method" class="signature"><strong>#transient_transaction?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unknown_transaction?-instance-method" class="signature"><strong>#unknown_transaction?</strong></a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -1008,6 +1131,156 @@
 
 
 
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="add_error_label(label:String):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>add_error_label</strong>(label : String) : Nil
+
+        <a class="method-permalink" href="#add_error_label(label:String):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="add_retryable_label(wire_version:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>add_retryable_label</strong>(wire_version : Int32)
+
+        <a class="method-permalink" href="#add_retryable_label(wire_version:Int32)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="add_transient_transaction_label-instance-method">
+      <div class="signature">
+        
+        def <strong>add_transient_transaction_label</strong>
+
+        <a class="method-permalink" href="#add_transient_transaction_label-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="add_unknown_transaction_label-instance-method">
+      <div class="signature">
+        
+        def <strong>add_unknown_transaction_label</strong>
+
+        <a class="method-permalink" href="#add_unknown_transaction_label-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="error_labels:Set(String)-instance-method">
+      <div class="signature">
+        
+        def <strong>error_labels</strong> : Set(String)
+
+        <a class="method-permalink" href="#error_labels:Set(String)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="has_error_label?(label:String):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>has_error_label?</strong>(label : String) : Bool
+
+        <a class="method-permalink" href="#has_error_label?(label:String):Bool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="retryable_read?-instance-method">
+      <div class="signature">
+        
+        def <strong>retryable_read?</strong>
+
+        <a class="method-permalink" href="#retryable_read?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="retryable_write?-instance-method">
+      <div class="signature">
+        
+        def <strong>retryable_write?</strong>
+
+        <a class="method-permalink" href="#retryable_write?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="transient_transaction?-instance-method">
+      <div class="signature">
+        
+        def <strong>transient_transaction?</strong>
+
+        <a class="method-permalink" href="#transient_transaction?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unknown_transaction?-instance-method">
+      <div class="signature">
+        
+        def <strong>unknown_transaction?</strong>
+
+        <a class="method-permalink" href="#unknown_transaction?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 

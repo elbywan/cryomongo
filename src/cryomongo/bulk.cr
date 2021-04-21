@@ -250,7 +250,7 @@ class Mongo::Bulk
     when ReplaceOne
       Tools.merge_bson({
         q:     model.filter,
-        u:     model.replacement,
+        u:     Collection.validate_replacement!(model.replacement),
         multi: false,
       }, {
         hint:      model.hint,
@@ -262,7 +262,7 @@ class Mongo::Bulk
     when UpdateOne
       Tools.merge_bson({
         q:     model.filter,
-        u:     model.update,
+        u:     Collection.validate_update!(model.update),
         multi: false,
       }, {
         hint:          model.hint,
@@ -275,7 +275,7 @@ class Mongo::Bulk
     when UpdateMany
       Tools.merge_bson({
         q:     model.filter,
-        u:     model.update,
+        u:     Collection.validate_update!(model.update),
         multi: true,
       }, {
         hint:          model.hint,

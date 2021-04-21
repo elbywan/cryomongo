@@ -78,7 +78,7 @@ describe Mongo::Monitoring do
                 }
               when Mongo::Monitoring::Commands::CommandSucceededEvent
                 Mongo::Spec::Runner.compare_json(result["reply"], JSON.parse(event.reply.to_json)) { |a, b|
-                  if a == 42
+                  if a.as_i? == 42 || a.as_s? == "42"
                     b.should_not be_nil
                     cursor_id = b.as_i64
                   elsif a == ""
@@ -91,7 +91,7 @@ describe Mongo::Monitoring do
                 # nothing special to do
               end
             rescue e
-              puts e.inspect_with_backtrace
+              # puts e.inspect_with_backtrace
               raise e
             end
 

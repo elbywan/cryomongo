@@ -51,7 +51,6 @@ class Mongo::SDAM::ServerDescription
   # When this server was last checked.
   property last_update_time : Time = Time::UNIX_EPOCH
   getter logical_session_timeout_minutes : Int32? = nil
-  getter null_logical_session_timeout_minutes : Bool = false
   # The "topologyVersion" from the server's most recent ismaster response or State Change Error.
   getter topology_version : BSON? = nil
 
@@ -79,7 +78,6 @@ class Mongo::SDAM::ServerDescription
       me
       election_id
       tags
-      null_logical_session_timeout_minutes
     ), is_master_result)
 
     @last_update_time = Time.utc

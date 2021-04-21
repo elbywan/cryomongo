@@ -27,8 +27,10 @@ module Mongo::Commands::Delete
   end
 
   def retryable?(**args)
-    if deletes = args["deletes"]?
-      deletes.size == 1 && deletes[0]["limit"]? == 1
+    !prevent_retry(args) && begin
+      if deletes = args["deletes"]?
+        deletes.size == 1 && deletes[0]["limit"]? == 1
+      end
     end
   end
 end

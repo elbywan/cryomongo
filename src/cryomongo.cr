@@ -1,5 +1,6 @@
 require "log"
 require "bson"
+require "./cryomongo/ext/*"
 require "./cryomongo/messages/**"
 require "./cryomongo/client"
 require "./cryomongo/gridfs"

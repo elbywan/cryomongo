@@ -63,6 +63,11 @@ struct Mongo::Connection
       send(request, Commands::IsMaster, log: false)
       response = receive(log: false)
     }
+
+    if error = response.error?
+      raise error
+    end
+
     result = Commands::IsMaster.result(response.body)
 
     if result.sasl_supported_mechs
@@ -115,19 +120,19 @@ struct Mongo::Connection
     message = Messages::Message.new(op_msg)
 
     Log.debug {
-      ">> #{"[#{message.header.request_id}]".ljust(8)} #{command}"
+      "(#{server_description.address}) >> #{"[#{message.header.request_id}]".ljust(8)} #{command}"
     } if command && log
 
     Log.trace {
-      ">> #{"[#{message.header.request_id}]".ljust(8)} Header: #{message.header.inspect}"
+      "(#{server_description.address}) >> #{"[#{message.header.request_id}]".ljust(8)} Header: #{message.header.inspect}"
     } if log
 
     Log.trace {
-      ">> #{"[#{message.header.request_id}]".ljust(8)} Body: #{op_msg.body.to_json}"
+      "(#{server_description.address}) >> #{"[#{message.header.request_id}]".ljust(8)} Body: #{op_msg.body.to_json}"
     } if log
     op_msg.each_sequence { |key, contents|
       Log.trace {
-        ">> #{"[#{message.header.request_id}]".ljust(8)} Seq(#{key}): #{contents.to_json}"
+        "(#{server_description.address}) >> #{"[#{message.header.request_id}]".ljust(8)} Seq(#{key}): #{contents.to_json}"
       } if log
     }
 
@@ -145,18 +150,18 @@ struct Mongo::Connection
       message = Mongo::Messages::Message.new(socket)
 
       Log.debug {
-        "<< #{"[#{message.header.response_to}]".ljust(8)} Header: #{message.header.inspect}"
+        "(#{server_description.address}) << #{"[#{message.header.response_to}]".ljust(8)} Header: #{message.header.inspect}"
       } if log
 
       op_msg = message.contents.as(Messages::OpMsg)
       more_to_come = op_msg.flag_bits.more_to_come?
 
       Log.trace {
-        "<< #{"[#{message.header.response_to}]".ljust(8)} Body: #{op_msg.body.to_json}"
+        "(#{server_description.address}) << #{"[#{message.header.response_to}]".ljust(8)} Body: #{op_msg.body.to_json}"
       } if log
       op_msg.each_sequence { |key, contents|
         Log.trace {
-          "<< #{"[#{message.header.response_to}]".ljust(8)} Seq(#{key}): #{contents.to_json}"
+          "(#{server_description.address}) << #{"[#{message.header.response_to}]".ljust(8)} Seq(#{key}): #{contents.to_json}"
         }
       } if log
 

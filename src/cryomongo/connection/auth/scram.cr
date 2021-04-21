@@ -56,7 +56,7 @@ class Mongo::Auth::Scram
     connection.send(request, "saslStart")
     # 2.
     response = connection.receive
-    if error = response.validate
+    if error = response.error?
       raise error
     end
     reply_document = response.body
@@ -89,7 +89,7 @@ class Mongo::Auth::Scram
 
     # 4.
     response = connection.receive
-    if error = response.validate
+    if error = response.error?
       raise error
     end
     reply_document = response.body
@@ -109,7 +109,7 @@ class Mongo::Auth::Scram
       })
       connection.send(request, "saslContinue")
       response = connection.receive
-      if error = response.validate
+      if error = response.error?
         raise error
       end
       reply_document = response.body

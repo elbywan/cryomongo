@@ -27,6 +27,7 @@ enum MongoLaunchTopology
   Single
   Replicaset
   Sharded
+  ShardedMultipleMongos
 end
 
 def try(command, *, times = 3, delay = 1.seconds)
@@ -38,7 +39,7 @@ def try(command, *, times = 3, delay = 1.seconds)
     puts output
     break if exit_status.normal_exit?
     puts "Exit code in error: #{exit_status.exit_code}"
-    puts "Retrying in ${delay}…"
+    puts "Retrying in #{delay}…"
     sleep delay
     i += 1
   end
@@ -51,7 +52,9 @@ def start_mongo(topology : MongoLaunchTopology = :single)
                       when MongoLaunchTopology::Replicaset
                         "--replicaset"
                       when MongoLaunchTopology::Sharded
-                        "--replicaset --sharded 3 --config 3 --port 27017"
+                        "--replicaset --sharded 3 --port 27017"
+                      when MongoLaunchTopology::ShardedMultipleMongos
+                        "--replicaset --sharded 3 --mongos 2 --port 27017"
                       end
 
   mongo_path = ENV["MONGODB_PATH"]?
@@ -65,16 +68,18 @@ def stop_mongo
   sleep 1.seconds
 end
 
-def with_mongo(topologies = nil, &block : (Proc(Mongo::Client), MongoLaunchTopology) -> Nil)
+def with_mongo(topologies = nil, &block : (Proc(Mongo::Client), MongoLaunchTopology, String) -> Nil)
   MongoLaunchTopology.each { |topology|
     next if topologies.try { |t| !topology.in?(t) }
     context "in #{topology} mode", tags: "#{topology.to_s.underscore}" do
       client = uninitialized Mongo::Client
       get_client : -> Mongo::Client = ->{ client }
+      uri = topology.sharded_multiple_mongos? ? "mongodb://localhost:27017,localhost:27018/" : "mongodb://localhost:27017/"
 
       before_all {
         `rm -Rf ./data`
         start_mongo(topology)
+
         client = Mongo::Client.new
       }
 
@@ -84,7 +89,7 @@ def with_mongo(topologies = nil, &block : (Proc(Mongo::Client), MongoLaunchTopol
         `rm -Rf ./data`
       }
 
-      block.call(get_client, topology)
+      block.call(get_client, topology, uri)
     end
   }
 end

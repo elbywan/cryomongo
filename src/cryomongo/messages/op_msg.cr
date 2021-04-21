@@ -132,7 +132,7 @@ struct Mongo::Messages::OpMsg < Mongo::Messages::Part
     self.body["ok"] == 1
   end
 
-  def validate : Exception?
+  def error? : Exception?
     if self.valid?
       if errors = self.body["writeErrors"]?
         Mongo::Error::CommandWrite.new(errors.as(BSON))
@@ -140,9 +140,11 @@ struct Mongo::Messages::OpMsg < Mongo::Messages::Part
         Mongo::Error::WriteConcern.new(write_error.as(BSON))
       end
     else
-      err_msg = self.body["errmsg"]?.as(String)
+      err_msg = self.body["errmsg"]?.try &.as(String)
+      err_code_name = self.body["codeName"]?.try &.as(String)
       err_code = self.body["code"]?
-      Mongo::Error::Command.new(err_code, err_msg)
+      err_labels = self.body["errorLabels"]?.try { |labels| Array(String).from_bson(labels) } || [] of String
+      Mongo::Error::Command.new(err_code, err_code_name, err_msg, error_labels: Set(String).new(err_labels))
     end
   end
 
