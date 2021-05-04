@@ -40,6 +40,7 @@ module Mongo::Session
     # The recoveryToken field enables the driver to recover a sharded transaction's outcome on a new mongos when the original mongos is no longer available.
     property recovery_token : BSON? = nil
 
+    @transactions_lock = Mutex.new
     @empty_commit = false
 
     def is_transaction?
@@ -195,7 +196,7 @@ module Mongo::Session
     # -- Private
 
     private def state_transition(event : TransactionStateEvent, *, rollback_status_on_error = true, &block)
-      @lock.synchronize do
+      @transactions_lock.synchronize do
         @transitions_from = @transaction_state
         @transaction_state = begin
           case {@transaction_state, event}
@@ -235,11 +236,11 @@ module Mongo::Session
     rescue e
       if rollback_status_on_error
         # Restore previous state
-        @lock.synchronize { @transaction_state = @transitions_from.not_nil! }
+        @transactions_lock.synchronize { @transaction_state = @transitions_from.not_nil! }
       end
       raise e
     ensure
-      @lock.synchronize { @transitions_from = nil }
+      @transactions_lock.synchronize { @transitions_from = nil }
     end
   end
 end

@@ -176,12 +176,6 @@ struct Mongo::Connection
     receive(log: log) { }
   end
 
-  def before_checkout
-  end
-
-  def after_release
-  end
-
   def close
     @socket.close unless @socket.closed?
   end

@@ -1,5 +1,4 @@
 require "socket"
-require "db"
 require "./database"
 require "./messages/**"
 require "./commands/**"
@@ -36,8 +35,9 @@ class Mongo::Client
   # :nodoc:
   protected getter min_heartbeat_frequency : Time::Span = 500.milliseconds
 
-  @@lock = Mutex.new(:reentrant)
-  @pools : Hash(String, DB::Pool(Mongo::Connection)) = Hash(String, DB::Pool(Mongo::Connection)).new
+  @@topology_lock = Mutex.new(:reentrant)
+  @@connection_pool_lock = Mutex.new
+  @pools : Hash(String, Mongo::Connection::Pool(Mongo::Connection)) = Hash(String, Mongo::Connection::Pool(Mongo::Connection)).new
   @monitors : Array(SDAM::Monitor) = Array(SDAM::Monitor).new
   @socket_check_interval : Time::Span = 5.seconds
   @last_scan : Time = Time::UNIX_EPOCH
@@ -133,6 +133,8 @@ class Mongo::Client
   def [](name : String) : Database
     database(name)
   end
+
+  @@cmd_count = 0
 
   # Execute a command on the server.
   #
@@ -827,42 +829,42 @@ class Mongo::Client
   end
 
   protected def get_connection(server_description : SDAM::ServerDescription) : Mongo::Connection
-    @pools[server_description.address] ||= DB::Pool(Mongo::Connection).new(
-      initial_pool_size: @options.min_pool_size,
-      max_pool_size: @options.max_pool_size,
-      max_idle_pool_size: @options.max_pool_size,
-      checkout_timeout: @options.wait_queue_timeout.try(&.seconds.to_f64) || 5.0
-    ) do
-      connection = Mongo::Connection.new(server_description, @credentials, @options)
-      result, round_trip_time = connection.handshake(send_metadata: true, appname: @options.appname)
-      connection.authenticate
-      new_rtt = Connection.average_round_trip_time(round_trip_time, server_description.round_trip_time)
-      new_description = SDAM::ServerDescription.new(server_description.address, result, new_rtt)
-      topology.update(server_description, new_description)
-      server_description.update(new_description)
-      connection
-    rescue e
-      connection.try &.close
-      raise e
-    end
+    @@connection_pool_lock.synchronize {
+      @pools[server_description.address] ||= Mongo::Connection::Pool(Mongo::Connection).new(
+        initial_pool_size: @options.min_pool_size,
+        max_pool_size: @options.max_pool_size,
+        max_idle_pool_size: @options.max_pool_size,
+        checkout_timeout: @options.wait_queue_timeout.try(&.seconds.to_f64) || 5.0
+      ) do
+        connection = Mongo::Connection.new(server_description, @credentials, @options)
+        result, round_trip_time = connection.handshake(send_metadata: true, appname: @options.appname)
+        connection.authenticate
+        new_rtt = Connection.average_round_trip_time(round_trip_time, server_description.round_trip_time)
+        new_description = SDAM::ServerDescription.new(server_description.address, result, new_rtt)
+        topology.update(server_description, new_description)
+        server_description.update(new_description)
+        connection
+      rescue e
+        connection.try &.close
+        raise e
+      end
+    }
     @pools[server_description.address].checkout
   end
 
   private def release_connection(connection : Mongo::Connection)
-    @@lock.synchronize {
-      @pools[connection.server_description.address]?.try &.release(connection)
-    }
+    @pools[connection.server_description.address]?.try &.release(connection)
   end
 
   protected def close_connection_pool(server_description : SDAM::ServerDescription)
-    @@lock.synchronize {
-      @pools[server_description.address]?.try &.close
+    @pools[server_description.address]?.try &.close
+    @@connection_pool_lock.synchronize {
       @pools.delete server_description.address
     }
   end
 
   protected def stop_monitoring(server_description : SDAM::ServerDescription)
-    @@lock.synchronize {
+    @@topology_lock.synchronize {
       @monitors.reject!(server_description)
     }
   end
@@ -877,7 +879,7 @@ class Mongo::Client
       end
     end
 
-    @@lock.synchronize {
+    @@topology_lock.synchronize {
       self.topology.servers.each { |server|
         no_monitor = @monitors.none? { |monitor|
           monitor.server_description.address.== server.address

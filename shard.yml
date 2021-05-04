@@ -12,8 +12,6 @@ dependencies:
   bson:
     github: elbywan/bson.cr
     version: ~> 0.3.0
-  db:
-    github: crystal-lang/crystal-db
   durian:
     github: 636f7374/durian.cr
     version: ~> 0.1.5

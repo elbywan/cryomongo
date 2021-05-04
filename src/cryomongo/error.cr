@@ -87,8 +87,8 @@ module Mongo
   # class Error::Handshake < Error
   # end
 
-  # class Error::Connection < Error
-  # end
+  class Error::Connection < Error::Client
+  end
 
   # Is raised during server selection when encountering a timeout or a compatibility issue.
   class Error::ServerSelection < Error
