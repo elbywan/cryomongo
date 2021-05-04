@@ -15,7 +15,6 @@ require "./commands"
 class Mongo::Cursor
   include Iterator(BSON)
 
-  @@lock = Mutex.new(:reentrant)
   @database : String
   @collection : Collection::CollectionKey
   @tailable : Bool = false
@@ -82,14 +81,12 @@ class Mongo::Cursor
 
   # Close the cursor and frees underlying resources.
   def close
-    @@lock.synchronize {
-      unless exhausted?
-        if (session = @session) && session.implicit?
-          session.end
-        end
-        self.kill
+    unless exhausted?
+      if (session = @session) && session.implicit?
+        session.end
       end
-    }
+      self.kill
+    end
   rescue e
     # Ignore - client might be dead
   end
@@ -108,29 +105,27 @@ class Mongo::Cursor
   protected def fetch_more
     return if @cursor_id == 0
 
-    @@lock.synchronize {
-      batch_size = @limit.try { |limit| Math.max(limit - @counter, 1) } || @batch_size
+    batch_size = @limit.try { |limit| Math.max(limit - @counter, 1) } || @batch_size
 
-      reply = @client.command(
-        Commands::GetMore,
-        database: @database,
-        collection: @collection,
-        cursor_id: @cursor_id,
-        batch_size: batch_size,
-        max_time_ms: @await_time_ms,
-        server_description: @server_description,
-        session: @session
-      ).not_nil!
-      @cursor_id = reply.cursor.id
-      @batch = reply.cursor.next_batch
-      @counter += @batch.size
+    reply = @client.command(
+      Commands::GetMore,
+      database: @database,
+      collection: @collection,
+      cursor_id: @cursor_id,
+      batch_size: batch_size,
+      max_time_ms: @await_time_ms,
+      server_description: @server_description,
+      session: @session
+    ).not_nil!
+    @cursor_id = reply.cursor.id
+    @batch = reply.cursor.next_batch
+    @counter += @batch.size
 
-      if (session = @session) && exhausted? && session.implicit?
-        session.end
-      end
+    if (session = @session) && exhausted? && session.implicit?
+      session.end
+    end
 
-      reply
-    }
+    reply
   end
 
   # Will convert the elements to the `T` type while iterating the `Cursor`.

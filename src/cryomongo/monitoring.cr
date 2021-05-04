@@ -46,7 +46,9 @@ module Mongo::Monitoring
     end
 
     def has_subscribers?
-      !@subscribers.empty?
+      @observable_lock.synchronize {
+        !@subscribers.empty?
+      }
     end
   end
 
