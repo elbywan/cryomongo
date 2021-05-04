@@ -1,5 +1,5 @@
 dist: bionic
-language: crystal
+language: minimal
 
 env:
   matrix:
@@ -16,6 +16,7 @@ addons:
       - libevent-dev
 
 install:
+  - curl -fsSL https://crystal-lang.org/install.sh | sudo bash
   - wget https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/${MONGODB_RELEASE}/multiverse/binary-amd64/mongodb-org-server_${MONGODB_VERSION}_amd64.deb
   - sudo dpkg -i mongodb-org-server_${MONGODB_VERSION}_amd64.deb
   - wget https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/${MONGODB_RELEASE}/multiverse/binary-amd64/mongodb-org-mongos_${MONGODB_VERSION}_amd64.deb
