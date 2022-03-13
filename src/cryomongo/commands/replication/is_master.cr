@@ -39,7 +39,7 @@ module Mongo::Commands::IsMaster
     property max_bson_object_size : Int32 = 16 * 1024 * 1024
     property max_message_size_bytes : Int32 = 48_000_000
     property max_write_batch_size : Int32 = 100_000
-    property local_time : Time?
+    property local_time : (Time | Int64)?
     property logical_session_timeout_minutes : Int32?
     property connection_id : Int32?
     property min_wire_version : Int32 = 0

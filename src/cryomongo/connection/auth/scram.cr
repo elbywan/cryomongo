@@ -105,7 +105,7 @@ class Mongo::Auth::Scram
         saslContinue:   1,
         conversationId: @id,
         "$db":          source,
-        payload:        "",
+        payload:        "".to_slice,
       })
       connection.send(request, "saslContinue")
       response = connection.receive
