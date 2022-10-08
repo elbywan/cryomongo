@@ -3,6 +3,7 @@
 	<h1>cryomongo</h1>
   <h3>A MongoDB driver written in pure Crystal.</h3>
   <a href="https://travis-ci.org/elbywan/cryomongo"><img alt="travis-badge" src="https://travis-ci.org/elbywan/cryomongo.svg?branch=master"></a>
+  <a href="https://github.com/elbywan/cryomongo/actions?query=branch%3Amaster+workflow%3ASpecs"><img alt="Build Status" src="https://github.com/elbywan/cryomongo/workflows/Specs/badge.svg?branch=master"></a>
   <a href="https://github.com/elbywan/cryomongo/tags"><img alt="GitHub tag (latest SemVer)" src="https://img.shields.io/github/v/tag/elbywan/cryomongo"></a>
   <a href="https://github.com/elbywan/cryomongo/blob/master/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/elbywan/cryomongo"></a>
 </div>
@@ -11,7 +12,7 @@
 
 #### Cryomongo is a high-performance MongoDB driver written in pure Crystal. (i.e. no C dependencies needed.)
 
-*Compatible with MongoDB 3.6+. Tested against: 4.0 and 4.2.*
+*Compatible with MongoDB 3.6+. Tested against: 4.2.*
 
 **⚠️ BETA state.**
 
