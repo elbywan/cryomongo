@@ -1,0 +1,47 @@
+name: Specs
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  schedule:
+    - cron: "0 0 10 * 6"
+
+jobs:
+  tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - mongodb_minor: 4.2
+            MONGODB_VERSION: 4.2.13
+          # - mongodb_version: 4.4
+          #   MONGODB_VERSION: 4.4.4
+    runs-on: macos-latest
+    name: Mongodb tests
+    env:
+      MONGODB_VERSION: ${{ matrix.MONGODB_VERSION }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install MongoDB
+        run: |
+          brew tap mongodb/brew
+          brew update
+          brew install mongodb-community@${{ matrix.mongodb_minor }}
+          ln -sf $(brew --prefix mongodb-community@${{ matrix.mongodb_minor }})/bin/* /usr/local/bin/
+          python3 -m pip install mtools[all]
+          which mongod
+          mongod --version
+      - name: Install Crystal
+        run: brew install openssl crystal
+      - name: Install dependencies
+        run: |
+          shards install
+      - name: Run specs
+        run: |
+          crystal spec --tag single
+          crystal spec --tag replicaset
+          crystal spec --tag sharded
+          crystal spec --tag sharded_multiple_mongos
