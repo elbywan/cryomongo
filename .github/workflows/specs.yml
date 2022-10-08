@@ -15,7 +15,7 @@ jobs:
       matrix:
         include:
           - mongodb_minor: 4.2
-            MONGODB_VERSION: 4.2.13
+            MONGODB_VERSION: 4.2.22
           # - mongodb_version: 4.4
           #   MONGODB_VERSION: 4.4.4
     runs-on: macos-latest
