@@ -107,6 +107,7 @@ module Mongo::Commands
     result(WriteConcernError, root: false) {
       property code : Int32
       property errmsg : String
+      @[BSON::Field(key: "errInfo")]
       property err_info : BSON?
     }
 
