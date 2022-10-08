@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -756,6 +756,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Connection" data-name="mongo::error::connection">
+      <a href="../../Mongo/Error/Connection.html">Connection</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
       <a href="../../Mongo/Error/Network.html">Network</a>
       
@@ -1023,42 +1028,42 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#abort_transaction(*,write_concern:WriteConcern?=nil)-instance-method" class="signature"><strong>#abort_transaction</strong>(*, write_concern : WriteConcern? = <span class="n">nil</span>)</a>
+        <a href="#abort_transaction%28%2A%2Cwrite_concern%3AWriteConcern%3F%3Dnil%29-instance-method" class="signature"><strong>#abort_transaction</strong>(*, write_concern : WriteConcern? = <span class="n">nil</span>)</a>
         
           <div class="summary"><p>Aborts the currently active transaction in this session.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#advance_cluster_time(cluster_time:ClusterTime)-instance-method" class="signature"><strong>#advance_cluster_time</strong>(cluster_time : ClusterTime)</a>
+        <a href="#advance_cluster_time%28cluster_time%3AClusterTime%29-instance-method" class="signature"><strong>#advance_cluster_time</strong>(cluster_time : ClusterTime)</a>
         
           <div class="summary"><p>This method advances the <em>cluster_time</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#advance_operation_time(operation_time:BSON::Timestamp)-instance-method" class="signature"><strong>#advance_operation_time</strong>(operation_time : BSON::Timestamp)</a>
+        <a href="#advance_operation_time%28operation_time%3ABSON%3A%3ATimestamp%29-instance-method" class="signature"><strong>#advance_operation_time</strong>(operation_time : BSON::Timestamp)</a>
         
           <div class="summary"><p>This method advances the <em>operation_time</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#cluster_time:ClusterTime?-instance-method" class="signature"><strong>#cluster_time</strong> : ClusterTime?</a>
+        <a href="#cluster_time%3AClusterTime%3F-instance-method" class="signature"><strong>#cluster_time</strong> : ClusterTime?</a>
         
           <div class="summary"><p>This property returns the most recent cluster time seen by this session.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#commit_transaction(*,write_concern:WriteConcern?=nil)-instance-method" class="signature"><strong>#commit_transaction</strong>(*, write_concern : WriteConcern? = <span class="n">nil</span>)</a>
+        <a href="#commit_transaction%28%2A%2Cwrite_concern%3AWriteConcern%3F%3Dnil%29-instance-method" class="signature"><strong>#commit_transaction</strong>(*, write_concern : WriteConcern? = <span class="n">nil</span>)</a>
         
           <div class="summary"><p>Commits the currently active transaction in this session.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#current_transaction_options:Mongo::Session::TransactionOptions-instance-method" class="signature"><strong>#current_transaction_options</strong> : Mongo::Session::TransactionOptions</a>
+        <a href="#current_transaction_options%3AMongo%3A%3ASession%3A%3ATransactionOptions-instance-method" class="signature"><strong>#current_transaction_options</strong> : Mongo::Session::TransactionOptions</a>
         
           <div class="summary"><p>Options for the current transaction.</p></div>
         
@@ -1072,70 +1077,70 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#is_transaction?-instance-method" class="signature"><strong>#is_transaction?</strong></a>
+        <a href="#is_transaction%3F-instance-method" class="signature"><strong>#is_transaction?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#operation_time:BSON::Timestamp?-instance-method" class="signature"><strong>#operation_time</strong> : BSON::Timestamp?</a>
+        <a href="#operation_time%3ABSON%3A%3ATimestamp%3F-instance-method" class="signature"><strong>#operation_time</strong> : BSON::Timestamp?</a>
         
           <div class="summary"><p>This property returns the operation time of the most recent operation performed using this session.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#options:Options-instance-method" class="signature"><strong>#options</strong> : Options</a>
+        <a href="#options%3AOptions-instance-method" class="signature"><strong>#options</strong> : Options</a>
         
           <div class="summary"><p>The session options used when creating the session.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#recovery_token:BSON?-instance-method" class="signature"><strong>#recovery_token</strong> : BSON?</a>
+        <a href="#recovery_token%3ABSON%3F-instance-method" class="signature"><strong>#recovery_token</strong> : BSON?</a>
         
           <div class="summary"><p>The recoveryToken field enables the driver to recover a sharded transaction's outcome on a new mongos when the original mongos is no longer available.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#recovery_token=(recovery_token:BSON?)-instance-method" class="signature"><strong>#recovery_token=</strong>(recovery_token : BSON?)</a>
+        <a href="#recovery_token%3D%28recovery_token%3ABSON%3F%29-instance-method" class="signature"><strong>#recovery_token=</strong>(recovery_token : BSON?)</a>
         
           <div class="summary"><p>The recoveryToken field enables the driver to recover a sharded transaction's outcome on a new mongos when the original mongos is no longer available.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#server_description:SDAM::ServerDescription?-instance-method" class="signature"><strong>#server_description</strong> : SDAM::ServerDescription?</a>
+        <a href="#server_description%3ASDAM%3A%3AServerDescription%3F-instance-method" class="signature"><strong>#server_description</strong> : SDAM::ServerDescription?</a>
         
           <div class="summary"><p>Server description if the session is pinned to a specific mongos.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#start_transaction(**options)-instance-method" class="signature"><strong>#start_transaction</strong>(**options)</a>
+        <a href="#start_transaction%28%2A%2Aoptions%29-instance-method" class="signature"><strong>#start_transaction</strong>(**options)</a>
         
           <div class="summary"><p>Starts a new transaction with the given options.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#transaction_state:TransactionState-instance-method" class="signature"><strong>#transaction_state</strong> : TransactionState</a>
+        <a href="#transaction_state%3ATransactionState-instance-method" class="signature"><strong>#transaction_state</strong> : TransactionState</a>
         
           <div class="summary"><p>The state of the transaction.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#transitions_from:TransactionState?-instance-method" class="signature"><strong>#transitions_from</strong> : TransactionState?</a>
+        <a href="#transitions_from%3ATransactionState%3F-instance-method" class="signature"><strong>#transitions_from</strong> : TransactionState?</a>
         
           <div class="summary"><p>The state from where the transaction is transitioning.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#with_transaction(**options,&)-instance-method" class="signature"><strong>#with_transaction</strong>(**options, &)</a>
+        <a href="#with_transaction%28%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#with_transaction</strong>(**options, &)</a>
         
-          <div class="summary"><p>Same as <code><a href="../../Mongo/Session/ClientSession.html#start_transaction(**options)-instance-method">#start_transaction</a></code> but will commit the transaction after the block returns.</p></div>
+          <div class="summary"><p>Same as <code><a href="../../Mongo/Session/ClientSession.html#start_transaction%28%2A%2Aoptions%29-instance-method">#start_transaction</a></code> but will commit the transaction after the block returns.</p></div>
         
       </li>
     
@@ -1188,16 +1193,14 @@
         
         def <strong>abort_transaction</strong>(*, write_concern : <a href="../../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#abort_transaction(*,write_concern:WriteConcern?=nil)-instance-method">#</a>
+        <a class="method-permalink" href="#abort_transaction%28%2A%2Cwrite_concern%3AWriteConcern%3F%3Dnil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Aborts the currently active transaction in this session.</p>
-
 <p><span class="flag purple">NOTE</span>  Raises an error if this session has no transaction.</p>
-
-<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.new
 session <span class="o">=</span> client.start_session
 session.start_transaction
 client[<span class="s">&quot;db&quot;</span>][<span class="s">&quot;collection&quot;</span>].tap { <span class="o">|</span>collection<span class="o">|</span>
@@ -1218,13 +1221,12 @@ session.abort_transaction</code></pre>
         
         def <strong>advance_cluster_time</strong>(cluster_time : <a href="../../Mongo/Session/ClusterTime.html">ClusterTime</a>)
 
-        <a class="method-permalink" href="#advance_cluster_time(cluster_time:ClusterTime)-instance-method">#</a>
+        <a class="method-permalink" href="#advance_cluster_time%28cluster_time%3AClusterTime%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>This method advances the <em>cluster_time</em>.</p>
-
 <p><span class="flag purple">NOTE</span>  this method is a no-op if the provider cluster time is less than the current cluster time.</p>
         </div>
       
@@ -1239,13 +1241,12 @@ session.abort_transaction</code></pre>
         
         def <strong>advance_operation_time</strong>(operation_time : BSON::Timestamp)
 
-        <a class="method-permalink" href="#advance_operation_time(operation_time:BSON::Timestamp)-instance-method">#</a>
+        <a class="method-permalink" href="#advance_operation_time%28operation_time%3ABSON%3A%3ATimestamp%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>This method advances the <em>operation_time</em>.</p>
-
 <p><span class="flag purple">NOTE</span>  this method is a no-op if the provider operation time is less than the current operation time.</p>
         </div>
       
@@ -1260,7 +1261,7 @@ session.abort_transaction</code></pre>
         
         def <strong>cluster_time</strong> : <a href="../../Mongo/Session/ClusterTime.html">ClusterTime</a>?
 
-        <a class="method-permalink" href="#cluster_time:ClusterTime?-instance-method">#</a>
+        <a class="method-permalink" href="#cluster_time%3AClusterTime%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1281,16 +1282,14 @@ This value will also be null when a cluster does not report cluster times.</p>
         
         def <strong>commit_transaction</strong>(*, write_concern : <a href="../../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#commit_transaction(*,write_concern:WriteConcern?=nil)-instance-method">#</a>
+        <a class="method-permalink" href="#commit_transaction%28%2A%2Cwrite_concern%3AWriteConcern%3F%3Dnil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Commits the currently active transaction in this session.</p>
-
 <p><span class="flag purple">NOTE</span>  Raises an error if this session has no transaction.</p>
-
-<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.new
 session <span class="o">=</span> client.start_session
 session.start_transaction
 client[<span class="s">&quot;db&quot;</span>][<span class="s">&quot;collection&quot;</span>].tap { <span class="o">|</span>collection<span class="o">|</span>
@@ -1311,7 +1310,7 @@ session.commit_transaction</code></pre>
         
         def <strong>current_transaction_options</strong> : <a href="../../Mongo/Session/TransactionOptions.html">Mongo::Session::TransactionOptions</a>
 
-        <a class="method-permalink" href="#current_transaction_options:Mongo::Session::TransactionOptions-instance-method">#</a>
+        <a class="method-permalink" href="#current_transaction_options%3AMongo%3A%3ASession%3A%3ATransactionOptions-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1349,7 +1348,7 @@ session.commit_transaction</code></pre>
         
         def <strong>is_transaction?</strong>
 
-        <a class="method-permalink" href="#is_transaction?-instance-method">#</a>
+        <a class="method-permalink" href="#is_transaction%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1363,7 +1362,7 @@ session.commit_transaction</code></pre>
         
         def <strong>operation_time</strong> : BSON::Timestamp?
 
-        <a class="method-permalink" href="#operation_time:BSON::Timestamp?-instance-method">#</a>
+        <a class="method-permalink" href="#operation_time%3ABSON%3A%3ATimestamp%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1384,7 +1383,7 @@ This value will also be null when the cluster does not report operation times.</
         
         def <strong>options</strong> : <a href="../../Mongo/Session/Options.html">Options</a>
 
-        <a class="method-permalink" href="#options:Options-instance-method">#</a>
+        <a class="method-permalink" href="#options%3AOptions-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1403,7 +1402,7 @@ This value will also be null when the cluster does not report operation times.</
         
         def <strong>recovery_token</strong> : BSON?
 
-        <a class="method-permalink" href="#recovery_token:BSON?-instance-method">#</a>
+        <a class="method-permalink" href="#recovery_token%3ABSON%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1422,7 +1421,7 @@ This value will also be null when the cluster does not report operation times.</
         
         def <strong>recovery_token=</strong>(recovery_token : BSON?)
 
-        <a class="method-permalink" href="#recovery_token=(recovery_token:BSON?)-instance-method">#</a>
+        <a class="method-permalink" href="#recovery_token%3D%28recovery_token%3ABSON%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1441,7 +1440,7 @@ This value will also be null when the cluster does not report operation times.</
         
         def <strong>server_description</strong> : SDAM::ServerDescription?
 
-        <a class="method-permalink" href="#server_description:SDAM::ServerDescription?-instance-method">#</a>
+        <a class="method-permalink" href="#server_description%3ASDAM%3A%3AServerDescription%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1460,24 +1459,21 @@ This value will also be null when the cluster does not report operation times.</
         
         def <strong>start_transaction</strong>(**options)
 
-        <a class="method-permalink" href="#start_transaction(**options)-instance-method">#</a>
+        <a class="method-permalink" href="#start_transaction%28%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Starts a new transaction with the given options.</p>
-
 <p>This session's <code>options.default_transaction_options</code> of type <code><a href="../../Mongo/Session/TransactionOptions.html">TransactionOptions</a></code> is used when options is omitted.</p>
-
 <p><span class="flag purple">NOTE</span>  Raises an error if this session is already in a transaction.</p>
-
-<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.new
 session <span class="o">=</span> client.start_session
 
 <span class="c"># transaction options arguments are optional</span>
 session.start_transaction(
-  read_concern: <span class="t">Mongo</span><span class="t">::</span><span class="t">ReadConcern</span>.<span class="k">new</span>(level: <span class="s">&quot;snapshot&quot;</span>),
-  write_concern: <span class="t">Mongo</span><span class="t">::</span><span class="t">WriteConcern</span>.<span class="k">new</span>(w: <span class="s">&quot;majority&quot;</span>)
+  read_concern: <span class="t">Mongo</span><span class="t">::</span><span class="t">ReadConcern</span>.new(level: <span class="s">&quot;snapshot&quot;</span>),
+  write_concern: <span class="t">Mongo</span><span class="t">::</span><span class="t">WriteConcern</span>.new(w: <span class="s">&quot;majority&quot;</span>)
 )</code></pre>
         </div>
       
@@ -1492,7 +1488,7 @@ session.start_transaction(
         
         def <strong>transaction_state</strong> : <a href="../../Mongo/Session/TransactionState.html">TransactionState</a>
 
-        <a class="method-permalink" href="#transaction_state:TransactionState-instance-method">#</a>
+        <a class="method-permalink" href="#transaction_state%3ATransactionState-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1511,7 +1507,7 @@ session.start_transaction(
         
         def <strong>transitions_from</strong> : <a href="../../Mongo/Session/TransactionState.html">TransactionState</a>?
 
-        <a class="method-permalink" href="#transitions_from:TransactionState?-instance-method">#</a>
+        <a class="method-permalink" href="#transitions_from%3ATransactionState%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1525,21 +1521,19 @@ session.start_transaction(
       </div>
     </div>
   
-    <div class="entry-detail" id="with_transaction(**options,&)-instance-method">
+    <div class="entry-detail" id="with_transaction(**options,&amp;)-instance-method">
       <div class="signature">
         
         def <strong>with_transaction</strong>(**options, &)
 
-        <a class="method-permalink" href="#with_transaction(**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#with_transaction%28%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Same as <code><a href="../../Mongo/Session/ClientSession.html#start_transaction(**options)-instance-method">#start_transaction</a></code> but will commit the transaction after the block returns.</p>
-
+          <p>Same as <code><a href="../../Mongo/Session/ClientSession.html#start_transaction%28%2A%2Aoptions%29-instance-method">#start_transaction</a></code> but will commit the transaction after the block returns.</p>
 <p><span class="flag purple">NOTE</span>  If an error is thrown, the transaction will be aborted.</p>
-
-<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.new
 session <span class="o">=</span> client.start_session
 session.with_transaction {
   client[<span class="s">&quot;db&quot;</span>][<span class="s">&quot;collection&quot;</span>].tap { <span class="o">|</span>collection<span class="o">|</span>

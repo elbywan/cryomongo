@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -756,6 +756,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Connection" data-name="mongo::error::connection">
+      <a href="../../Mongo/Error/Connection.html">Connection</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
       <a href="../../Mongo/Error/Network.html">Network</a>
       
@@ -1028,7 +1033,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(bson:BSON)-class-method" class="signature"><strong>.new</strong>(bson : BSON)</a>
+        <a href="#new%28bson%3ABSON%29-class-method" class="signature"><strong>.new</strong>(bson : BSON)</a>
         
           <div class="summary"><p>Allocate an instance and copies data from a BSON struct.</p></div>
         
@@ -1049,9 +1054,9 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#from_bson(bson:BSON)-class-method" class="signature"><strong>.from_bson</strong>(bson : BSON)</a>
+        <a href="#from_bson%28bson%3ABSON%29-class-method" class="signature"><strong>.from_bson</strong>(bson : BSON)</a>
         
-          <div class="summary"><p><span class="flag purple">NOTE</span>  See <code>self<a href="../../Mongo/GridFS/File.html#new(bson:BSON)-class-method">.new</a></code>.</p></div>
+          <div class="summary"><p><span class="flag purple">NOTE</span>  See <code>self<a href="../../Mongo/GridFS/File.html#new%28bson%3ABSON%29-class-method">.new</a></code>.</p></div>
         
       </li>
     
@@ -1070,91 +1075,91 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#_id:FileID-instance-method" class="signature"><strong>#_id</strong> : FileID</a>
+        <a href="#_id%3AFileID-instance-method" class="signature"><strong>#_id</strong> : FileID</a>
         
           <div class="summary"><p>A unique ID for this document.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#_id=(_id:FileID)-instance-method" class="signature"><strong>#_id=</strong>(_id : FileID)</a>
+        <a href="#_id%3D%28_id%3AFileID%29-instance-method" class="signature"><strong>#_id=</strong>(_id : FileID)</a>
         
           <div class="summary"><p>A unique ID for this document.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#chunk_size:Int64-instance-method" class="signature"><strong>#chunk_size</strong> : Int64</a>
+        <a href="#chunk_size%3AInt64-instance-method" class="signature"><strong>#chunk_size</strong> : Int64</a>
         
           <div class="summary"><p>The size, in bytes, of each data chunk of this file.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#chunk_size=(chunk_size:Int64)-instance-method" class="signature"><strong>#chunk_size=</strong>(chunk_size : Int64)</a>
+        <a href="#chunk_size%3D%28chunk_size%3AInt64%29-instance-method" class="signature"><strong>#chunk_size=</strong>(chunk_size : Int64)</a>
         
           <div class="summary"><p>The size, in bytes, of each data chunk of this file.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#filename:String-instance-method" class="signature"><strong>#filename</strong> : String</a>
+        <a href="#filename%3AString-instance-method" class="signature"><strong>#filename</strong> : String</a>
         
           <div class="summary"><p>The name of this stored file; this does not need to be unique.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#filename=(filename:String)-instance-method" class="signature"><strong>#filename=</strong>(filename : String)</a>
+        <a href="#filename%3D%28filename%3AString%29-instance-method" class="signature"><strong>#filename=</strong>(filename : String)</a>
         
           <div class="summary"><p>The name of this stored file; this does not need to be unique.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#length:Int64-instance-method" class="signature"><strong>#length</strong> : Int64</a>
+        <a href="#length%3AInt64-instance-method" class="signature"><strong>#length</strong> : Int64</a>
         
           <div class="summary"><p>The length of this stored file, in bytes.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#length=(length:Int64)-instance-method" class="signature"><strong>#length=</strong>(length : Int64)</a>
+        <a href="#length%3D%28length%3AInt64%29-instance-method" class="signature"><strong>#length=</strong>(length : Int64)</a>
         
           <div class="summary"><p>The length of this stored file, in bytes.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#metadata:BSON?-instance-method" class="signature"><strong>#metadata</strong> : BSON?</a>
+        <a href="#metadata%3ABSON%3F-instance-method" class="signature"><strong>#metadata</strong> : BSON?</a>
         
           <div class="summary"><p>Any additional application data the user wishes to store.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#metadata=(metadata:BSON?)-instance-method" class="signature"><strong>#metadata=</strong>(metadata : BSON?)</a>
+        <a href="#metadata%3D%28metadata%3ABSON%3F%29-instance-method" class="signature"><strong>#metadata=</strong>(metadata : BSON?)</a>
         
           <div class="summary"><p>Any additional application data the user wishes to store.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_bson(bson=BSON.new)-instance-method" class="signature"><strong>#to_bson</strong>(bson = <span class="t">BSON</span>.<span class="k">new</span>)</a>
+        <a href="#to_bson%28bson%3DBSON.new%29-instance-method" class="signature"><strong>#to_bson</strong>(bson = <span class="t">BSON</span>.new)</a>
         
           <div class="summary"><p>Converts to a BSON representation.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#upload_date:Time-instance-method" class="signature"><strong>#upload_date</strong> : Time</a>
+        <a href="#upload_date%3ATime-instance-method" class="signature"><strong>#upload_date</strong> : Time</a>
         
           <div class="summary"><p>The date and time this file was added to GridFS, stored as a BSON datetime value.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#upload_date=(upload_date:Time)-instance-method" class="signature"><strong>#upload_date=</strong>(upload_date : Time)</a>
+        <a href="#upload_date%3D%28upload_date%3ATime%29-instance-method" class="signature"><strong>#upload_date=</strong>(upload_date : Time)</a>
         
           <div class="summary"><p>The date and time this file was added to GridFS, stored as a BSON datetime value.</p></div>
         
@@ -1225,21 +1230,20 @@
         
         def self.<strong>new</strong>(bson : BSON)
 
-        <a class="method-permalink" href="#new(bson:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#new%28bson%3ABSON%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Allocate an instance and copies data from a BSON struct.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">User</span>
   <span class="k">include</span> <span class="t">BSON</span><span class="t">::</span><span class="t">Serializable</span>
   property name : <span class="t">String</span>
 <span class="k">end</span>
 
-data <span class="o">=</span> <span class="t">BSON</span>.<span class="k">new</span>
+data <span class="o">=</span> <span class="t">BSON</span>.new
 data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span class="s">&quot;John&quot;</span>
-<span class="t">User</span>.<span class="k">new</span>(data)</code></pre>
+<span class="t">User</span>.new(data)</code></pre>
         </div>
       
       <br/>
@@ -1265,12 +1269,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def self.<strong>from_bson</strong>(bson : BSON)
 
-        <a class="method-permalink" href="#from_bson(bson:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#from_bson%28bson%3ABSON%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p><span class="flag purple">NOTE</span>  See <code>self<a href="../../Mongo/GridFS/File.html#new(bson:BSON)-class-method">.new</a></code>.</p>
+          <p><span class="flag purple">NOTE</span>  See <code>self<a href="../../Mongo/GridFS/File.html#new%28bson%3ABSON%29-class-method">.new</a></code>.</p>
         </div>
       
       <br/>
@@ -1296,7 +1300,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>_id</strong> : FileID
 
-        <a class="method-permalink" href="#_id:FileID-instance-method">#</a>
+        <a class="method-permalink" href="#_id%3AFileID-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1315,7 +1319,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>_id=</strong>(_id : FileID)
 
-        <a class="method-permalink" href="#_id=(_id:FileID)-instance-method">#</a>
+        <a class="method-permalink" href="#_id%3D%28_id%3AFileID%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1334,7 +1338,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>chunk_size</strong> : Int64
 
-        <a class="method-permalink" href="#chunk_size:Int64-instance-method">#</a>
+        <a class="method-permalink" href="#chunk_size%3AInt64-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1353,7 +1357,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>chunk_size=</strong>(chunk_size : Int64)
 
-        <a class="method-permalink" href="#chunk_size=(chunk_size:Int64)-instance-method">#</a>
+        <a class="method-permalink" href="#chunk_size%3D%28chunk_size%3AInt64%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1372,7 +1376,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>filename</strong> : String
 
-        <a class="method-permalink" href="#filename:String-instance-method">#</a>
+        <a class="method-permalink" href="#filename%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1391,7 +1395,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>filename=</strong>(filename : String)
 
-        <a class="method-permalink" href="#filename=(filename:String)-instance-method">#</a>
+        <a class="method-permalink" href="#filename%3D%28filename%3AString%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1410,7 +1414,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>length</strong> : Int64
 
-        <a class="method-permalink" href="#length:Int64-instance-method">#</a>
+        <a class="method-permalink" href="#length%3AInt64-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1429,7 +1433,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>length=</strong>(length : Int64)
 
-        <a class="method-permalink" href="#length=(length:Int64)-instance-method">#</a>
+        <a class="method-permalink" href="#length%3D%28length%3AInt64%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1448,7 +1452,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>metadata</strong> : BSON?
 
-        <a class="method-permalink" href="#metadata:BSON?-instance-method">#</a>
+        <a class="method-permalink" href="#metadata%3ABSON%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1467,7 +1471,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>metadata=</strong>(metadata : BSON?)
 
-        <a class="method-permalink" href="#metadata=(metadata:BSON?)-instance-method">#</a>
+        <a class="method-permalink" href="#metadata%3D%28metadata%3ABSON%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1484,16 +1488,15 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
     <div class="entry-detail" id="to_bson(bson=BSON.new)-instance-method">
       <div class="signature">
         
-        def <strong>to_bson</strong>(bson = <span class="t">BSON</span>.<span class="k">new</span>)
+        def <strong>to_bson</strong>(bson = <span class="t">BSON</span>.new)
 
-        <a class="method-permalink" href="#to_bson(bson=BSON.new)-instance-method">#</a>
+        <a class="method-permalink" href="#to_bson%28bson%3DBSON.new%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Converts to a BSON representation.</p>
-
-<pre><code class="language-crystal">user <span class="o">=</span> <span class="t">User</span>.<span class="k">new</span> name: <span class="s">&quot;John&quot;</span>
+<pre><code class="language-crystal">user <span class="o">=</span> <span class="t">User</span>.new name: <span class="s">&quot;John&quot;</span>
 bson <span class="o">=</span> user.to_bson</code></pre>
         </div>
       
@@ -1508,7 +1511,7 @@ bson <span class="o">=</span> user.to_bson</code></pre>
         
         def <strong>upload_date</strong> : Time
 
-        <a class="method-permalink" href="#upload_date:Time-instance-method">#</a>
+        <a class="method-permalink" href="#upload_date%3ATime-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1527,7 +1530,7 @@ bson <span class="o">=</span> user.to_bson</code></pre>
         
         def <strong>upload_date=</strong>(upload_date : Time)
 
-        <a class="method-permalink" href="#upload_date=(upload_date:Time)-instance-method">#</a>
+        <a class="method-permalink" href="#upload_date%3D%28upload_date%3ATime%29-instance-method">#</a>
       </div>
       
         <div class="doc">

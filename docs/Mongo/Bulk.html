@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -756,6 +756,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Connection" data-name="mongo::error::connection">
+      <a href="../Mongo/Error/Connection.html">Connection</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
       <a href="../Mongo/Error/Network.html">Network</a>
       
@@ -970,7 +975,6 @@
   </h2>
 
   <p>A bulk operations builder.</p>
-
 <pre><code class="language-crystal"><span class="c"># A Bulk instance can be obtained by calling `.bulk()` on a collection.</span>
 bulk <span class="o">=</span> collection.bulk(ordered: <span class="n">true</span>)
 <span class="c"># Then, operations can be added…</span>
@@ -979,7 +983,7 @@ bulk <span class="o">=</span> collection.bulk(ordered: <span class="n">true</spa
   bulk.delete_many({number: {<span class="s">&quot;$lt&quot;</span>: <span class="n">450</span>}})
 }
 <span class="c"># …and they will be performed once the bulk gets executed.</span>
-bulk_result <span class="o">=</span> bulk.execute(write_concern: <span class="t">Mongo</span><span class="t">::</span><span class="t">WriteConcern</span>.<span class="k">new</span>(w: <span class="n">1</span>))
+bulk_result <span class="o">=</span> bulk.execute(write_concern: <span class="t">Mongo</span><span class="t">::</span><span class="t">WriteConcern</span>.new(w: <span class="n">1</span>))
 pp bulk_result</code></pre>
 
 
@@ -1029,63 +1033,63 @@ pp bulk_result</code></pre>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#collection:Mongo::Collection-instance-method" class="signature"><strong>#collection</strong> : Mongo::Collection</a>
+        <a href="#collection%3AMongo%3A%3ACollection-instance-method" class="signature"><strong>#collection</strong> : Mongo::Collection</a>
         
           <div class="summary"><p>The target collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#delete_many(filter,**options)-instance-method" class="signature"><strong>#delete_many</strong>(filter, **options)</a>
+        <a href="#delete_many%28filter%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#delete_many</strong>(filter, **options)</a>
         
           <div class="summary"><p>Delete one or more documents.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#delete_one(filter,**options)-instance-method" class="signature"><strong>#delete_one</strong>(filter, **options)</a>
+        <a href="#delete_one%28filter%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#delete_one</strong>(filter, **options)</a>
         
           <div class="summary"><p>Delete a single document.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#execute(write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil)-instance-method" class="signature"><strong>#execute</strong>(write_concern : WriteConcern? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>)</a>
+        <a href="#execute%28write_concern%3AWriteConcern%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%29-instance-method" class="signature"><strong>#execute</strong>(write_concern : WriteConcern? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>)</a>
         
           <div class="summary"><p>Execute the bulk operations stored in this <code><a href="../Mongo/Bulk.html">Bulk</a></code> instance.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#insert_one(document)-instance-method" class="signature"><strong>#insert_one</strong>(document)</a>
+        <a href="#insert_one%28document%29-instance-method" class="signature"><strong>#insert_one</strong>(document)</a>
         
           <div class="summary"><p>Insert a single document.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#ordered?:Bool-instance-method" class="signature"><strong>#ordered?</strong> : Bool</a>
+        <a href="#ordered%3F%3ABool-instance-method" class="signature"><strong>#ordered?</strong> : Bool</a>
         
           <div class="summary"><p>Whether the bulk is ordered.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#replace_one(filter,replacement,**options)-instance-method" class="signature"><strong>#replace_one</strong>(filter, replacement, **options)</a>
+        <a href="#replace_one%28filter%2Creplacement%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#replace_one</strong>(filter, replacement, **options)</a>
         
           <div class="summary"><p>Replace one document.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#update_many(filter,update,**options)-instance-method" class="signature"><strong>#update_many</strong>(filter, update, **options)</a>
+        <a href="#update_many%28filter%2Cupdate%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#update_many</strong>(filter, update, **options)</a>
         
           <div class="summary"><p>Update many documents.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#update_one(filter,update,**options)-instance-method" class="signature"><strong>#update_one</strong>(filter, update, **options)</a>
+        <a href="#update_one%28filter%2Cupdate%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#update_one</strong>(filter, update, **options)</a>
         
           <div class="summary"><p>Update one document.</p></div>
         
@@ -1140,7 +1144,7 @@ pp bulk_result</code></pre>
         
         def <strong>collection</strong> : <a href="../Mongo/Collection.html">Mongo::Collection</a>
 
-        <a class="method-permalink" href="#collection:Mongo::Collection-instance-method">#</a>
+        <a class="method-permalink" href="#collection%3AMongo%3A%3ACollection-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1159,7 +1163,7 @@ pp bulk_result</code></pre>
         
         def <strong>delete_many</strong>(filter, **options)
 
-        <a class="method-permalink" href="#delete_many(filter,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#delete_many%28filter%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1178,7 +1182,7 @@ pp bulk_result</code></pre>
         
         def <strong>delete_one</strong>(filter, **options)
 
-        <a class="method-permalink" href="#delete_one(filter,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#delete_one%28filter%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1197,7 +1201,7 @@ pp bulk_result</code></pre>
         
         def <strong>execute</strong>(write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#execute(write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil)-instance-method">#</a>
+        <a class="method-permalink" href="#execute%28write_concern%3AWriteConcern%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1216,7 +1220,7 @@ pp bulk_result</code></pre>
         
         def <strong>insert_one</strong>(document)
 
-        <a class="method-permalink" href="#insert_one(document)-instance-method">#</a>
+        <a class="method-permalink" href="#insert_one%28document%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1235,7 +1239,7 @@ pp bulk_result</code></pre>
         
         def <strong>ordered?</strong> : Bool
 
-        <a class="method-permalink" href="#ordered?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#ordered%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1254,7 +1258,7 @@ pp bulk_result</code></pre>
         
         def <strong>replace_one</strong>(filter, replacement, **options)
 
-        <a class="method-permalink" href="#replace_one(filter,replacement,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#replace_one%28filter%2Creplacement%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1273,7 +1277,7 @@ pp bulk_result</code></pre>
         
         def <strong>update_many</strong>(filter, update, **options)
 
-        <a class="method-permalink" href="#update_many(filter,update,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#update_many%28filter%2Cupdate%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1292,7 +1296,7 @@ pp bulk_result</code></pre>
         
         def <strong>update_one</strong>(filter, update, **options)
 
-        <a class="method-permalink" href="#update_one(filter,update,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#update_one%28filter%2Cupdate%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
         <div class="doc">

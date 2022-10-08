@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -756,6 +756,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Connection" data-name="mongo::error::connection">
+      <a href="../Mongo/Error/Connection.html">Connection</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
       <a href="../Mongo/Error/Network.html">Network</a>
       
@@ -970,9 +975,7 @@
   </h2>
 
   <p>Write concern describes the level of acknowledgment requested from MongoDB for write operations to a standalone mongod or to replica sets or to sharded clusters.</p>
-
 <p>In sharded clusters, mongos instances will pass the write concern on to the shards.</p>
-
 <p>See: <a href="https://docs.mongodb.com/manual/reference/write-concern/index.html">the official documentation</a></p>
 
 
@@ -1032,14 +1035,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(bson:BSON)-class-method" class="signature"><strong>.new</strong>(bson : BSON)</a>
+        <a href="#new%28bson%3ABSON%29-class-method" class="signature"><strong>.new</strong>(bson : BSON)</a>
         
           <div class="summary"><p>Allocate an instance and copies data from a BSON struct.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(j:Bool?=nil,w:Int32?%7CString?=nil,w_timeout:Int64?=nil)-class-method" class="signature"><strong>.new</strong>(j : Bool? = <span class="n">nil</span>, w : Int32? | String? = <span class="n">nil</span>, w_timeout : Int64? = <span class="n">nil</span>)</a>
+        <a href="#new%28j%3ABool%3F%3Dnil%2Cw%3AInt32%3F%7CString%3F%3Dnil%2Cw_timeout%3AInt64%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(j : Bool? = <span class="n">nil</span>, w : Int32? | String? = <span class="n">nil</span>, w_timeout : Int64? = <span class="n">nil</span>)</a>
         
           <div class="summary"><p>Create a WriteConcern instance.</p></div>
         
@@ -1060,9 +1063,9 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#from_bson(bson:BSON)-class-method" class="signature"><strong>.from_bson</strong>(bson : BSON)</a>
+        <a href="#from_bson%28bson%3ABSON%29-class-method" class="signature"><strong>.from_bson</strong>(bson : BSON)</a>
         
-          <div class="summary"><p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/WriteConcern.html#new(bson:BSON)-class-method">.new</a></code>.</p></div>
+          <div class="summary"><p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/WriteConcern.html#new%28bson%3ABSON%29-class-method">.new</a></code>.</p></div>
         
       </li>
     
@@ -1081,52 +1084,52 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#j:Bool?-instance-method" class="signature"><strong>#j</strong> : Bool?</a>
+        <a href="#j%3ABool%3F-instance-method" class="signature"><strong>#j</strong> : Bool?</a>
         
           <div class="summary"><p>The <em>j</em> option requests acknowledgment from MongoDB that the write operation has been written to the on-disk journal.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#j=(j:Bool?)-instance-method" class="signature"><strong>#j=</strong>(j : Bool?)</a>
+        <a href="#j%3D%28j%3ABool%3F%29-instance-method" class="signature"><strong>#j=</strong>(j : Bool?)</a>
         
           <div class="summary"><p>The <em>j</em> option requests acknowledgment from MongoDB that the write operation has been written to the on-disk journal.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_bson(bson=BSON.new)-instance-method" class="signature"><strong>#to_bson</strong>(bson = <span class="t">BSON</span>.<span class="k">new</span>)</a>
+        <a href="#to_bson%28bson%3DBSON.new%29-instance-method" class="signature"><strong>#to_bson</strong>(bson = <span class="t">BSON</span>.new)</a>
         
           <div class="summary"><p>Converts to a BSON representation.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#unacknowledged?-instance-method" class="signature"><strong>#unacknowledged?</strong></a>
+        <a href="#unacknowledged%3F-instance-method" class="signature"><strong>#unacknowledged?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#w:Int32%7CString%7CNil-instance-method" class="signature"><strong>#w</strong> : Int32 | String | Nil</a>
+        <a href="#w%3AInt32%7CString%7CNil-instance-method" class="signature"><strong>#w</strong> : Int32 | String | Nil</a>
         
           <div class="summary"><p>The <em>w</em> option requests acknowledgment that the write operation has propagated to a specified number of mongod instances or to mongod instances with specified tags.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#w=(w:Int32%7CString%7CNil)-instance-method" class="signature"><strong>#w=</strong>(w : Int32 | String | Nil)</a>
+        <a href="#w%3D%28w%3AInt32%7CString%7CNil%29-instance-method" class="signature"><strong>#w=</strong>(w : Int32 | String | Nil)</a>
         
           <div class="summary"><p>The <em>w</em> option requests acknowledgment that the write operation has propagated to a specified number of mongod instances or to mongod instances with specified tags.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#w_timeout:Int64?-instance-method" class="signature"><strong>#w_timeout</strong> : Int64?</a>
+        <a href="#w_timeout%3AInt64%3F-instance-method" class="signature"><strong>#w_timeout</strong> : Int64?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#w_timeout=(w_timeout:Int64?)-instance-method" class="signature"><strong>#w_timeout=</strong>(w_timeout : Int64?)</a>
+        <a href="#w_timeout%3D%28w_timeout%3AInt64%3F%29-instance-method" class="signature"><strong>#w_timeout=</strong>(w_timeout : Int64?)</a>
         
       </li>
     
@@ -1195,21 +1198,20 @@
         
         def self.<strong>new</strong>(bson : BSON)
 
-        <a class="method-permalink" href="#new(bson:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#new%28bson%3ABSON%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Allocate an instance and copies data from a BSON struct.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">User</span>
   <span class="k">include</span> <span class="t">BSON</span><span class="t">::</span><span class="t">Serializable</span>
   property name : <span class="t">String</span>
 <span class="k">end</span>
 
-data <span class="o">=</span> <span class="t">BSON</span>.<span class="k">new</span>
+data <span class="o">=</span> <span class="t">BSON</span>.new
 data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span class="s">&quot;John&quot;</span>
-<span class="t">User</span>.<span class="k">new</span>(data)</code></pre>
+<span class="t">User</span>.new(data)</code></pre>
         </div>
       
       <br/>
@@ -1223,7 +1225,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def self.<strong>new</strong>(j : Bool? = <span class="n">nil</span>, w : Int32? | String? = <span class="n">nil</span>, w_timeout : Int64? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new(j:Bool?=nil,w:Int32?%7CString?=nil,w_timeout:Int64?=nil)-class-method">#</a>
+        <a class="method-permalink" href="#new%28j%3ABool%3F%3Dnil%2Cw%3AInt32%3F%7CString%3F%3Dnil%2Cw_timeout%3AInt64%3F%3Dnil%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1254,12 +1256,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def self.<strong>from_bson</strong>(bson : BSON)
 
-        <a class="method-permalink" href="#from_bson(bson:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#from_bson%28bson%3ABSON%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/WriteConcern.html#new(bson:BSON)-class-method">.new</a></code>.</p>
+          <p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/WriteConcern.html#new%28bson%3ABSON%29-class-method">.new</a></code>.</p>
         </div>
       
       <br/>
@@ -1285,7 +1287,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>j</strong> : Bool?
 
-        <a class="method-permalink" href="#j:Bool?-instance-method">#</a>
+        <a class="method-permalink" href="#j%3ABool%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1304,7 +1306,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>j=</strong>(j : Bool?)
 
-        <a class="method-permalink" href="#j=(j:Bool?)-instance-method">#</a>
+        <a class="method-permalink" href="#j%3D%28j%3ABool%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1321,16 +1323,15 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
     <div class="entry-detail" id="to_bson(bson=BSON.new)-instance-method">
       <div class="signature">
         
-        def <strong>to_bson</strong>(bson = <span class="t">BSON</span>.<span class="k">new</span>)
+        def <strong>to_bson</strong>(bson = <span class="t">BSON</span>.new)
 
-        <a class="method-permalink" href="#to_bson(bson=BSON.new)-instance-method">#</a>
+        <a class="method-permalink" href="#to_bson%28bson%3DBSON.new%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Converts to a BSON representation.</p>
-
-<pre><code class="language-crystal">user <span class="o">=</span> <span class="t">User</span>.<span class="k">new</span> name: <span class="s">&quot;John&quot;</span>
+<pre><code class="language-crystal">user <span class="o">=</span> <span class="t">User</span>.new name: <span class="s">&quot;John&quot;</span>
 bson <span class="o">=</span> user.to_bson</code></pre>
         </div>
       
@@ -1345,7 +1346,7 @@ bson <span class="o">=</span> user.to_bson</code></pre>
         
         def <strong>unacknowledged?</strong>
 
-        <a class="method-permalink" href="#unacknowledged?-instance-method">#</a>
+        <a class="method-permalink" href="#unacknowledged%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1359,7 +1360,7 @@ bson <span class="o">=</span> user.to_bson</code></pre>
         
         def <strong>w</strong> : Int32 | String | Nil
 
-        <a class="method-permalink" href="#w:Int32%7CString%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#w%3AInt32%7CString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1378,7 +1379,7 @@ bson <span class="o">=</span> user.to_bson</code></pre>
         
         def <strong>w=</strong>(w : Int32 | String | Nil)
 
-        <a class="method-permalink" href="#w=(w:Int32%7CString%7CNil)-instance-method">#</a>
+        <a class="method-permalink" href="#w%3D%28w%3AInt32%7CString%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1397,7 +1398,7 @@ bson <span class="o">=</span> user.to_bson</code></pre>
         
         def <strong>w_timeout</strong> : Int64?
 
-        <a class="method-permalink" href="#w_timeout:Int64?-instance-method">#</a>
+        <a class="method-permalink" href="#w_timeout%3AInt64%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1411,7 +1412,7 @@ bson <span class="o">=</span> user.to_bson</code></pre>
         
         def <strong>w_timeout=</strong>(w_timeout : Int64?)
 
-        <a class="method-permalink" href="#w_timeout=(w_timeout:Int64?)-instance-method">#</a>
+        <a class="method-permalink" href="#w_timeout%3D%28w_timeout%3AInt64%3F%29-instance-method">#</a>
       </div>
       
       <br/>

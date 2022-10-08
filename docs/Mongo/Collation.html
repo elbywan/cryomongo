@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -756,6 +756,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Connection" data-name="mongo::error::connection">
+      <a href="../Mongo/Error/Connection.html">Connection</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
       <a href="../Mongo/Error/Network.html">Network</a>
       
@@ -970,7 +975,6 @@
   </h2>
 
   <p>Collation allows users to specify language-specific rules for string comparison, such as rules for lettercase and accent marks.</p>
-
 <p>See: <a href="https://docs.mongodb.com/manual/reference/collation/index.html">the official documentation</a></p>
 
 
@@ -1030,14 +1034,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(bson:BSON)-class-method" class="signature"><strong>.new</strong>(bson : BSON)</a>
+        <a href="#new%28bson%3ABSON%29-class-method" class="signature"><strong>.new</strong>(bson : BSON)</a>
         
           <div class="summary"><p>Allocate an instance and copies data from a BSON struct.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(locale,case_level=nil,case_first=nil,strength=nil,numeric_ordering=nil,alternate=nil,max_variable=nil,backwards=nil,normalization=nil)-class-method" class="signature"><strong>.new</strong>(locale, case_level = <span class="n">nil</span>, case_first = <span class="n">nil</span>, strength = <span class="n">nil</span>, numeric_ordering = <span class="n">nil</span>, alternate = <span class="n">nil</span>, max_variable = <span class="n">nil</span>, backwards = <span class="n">nil</span>, normalization = <span class="n">nil</span>)</a>
+        <a href="#new%28locale%3AString%2Ccase_level%3ABool%3F%3Dnil%2Ccase_first%3AString%3F%3Dnil%2Cstrength%3AInt32%3F%3Dnil%2Cnumeric_ordering%3Dnil%2Calternate%3Dnil%2Cmax_variable%3Dnil%2Cbackwards%3Dnil%2Cnormalization%3Dnil%29-class-method" class="signature"><strong>.new</strong>(locale : String, case_level : Bool? = <span class="n">nil</span>, case_first : String? = <span class="n">nil</span>, strength : Int32? = <span class="n">nil</span>, numeric_ordering = <span class="n">nil</span>, alternate = <span class="n">nil</span>, max_variable = <span class="n">nil</span>, backwards = <span class="n">nil</span>, normalization = <span class="n">nil</span>)</a>
         
           <div class="summary"><p>Create a new <code><a href="../Mongo/Collation.html">Collation</a></code> instance.</p></div>
         
@@ -1058,9 +1062,9 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#from_bson(bson:BSON)-class-method" class="signature"><strong>.from_bson</strong>(bson : BSON)</a>
+        <a href="#from_bson%28bson%3ABSON%29-class-method" class="signature"><strong>.from_bson</strong>(bson : BSON)</a>
         
-          <div class="summary"><p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/Collation.html#new(bson:BSON)-class-method">.new</a></code>.</p></div>
+          <div class="summary"><p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/Collation.html#new%28bson%3ABSON%29-class-method">.new</a></code>.</p></div>
         
       </li>
     
@@ -1079,133 +1083,133 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#alternate:String?-instance-method" class="signature"><strong>#alternate</strong> : String?</a>
+        <a href="#alternate%3AString%3F-instance-method" class="signature"><strong>#alternate</strong> : String?</a>
         
           <div class="summary"><p>Field that determines whether collation should consider whitespace and punctuation as base characters for purposes of comparison.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#alternate=(alternate:String?)-instance-method" class="signature"><strong>#alternate=</strong>(alternate : String?)</a>
+        <a href="#alternate%3D%28alternate%3AString%3F%29-instance-method" class="signature"><strong>#alternate=</strong>(alternate : String?)</a>
         
           <div class="summary"><p>Field that determines whether collation should consider whitespace and punctuation as base characters for purposes of comparison.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#backwards:Bool?-instance-method" class="signature"><strong>#backwards</strong> : Bool?</a>
+        <a href="#backwards%3ABool%3F-instance-method" class="signature"><strong>#backwards</strong> : Bool?</a>
         
           <div class="summary"><p>Flag that determines whether strings with diacritics sort from back of the string, such as with some French dictionary ordering.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#backwards=(backwards:Bool?)-instance-method" class="signature"><strong>#backwards=</strong>(backwards : Bool?)</a>
+        <a href="#backwards%3D%28backwards%3ABool%3F%29-instance-method" class="signature"><strong>#backwards=</strong>(backwards : Bool?)</a>
         
           <div class="summary"><p>Flag that determines whether strings with diacritics sort from back of the string, such as with some French dictionary ordering.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#case_first:String?-instance-method" class="signature"><strong>#case_first</strong> : String?</a>
+        <a href="#case_first%3AString%3F-instance-method" class="signature"><strong>#case_first</strong> : String?</a>
         
           <div class="summary"><p>A field that determines sort order of case differences during tertiary level comparisons.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#case_first=(case_first:String?)-instance-method" class="signature"><strong>#case_first=</strong>(case_first : String?)</a>
+        <a href="#case_first%3D%28case_first%3AString%3F%29-instance-method" class="signature"><strong>#case_first=</strong>(case_first : String?)</a>
         
           <div class="summary"><p>A field that determines sort order of case differences during tertiary level comparisons.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#case_level:Bool?-instance-method" class="signature"><strong>#case_level</strong> : Bool?</a>
+        <a href="#case_level%3ABool%3F-instance-method" class="signature"><strong>#case_level</strong> : Bool?</a>
         
           <div class="summary"><p>Flag that determines whether to include case comparison at strength level 1 or 2.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#case_level=(case_level:Bool?)-instance-method" class="signature"><strong>#case_level=</strong>(case_level : Bool?)</a>
+        <a href="#case_level%3D%28case_level%3ABool%3F%29-instance-method" class="signature"><strong>#case_level=</strong>(case_level : Bool?)</a>
         
           <div class="summary"><p>Flag that determines whether to include case comparison at strength level 1 or 2.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#locale:String-instance-method" class="signature"><strong>#locale</strong> : String</a>
+        <a href="#locale%3AString-instance-method" class="signature"><strong>#locale</strong> : String</a>
         
           <div class="summary"><p>The ICU locale.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#locale=(locale:String)-instance-method" class="signature"><strong>#locale=</strong>(locale : String)</a>
+        <a href="#locale%3D%28locale%3AString%29-instance-method" class="signature"><strong>#locale=</strong>(locale : String)</a>
         
           <div class="summary"><p>The ICU locale.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#max_variable:String?-instance-method" class="signature"><strong>#max_variable</strong> : String?</a>
+        <a href="#max_variable%3AString%3F-instance-method" class="signature"><strong>#max_variable</strong> : String?</a>
         
-          <div class="summary"><p>Field that determines up to which characters are considered ignorable when <code>alternate: "shifted"</code>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#max_variable=(max_variable:String?)-instance-method" class="signature"><strong>#max_variable=</strong>(max_variable : String?)</a>
-        
-          <div class="summary"><p>Field that determines up to which characters are considered ignorable when <code>alternate: "shifted"</code>.</p></div>
+          <div class="summary"><p>Field that determines up to which characters are considered ignorable when <code>alternate: &quot;shifted&quot;</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#normalization:Bool?-instance-method" class="signature"><strong>#normalization</strong> : Bool?</a>
+        <a href="#max_variable%3D%28max_variable%3AString%3F%29-instance-method" class="signature"><strong>#max_variable=</strong>(max_variable : String?)</a>
+        
+          <div class="summary"><p>Field that determines up to which characters are considered ignorable when <code>alternate: &quot;shifted&quot;</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#normalization%3ABool%3F-instance-method" class="signature"><strong>#normalization</strong> : Bool?</a>
         
           <div class="summary"><p>Flag that determines whether to check if text require normalization and to perform normalization.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#normalization=(normalization:Bool?)-instance-method" class="signature"><strong>#normalization=</strong>(normalization : Bool?)</a>
+        <a href="#normalization%3D%28normalization%3ABool%3F%29-instance-method" class="signature"><strong>#normalization=</strong>(normalization : Bool?)</a>
         
           <div class="summary"><p>Flag that determines whether to check if text require normalization and to perform normalization.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#numeric_ordering:Bool?-instance-method" class="signature"><strong>#numeric_ordering</strong> : Bool?</a>
+        <a href="#numeric_ordering%3ABool%3F-instance-method" class="signature"><strong>#numeric_ordering</strong> : Bool?</a>
         
           <div class="summary"><p>Flag that determines whether to compare numeric strings as numbers or as strings.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#numeric_ordering=(numeric_ordering:Bool?)-instance-method" class="signature"><strong>#numeric_ordering=</strong>(numeric_ordering : Bool?)</a>
+        <a href="#numeric_ordering%3D%28numeric_ordering%3ABool%3F%29-instance-method" class="signature"><strong>#numeric_ordering=</strong>(numeric_ordering : Bool?)</a>
         
           <div class="summary"><p>Flag that determines whether to compare numeric strings as numbers or as strings.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#strength:Int32?-instance-method" class="signature"><strong>#strength</strong> : Int32?</a>
+        <a href="#strength%3AInt32%3F-instance-method" class="signature"><strong>#strength</strong> : Int32?</a>
         
           <div class="summary"><p>The level of comparison to perform.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#strength=(strength:Int32?)-instance-method" class="signature"><strong>#strength=</strong>(strength : Int32?)</a>
+        <a href="#strength%3D%28strength%3AInt32%3F%29-instance-method" class="signature"><strong>#strength=</strong>(strength : Int32?)</a>
         
           <div class="summary"><p>The level of comparison to perform.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_bson(bson=BSON.new)-instance-method" class="signature"><strong>#to_bson</strong>(bson = <span class="t">BSON</span>.<span class="k">new</span>)</a>
+        <a href="#to_bson%28bson%3DBSON.new%29-instance-method" class="signature"><strong>#to_bson</strong>(bson = <span class="t">BSON</span>.new)</a>
         
           <div class="summary"><p>Converts to a BSON representation.</p></div>
         
@@ -1276,21 +1280,20 @@
         
         def self.<strong>new</strong>(bson : BSON)
 
-        <a class="method-permalink" href="#new(bson:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#new%28bson%3ABSON%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Allocate an instance and copies data from a BSON struct.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">User</span>
   <span class="k">include</span> <span class="t">BSON</span><span class="t">::</span><span class="t">Serializable</span>
   property name : <span class="t">String</span>
 <span class="k">end</span>
 
-data <span class="o">=</span> <span class="t">BSON</span>.<span class="k">new</span>
+data <span class="o">=</span> <span class="t">BSON</span>.new
 data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span class="s">&quot;John&quot;</span>
-<span class="t">User</span>.<span class="k">new</span>(data)</code></pre>
+<span class="t">User</span>.new(data)</code></pre>
         </div>
       
       <br/>
@@ -1299,19 +1302,18 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="new(locale,case_level=nil,case_first=nil,strength=nil,numeric_ordering=nil,alternate=nil,max_variable=nil,backwards=nil,normalization=nil)-class-method">
+    <div class="entry-detail" id="new(locale:String,case_level:Bool?=nil,case_first:String?=nil,strength:Int32?=nil,numeric_ordering=nil,alternate=nil,max_variable=nil,backwards=nil,normalization=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(locale, case_level = <span class="n">nil</span>, case_first = <span class="n">nil</span>, strength = <span class="n">nil</span>, numeric_ordering = <span class="n">nil</span>, alternate = <span class="n">nil</span>, max_variable = <span class="n">nil</span>, backwards = <span class="n">nil</span>, normalization = <span class="n">nil</span>)
+        def self.<strong>new</strong>(locale : String, case_level : Bool? = <span class="n">nil</span>, case_first : String? = <span class="n">nil</span>, strength : Int32? = <span class="n">nil</span>, numeric_ordering = <span class="n">nil</span>, alternate = <span class="n">nil</span>, max_variable = <span class="n">nil</span>, backwards = <span class="n">nil</span>, normalization = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new(locale,case_level=nil,case_first=nil,strength=nil,numeric_ordering=nil,alternate=nil,max_variable=nil,backwards=nil,normalization=nil)-class-method">#</a>
+        <a class="method-permalink" href="#new%28locale%3AString%2Ccase_level%3ABool%3F%3Dnil%2Ccase_first%3AString%3F%3Dnil%2Cstrength%3AInt32%3F%3Dnil%2Cnumeric_ordering%3Dnil%2Calternate%3Dnil%2Cmax_variable%3Dnil%2Cbackwards%3Dnil%2Cnormalization%3Dnil%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Create a new <code><a href="../Mongo/Collation.html">Collation</a></code> instance.</p>
-
-<pre><code class="language-crystal">collation <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Collation</span>.<span class="k">new</span>(locale: <span class="s">&quot;fr&quot;</span>)</code></pre>
+<pre><code class="language-crystal">collation <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Collation</span>.new(locale: <span class="s">&quot;fr&quot;</span>)</code></pre>
         </div>
       
       <br/>
@@ -1337,12 +1339,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def self.<strong>from_bson</strong>(bson : BSON)
 
-        <a class="method-permalink" href="#from_bson(bson:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#from_bson%28bson%3ABSON%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/Collation.html#new(bson:BSON)-class-method">.new</a></code>.</p>
+          <p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/Collation.html#new%28bson%3ABSON%29-class-method">.new</a></code>.</p>
         </div>
       
       <br/>
@@ -1368,7 +1370,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>alternate</strong> : String?
 
-        <a class="method-permalink" href="#alternate:String?-instance-method">#</a>
+        <a class="method-permalink" href="#alternate%3AString%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1387,7 +1389,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>alternate=</strong>(alternate : String?)
 
-        <a class="method-permalink" href="#alternate=(alternate:String?)-instance-method">#</a>
+        <a class="method-permalink" href="#alternate%3D%28alternate%3AString%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1406,7 +1408,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>backwards</strong> : Bool?
 
-        <a class="method-permalink" href="#backwards:Bool?-instance-method">#</a>
+        <a class="method-permalink" href="#backwards%3ABool%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1425,7 +1427,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>backwards=</strong>(backwards : Bool?)
 
-        <a class="method-permalink" href="#backwards=(backwards:Bool?)-instance-method">#</a>
+        <a class="method-permalink" href="#backwards%3D%28backwards%3ABool%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1444,7 +1446,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>case_first</strong> : String?
 
-        <a class="method-permalink" href="#case_first:String?-instance-method">#</a>
+        <a class="method-permalink" href="#case_first%3AString%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1463,7 +1465,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>case_first=</strong>(case_first : String?)
 
-        <a class="method-permalink" href="#case_first=(case_first:String?)-instance-method">#</a>
+        <a class="method-permalink" href="#case_first%3D%28case_first%3AString%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1482,7 +1484,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>case_level</strong> : Bool?
 
-        <a class="method-permalink" href="#case_level:Bool?-instance-method">#</a>
+        <a class="method-permalink" href="#case_level%3ABool%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1501,7 +1503,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>case_level=</strong>(case_level : Bool?)
 
-        <a class="method-permalink" href="#case_level=(case_level:Bool?)-instance-method">#</a>
+        <a class="method-permalink" href="#case_level%3D%28case_level%3ABool%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1520,7 +1522,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>locale</strong> : String
 
-        <a class="method-permalink" href="#locale:String-instance-method">#</a>
+        <a class="method-permalink" href="#locale%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1539,7 +1541,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>locale=</strong>(locale : String)
 
-        <a class="method-permalink" href="#locale=(locale:String)-instance-method">#</a>
+        <a class="method-permalink" href="#locale%3D%28locale%3AString%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1558,12 +1560,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>max_variable</strong> : String?
 
-        <a class="method-permalink" href="#max_variable:String?-instance-method">#</a>
+        <a class="method-permalink" href="#max_variable%3AString%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Field that determines up to which characters are considered ignorable when <code>alternate: "shifted"</code>. Has no effect if <code>alternate: "non-ignorable"</code></p>
+          <p>Field that determines up to which characters are considered ignorable when <code>alternate: &quot;shifted&quot;</code>. Has no effect if <code>alternate: &quot;non-ignorable&quot;</code></p>
         </div>
       
       <br/>
@@ -1577,12 +1579,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>max_variable=</strong>(max_variable : String?)
 
-        <a class="method-permalink" href="#max_variable=(max_variable:String?)-instance-method">#</a>
+        <a class="method-permalink" href="#max_variable%3D%28max_variable%3AString%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Field that determines up to which characters are considered ignorable when <code>alternate: "shifted"</code>. Has no effect if <code>alternate: "non-ignorable"</code></p>
+          <p>Field that determines up to which characters are considered ignorable when <code>alternate: &quot;shifted&quot;</code>. Has no effect if <code>alternate: &quot;non-ignorable&quot;</code></p>
         </div>
       
       <br/>
@@ -1596,7 +1598,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>normalization</strong> : Bool?
 
-        <a class="method-permalink" href="#normalization:Bool?-instance-method">#</a>
+        <a class="method-permalink" href="#normalization%3ABool%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1616,7 +1618,7 @@ Generally, majority of text does not require this normalization processing.</p>
         
         def <strong>normalization=</strong>(normalization : Bool?)
 
-        <a class="method-permalink" href="#normalization=(normalization:Bool?)-instance-method">#</a>
+        <a class="method-permalink" href="#normalization%3D%28normalization%3ABool%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1636,7 +1638,7 @@ Generally, majority of text does not require this normalization processing.</p>
         
         def <strong>numeric_ordering</strong> : Bool?
 
-        <a class="method-permalink" href="#numeric_ordering:Bool?-instance-method">#</a>
+        <a class="method-permalink" href="#numeric_ordering%3ABool%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1655,7 +1657,7 @@ Generally, majority of text does not require this normalization processing.</p>
         
         def <strong>numeric_ordering=</strong>(numeric_ordering : Bool?)
 
-        <a class="method-permalink" href="#numeric_ordering=(numeric_ordering:Bool?)-instance-method">#</a>
+        <a class="method-permalink" href="#numeric_ordering%3D%28numeric_ordering%3ABool%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1674,7 +1676,7 @@ Generally, majority of text does not require this normalization processing.</p>
         
         def <strong>strength</strong> : Int32?
 
-        <a class="method-permalink" href="#strength:Int32?-instance-method">#</a>
+        <a class="method-permalink" href="#strength%3AInt32%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1693,7 +1695,7 @@ Generally, majority of text does not require this normalization processing.</p>
         
         def <strong>strength=</strong>(strength : Int32?)
 
-        <a class="method-permalink" href="#strength=(strength:Int32?)-instance-method">#</a>
+        <a class="method-permalink" href="#strength%3D%28strength%3AInt32%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1710,16 +1712,15 @@ Generally, majority of text does not require this normalization processing.</p>
     <div class="entry-detail" id="to_bson(bson=BSON.new)-instance-method">
       <div class="signature">
         
-        def <strong>to_bson</strong>(bson = <span class="t">BSON</span>.<span class="k">new</span>)
+        def <strong>to_bson</strong>(bson = <span class="t">BSON</span>.new)
 
-        <a class="method-permalink" href="#to_bson(bson=BSON.new)-instance-method">#</a>
+        <a class="method-permalink" href="#to_bson%28bson%3DBSON.new%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Converts to a BSON representation.</p>
-
-<pre><code class="language-crystal">user <span class="o">=</span> <span class="t">User</span>.<span class="k">new</span> name: <span class="s">&quot;John&quot;</span>
+<pre><code class="language-crystal">user <span class="o">=</span> <span class="t">User</span>.new name: <span class="s">&quot;John&quot;</span>
 bson <span class="o">=</span> user.to_bson</code></pre>
         </div>
       

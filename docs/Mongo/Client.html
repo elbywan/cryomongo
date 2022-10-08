@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -756,6 +756,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Connection" data-name="mongo::error::connection">
+      <a href="../Mongo/Error/Connection.html">Connection</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
       <a href="../Mongo/Error/Network.html">Network</a>
       
@@ -970,7 +975,6 @@
   </h2>
 
   <p>The client which provides access to a MongoDB server, replica set, or sharded cluster.</p>
-
 <p>It maintains management of underlying sockets and routing to individual nodes.</p>
 
 
@@ -1066,7 +1070,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(connection_string:String=&quot;mongodb://localhost:27017&quot;,options:Mongo::Options=Mongo::Options.new)-class-method" class="signature"><strong>.new</strong>(connection_string : String = <span class="s">&quot;mongodb://localhost:27017&quot;</span>, options : Mongo::Options = <span class="t">Mongo</span><span class="t">::</span><span class="t">Options</span>.<span class="k">new</span>)</a>
+        <a href="#new%28connection_string%3AString%3D%22mongodb%3A//localhost%3A27017%22%2Coptions%3AMongo%3A%3AOptions%3DMongo%3A%3AOptions.new%29-class-method" class="signature"><strong>.new</strong>(connection_string : String = <span class="s">&quot;mongodb://localhost:27017&quot;</span>, options : Mongo::Options = <span class="t">Mongo</span><span class="t">::</span><span class="t">Options</span>.new)</a>
         
           <div class="summary"><p>Create a mongodb client instance from a mongodb URL.</p></div>
         
@@ -1089,7 +1093,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#[](name:String):Database-instance-method" class="signature"><strong>#[]</strong>(name : String) : Database</a>
+        <a href="#%5B%5D%28name%3AString%29%3ADatabase-instance-method" class="signature"><strong>#[]</strong>(name : String) : Database</a>
         
           <div class="summary"><p>Get a newly allocated <code><a href="../Mongo/Database.html">Mongo::Database</a></code>using the default auth database string optionally provided as a part of the connection string uri.</p></div>
         
@@ -1103,140 +1107,140 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#cluster_time:Session::ClusterTime?-instance-method" class="signature"><strong>#cluster_time</strong> : Session::ClusterTime?</a>
+        <a href="#cluster_time%3ASession%3A%3AClusterTime%3F-instance-method" class="signature"><strong>#cluster_time</strong> : Session::ClusterTime?</a>
         
           <div class="summary"><p>The current highest seen cluster time for the deployment</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method" class="signature"><strong>#command</strong>(command cmd, write_concern : WriteConcern? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, server_description : SDAM::ServerDescription? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args)</a>
+        <a href="#command%28command%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Cserver_description%3ASDAM%3A%3AServerDescription%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%2Coperation_id%3AInt64%3F%3Dnil%2C%2A%2Aargs%2C%26%29-instance-method" class="signature"><strong>#command</strong>(command, write_concern : WriteConcern? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, server_description : SDAM::ServerDescription? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args, &)</a>
         
           <div class="summary"><p>Execute a command on the server.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args,&)-instance-method" class="signature"><strong>#command</strong>(command, write_concern : WriteConcern? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, server_description : SDAM::ServerDescription? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args, &)</a>
+        <a href="#command%28commandcmd%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Cserver_description%3ASDAM%3A%3AServerDescription%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%2Coperation_id%3AInt64%3F%3Dnil%2C%2A%2Aargs%29-instance-method" class="signature"><strong>#command</strong>(command cmd, write_concern : WriteConcern? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, server_description : SDAM::ServerDescription? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args)</a>
         
           <div class="summary"><p>Execute a command on the server.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#database(name:String):Database-instance-method" class="signature"><strong>#database</strong>(name : String) : Database</a>
+        <a href="#database%28name%3AString%29%3ADatabase-instance-method" class="signature"><strong>#database</strong>(name : String) : Database</a>
         
           <div class="summary"><p>Get a newly allocated <code><a href="../Mongo/Database.html">Mongo::Database</a></code> for the database named <em>name</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#default_auth_db:String-instance-method" class="signature"><strong>#default_auth_db</strong> : String</a>
+        <a href="#default_auth_db%3AString-instance-method" class="signature"><strong>#default_auth_db</strong> : String</a>
         
           <div class="summary"><p>The default auth database is optionally provided as a part of the connection string uri.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#default_database:Database?-instance-method" class="signature"><strong>#default_database</strong> : Database?</a>
+        <a href="#default_database%3ADatabase%3F-instance-method" class="signature"><strong>#default_database</strong> : Database?</a>
         
           <div class="summary"><p>Get a newly allocated <code><a href="../Mongo/Database.html">Mongo::Database</a></code>using the default auth database string optionally provided as a part of the connection string uri.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#list_databases(*,filter=nil,name_only:Bool?=nil,authorized_databases:Bool?=nil,session:Session::ClientSession?=nil):Commands::ListDatabases::Result-instance-method" class="signature"><strong>#list_databases</strong>(*, filter = <span class="n">nil</span>, name_only : Bool? = <span class="n">nil</span>, authorized_databases : Bool? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Commands::ListDatabases::Result</a>
+        <a href="#list_databases%28%2A%2Cfilter%3Dnil%2Cname_only%3ABool%3F%3Dnil%2Cauthorized_databases%3ABool%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3AListDatabases%3A%3AResult-instance-method" class="signature"><strong>#list_databases</strong>(*, filter = <span class="n">nil</span>, name_only : Bool? = <span class="n">nil</span>, authorized_databases : Bool? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Commands::ListDatabases::Result</a>
         
           <div class="summary"><p>Provides a list of all existing databases along with basic statistics about them.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#options:Options-instance-method" class="signature"><strong>#options</strong> : Options</a>
+        <a href="#options%3AOptions-instance-method" class="signature"><strong>#options</strong> : Options</a>
         
           <div class="summary"><p>The set of driver options.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read_concern:ReadConcern?-instance-method" class="signature"><strong>#read_concern</strong> : ReadConcern?</a>
+        <a href="#read_concern%3AReadConcern%3F-instance-method" class="signature"><strong>#read_concern</strong> : ReadConcern?</a>
         
           <div class="summary"><p>Read concern accessor.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read_concern=(read_concern:ReadConcern?)-instance-method" class="signature"><strong>#read_concern=</strong>(read_concern : ReadConcern?)</a>
+        <a href="#read_concern%3D%28read_concern%3AReadConcern%3F%29-instance-method" class="signature"><strong>#read_concern=</strong>(read_concern : ReadConcern?)</a>
         
           <div class="summary"><p>Read concern accessor.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read_preference:ReadPreference?-instance-method" class="signature"><strong>#read_preference</strong> : ReadPreference?</a>
+        <a href="#read_preference%3AReadPreference%3F-instance-method" class="signature"><strong>#read_preference</strong> : ReadPreference?</a>
         
           <div class="summary"><p>ReadPreference accessor.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read_preference=(read_preference:ReadPreference?)-instance-method" class="signature"><strong>#read_preference=</strong>(read_preference : ReadPreference?)</a>
+        <a href="#read_preference%3D%28read_preference%3AReadPreference%3F%29-instance-method" class="signature"><strong>#read_preference=</strong>(read_preference : ReadPreference?)</a>
         
           <div class="summary"><p>ReadPreference accessor.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#start_session(*,causal_consistency:Bool=true,default_transaction_options:Session::TransactionOptions?=nil):Session::ClientSession-instance-method" class="signature"><strong>#start_session</strong>(*, causal_consistency : Bool = <span class="n">true</span>, default_transaction_options : Session::TransactionOptions? = <span class="n">nil</span>) : Session::ClientSession</a>
+        <a href="#start_session%28%2A%2Ccausal_consistency%3ABool%3Dtrue%2Cdefault_transaction_options%3ASession%3A%3ATransactionOptions%3F%3Dnil%29%3ASession%3A%3AClientSession-instance-method" class="signature"><strong>#start_session</strong>(*, causal_consistency : Bool = <span class="n">true</span>, default_transaction_options : Session::TransactionOptions? = <span class="n">nil</span>) : Session::ClientSession</a>
         
           <div class="summary"><p>Starts a new logical session for a sequence of operations.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#status(*,repl:Int32?=nil,metrics:Int32?=nil,locks:Int32?=nil,mirrored_reads:Int32?=nil,latch_analysis:Int32?=nil,session:Session::ClientSession?=nil):BSON?-instance-method" class="signature"><strong>#status</strong>(*, repl : Int32? = <span class="n">nil</span>, metrics : Int32? = <span class="n">nil</span>, locks : Int32? = <span class="n">nil</span>, mirrored_reads : Int32? = <span class="n">nil</span>, latch_analysis : Int32? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : BSON?</a>
+        <a href="#status%28%2A%2Crepl%3AInt32%3F%3Dnil%2Cmetrics%3AInt32%3F%3Dnil%2Clocks%3AInt32%3F%3Dnil%2Cmirrored_reads%3AInt32%3F%3Dnil%2Clatch_analysis%3AInt32%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ABSON%3F-instance-method" class="signature"><strong>#status</strong>(*, repl : Int32? = <span class="n">nil</span>, metrics : Int32? = <span class="n">nil</span>, locks : Int32? = <span class="n">nil</span>, mirrored_reads : Int32? = <span class="n">nil</span>, latch_analysis : Int32? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : BSON?</a>
         
           <div class="summary"><p>Returns a document that provides an overview of the database’s state.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#subscribe_commands(&callback:Monitoring::Commands::Event-%3ENil):Monitoring::Commands::Event-%3ENil-instance-method" class="signature"><strong>#subscribe_commands</strong>(&callback : Monitoring::Commands::Event -> Nil) : Monitoring::Commands::Event -> Nil</a>
+        <a href="#subscribe_commands%28%26callback%3AMonitoring%3A%3ACommands%3A%3AEvent-%3ENil%29%3AMonitoring%3A%3ACommands%3A%3AEvent-%3ENil-instance-method" class="signature"><strong>#subscribe_commands</strong>(&callback : Monitoring::Commands::Event -> Nil) : Monitoring::Commands::Event -> Nil</a>
         
           <div class="summary"><p>Subscribe to monitoring command events.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#top:BSON?-instance-method" class="signature"><strong>#top</strong> : BSON?</a>
+        <a href="#top%3ABSON%3F-instance-method" class="signature"><strong>#top</strong> : BSON?</a>
         
           <div class="summary"><p>An administrative command that returns usage statistics for each collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#unsubscribe_commands(callback:Monitoring::Commands::Event-%3ENil):Nil-instance-method" class="signature"><strong>#unsubscribe_commands</strong>(callback : Monitoring::Commands::Event -> Nil) : Nil</a>
+        <a href="#unsubscribe_commands%28callback%3AMonitoring%3A%3ACommands%3A%3AEvent-%3ENil%29%3ANil-instance-method" class="signature"><strong>#unsubscribe_commands</strong>(callback : Monitoring::Commands::Event -> Nil) : Nil</a>
         
           <div class="summary"><p>Ends the subscription for command events.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#watch(pipeline:Array=[]ofBSON,*,full_document:String?=nil,resume_after:BSON?=nil,max_await_time_ms:Int64?=nil,batch_size:Int32?=nil,collation:Collation?=nil,start_at_operation_time:Time?=nil,start_after:BSON?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil):Mongo::ChangeStream::Cursor-instance-method" class="signature"><strong>#watch</strong>(pipeline : Array = <span class="o">[]</span> <span class="k">of</span> <span class="t">BSON</span>, *, full_document : String? = <span class="n">nil</span>, resume_after : BSON? = <span class="n">nil</span>, max_await_time_ms : Int64? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, start_at_operation_time : Time? = <span class="n">nil</span>, start_after : BSON? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Mongo::ChangeStream::Cursor</a>
+        <a href="#watch%28pipeline%3AArray%3D%5B%5DofBSON%2C%2A%2Cfull_document%3AString%3F%3Dnil%2Cresume_after%3ABSON%3F%3Dnil%2Cmax_await_time_ms%3AInt64%3F%3Dnil%2Cbatch_size%3AInt32%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Cstart_at_operation_time%3ATime%3F%3Dnil%2Cstart_after%3ABSON%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AMongo%3A%3AChangeStream%3A%3ACursor-instance-method" class="signature"><strong>#watch</strong>(pipeline : Array = <span class="o">[]</span> <span class="k">of</span> <span class="t">BSON</span>, *, full_document : String? = <span class="n">nil</span>, resume_after : BSON? = <span class="n">nil</span>, max_await_time_ms : Int64? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, start_at_operation_time : Time? = <span class="n">nil</span>, start_after : BSON? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Mongo::ChangeStream::Cursor</a>
         
           <div class="summary"><p>Allows a client to observe all changes in a cluster.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#write_concern:WriteConcern?-instance-method" class="signature"><strong>#write_concern</strong> : WriteConcern?</a>
+        <a href="#write_concern%3AWriteConcern%3F-instance-method" class="signature"><strong>#write_concern</strong> : WriteConcern?</a>
         
           <div class="summary"><p>Write concern accessor.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#write_concern=(write_concern:WriteConcern?)-instance-method" class="signature"><strong>#write_concern=</strong>(write_concern : WriteConcern?)</a>
+        <a href="#write_concern%3D%28write_concern%3AWriteConcern%3F%29-instance-method" class="signature"><strong>#write_concern=</strong>(write_concern : WriteConcern?)</a>
         
           <div class="summary"><p>Write concern accessor.</p></div>
         
@@ -1315,18 +1319,17 @@
     <div class="entry-detail" id="new(connection_string:String=&quot;mongodb://localhost:27017&quot;,options:Mongo::Options=Mongo::Options.new)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(connection_string : String = <span class="s">&quot;mongodb://localhost:27017&quot;</span>, options : <a href="../Mongo/Options.html">Mongo::Options</a> = <span class="t">Mongo</span><span class="t">::</span><span class="t">Options</span>.<span class="k">new</span>)
+        def self.<strong>new</strong>(connection_string : String = <span class="s">&quot;mongodb://localhost:27017&quot;</span>, options : <a href="../Mongo/Options.html">Mongo::Options</a> = <span class="t">Mongo</span><span class="t">::</span><span class="t">Options</span>.new)
 
-        <a class="method-permalink" href="#new(connection_string:String=&quot;mongodb://localhost:27017&quot;,options:Mongo::Options=Mongo::Options.new)-class-method">#</a>
+        <a class="method-permalink" href="#new%28connection_string%3AString%3D%22mongodb%3A//localhost%3A27017%22%2Coptions%3AMongo%3A%3AOptions%3DMongo%3A%3AOptions.new%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Create a mongodb client instance from a mongodb URL.</p>
-
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;cryomongo&quot;</span>
 
-client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span> <span class="s">&quot;mongodb://127.0.0.1/?appname=client-example&quot;</span></code></pre>
+client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.new <span class="s">&quot;mongodb://127.0.0.1/?appname=client-example&quot;</span></code></pre>
         </div>
       
       <br/>
@@ -1354,14 +1357,13 @@ client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</
         
         def <strong>[]</strong>(name : String) : <a href="../Mongo/Database.html">Database</a>
 
-        <a class="method-permalink" href="#[](name:String):Database-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28name%3AString%29%3ADatabase-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Get a newly allocated <code><a href="../Mongo/Database.html">Mongo::Database</a></code>using the default auth database string
 optionally provided as a part of the connection string uri.</p>
-
 <p>see: https://docs.mongodb.com/manual/reference/connection-string/</p>
         </div>
       
@@ -1395,7 +1397,7 @@ optionally provided as a part of the connection string uri.</p>
         
         def <strong>cluster_time</strong> : <a href="../Mongo/Session/ClusterTime.html">Session::ClusterTime</a>?
 
-        <a class="method-permalink" href="#cluster_time:Session::ClusterTime?-instance-method">#</a>
+        <a class="method-permalink" href="#cluster_time%3ASession%3A%3AClusterTime%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1409,18 +1411,17 @@ optionally provided as a part of the connection string uri.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method">
+    <div class="entry-detail" id="command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args,&amp;)-instance-method">
       <div class="signature">
         
-        def <strong>command</strong>(command cmd, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, server_description : SDAM::ServerDescription? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args)
+        def <strong>command</strong>(command, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, server_description : SDAM::ServerDescription? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args, &)
 
-        <a class="method-permalink" href="#command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method">#</a>
+        <a class="method-permalink" href="#command%28command%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Cserver_description%3ASDAM%3A%3AServerDescription%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%2Coperation_id%3AInt64%3F%3Dnil%2C%2A%2Aargs%2C%26%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Execute a command on the server.</p>
-
 <pre><code class="language-crystal"><span class="c"># First argument is the `Mongo::Commands`.</span>
 client.command(<span class="t">Mongo</span><span class="t">::</span><span class="t">Commands</span><span class="t">::</span><span class="t">DropDatabase</span>, database: <span class="s">&quot;database_name&quot;</span>)</code></pre>
         </div>
@@ -1431,18 +1432,17 @@ client.command(<span class="t">Mongo</span><span class="t">::</span><span class=
       </div>
     </div>
   
-    <div class="entry-detail" id="command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args,&)-instance-method">
+    <div class="entry-detail" id="command(commandcmd,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args)-instance-method">
       <div class="signature">
         
-        def <strong>command</strong>(command, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, server_description : SDAM::ServerDescription? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args, &)
+        def <strong>command</strong>(command cmd, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, server_description : SDAM::ServerDescription? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>, operation_id : Int64? = <span class="n">nil</span>, **args)
 
-        <a class="method-permalink" href="#command(command,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,server_description:SDAM::ServerDescription?=nil,session:Session::ClientSession?=nil,operation_id:Int64?=nil,**args,&)-instance-method">#</a>
+        <a class="method-permalink" href="#command%28commandcmd%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Cserver_description%3ASDAM%3A%3AServerDescription%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%2Coperation_id%3AInt64%3F%3Dnil%2C%2A%2Aargs%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Execute a command on the server.</p>
-
 <pre><code class="language-crystal"><span class="c"># First argument is the `Mongo::Commands`.</span>
 client.command(<span class="t">Mongo</span><span class="t">::</span><span class="t">Commands</span><span class="t">::</span><span class="t">DropDatabase</span>, database: <span class="s">&quot;database_name&quot;</span>)</code></pre>
         </div>
@@ -1458,7 +1458,7 @@ client.command(<span class="t">Mongo</span><span class="t">::</span><span class=
         
         def <strong>database</strong>(name : String) : <a href="../Mongo/Database.html">Database</a>
 
-        <a class="method-permalink" href="#database(name:String):Database-instance-method">#</a>
+        <a class="method-permalink" href="#database%28name%3AString%29%3ADatabase-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1477,13 +1477,12 @@ client.command(<span class="t">Mongo</span><span class="t">::</span><span class=
         
         def <strong>default_auth_db</strong> : String
 
-        <a class="method-permalink" href="#default_auth_db:String-instance-method">#</a>
+        <a class="method-permalink" href="#default_auth_db%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>The default auth database is optionally provided as a part of the connection string uri.</p>
-
 <p>see: https://docs.mongodb.com/manual/reference/connection-string/</p>
         </div>
       
@@ -1498,14 +1497,13 @@ client.command(<span class="t">Mongo</span><span class="t">::</span><span class=
         
         def <strong>default_database</strong> : <a href="../Mongo/Database.html">Database</a>?
 
-        <a class="method-permalink" href="#default_database:Database?-instance-method">#</a>
+        <a class="method-permalink" href="#default_database%3ADatabase%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Get a newly allocated <code><a href="../Mongo/Database.html">Mongo::Database</a></code>using the default auth database string
 optionally provided as a part of the connection string uri.</p>
-
 <p>see: https://docs.mongodb.com/manual/reference/connection-string/</p>
         </div>
       
@@ -1520,13 +1518,12 @@ optionally provided as a part of the connection string uri.</p>
         
         def <strong>list_databases</strong>(*, filter = <span class="n">nil</span>, name_only : Bool? = <span class="n">nil</span>, authorized_databases : Bool? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/ListDatabases/Result.html">Commands::ListDatabases::Result</a>
 
-        <a class="method-permalink" href="#list_databases(*,filter=nil,name_only:Bool?=nil,authorized_databases:Bool?=nil,session:Session::ClientSession?=nil):Commands::ListDatabases::Result-instance-method">#</a>
+        <a class="method-permalink" href="#list_databases%28%2A%2Cfilter%3Dnil%2Cname_only%3ABool%3F%3Dnil%2Cauthorized_databases%3ABool%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3AListDatabases%3A%3AResult-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Provides a list of all existing databases along with basic statistics about them.</p>
-
 <p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/listDatabases">for more details, please check the official MongoDB documentation</a>.</p>
         </div>
       
@@ -1541,7 +1538,7 @@ optionally provided as a part of the connection string uri.</p>
         
         def <strong>options</strong> : <a href="../Mongo/Options.html">Options</a>
 
-        <a class="method-permalink" href="#options:Options-instance-method">#</a>
+        <a class="method-permalink" href="#options%3AOptions-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1560,13 +1557,12 @@ optionally provided as a part of the connection string uri.</p>
         
         def <strong>read_concern</strong> : <a href="../Mongo/ReadConcern.html">ReadConcern</a>?
 
-        <a class="method-permalink" href="#read_concern:ReadConcern?-instance-method">#</a>
+        <a class="method-permalink" href="#read_concern%3AReadConcern%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Read concern accessor.</p>
-
 <p>See: <a href="https://docs.mongodb.com/manual/reference/read-concern/index.html">the official documentation</a></p>
         </div>
       
@@ -1581,13 +1577,12 @@ optionally provided as a part of the connection string uri.</p>
         
         def <strong>read_concern=</strong>(read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>?)
 
-        <a class="method-permalink" href="#read_concern=(read_concern:ReadConcern?)-instance-method">#</a>
+        <a class="method-permalink" href="#read_concern%3D%28read_concern%3AReadConcern%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Read concern accessor.</p>
-
 <p>See: <a href="https://docs.mongodb.com/manual/reference/read-concern/index.html">the official documentation</a></p>
         </div>
       
@@ -1602,13 +1597,12 @@ optionally provided as a part of the connection string uri.</p>
         
         def <strong>read_preference</strong> : <a href="../Mongo/ReadPreference.html">ReadPreference</a>?
 
-        <a class="method-permalink" href="#read_preference:ReadPreference?-instance-method">#</a>
+        <a class="method-permalink" href="#read_preference%3AReadPreference%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>ReadPreference accessor.</p>
-
 <p>See: <a href="https://docs.mongodb.com/manual/core/read-preference/index.html">the official documentation</a>.</p>
         </div>
       
@@ -1623,13 +1617,12 @@ optionally provided as a part of the connection string uri.</p>
         
         def <strong>read_preference=</strong>(read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>?)
 
-        <a class="method-permalink" href="#read_preference=(read_preference:ReadPreference?)-instance-method">#</a>
+        <a class="method-permalink" href="#read_preference%3D%28read_preference%3AReadPreference%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>ReadPreference accessor.</p>
-
 <p>See: <a href="https://docs.mongodb.com/manual/core/read-preference/index.html">the official documentation</a>.</p>
         </div>
       
@@ -1644,22 +1637,21 @@ optionally provided as a part of the connection string uri.</p>
         
         def <strong>start_session</strong>(*, causal_consistency : Bool = <span class="n">true</span>, default_transaction_options : <a href="../Mongo/Session/TransactionOptions.html">Session::TransactionOptions</a>? = <span class="n">nil</span>) : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>
 
-        <a class="method-permalink" href="#start_session(*,causal_consistency:Bool=true,default_transaction_options:Session::TransactionOptions?=nil):Session::ClientSession-instance-method">#</a>
+        <a class="method-permalink" href="#start_session%28%2A%2Ccausal_consistency%3ABool%3Dtrue%2Cdefault_transaction_options%3ASession%3A%3ATransactionOptions%3F%3Dnil%29%3ASession%3A%3AClientSession-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Starts a new logical session for a sequence of operations.</p>
-
-<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.new
 
 <span class="c"># First, create a ClientSession which is by default causally consistent.</span>
 session <span class="o">=</span> client.start_session
 collection <span class="o">=</span> client[<span class="s">&quot;db&quot;</span>][<span class="s">&quot;coll&quot;</span>]
 
 <span class="c"># On a side note, it is important to ensure that both read and writes are performed with &quot;majority&quot; concern.</span>
-collection.read_concern <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">ReadConcern</span>.<span class="k">new</span>(level: <span class="s">&quot;majority&quot;</span>)
-collection.write_concern <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">WriteConcern</span>.<span class="k">new</span>(w: <span class="s">&quot;majority&quot;</span>)
+collection.read_concern <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">ReadConcern</span>.new(level: <span class="s">&quot;majority&quot;</span>)
+collection.write_concern <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">WriteConcern</span>.new(w: <span class="s">&quot;majority&quot;</span>)
 
 <span class="c"># Then pass session as the *session* named argument…</span>
 collection.insert_one({a: <span class="n">1</span>}, session: session)
@@ -1680,13 +1672,12 @@ session.<span class="k">end</span></code></pre>
         
         def <strong>status</strong>(*, repl : Int32? = <span class="n">nil</span>, metrics : Int32? = <span class="n">nil</span>, locks : Int32? = <span class="n">nil</span>, mirrored_reads : Int32? = <span class="n">nil</span>, latch_analysis : Int32? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : BSON?
 
-        <a class="method-permalink" href="#status(*,repl:Int32?=nil,metrics:Int32?=nil,locks:Int32?=nil,mirrored_reads:Int32?=nil,latch_analysis:Int32?=nil,session:Session::ClientSession?=nil):BSON?-instance-method">#</a>
+        <a class="method-permalink" href="#status%28%2A%2Crepl%3AInt32%3F%3Dnil%2Cmetrics%3AInt32%3F%3Dnil%2Clocks%3AInt32%3F%3Dnil%2Cmirrored_reads%3AInt32%3F%3Dnil%2Clatch_analysis%3AInt32%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ABSON%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a document that provides an overview of the database’s state.</p>
-
 <p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/serverStatus/">for more details, please check the official MongoDB documentation</a>.</p>
         </div>
       
@@ -1696,19 +1687,18 @@ session.<span class="k">end</span></code></pre>
       </div>
     </div>
   
-    <div class="entry-detail" id="subscribe_commands(&callback:Monitoring::Commands::Event->Nil):Monitoring::Commands::Event->Nil-instance-method">
+    <div class="entry-detail" id="subscribe_commands(&amp;callback:Monitoring::Commands::Event-&gt;Nil):Monitoring::Commands::Event-&gt;Nil-instance-method">
       <div class="signature">
         
         def <strong>subscribe_commands</strong>(&callback : <a href="../Mongo/Monitoring/Commands/Event.html">Monitoring::Commands::Event</a> -> Nil) : <a href="../Mongo/Monitoring/Commands/Event.html">Monitoring::Commands::Event</a> -> Nil
 
-        <a class="method-permalink" href="#subscribe_commands(&callback:Monitoring::Commands::Event-%3ENil):Monitoring::Commands::Event-%3ENil-instance-method">#</a>
+        <a class="method-permalink" href="#subscribe_commands%28%26callback%3AMonitoring%3A%3ACommands%3A%3AEvent-%3ENil%29%3AMonitoring%3A%3ACommands%3A%3AEvent-%3ENil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Subscribe to monitoring command events.</p>
-
-<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.new
 
 client.subscribe_commands { <span class="o">|</span>event<span class="o">|</span>
   <span class="k">case</span> event
@@ -1733,13 +1723,12 @@ client.subscribe_commands { <span class="o">|</span>event<span class="o">|</span
         
         def <strong>top</strong> : BSON?
 
-        <a class="method-permalink" href="#top:BSON?-instance-method">#</a>
+        <a class="method-permalink" href="#top%3ABSON%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>An administrative command that returns usage statistics for each collection.</p>
-
 <p><span class="flag purple">NOTE</span>  <a href="https://docs.mongodb.com/manual/reference/command/top">for more details, please check the official MongoDB documentation</a>.</p>
         </div>
       
@@ -1749,19 +1738,18 @@ client.subscribe_commands { <span class="o">|</span>event<span class="o">|</span
       </div>
     </div>
   
-    <div class="entry-detail" id="unsubscribe_commands(callback:Monitoring::Commands::Event->Nil):Nil-instance-method">
+    <div class="entry-detail" id="unsubscribe_commands(callback:Monitoring::Commands::Event-&gt;Nil):Nil-instance-method">
       <div class="signature">
         
         def <strong>unsubscribe_commands</strong>(callback : <a href="../Mongo/Monitoring/Commands/Event.html">Monitoring::Commands::Event</a> -> Nil) : Nil
 
-        <a class="method-permalink" href="#unsubscribe_commands(callback:Monitoring::Commands::Event-%3ENil):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#unsubscribe_commands%28callback%3AMonitoring%3A%3ACommands%3A%3AEvent-%3ENil%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Ends the subscription for command events.</p>
-
-<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.<span class="k">new</span>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Mongo</span><span class="t">::</span><span class="t">Client</span>.new
 
 subscription <span class="o">=</span> client.subscribe_commands { <span class="o">|</span>event<span class="o">|</span>
   puts event
@@ -1781,15 +1769,13 @@ client.unsubscribe_commands(subscription)</code></pre>
         
         def <strong>watch</strong>(pipeline : Array = <span class="o">[]</span> <span class="k">of</span> <span class="t">BSON</span>, *, full_document : String? = <span class="n">nil</span>, resume_after : BSON? = <span class="n">nil</span>, max_await_time_ms : Int64? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, start_at_operation_time : Time? = <span class="n">nil</span>, start_after : BSON? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/ChangeStream/Cursor.html">Mongo::ChangeStream::Cursor</a>
 
-        <a class="method-permalink" href="#watch(pipeline:Array=[]ofBSON,*,full_document:String?=nil,resume_after:BSON?=nil,max_await_time_ms:Int64?=nil,batch_size:Int32?=nil,collation:Collation?=nil,start_at_operation_time:Time?=nil,start_after:BSON?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil):Mongo::ChangeStream::Cursor-instance-method">#</a>
+        <a class="method-permalink" href="#watch%28pipeline%3AArray%3D%5B%5DofBSON%2C%2A%2Cfull_document%3AString%3F%3Dnil%2Cresume_after%3ABSON%3F%3Dnil%2Cmax_await_time_ms%3AInt64%3F%3Dnil%2Cbatch_size%3AInt32%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Cstart_at_operation_time%3ATime%3F%3Dnil%2Cstart_after%3ABSON%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AMongo%3A%3AChangeStream%3A%3ACursor-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Allows a client to observe all changes in a cluster.</p>
-
 <p>Returns a change stream on all collections in all databases in a cluster.</p>
-
 <p><span class="flag purple">NOTE</span>  Excludes system collections.</p>
         </div>
       
@@ -1804,13 +1790,12 @@ client.unsubscribe_commands(subscription)</code></pre>
         
         def <strong>write_concern</strong> : <a href="../Mongo/WriteConcern.html">WriteConcern</a>?
 
-        <a class="method-permalink" href="#write_concern:WriteConcern?-instance-method">#</a>
+        <a class="method-permalink" href="#write_concern%3AWriteConcern%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Write concern accessor.</p>
-
 <p>See: <a href="https://docs.mongodb.com/manual/reference/write-concern/index.html">the official documentation</a></p>
         </div>
       
@@ -1825,13 +1810,12 @@ client.unsubscribe_commands(subscription)</code></pre>
         
         def <strong>write_concern=</strong>(write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>?)
 
-        <a class="method-permalink" href="#write_concern=(write_concern:WriteConcern?)-instance-method">#</a>
+        <a class="method-permalink" href="#write_concern%3D%28write_concern%3AWriteConcern%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Write concern accessor.</p>
-
 <p>See: <a href="https://docs.mongodb.com/manual/reference/write-concern/index.html">the official documentation</a></p>
         </div>
       

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -756,6 +756,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Connection" data-name="mongo::error::connection">
+      <a href="../../../../Mongo/Error/Connection.html">Connection</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
       <a href="../../../../Mongo/Error/Network.html">Network</a>
       
@@ -1017,7 +1022,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(bson:BSON)-class-method" class="signature"><strong>.new</strong>(bson : BSON)</a>
+        <a href="#new%28bson%3ABSON%29-class-method" class="signature"><strong>.new</strong>(bson : BSON)</a>
         
           <div class="summary"><p>Allocate an instance and copies data from a BSON struct.</p></div>
         
@@ -1038,9 +1043,9 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#from_bson(bson:BSON)-class-method" class="signature"><strong>.from_bson</strong>(bson : BSON)</a>
+        <a href="#from_bson%28bson%3ABSON%29-class-method" class="signature"><strong>.from_bson</strong>(bson : BSON)</a>
         
-          <div class="summary"><p><span class="flag purple">NOTE</span>  See <code>self<a href="../../../../Mongo/Commands/GetMore/Result/Cursor.html#new(bson:BSON)-class-method">.new</a></code>.</p></div>
+          <div class="summary"><p><span class="flag purple">NOTE</span>  See <code>self<a href="../../../../Mongo/Commands/GetMore/Result/Cursor.html#new%28bson%3ABSON%29-class-method">.new</a></code>.</p></div>
         
       </li>
     
@@ -1059,47 +1064,47 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#id:Int64-instance-method" class="signature"><strong>#id</strong> : Int64</a>
+        <a href="#id%3AInt64-instance-method" class="signature"><strong>#id</strong> : Int64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#id=(id:Int64)-instance-method" class="signature"><strong>#id=</strong>(id : Int64)</a>
+        <a href="#id%3D%28id%3AInt64%29-instance-method" class="signature"><strong>#id=</strong>(id : Int64)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#next_batch:Array(BSON)-instance-method" class="signature"><strong>#next_batch</strong> : Array(BSON)</a>
+        <a href="#next_batch%3AArray%28BSON%29-instance-method" class="signature"><strong>#next_batch</strong> : Array(BSON)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#next_batch=(next_batch:Array(BSON))-instance-method" class="signature"><strong>#next_batch=</strong>(next_batch : Array(BSON))</a>
+        <a href="#next_batch%3D%28next_batch%3AArray%28BSON%29%29-instance-method" class="signature"><strong>#next_batch=</strong>(next_batch : Array(BSON))</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#ns:String-instance-method" class="signature"><strong>#ns</strong> : String</a>
+        <a href="#ns%3AString-instance-method" class="signature"><strong>#ns</strong> : String</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#ns=(ns:String)-instance-method" class="signature"><strong>#ns=</strong>(ns : String)</a>
+        <a href="#ns%3D%28ns%3AString%29-instance-method" class="signature"><strong>#ns=</strong>(ns : String)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#post_batch_resume_token:BSON?-instance-method" class="signature"><strong>#post_batch_resume_token</strong> : BSON?</a>
+        <a href="#post_batch_resume_token%3ABSON%3F-instance-method" class="signature"><strong>#post_batch_resume_token</strong> : BSON?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#post_batch_resume_token=(post_batch_resume_token:BSON?)-instance-method" class="signature"><strong>#post_batch_resume_token=</strong>(post_batch_resume_token : BSON?)</a>
+        <a href="#post_batch_resume_token%3D%28post_batch_resume_token%3ABSON%3F%29-instance-method" class="signature"><strong>#post_batch_resume_token=</strong>(post_batch_resume_token : BSON?)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_bson(bson=BSON.new)-instance-method" class="signature"><strong>#to_bson</strong>(bson = <span class="t">BSON</span>.<span class="k">new</span>)</a>
+        <a href="#to_bson%28bson%3DBSON.new%29-instance-method" class="signature"><strong>#to_bson</strong>(bson = <span class="t">BSON</span>.new)</a>
         
           <div class="summary"><p>Converts to a BSON representation.</p></div>
         
@@ -1170,21 +1175,20 @@
         
         def self.<strong>new</strong>(bson : BSON)
 
-        <a class="method-permalink" href="#new(bson:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#new%28bson%3ABSON%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Allocate an instance and copies data from a BSON struct.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">User</span>
   <span class="k">include</span> <span class="t">BSON</span><span class="t">::</span><span class="t">Serializable</span>
   property name : <span class="t">String</span>
 <span class="k">end</span>
 
-data <span class="o">=</span> <span class="t">BSON</span>.<span class="k">new</span>
+data <span class="o">=</span> <span class="t">BSON</span>.new
 data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span class="s">&quot;John&quot;</span>
-<span class="t">User</span>.<span class="k">new</span>(data)</code></pre>
+<span class="t">User</span>.new(data)</code></pre>
         </div>
       
       <br/>
@@ -1210,12 +1214,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def self.<strong>from_bson</strong>(bson : BSON)
 
-        <a class="method-permalink" href="#from_bson(bson:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#from_bson%28bson%3ABSON%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p><span class="flag purple">NOTE</span>  See <code>self<a href="../../../../Mongo/Commands/GetMore/Result/Cursor.html#new(bson:BSON)-class-method">.new</a></code>.</p>
+          <p><span class="flag purple">NOTE</span>  See <code>self<a href="../../../../Mongo/Commands/GetMore/Result/Cursor.html#new%28bson%3ABSON%29-class-method">.new</a></code>.</p>
         </div>
       
       <br/>
@@ -1241,7 +1245,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>id</strong> : Int64
 
-        <a class="method-permalink" href="#id:Int64-instance-method">#</a>
+        <a class="method-permalink" href="#id%3AInt64-instance-method">#</a>
       </div>
       
       <br/>
@@ -1255,7 +1259,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>id=</strong>(id : Int64)
 
-        <a class="method-permalink" href="#id=(id:Int64)-instance-method">#</a>
+        <a class="method-permalink" href="#id%3D%28id%3AInt64%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1269,7 +1273,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>next_batch</strong> : Array(BSON)
 
-        <a class="method-permalink" href="#next_batch:Array(BSON)-instance-method">#</a>
+        <a class="method-permalink" href="#next_batch%3AArray%28BSON%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1283,7 +1287,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>next_batch=</strong>(next_batch : Array(BSON))
 
-        <a class="method-permalink" href="#next_batch=(next_batch:Array(BSON))-instance-method">#</a>
+        <a class="method-permalink" href="#next_batch%3D%28next_batch%3AArray%28BSON%29%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1297,7 +1301,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>ns</strong> : String
 
-        <a class="method-permalink" href="#ns:String-instance-method">#</a>
+        <a class="method-permalink" href="#ns%3AString-instance-method">#</a>
       </div>
       
       <br/>
@@ -1311,7 +1315,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>ns=</strong>(ns : String)
 
-        <a class="method-permalink" href="#ns=(ns:String)-instance-method">#</a>
+        <a class="method-permalink" href="#ns%3D%28ns%3AString%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1325,7 +1329,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>post_batch_resume_token</strong> : BSON?
 
-        <a class="method-permalink" href="#post_batch_resume_token:BSON?-instance-method">#</a>
+        <a class="method-permalink" href="#post_batch_resume_token%3ABSON%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1339,7 +1343,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>post_batch_resume_token=</strong>(post_batch_resume_token : BSON?)
 
-        <a class="method-permalink" href="#post_batch_resume_token=(post_batch_resume_token:BSON?)-instance-method">#</a>
+        <a class="method-permalink" href="#post_batch_resume_token%3D%28post_batch_resume_token%3ABSON%3F%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1351,16 +1355,15 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
     <div class="entry-detail" id="to_bson(bson=BSON.new)-instance-method">
       <div class="signature">
         
-        def <strong>to_bson</strong>(bson = <span class="t">BSON</span>.<span class="k">new</span>)
+        def <strong>to_bson</strong>(bson = <span class="t">BSON</span>.new)
 
-        <a class="method-permalink" href="#to_bson(bson=BSON.new)-instance-method">#</a>
+        <a class="method-permalink" href="#to_bson%28bson%3DBSON.new%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Converts to a BSON representation.</p>
-
-<pre><code class="language-crystal">user <span class="o">=</span> <span class="t">User</span>.<span class="k">new</span> name: <span class="s">&quot;John&quot;</span>
+<pre><code class="language-crystal">user <span class="o">=</span> <span class="t">User</span>.new name: <span class="s">&quot;John&quot;</span>
 bson <span class="o">=</span> user.to_bson</code></pre>
         </div>
       

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -756,6 +756,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Connection" data-name="mongo::error::connection">
+      <a href="../../Mongo/Error/Connection.html">Connection</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
       <a href="../../Mongo/Error/Network.html">Network</a>
       
@@ -1028,7 +1033,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(db:Database,*,bucket_name:String=&quot;fs&quot;,chunk_size_bytes:Int32=255*1024,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil)-class-method" class="signature"><strong>.new</strong>(db : Database, *, bucket_name : String = <span class="s">&quot;fs&quot;</span>, chunk_size_bytes : Int32 = <span class="n">255</span> <span class="o">*</span> <span class="n">1024</span>, write_concern : WriteConcern? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>)</a>
+        <a href="#new%28db%3ADatabase%2C%2A%2Cbucket_name%3AString%3D%22fs%22%2Cchunk_size_bytes%3AInt32%3D255%2A1024%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(db : Database, *, bucket_name : String = <span class="s">&quot;fs&quot;</span>, chunk_size_bytes : Int32 = <span class="n">255</span> <span class="o">*</span> <span class="n">1024</span>, write_concern : WriteConcern? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>)</a>
         
           <div class="summary"><p>Creates a new GridFSBucket object, managing a GridFS bucket within the given database.</p></div>
         
@@ -1051,21 +1056,21 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#delete(id:FileID):NilforallFileID-instance-method" class="signature"><strong>#delete</strong>(id : FileID) : Nil forall FileID</a>
+        <a href="#delete%28id%3AFileID%29%3ANilforallFileID-instance-method" class="signature"><strong>#delete</strong>(id : FileID) : Nil forall FileID</a>
         
           <div class="summary"><p>Given an <em>id</em>, delete this stored file’s files collection document and associated chunks from a GridFS bucket.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#download_to_stream(id:FileID,destination:IO):NilforallFileID-instance-method" class="signature"><strong>#download_to_stream</strong>(id : FileID, destination : IO) : Nil forall FileID</a>
+        <a href="#download_to_stream%28id%3AFileID%2Cdestination%3AIO%29%3ANilforallFileID-instance-method" class="signature"><strong>#download_to_stream</strong>(id : FileID, destination : IO) : Nil forall FileID</a>
         
           <div class="summary"><p>Downloads the contents of the stored file specified by <em>id</em> and writes the contents to the <em>destination</em> Stream.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#download_to_stream_by_name(filename:String,destination:IO,revision:Int32=-1):Nil-instance-method" class="signature"><strong>#download_to_stream_by_name</strong>(filename : String, destination : IO, revision : Int32 = <span class="n">-1</span>) : Nil</a>
+        <a href="#download_to_stream_by_name%28filename%3AString%2Cdestination%3AIO%2Crevision%3AInt32%3D-1%29%3ANil-instance-method" class="signature"><strong>#download_to_stream_by_name</strong>(filename : String, destination : IO, revision : Int32 = <span class="n">-1</span>) : Nil</a>
         
           <div class="summary"><p>Downloads the contents of the stored file specified by <em>filename</em> and by an optional <em>revision</em> and writes the contents to the <em>destination</em> <code>IO</code> stream.</p></div>
         
@@ -1079,49 +1084,49 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#find(filter=BSON.new,*,allow_disk_use:Bool?=nil,batch_size:Int32?=nil,limit:Int32?=nil,max_time_ms:Int64?=nil,no_cursor_timeout:Bool?=nil,skip:Int32?=nil,sort=nil):Cursor::Wrapper(File(BSON::Value))-instance-method" class="signature"><strong>#find</strong>(filter = <span class="t">BSON</span>.<span class="k">new</span>, *, allow_disk_use : Bool? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, limit : Int32? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, no_cursor_timeout : Bool? = <span class="n">nil</span>, skip : Int32? = <span class="n">nil</span>, sort = <span class="n">nil</span>) : Cursor::Wrapper(File(BSON::Value))</a>
+        <a href="#find%28filter%3DBSON.new%2C%2A%2Callow_disk_use%3ABool%3F%3Dnil%2Cbatch_size%3AInt32%3F%3Dnil%2Climit%3AInt32%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cno_cursor_timeout%3ABool%3F%3Dnil%2Cskip%3AInt32%3F%3Dnil%2Csort%3Dnil%29%3ACursor%3A%3AWrapper%28File%28BSON%3A%3AValue%29%29-instance-method" class="signature"><strong>#find</strong>(filter = <span class="t">BSON</span>.new, *, allow_disk_use : Bool? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, limit : Int32? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, no_cursor_timeout : Bool? = <span class="n">nil</span>, skip : Int32? = <span class="n">nil</span>, sort = <span class="n">nil</span>) : Cursor::Wrapper(File(BSON::Value))</a>
         
           <div class="summary"><p>Find and return the files collection documents that match <em>filter</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open_download_stream(id:FileID):IOforallFileID-instance-method" class="signature"><strong>#open_download_stream</strong>(id : FileID) : IO forall FileID</a>
+        <a href="#open_download_stream%28id%3AFileID%29%3AIOforallFileID-instance-method" class="signature"><strong>#open_download_stream</strong>(id : FileID) : IO forall FileID</a>
         
           <div class="summary"><p>Opens a Stream from which the application can read the contents of the stored file specified by <em>id</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open_download_stream_by_name(filename:String,revision:Int32=-1):IO-instance-method" class="signature"><strong>#open_download_stream_by_name</strong>(filename : String, revision : Int32 = <span class="n">-1</span>) : IO</a>
+        <a href="#open_download_stream_by_name%28filename%3AString%2Crevision%3AInt32%3D-1%29%3AIO-instance-method" class="signature"><strong>#open_download_stream_by_name</strong>(filename : String, revision : Int32 = <span class="n">-1</span>) : IO</a>
         
           <div class="summary"><p>Opens a <code>IO</code> stream from which the application can read the contents of the stored file specified by <em>filename</em> and an optional <em>revision</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open_upload_stream(filename:String,*,id=nil,chunk_size_bytes:Int32?=nil,metadata=nil):IO-instance-method" class="signature"><strong>#open_upload_stream</strong>(filename : String, *, id = <span class="n">nil</span>, chunk_size_bytes : Int32? = <span class="n">nil</span>, metadata = <span class="n">nil</span>) : IO</a>
+        <a href="#open_upload_stream%28filename%3AString%2C%2A%2Cid%3Dnil%2Cchunk_size_bytes%3AInt32%3F%3Dnil%2Cmetadata%3Dnil%29%3AIO-instance-method" class="signature"><strong>#open_upload_stream</strong>(filename : String, *, id = <span class="n">nil</span>, chunk_size_bytes : Int32? = <span class="n">nil</span>, metadata = <span class="n">nil</span>) : IO</a>
         
           <div class="summary"><p>Opens an <code>IO</code> stream that the caller can write the contents of the file to.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open_upload_stream(filename:String,*,id:FileID=nil,chunk_size_bytes:Int32?=nil,metadata=nil,&)forallFileID-instance-method" class="signature"><strong>#open_upload_stream</strong>(filename : String, *, id : FileID = <span class="n">nil</span>, chunk_size_bytes : Int32? = <span class="n">nil</span>, metadata = <span class="n">nil</span>, &) forall FileID</a>
+        <a href="#open_upload_stream%28filename%3AString%2C%2A%2Cid%3AFileID%3Dnil%2Cchunk_size_bytes%3AInt32%3F%3Dnil%2Cmetadata%3Dnil%2C%26%29forallFileID-instance-method" class="signature"><strong>#open_upload_stream</strong>(filename : String, *, id : FileID = <span class="n">nil</span>, chunk_size_bytes : Int32? = <span class="n">nil</span>, metadata = <span class="n">nil</span>, &) forall FileID</a>
         
           <div class="summary"><p>Yields an <code>IO</code> stream that the caller can write the contents of the file to.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#rename(id:FileID,new_filename:String):NilforallFileID-instance-method" class="signature"><strong>#rename</strong>(id : FileID, new_filename : String) : Nil forall FileID</a>
+        <a href="#rename%28id%3AFileID%2Cnew_filename%3AString%29%3ANilforallFileID-instance-method" class="signature"><strong>#rename</strong>(id : FileID, new_filename : String) : Nil forall FileID</a>
         
           <div class="summary"><p>Renames the stored file with the specified <em>id</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#upload_from_stream(filename:String,stream:IO,*,id:FileID=nil,chunk_size_bytes:Int32?=nil,metadata=nil)forallFileID-instance-method" class="signature"><strong>#upload_from_stream</strong>(filename : String, stream : IO, *, id : FileID = <span class="n">nil</span>, chunk_size_bytes : Int32? = <span class="n">nil</span>, metadata = <span class="n">nil</span>) forall FileID</a>
+        <a href="#upload_from_stream%28filename%3AString%2Cstream%3AIO%2C%2A%2Cid%3AFileID%3Dnil%2Cchunk_size_bytes%3AInt32%3F%3Dnil%2Cmetadata%3Dnil%29forallFileID-instance-method" class="signature"><strong>#upload_from_stream</strong>(filename : String, stream : IO, *, id : FileID = <span class="n">nil</span>, chunk_size_bytes : Int32? = <span class="n">nil</span>, metadata = <span class="n">nil</span>) forall FileID</a>
         
           <div class="summary"><p>Uploads a user file to a GridFS bucket.</p></div>
         
@@ -1145,17 +1150,17 @@
     bucket</a>, 
     
   
-    <a href="../../Mongo/GridFS/Bucket/Internal.html#check_collection_index(collection,keys)-instance-method" class="tooltip">
+    <a href="../../Mongo/GridFS/Bucket/Internal.html#check_collection_index%28collection%2Ckeys%29-instance-method" class="tooltip">
       <span>check_collection_index(collection, keys)</span>
     check_collection_index</a>, 
     
   
-    <a href="../../Mongo/GridFS/Bucket/Internal.html#check_indexes(bucket,chunks)-instance-method" class="tooltip">
+    <a href="../../Mongo/GridFS/Bucket/Internal.html#check_indexes%28bucket%2Cchunks%29-instance-method" class="tooltip">
       <span>check_indexes(bucket, chunks)</span>
     check_indexes</a>, 
     
   
-    <a href="../../Mongo/GridFS/Bucket/Internal.html#chunk_count(file:File(FileID)):Int64forallFileID-instance-method" class="tooltip">
+    <a href="../../Mongo/GridFS/Bucket/Internal.html#chunk_count%28file%3AFile%28FileID%29%29%3AInt64forallFileID-instance-method" class="tooltip">
       <span>chunk_count(file : File(FileID)) : Int64 forall FileID</span>
     chunk_count</a>, 
     
@@ -1165,27 +1170,27 @@
     chunks</a>, 
     
   
-    <a href="../../Mongo/GridFS/Bucket/Internal.html#fill_slice(io:IO,slice:Bytes)-instance-method" class="tooltip">
+    <a href="../../Mongo/GridFS/Bucket/Internal.html#fill_slice%28io%3AIO%2Cslice%3ABytes%29-instance-method" class="tooltip">
       <span>fill_slice(io : IO, slice : Bytes)</span>
     fill_slice</a>, 
     
   
-    <a href="../../Mongo/GridFS/Bucket/Internal.html#get_chunk(id:FileID,n:Int64)forallFileID-instance-method" class="tooltip">
+    <a href="../../Mongo/GridFS/Bucket/Internal.html#get_chunk%28id%3AFileID%2Cn%3AInt64%29forallFileID-instance-method" class="tooltip">
       <span>get_chunk(id : FileID, n : Int64) forall FileID</span>
     get_chunk</a>, 
     
   
-    <a href="../../Mongo/GridFS/Bucket/Internal.html#get_file(id:FileID):File(FileID)forallFileID-instance-method" class="tooltip">
+    <a href="../../Mongo/GridFS/Bucket/Internal.html#get_file%28id%3AFileID%29%3AFile%28FileID%29forallFileID-instance-method" class="tooltip">
       <span>get_file(id : FileID) : File(FileID) forall FileID</span>
     get_file</a>, 
     
   
-    <a href="../../Mongo/GridFS/Bucket/Internal.html#get_file_by_name(name:String,revision:Int32=-1):File(BSON::Value)-instance-method" class="tooltip">
+    <a href="../../Mongo/GridFS/Bucket/Internal.html#get_file_by_name%28name%3AString%2Crevision%3AInt32%3D-1%29%3AFile%28BSON%3A%3AValue%29-instance-method" class="tooltip">
       <span>get_file_by_name(name : String, revision : Int32 = <span class="n">-1</span>) : File(BSON::Value)</span>
     get_file_by_name</a>, 
     
   
-    <a href="../../Mongo/GridFS/Bucket/Internal.html#integrity_check!(file:File,chunk:Chunk,remaining:Int64)-instance-method" class="tooltip">
+    <a href="../../Mongo/GridFS/Bucket/Internal.html#integrity_check%21%28file%3AFile%2Cchunk%3AChunk%2Cremaining%3AInt64%29-instance-method" class="tooltip">
       <span>integrity_check!(file : File, chunk : Chunk, remaining : Int64)</span>
     integrity_check!</a>
     
@@ -1236,7 +1241,7 @@
         
         def self.<strong>new</strong>(db : <a href="../../Mongo/Database.html">Database</a>, *, bucket_name : String = <span class="s">&quot;fs&quot;</span>, chunk_size_bytes : Int32 = <span class="n">255</span> <span class="o">*</span> <span class="n">1024</span>, write_concern : <a href="../../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new(db:Database,*,bucket_name:String=&quot;fs&quot;,chunk_size_bytes:Int32=255*1024,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil)-class-method">#</a>
+        <a class="method-permalink" href="#new%28db%3ADatabase%2C%2A%2Cbucket_name%3AString%3D%22fs%22%2Cchunk_size_bytes%3AInt32%3D255%2A1024%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1269,15 +1274,14 @@
         
         def <strong>delete</strong>(id : FileID) : Nil forall FileID
 
-        <a class="method-permalink" href="#delete(id:FileID):NilforallFileID-instance-method">#</a>
+        <a class="method-permalink" href="#delete%28id%3AFileID%29%3ANilforallFileID-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Given an <em>id</em>, delete this stored file’s files collection document and associated chunks from a GridFS bucket.</p>
-
 <pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
-id <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.<span class="k">new</span>(<span class="s">&quot;5eed35600000000000000000&quot;</span>)
+id <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.new(<span class="s">&quot;5eed35600000000000000000&quot;</span>)
 gridfs.delete(id)</code></pre>
         </div>
       
@@ -1292,17 +1296,16 @@ gridfs.delete(id)</code></pre>
         
         def <strong>download_to_stream</strong>(id : FileID, destination : IO) : Nil forall FileID
 
-        <a class="method-permalink" href="#download_to_stream(id:FileID,destination:IO):NilforallFileID-instance-method">#</a>
+        <a class="method-permalink" href="#download_to_stream%28id%3AFileID%2Cdestination%3AIO%29%3ANilforallFileID-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Downloads the contents of the stored file specified by <em>id</em> and writes
 the contents to the <em>destination</em> Stream.</p>
-
 <pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
-stream <span class="o">=</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>
-id <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.<span class="k">new</span>(<span class="s">&quot;5eed35600000000000000000&quot;</span>)
+stream <span class="o">=</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new
+id <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.new(<span class="s">&quot;5eed35600000000000000000&quot;</span>)
 gridfs.download_to_stream(id, stream)
 puts stream.rewind.gets_to_end</code></pre>
         </div>
@@ -1318,17 +1321,15 @@ puts stream.rewind.gets_to_end</code></pre>
         
         def <strong>download_to_stream_by_name</strong>(filename : String, destination : IO, revision : Int32 = <span class="n">-1</span>) : Nil
 
-        <a class="method-permalink" href="#download_to_stream_by_name(filename:String,destination:IO,revision:Int32=-1):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#download_to_stream_by_name%28filename%3AString%2Cdestination%3AIO%2Crevision%3AInt32%3D-1%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Downloads the contents of the stored file specified by <em>filename</em> and by an optional <em>revision</em> and writes the contents to the <em>destination</em> <code>IO</code> stream.</p>
-
-<p>See: <code><a href="../../Mongo/GridFS/Bucket.html#open_download_stream_by_name(filename:String,revision:Int32=-1):IO-instance-method">#open_download_stream_by_name</a></code> for how the revision is calculated.</p>
-
+<p>See: <code><a href="../../Mongo/GridFS/Bucket.html#open_download_stream_by_name%28filename%3AString%2Crevision%3AInt32%3D-1%29%3AIO-instance-method">#open_download_stream_by_name</a></code> for how the revision is calculated.</p>
 <pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
-io <span class="o">=</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>
+io <span class="o">=</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new
 gridfs.download_to_stream_by_name(<span class="s">&quot;file&quot;</span>, io, revision: <span class="n">-1</span>)
 puts io.to_s</code></pre>
         </div>
@@ -1350,7 +1351,6 @@ puts io.to_s</code></pre>
         <div class="doc">
           
           <p>Drops the files and chunks collections associated with this bucket.</p>
-
 <pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 gridfs.drop</code></pre>
         </div>
@@ -1364,15 +1364,14 @@ gridfs.drop</code></pre>
     <div class="entry-detail" id="find(filter=BSON.new,*,allow_disk_use:Bool?=nil,batch_size:Int32?=nil,limit:Int32?=nil,max_time_ms:Int64?=nil,no_cursor_timeout:Bool?=nil,skip:Int32?=nil,sort=nil):Cursor::Wrapper(File(BSON::Value))-instance-method">
       <div class="signature">
         
-        def <strong>find</strong>(filter = <span class="t">BSON</span>.<span class="k">new</span>, *, allow_disk_use : Bool? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, limit : Int32? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, no_cursor_timeout : Bool? = <span class="n">nil</span>, skip : Int32? = <span class="n">nil</span>, sort = <span class="n">nil</span>) : <a href="../../Mongo/Cursor/Wrapper.html">Cursor::Wrapper</a>(<a href="../../Mongo/GridFS/File.html">File</a>(BSON::Value))
+        def <strong>find</strong>(filter = <span class="t">BSON</span>.new, *, allow_disk_use : Bool? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, limit : Int32? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, no_cursor_timeout : Bool? = <span class="n">nil</span>, skip : Int32? = <span class="n">nil</span>, sort = <span class="n">nil</span>) : <a href="../../Mongo/Cursor/Wrapper.html">Cursor::Wrapper</a>(<a href="../../Mongo/GridFS/File.html">File</a>(BSON::Value))
 
-        <a class="method-permalink" href="#find(filter=BSON.new,*,allow_disk_use:Bool?=nil,batch_size:Int32?=nil,limit:Int32?=nil,max_time_ms:Int64?=nil,no_cursor_timeout:Bool?=nil,skip:Int32?=nil,sort=nil):Cursor::Wrapper(File(BSON::Value))-instance-method">#</a>
+        <a class="method-permalink" href="#find%28filter%3DBSON.new%2C%2A%2Callow_disk_use%3ABool%3F%3Dnil%2Cbatch_size%3AInt32%3F%3Dnil%2Climit%3AInt32%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cno_cursor_timeout%3ABool%3F%3Dnil%2Cskip%3AInt32%3F%3Dnil%2Csort%3Dnil%29%3ACursor%3A%3AWrapper%28File%28BSON%3A%3AValue%29%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Find and return the files collection documents that match <em>filter</em>.</p>
-
 <pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 gridfs.find({
   length: {<span class="s">&quot;$gte&quot;</span>: <span class="n">5000</span>},
@@ -1390,18 +1389,16 @@ gridfs.find({
         
         def <strong>open_download_stream</strong>(id : FileID) : IO forall FileID
 
-        <a class="method-permalink" href="#open_download_stream(id:FileID):IOforallFileID-instance-method">#</a>
+        <a class="method-permalink" href="#open_download_stream%28id%3AFileID%29%3AIOforallFileID-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Opens a Stream from which the application can read the contents of the stored file
 specified by <em>id</em>.</p>
-
 <p>Returns a <code>IO</code> stream.</p>
-
 <pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
-id <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.<span class="k">new</span>(<span class="s">&quot;5eed35600000000000000000&quot;</span>)
+id <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.new(<span class="s">&quot;5eed35600000000000000000&quot;</span>)
 stream <span class="o">=</span> gridfs.open_download_stream(id)
 puts stream.gets_to_end
 stream.close</code></pre>
@@ -1418,39 +1415,37 @@ stream.close</code></pre>
         
         def <strong>open_download_stream_by_name</strong>(filename : String, revision : Int32 = <span class="n">-1</span>) : IO
 
-        <a class="method-permalink" href="#open_download_stream_by_name(filename:String,revision:Int32=-1):IO-instance-method">#</a>
+        <a class="method-permalink" href="#open_download_stream_by_name%28filename%3AString%2Crevision%3AInt32%3D-1%29%3AIO-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Opens a <code>IO</code> stream from which the application can read the contents of the stored file
 specified by <em>filename</em> and an optional <em>revision</em>.</p>
-
 <p>Returns a <code>IO</code> stream.</p>
-
 <p><span class="flag purple">NOTE</span>  It is the responsbility of the caller to close the stream.</p>
-
 <pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 stream <span class="o">=</span> gridfs.open_download_stream_by_name(<span class="s">&quot;file&quot;</span>, revision: <span class="n">2</span>)
 puts stream.gets_to_end
 stream.close</code></pre>
-
 <h4><a id="about-the-the-revision-argument" class="anchor" href="#about-the-the-revision-argument">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>About the the <em>revision</em> argument:</h4>
-
 <p>Specifies which revision (documents with the same filename and different uploadDate)
 of the file to retrieve. Defaults to -1 (the most recent revision).</p>
-
 <p>Revision numbers are defined as follows:</p>
-
-<ul><li>0 = the original stored file</li><li>1 = the first revision</li><li>2 = the second revision</li></ul>
-
+<ul>
+<li>0 = the original stored file</li>
+<li>1 = the first revision</li>
+<li>2 = the second revision</li>
+</ul>
 <p>etc…</p>
-
-<ul><li>-2 = the second most recent revision</li><li>-1 = the most recent revision</li></ul>
+<ul>
+<li>-2 = the second most recent revision</li>
+<li>-1 = the most recent revision</li>
+</ul>
         </div>
       
       <br/>
@@ -1464,15 +1459,13 @@ of the file to retrieve. Defaults to -1 (the most recent revision).</p>
         
         def <strong>open_upload_stream</strong>(filename : String, *, id = <span class="n">nil</span>, chunk_size_bytes : Int32? = <span class="n">nil</span>, metadata = <span class="n">nil</span>) : IO
 
-        <a class="method-permalink" href="#open_upload_stream(filename:String,*,id=nil,chunk_size_bytes:Int32?=nil,metadata=nil):IO-instance-method">#</a>
+        <a class="method-permalink" href="#open_upload_stream%28filename%3AString%2C%2A%2Cid%3Dnil%2Cchunk_size_bytes%3AInt32%3F%3Dnil%2Cmetadata%3Dnil%29%3AIO-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Opens an <code>IO</code> stream that the caller can write the contents of the file to.</p>
-
 <p><span class="flag purple">NOTE</span>  It is the responsbility of the caller to flush and close the stream.</p>
-
 <pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 io <span class="o">=</span> gridfs.open_upload_stream(filename: <span class="s">&quot;file.txt&quot;</span>, chunk_size_bytes: <span class="n">1024</span>, metadata: {hello: <span class="s">&quot;world&quot;</span>})
 io <span class="o">&lt;&lt;</span> <span class="s">&quot;some&quot;</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;text&quot;</span>
@@ -1487,20 +1480,18 @@ sleep <span class="n">1</span></code></pre>
       </div>
     </div>
   
-    <div class="entry-detail" id="open_upload_stream(filename:String,*,id:FileID=nil,chunk_size_bytes:Int32?=nil,metadata=nil,&)forallFileID-instance-method">
+    <div class="entry-detail" id="open_upload_stream(filename:String,*,id:FileID=nil,chunk_size_bytes:Int32?=nil,metadata=nil,&amp;)forallFileID-instance-method">
       <div class="signature">
         
         def <strong>open_upload_stream</strong>(filename : String, *, id : FileID = <span class="n">nil</span>, chunk_size_bytes : Int32? = <span class="n">nil</span>, metadata = <span class="n">nil</span>, &) forall FileID
 
-        <a class="method-permalink" href="#open_upload_stream(filename:String,*,id:FileID=nil,chunk_size_bytes:Int32?=nil,metadata=nil,&)forallFileID-instance-method">#</a>
+        <a class="method-permalink" href="#open_upload_stream%28filename%3AString%2C%2A%2Cid%3AFileID%3Dnil%2Cchunk_size_bytes%3AInt32%3F%3Dnil%2Cmetadata%3Dnil%2C%26%29forallFileID-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Yields an <code>IO</code> stream that the caller can write the contents of the file to.</p>
-
 <p><span class="flag purple">NOTE</span>  Will flush and close the stream after the block gets executed.</p>
-
 <pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
 gridfs.open_upload_stream(filename: <span class="s">&quot;file.txt&quot;</span>, chunk_size_bytes: <span class="n">1024</span>, metadata: {hello: <span class="s">&quot;world&quot;</span>}) { <span class="o">|</span>io<span class="o">|</span>
   io <span class="o">&lt;&lt;</span> <span class="s">&quot;some text&quot;</span>
@@ -1519,15 +1510,14 @@ sleep <span class="n">1</span></code></pre>
         
         def <strong>rename</strong>(id : FileID, new_filename : String) : Nil forall FileID
 
-        <a class="method-permalink" href="#rename(id:FileID,new_filename:String):NilforallFileID-instance-method">#</a>
+        <a class="method-permalink" href="#rename%28id%3AFileID%2Cnew_filename%3AString%29%3ANilforallFileID-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Renames the stored file with the specified <em>id</em>.</p>
-
 <pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
-id <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.<span class="k">new</span>(<span class="s">&quot;5eed35600000000000000000&quot;</span>)
+id <span class="o">=</span> <span class="t">BSON</span><span class="t">::</span><span class="t">ObjectId</span>.new(<span class="s">&quot;5eed35600000000000000000&quot;</span>)
 gridfs.rename(id, new_filename: <span class="s">&quot;new_name.txt&quot;</span>)</code></pre>
         </div>
       
@@ -1542,25 +1532,20 @@ gridfs.rename(id, new_filename: <span class="s">&quot;new_name.txt&quot;</span>)
         
         def <strong>upload_from_stream</strong>(filename : String, stream : IO, *, id : FileID = <span class="n">nil</span>, chunk_size_bytes : Int32? = <span class="n">nil</span>, metadata = <span class="n">nil</span>) forall FileID
 
-        <a class="method-permalink" href="#upload_from_stream(filename:String,stream:IO,*,id:FileID=nil,chunk_size_bytes:Int32?=nil,metadata=nil)forallFileID-instance-method">#</a>
+        <a class="method-permalink" href="#upload_from_stream%28filename%3AString%2Cstream%3AIO%2C%2A%2Cid%3AFileID%3Dnil%2Cchunk_size_bytes%3AInt32%3F%3Dnil%2Cmetadata%3Dnil%29forallFileID-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Uploads a user file to a GridFS bucket.</p>
-
 <p>The application supplies a custom file id or the driver will generate the file id.</p>
-
 <p>Reads the contents of the user file from the <em>source</em> Stream and uploads it
 as chunks in the chunks collection. After all the chunks have been uploaded,
 it creates a files collection document for <em>filename</em> in the files collection.</p>
-
 <p>Returns the id of the uploaded file.</p>
-
 <p><span class="flag purple">NOTE</span>  It is the responsbility of the caller to flush and close the stream.</p>
-
 <pre><code class="language-crystal">gridfs <span class="o">=</span> client[<span class="s">&quot;database&quot;</span>].grid_fs
-file <span class="o">=</span> <span class="t">File</span>.<span class="k">new</span>(<span class="s">&quot;file.txt&quot;</span>)
+file <span class="o">=</span> <span class="t">File</span>.new(<span class="s">&quot;file.txt&quot;</span>)
 id <span class="o">=</span> gridfs.upload_from_stream(<span class="s">&quot;file.txt&quot;</span>, file)
 file.close
 puts id</code></pre>

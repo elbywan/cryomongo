@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -756,6 +756,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Connection" data-name="mongo::error::connection">
+      <a href="../Mongo/Error/Connection.html">Connection</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
       <a href="../Mongo/Error/Network.html">Network</a>
       
@@ -970,7 +975,6 @@
   </h2>
 
   <p>The read preference describes how MongoDB clients route read operations to the members of a replica set.</p>
-
 <p>See: <a href="https://docs.mongodb.com/manual/core/read-preference/index.html">the official documentation</a>.</p>
 
 
@@ -1030,12 +1034,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(mode:String,tags:Array(BSON)?=nil,max_staleness_seconds:Int32?=nil,hedge:BSON?=nil)-class-method" class="signature"><strong>.new</strong>(mode : String, tags : Array(BSON)? = <span class="n">nil</span>, max_staleness_seconds : Int32? = <span class="n">nil</span>, hedge : BSON? = <span class="n">nil</span>)</a>
+        <a href="#new%28mode%3AString%2Ctags%3AArray%28BSON%29%3F%3Dnil%2Cmax_staleness_seconds%3AInt32%3F%3Dnil%2Chedge%3ABSON%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(mode : String, tags : Array(BSON)? = <span class="n">nil</span>, max_staleness_seconds : Int32? = <span class="n">nil</span>, hedge : BSON? = <span class="n">nil</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(bson:BSON)-class-method" class="signature"><strong>.new</strong>(bson : BSON)</a>
+        <a href="#new%28bson%3ABSON%29-class-method" class="signature"><strong>.new</strong>(bson : BSON)</a>
         
           <div class="summary"><p>Allocate an instance and copies data from a BSON struct.</p></div>
         
@@ -1056,9 +1060,9 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#from_bson(bson:BSON)-class-method" class="signature"><strong>.from_bson</strong>(bson : BSON)</a>
+        <a href="#from_bson%28bson%3ABSON%29-class-method" class="signature"><strong>.from_bson</strong>(bson : BSON)</a>
         
-          <div class="summary"><p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/ReadPreference.html#new(mode:String,tags:Array(BSON)?=nil,max_staleness_seconds:Int32?=nil,hedge:BSON?=nil)-class-method">.new</a></code>.</p></div>
+          <div class="summary"><p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/ReadPreference.html#new%28mode%3AString%2Ctags%3AArray%28BSON%29%3F%3Dnil%2Cmax_staleness_seconds%3AInt32%3F%3Dnil%2Chedge%3ABSON%3F%3Dnil%29-class-method">.new</a></code>.</p></div>
         
       </li>
     
@@ -1082,32 +1086,32 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#copy_with(mode_mode=@mode,tags_tags=@tags,max_staleness_seconds_max_staleness_seconds=@max_staleness_seconds,hedge_hedge=@hedge)-instance-method" class="signature"><strong>#copy_with</strong>(mode _mode = @mode, tags _tags = @tags, max_staleness_seconds _max_staleness_seconds = @max_staleness_seconds, hedge _hedge = @hedge)</a>
+        <a href="#copy_with%28mode_mode%3D%40mode%2Ctags_tags%3D%40tags%2Cmax_staleness_seconds_max_staleness_seconds%3D%40max_staleness_seconds%2Chedge_hedge%3D%40hedge%29-instance-method" class="signature"><strong>#copy_with</strong>(mode _mode = @mode, tags _tags = @tags, max_staleness_seconds _max_staleness_seconds = @max_staleness_seconds, hedge _hedge = @hedge)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#hedge:BSON?-instance-method" class="signature"><strong>#hedge</strong> : BSON?</a>
+        <a href="#hedge%3ABSON%3F-instance-method" class="signature"><strong>#hedge</strong> : BSON?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#max_staleness_seconds:Int32?-instance-method" class="signature"><strong>#max_staleness_seconds</strong> : Int32?</a>
+        <a href="#max_staleness_seconds%3AInt32%3F-instance-method" class="signature"><strong>#max_staleness_seconds</strong> : Int32?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mode:String-instance-method" class="signature"><strong>#mode</strong> : String</a>
+        <a href="#mode%3AString-instance-method" class="signature"><strong>#mode</strong> : String</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#tags:Array(BSON)?-instance-method" class="signature"><strong>#tags</strong> : Array(BSON)?</a>
+        <a href="#tags%3AArray%28BSON%29%3F-instance-method" class="signature"><strong>#tags</strong> : Array(BSON)?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_bson(bson=BSON.new)-instance-method" class="signature"><strong>#to_bson</strong>(bson = <span class="t">BSON</span>.<span class="k">new</span>)</a>
+        <a href="#to_bson%28bson%3DBSON.new%29-instance-method" class="signature"><strong>#to_bson</strong>(bson = <span class="t">BSON</span>.new)</a>
         
           <div class="summary"><p>Converts to a BSON representation.</p></div>
         
@@ -1178,7 +1182,7 @@
         
         def self.<strong>new</strong>(mode : String, tags : Array(BSON)? = <span class="n">nil</span>, max_staleness_seconds : Int32? = <span class="n">nil</span>, hedge : BSON? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new(mode:String,tags:Array(BSON)?=nil,max_staleness_seconds:Int32?=nil,hedge:BSON?=nil)-class-method">#</a>
+        <a class="method-permalink" href="#new%28mode%3AString%2Ctags%3AArray%28BSON%29%3F%3Dnil%2Cmax_staleness_seconds%3AInt32%3F%3Dnil%2Chedge%3ABSON%3F%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1192,21 +1196,20 @@
         
         def self.<strong>new</strong>(bson : BSON)
 
-        <a class="method-permalink" href="#new(bson:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#new%28bson%3ABSON%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Allocate an instance and copies data from a BSON struct.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">User</span>
   <span class="k">include</span> <span class="t">BSON</span><span class="t">::</span><span class="t">Serializable</span>
   property name : <span class="t">String</span>
 <span class="k">end</span>
 
-data <span class="o">=</span> <span class="t">BSON</span>.<span class="k">new</span>
+data <span class="o">=</span> <span class="t">BSON</span>.new
 data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span class="s">&quot;John&quot;</span>
-<span class="t">User</span>.<span class="k">new</span>(data)</code></pre>
+<span class="t">User</span>.new(data)</code></pre>
         </div>
       
       <br/>
@@ -1232,12 +1235,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def self.<strong>from_bson</strong>(bson : BSON)
 
-        <a class="method-permalink" href="#from_bson(bson:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#from_bson%28bson%3ABSON%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/ReadPreference.html#new(mode:String,tags:Array(BSON)?=nil,max_staleness_seconds:Int32?=nil,hedge:BSON?=nil)-class-method">.new</a></code>.</p>
+          <p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/ReadPreference.html#new%28mode%3AString%2Ctags%3AArray%28BSON%29%3F%3Dnil%2Cmax_staleness_seconds%3AInt32%3F%3Dnil%2Chedge%3ABSON%3F%3Dnil%29-class-method">.new</a></code>.</p>
         </div>
       
       <br/>
@@ -1277,7 +1280,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>copy_with</strong>(mode _mode = @mode, tags _tags = @tags, max_staleness_seconds _max_staleness_seconds = @max_staleness_seconds, hedge _hedge = @hedge)
 
-        <a class="method-permalink" href="#copy_with(mode_mode=@mode,tags_tags=@tags,max_staleness_seconds_max_staleness_seconds=@max_staleness_seconds,hedge_hedge=@hedge)-instance-method">#</a>
+        <a class="method-permalink" href="#copy_with%28mode_mode%3D%40mode%2Ctags_tags%3D%40tags%2Cmax_staleness_seconds_max_staleness_seconds%3D%40max_staleness_seconds%2Chedge_hedge%3D%40hedge%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1291,7 +1294,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>hedge</strong> : BSON?
 
-        <a class="method-permalink" href="#hedge:BSON?-instance-method">#</a>
+        <a class="method-permalink" href="#hedge%3ABSON%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1305,7 +1308,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>max_staleness_seconds</strong> : Int32?
 
-        <a class="method-permalink" href="#max_staleness_seconds:Int32?-instance-method">#</a>
+        <a class="method-permalink" href="#max_staleness_seconds%3AInt32%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1319,7 +1322,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>mode</strong> : String
 
-        <a class="method-permalink" href="#mode:String-instance-method">#</a>
+        <a class="method-permalink" href="#mode%3AString-instance-method">#</a>
       </div>
       
       <br/>
@@ -1333,7 +1336,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>tags</strong> : Array(BSON)?
 
-        <a class="method-permalink" href="#tags:Array(BSON)?-instance-method">#</a>
+        <a class="method-permalink" href="#tags%3AArray%28BSON%29%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1345,16 +1348,15 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
     <div class="entry-detail" id="to_bson(bson=BSON.new)-instance-method">
       <div class="signature">
         
-        def <strong>to_bson</strong>(bson = <span class="t">BSON</span>.<span class="k">new</span>)
+        def <strong>to_bson</strong>(bson = <span class="t">BSON</span>.new)
 
-        <a class="method-permalink" href="#to_bson(bson=BSON.new)-instance-method">#</a>
+        <a class="method-permalink" href="#to_bson%28bson%3DBSON.new%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Converts to a BSON representation.</p>
-
-<pre><code class="language-crystal">user <span class="o">=</span> <span class="t">User</span>.<span class="k">new</span> name: <span class="s">&quot;John&quot;</span>
+<pre><code class="language-crystal">user <span class="o">=</span> <span class="t">User</span>.new name: <span class="s">&quot;John&quot;</span>
 bson <span class="o">=</span> user.to_bson</code></pre>
         </div>
       

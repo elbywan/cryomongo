@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -756,6 +756,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Connection" data-name="mongo::error::connection">
+      <a href="../../Mongo/Error/Connection.html">Connection</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
       <a href="../../Mongo/Error/Network.html">Network</a>
       
@@ -1017,7 +1022,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(bson:BSON)-class-method" class="signature"><strong>.new</strong>(bson : BSON)</a>
+        <a href="#new%28bson%3ABSON%29-class-method" class="signature"><strong>.new</strong>(bson : BSON)</a>
         
           <div class="summary"><p>Allocate an instance and copies data from a BSON struct.</p></div>
         
@@ -1038,9 +1043,9 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#from_bson(bson:BSON)-class-method" class="signature"><strong>.from_bson</strong>(bson : BSON)</a>
+        <a href="#from_bson%28bson%3ABSON%29-class-method" class="signature"><strong>.from_bson</strong>(bson : BSON)</a>
         
-          <div class="summary"><p><span class="flag purple">NOTE</span>  See <code>self<a href="../../Mongo/ChangeStream/Document.html#new(bson:BSON)-class-method">.new</a></code>.</p></div>
+          <div class="summary"><p><span class="flag purple">NOTE</span>  See <code>self<a href="../../Mongo/ChangeStream/Document.html#new%28bson%3ABSON%29-class-method">.new</a></code>.</p></div>
         
       </li>
     
@@ -1059,49 +1064,49 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#_id:BSON-instance-method" class="signature"><strong>#_id</strong> : BSON</a>
+        <a href="#_id%3ABSON-instance-method" class="signature"><strong>#_id</strong> : BSON</a>
         
           <div class="summary"><p>The id functions as an opaque token for use when resuming an interrupted change stream.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#document_key:BSON?-instance-method" class="signature"><strong>#document_key</strong> : BSON?</a>
+        <a href="#document_key%3ABSON%3F-instance-method" class="signature"><strong>#document_key</strong> : BSON?</a>
         
           <div class="summary"><p>Only present for ops of type ‘insert’, ‘update’, ‘replace’, and ‘delete’.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#full_document:T?-instance-method" class="signature"><strong>#full_document</strong> : T?</a>
+        <a href="#full_document%3AT%3F-instance-method" class="signature"><strong>#full_document</strong> : T?</a>
         
           <div class="summary"><p>Always present for operations of type ‘insert’ and ‘replace’.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#ns:BSON-instance-method" class="signature"><strong>#ns</strong> : BSON</a>
+        <a href="#ns%3ABSON-instance-method" class="signature"><strong>#ns</strong> : BSON</a>
         
           <div class="summary"><p>Contains two fields: “db” and “coll” containing the database and collection name in which the change happened.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#operation_type:String-instance-method" class="signature"><strong>#operation_type</strong> : String</a>
+        <a href="#operation_type%3AString-instance-method" class="signature"><strong>#operation_type</strong> : String</a>
         
           <div class="summary"><p>Describes the type of operation represented in this change notification.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_bson(bson=BSON.new)-instance-method" class="signature"><strong>#to_bson</strong>(bson = <span class="t">BSON</span>.<span class="k">new</span>)</a>
+        <a href="#to_bson%28bson%3DBSON.new%29-instance-method" class="signature"><strong>#to_bson</strong>(bson = <span class="t">BSON</span>.new)</a>
         
           <div class="summary"><p>Converts to a BSON representation.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#update_description:UpdateDescription?-instance-method" class="signature"><strong>#update_description</strong> : UpdateDescription?</a>
+        <a href="#update_description%3AUpdateDescription%3F-instance-method" class="signature"><strong>#update_description</strong> : UpdateDescription?</a>
         
           <div class="summary"><p>Only present for ops of type ‘update’.</p></div>
         
@@ -1172,21 +1177,20 @@
         
         def self.<strong>new</strong>(bson : BSON)
 
-        <a class="method-permalink" href="#new(bson:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#new%28bson%3ABSON%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Allocate an instance and copies data from a BSON struct.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">User</span>
   <span class="k">include</span> <span class="t">BSON</span><span class="t">::</span><span class="t">Serializable</span>
   property name : <span class="t">String</span>
 <span class="k">end</span>
 
-data <span class="o">=</span> <span class="t">BSON</span>.<span class="k">new</span>
+data <span class="o">=</span> <span class="t">BSON</span>.new
 data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span class="s">&quot;John&quot;</span>
-<span class="t">User</span>.<span class="k">new</span>(data)</code></pre>
+<span class="t">User</span>.new(data)</code></pre>
         </div>
       
       <br/>
@@ -1212,12 +1216,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def self.<strong>from_bson</strong>(bson : BSON)
 
-        <a class="method-permalink" href="#from_bson(bson:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#from_bson%28bson%3ABSON%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p><span class="flag purple">NOTE</span>  See <code>self<a href="../../Mongo/ChangeStream/Document.html#new(bson:BSON)-class-method">.new</a></code>.</p>
+          <p><span class="flag purple">NOTE</span>  See <code>self<a href="../../Mongo/ChangeStream/Document.html#new%28bson%3ABSON%29-class-method">.new</a></code>.</p>
         </div>
       
       <br/>
@@ -1243,7 +1247,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>_id</strong> : BSON
 
-        <a class="method-permalink" href="#_id:BSON-instance-method">#</a>
+        <a class="method-permalink" href="#_id%3ABSON-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1263,14 +1267,13 @@ change stream.</p>
         
         def <strong>document_key</strong> : BSON?
 
-        <a class="method-permalink" href="#document_key:BSON?-instance-method">#</a>
+        <a class="method-permalink" href="#document_key%3ABSON%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Only present for ops of type ‘insert’, ‘update’, ‘replace’, and
 ‘delete’.</p>
-
 <p>For unsharded collections this contains a single field, _id, with the
 value of the _id of the document updated.  For sharded collections,
 this will contain all the components of the shard key in order,
@@ -1288,7 +1291,7 @@ followed by the _id if the _id isn’t part of the shard key.</p>
         
         def <strong>full_document</strong> : T?
 
-        <a class="method-permalink" href="#full_document:T?-instance-method">#</a>
+        <a class="method-permalink" href="#full_document%3AT%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1296,11 +1299,9 @@ followed by the _id if the _id isn’t part of the shard key.</p>
           <p>Always present for operations of type ‘insert’ and ‘replace’. Also
 present for operations of type ‘update’ if the user has specified ‘updateLookup’
 in the ‘fullDocument’ arguments to the ‘$changeStream’ stage.</p>
-
 <p>For operations of type ‘insert’ and ‘replace’, this key will contain the
 document being inserted, or the new version of the document that is replacing
 the existing document, respectively.</p>
-
 <p>For operations of type ‘update’, this key will contain a copy of the full
 version of the document from some point after the update occurred. If the
 document was deleted since the updated happened, it will be null.</p>
@@ -1317,7 +1318,7 @@ document was deleted since the updated happened, it will be null.</p>
         
         def <strong>ns</strong> : BSON
 
-        <a class="method-permalink" href="#ns:BSON-instance-method">#</a>
+        <a class="method-permalink" href="#ns%3ABSON-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1337,13 +1338,13 @@ collection name in which the change happened.</p>
         
         def <strong>operation_type</strong> : String
 
-        <a class="method-permalink" href="#operation_type:String-instance-method">#</a>
+        <a class="method-permalink" href="#operation_type%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Describes the type of operation represented in this change notification.
-"insert" | "update" | "replace" | "delete" | "invalidate" | "drop" | "dropDatabase" | "rename"</p>
+&quot;insert&quot; | &quot;update&quot; | &quot;replace&quot; | &quot;delete&quot; | &quot;invalidate&quot; | &quot;drop&quot; | &quot;dropDatabase&quot; | &quot;rename&quot;</p>
         </div>
       
       <br/>
@@ -1355,16 +1356,15 @@ collection name in which the change happened.</p>
     <div class="entry-detail" id="to_bson(bson=BSON.new)-instance-method">
       <div class="signature">
         
-        def <strong>to_bson</strong>(bson = <span class="t">BSON</span>.<span class="k">new</span>)
+        def <strong>to_bson</strong>(bson = <span class="t">BSON</span>.new)
 
-        <a class="method-permalink" href="#to_bson(bson=BSON.new)-instance-method">#</a>
+        <a class="method-permalink" href="#to_bson%28bson%3DBSON.new%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Converts to a BSON representation.</p>
-
-<pre><code class="language-crystal">user <span class="o">=</span> <span class="t">User</span>.<span class="k">new</span> name: <span class="s">&quot;John&quot;</span>
+<pre><code class="language-crystal">user <span class="o">=</span> <span class="t">User</span>.new name: <span class="s">&quot;John&quot;</span>
 bson <span class="o">=</span> user.to_bson</code></pre>
         </div>
       
@@ -1379,13 +1379,12 @@ bson <span class="o">=</span> user.to_bson</code></pre>
         
         def <strong>update_description</strong> : <a href="../../Mongo/ChangeStream/Document/UpdateDescription.html">UpdateDescription</a>?
 
-        <a class="method-permalink" href="#update_description:UpdateDescription?-instance-method">#</a>
+        <a class="method-permalink" href="#update_description%3AUpdateDescription%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Only present for ops of type ‘update’.</p>
-
 <p>Contains a description of updated and removed fields in this
 operation.</p>
         </div>

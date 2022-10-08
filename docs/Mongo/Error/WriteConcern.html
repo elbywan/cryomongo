@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -756,6 +756,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Connection" data-name="mongo::error::connection">
+      <a href="../../Mongo/Error/Connection.html">Connection</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
       <a href="../../Mongo/Error/Network.html">Network</a>
       
@@ -1014,7 +1019,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(error:BSON)-class-method" class="signature"><strong>.new</strong>(error : BSON)</a>
+        <a href="#new%28error%3ABSON%29-class-method" class="signature"><strong>.new</strong>(error : BSON)</a>
         
       </li>
     
@@ -1035,32 +1040,32 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#details:BSON?-instance-method" class="signature"><strong>#details</strong> : BSON?</a>
+        <a href="#details%3ABSON%3F-instance-method" class="signature"><strong>#details</strong> : BSON?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#failed_or_timeout?-instance-method" class="signature"><strong>#failed_or_timeout?</strong></a>
+        <a href="#failed_or_timeout%3F-instance-method" class="signature"><strong>#failed_or_timeout?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#max_time_ms_expired?-instance-method" class="signature"><strong>#max_time_ms_expired?</strong></a>
+        <a href="#max_time_ms_expired%3F-instance-method" class="signature"><strong>#max_time_ms_expired?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#shutdown_in_progress?-instance-method" class="signature"><strong>#shutdown_in_progress?</strong></a>
+        <a href="#shutdown_in_progress%3F-instance-method" class="signature"><strong>#shutdown_in_progress?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#unknown_repl?-instance-method" class="signature"><strong>#unknown_repl?</strong></a>
+        <a href="#unknown_repl%3F-instance-method" class="signature"><strong>#unknown_repl?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#unsatisfiable?-instance-method" class="signature"><strong>#unsatisfiable?</strong></a>
+        <a href="#unsatisfiable%3F-instance-method" class="signature"><strong>#unsatisfiable?</strong></a>
         
       </li>
     
@@ -1077,52 +1082,57 @@
   <h3>Instance methods inherited from class <code><a href="../../Mongo/Error/Command.html">Mongo::Error::Command</a></code></h3>
   
   
-    <a href="../../Mongo/Error/Command.html#code:Int32-instance-method" class="tooltip">
+    <a href="../../Mongo/Error/Command.html#code%3AInt32-instance-method" class="tooltip">
       <span>code : Int32</span>
     code</a>, 
     
   
-    <a href="../../Mongo/Error/Command.html#code_name:String?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error/Command.html#code_name%3AString%3F-instance-method" class="tooltip">
       <span>code_name : String?</span>
     code_name</a>, 
     
   
-    <a href="../../Mongo/Error/Command.html#max_time_ms_expired?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error/Command.html#details%3ABSON%3F-instance-method" class="tooltip">
+      <span>details : BSON?</span>
+    details</a>, 
+    
+  
+    <a href="../../Mongo/Error/Command.html#max_time_ms_expired%3F-instance-method" class="tooltip">
       <span>max_time_ms_expired?</span>
     max_time_ms_expired?</a>, 
     
   
-    <a href="../../Mongo/Error/Command.html#not_master?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error/Command.html#not_master%3F-instance-method" class="tooltip">
       <span>not_master?</span>
     not_master?</a>, 
     
   
-    <a href="../../Mongo/Error/Command.html#recovering?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error/Command.html#recovering%3F-instance-method" class="tooltip">
       <span>recovering?</span>
     recovering?</a>, 
     
   
-    <a href="../../Mongo/Error/Command.html#resumable?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error/Command.html#resumable%3F-instance-method" class="tooltip">
       <span>resumable?</span>
     resumable?</a>, 
     
   
-    <a href="../../Mongo/Error/Command.html#retryable_code?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error/Command.html#retryable_code%3F-instance-method" class="tooltip">
       <span>retryable_code?</span>
     retryable_code?</a>, 
     
   
-    <a href="../../Mongo/Error/Command.html#shutdown?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error/Command.html#shutdown%3F-instance-method" class="tooltip">
       <span>shutdown?</span>
     shutdown?</a>, 
     
   
-    <a href="../../Mongo/Error/Command.html#state_change?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error/Command.html#state_change%3F-instance-method" class="tooltip">
       <span>state_change?</span>
     state_change?</a>, 
     
   
-    <a href="../../Mongo/Error/Command.html#to_s(io:IO)-instance-method" class="tooltip">
+    <a href="../../Mongo/Error/Command.html#to_s%28io%3AIO%29-instance-method" class="tooltip">
       <span>to_s(io : IO)</span>
     to_s</a>
     
@@ -1134,8 +1144,8 @@
   <h3>Constructor methods inherited from class <code><a href="../../Mongo/Error/Command.html">Mongo::Error::Command</a></code></h3>
   
   
-    <a href="../../Mongo/Error/Command.html#new(code,code_name,message,*,error_labels=Set(String).new)-class-method" class="tooltip">
-      <span>new(code, code_name, message, *, error_labels = <span class="t">Set</span>(<span class="t">String</span>).<span class="k">new</span>)</span>
+    <a href="../../Mongo/Error/Command.html#new%28code%2Ccode_name%3AString%3F%2Cmessage%2Cdetails%3ABSON%3F%2C%2A%2Cerror_labels%3DSet%28String%29.new%29-class-method" class="tooltip">
+      <span>new(code, code_name : String?, message, details : BSON?, *, error_labels = <span class="t">Set</span>(<span class="t">String</span>).new)</span>
     new</a>
     
   
@@ -1160,12 +1170,12 @@
   <h3>Instance methods inherited from class <code><a href="../../Mongo/Error.html">Mongo::Error</a></code></h3>
   
   
-    <a href="../../Mongo/Error.html#add_error_label(label:String):Nil-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#add_error_label%28label%3AString%29%3ANil-instance-method" class="tooltip">
       <span>add_error_label(label : String) : Nil</span>
     add_error_label</a>, 
     
   
-    <a href="../../Mongo/Error.html#add_retryable_label(wire_version:Int32)-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#add_retryable_label%28wire_version%3AInt32%29-instance-method" class="tooltip">
       <span>add_retryable_label(wire_version : Int32)</span>
     add_retryable_label</a>, 
     
@@ -1180,32 +1190,32 @@
     add_unknown_transaction_label</a>, 
     
   
-    <a href="../../Mongo/Error.html#error_labels:Set(String)-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#error_labels%3ASet%28String%29-instance-method" class="tooltip">
       <span>error_labels : Set(String)</span>
     error_labels</a>, 
     
   
-    <a href="../../Mongo/Error.html#has_error_label?(label:String):Bool-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#has_error_label%3F%28label%3AString%29%3ABool-instance-method" class="tooltip">
       <span>has_error_label?(label : String) : Bool</span>
     has_error_label?</a>, 
     
   
-    <a href="../../Mongo/Error.html#retryable_read?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#retryable_read%3F-instance-method" class="tooltip">
       <span>retryable_read?</span>
     retryable_read?</a>, 
     
   
-    <a href="../../Mongo/Error.html#retryable_write?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#retryable_write%3F-instance-method" class="tooltip">
       <span>retryable_write?</span>
     retryable_write?</a>, 
     
   
-    <a href="../../Mongo/Error.html#transient_transaction?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#transient_transaction%3F-instance-method" class="tooltip">
       <span>transient_transaction?</span>
     transient_transaction?</a>, 
     
   
-    <a href="../../Mongo/Error.html#unknown_transaction?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#unknown_transaction%3F-instance-method" class="tooltip">
       <span>unknown_transaction?</span>
     unknown_transaction?</a>
     
@@ -1266,7 +1276,7 @@
         
         def self.<strong>new</strong>(error : BSON)
 
-        <a class="method-permalink" href="#new(error:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#new%28error%3ABSON%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1294,7 +1304,7 @@
         
         def <strong>details</strong> : BSON?
 
-        <a class="method-permalink" href="#details:BSON?-instance-method">#</a>
+        <a class="method-permalink" href="#details%3ABSON%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1308,7 +1318,7 @@
         
         def <strong>failed_or_timeout?</strong>
 
-        <a class="method-permalink" href="#failed_or_timeout?-instance-method">#</a>
+        <a class="method-permalink" href="#failed_or_timeout%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1322,7 +1332,7 @@
         
         def <strong>max_time_ms_expired?</strong>
 
-        <a class="method-permalink" href="#max_time_ms_expired?-instance-method">#</a>
+        <a class="method-permalink" href="#max_time_ms_expired%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1336,7 +1346,7 @@
         
         def <strong>shutdown_in_progress?</strong>
 
-        <a class="method-permalink" href="#shutdown_in_progress?-instance-method">#</a>
+        <a class="method-permalink" href="#shutdown_in_progress%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1350,7 +1360,7 @@
         
         def <strong>unknown_repl?</strong>
 
-        <a class="method-permalink" href="#unknown_repl?-instance-method">#</a>
+        <a class="method-permalink" href="#unknown_repl%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1364,7 +1374,7 @@
         
         def <strong>unsatisfiable?</strong>
 
-        <a class="method-permalink" href="#unsatisfiable?-instance-method">#</a>
+        <a class="method-permalink" href="#unsatisfiable%3F-instance-method">#</a>
       </div>
       
       <br/>

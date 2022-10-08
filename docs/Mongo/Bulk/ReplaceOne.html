@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -756,6 +756,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Connection" data-name="mongo::error::connection">
+      <a href="../../Mongo/Error/Connection.html">Connection</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
       <a href="../../Mongo/Error/Network.html">Network</a>
       
@@ -1014,7 +1019,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(filter,replacement,collation=nil,hint=nil,upsert=nil)-class-method" class="signature"><strong>.new</strong>(filter, replacement, collation = <span class="n">nil</span>, hint = <span class="n">nil</span>, upsert = <span class="n">nil</span>)</a>
+        <a href="#new%28filter%2Creplacement%2Ccollation%3AMongo%3A%3ACollation%3F%3Dnil%2Chint%3ABSON%7CString%7CNil%3Dnil%2Cupsert%3ABool%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(filter, replacement, collation : Mongo::Collation? = <span class="n">nil</span>, hint : BSON | String | Nil = <span class="n">nil</span>, upsert : Bool? = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -1035,27 +1040,27 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#collation:Collation?-instance-method" class="signature"><strong>#collation</strong> : Collation?</a>
+        <a href="#collation%3ACollation%3F-instance-method" class="signature"><strong>#collation</strong> : Collation?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#filter:BSON-instance-method" class="signature"><strong>#filter</strong> : BSON</a>
+        <a href="#filter%3ABSON-instance-method" class="signature"><strong>#filter</strong> : BSON</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#hint:String%7CBSON%7CNil-instance-method" class="signature"><strong>#hint</strong> : String | BSON | Nil</a>
+        <a href="#hint%3AString%7CBSON%7CNil-instance-method" class="signature"><strong>#hint</strong> : String | BSON | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#replacement:BSON-instance-method" class="signature"><strong>#replacement</strong> : BSON</a>
+        <a href="#replacement%3ABSON-instance-method" class="signature"><strong>#replacement</strong> : BSON</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#upsert:Bool?-instance-method" class="signature"><strong>#upsert</strong> : Bool?</a>
+        <a href="#upsert%3ABool%3F-instance-method" class="signature"><strong>#upsert</strong> : Bool?</a>
         
       </li>
     
@@ -1072,9 +1077,14 @@
   <h3>Instance methods inherited from struct <code><a href="../../Mongo/Bulk/WriteModel.html">Mongo::Bulk::WriteModel</a></code></h3>
   
   
-    <a href="../../Mongo/Bulk/WriteModel.html#(other)-instance-method" class="tooltip">
+    <a href="../../Mongo/Bulk/WriteModel.html#%3C%3D%3E%28other%29-instance-method" class="tooltip">
       <span><=>(other)</span>
-    <=></a>
+    <=></a>, 
+    
+  
+    <a href="../../Mongo/Bulk/WriteModel.html#initialize-instance-method" class="tooltip">
+      <span>initialize</span>
+    initialize</a>
     
   
 
@@ -1137,12 +1147,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(filter,replacement,collation=nil,hint=nil,upsert=nil)-class-method">
+    <div class="entry-detail" id="new(filter,replacement,collation:Mongo::Collation?=nil,hint:BSON|String|Nil=nil,upsert:Bool?=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(filter, replacement, collation = <span class="n">nil</span>, hint = <span class="n">nil</span>, upsert = <span class="n">nil</span>)
+        def self.<strong>new</strong>(filter, replacement, collation : <a href="../../Mongo/Collation.html">Mongo::Collation</a>? = <span class="n">nil</span>, hint : BSON | String | Nil = <span class="n">nil</span>, upsert : Bool? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new(filter,replacement,collation=nil,hint=nil,upsert=nil)-class-method">#</a>
+        <a class="method-permalink" href="#new%28filter%2Creplacement%2Ccollation%3AMongo%3A%3ACollation%3F%3Dnil%2Chint%3ABSON%7CString%7CNil%3Dnil%2Cupsert%3ABool%3F%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1170,7 +1180,7 @@
         
         def <strong>collation</strong> : <a href="../../Mongo/Collation.html">Collation</a>?
 
-        <a class="method-permalink" href="#collation:Collation?-instance-method">#</a>
+        <a class="method-permalink" href="#collation%3ACollation%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1184,7 +1194,7 @@
         
         def <strong>filter</strong> : BSON
 
-        <a class="method-permalink" href="#filter:BSON-instance-method">#</a>
+        <a class="method-permalink" href="#filter%3ABSON-instance-method">#</a>
       </div>
       
       <br/>
@@ -1198,7 +1208,7 @@
         
         def <strong>hint</strong> : String | BSON | Nil
 
-        <a class="method-permalink" href="#hint:String%7CBSON%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#hint%3AString%7CBSON%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1212,7 +1222,7 @@
         
         def <strong>replacement</strong> : BSON
 
-        <a class="method-permalink" href="#replacement:BSON-instance-method">#</a>
+        <a class="method-permalink" href="#replacement%3ABSON-instance-method">#</a>
       </div>
       
       <br/>
@@ -1226,7 +1236,7 @@
         
         def <strong>upsert</strong> : Bool?
 
-        <a class="method-permalink" href="#upsert:Bool?-instance-method">#</a>
+        <a class="method-permalink" href="#upsert%3ABool%3F-instance-method">#</a>
       </div>
       
       <br/>

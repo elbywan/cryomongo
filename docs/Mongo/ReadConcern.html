@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -756,6 +756,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Connection" data-name="mongo::error::connection">
+      <a href="../Mongo/Error/Connection.html">Connection</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
       <a href="../Mongo/Error/Network.html">Network</a>
       
@@ -970,10 +975,8 @@
   </h2>
 
   <p>The readConcern option allows to control the consistency and isolation properties of the data read from replica sets and replica set shards.</p>
-
 <p>Through the effective use of write concerns and read concerns, you can adjust the level of consistency and availability guarantees as appropriate,
 such as waiting for stronger consistency guarantees, or loosening consistency requirements to provide higher availability.</p>
-
 <p>See: <a href="https://docs.mongodb.com/manual/reference/read-concern/index.html">the official documentation</a></p>
 
 
@@ -1033,14 +1036,14 @@ such as waiting for stronger consistency guarantees, or loosening consistency re
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(bson:BSON)-class-method" class="signature"><strong>.new</strong>(bson : BSON)</a>
+        <a href="#new%28bson%3ABSON%29-class-method" class="signature"><strong>.new</strong>(bson : BSON)</a>
         
           <div class="summary"><p>Allocate an instance and copies data from a BSON struct.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(level=nil,after_cluster_time=nil)-class-method" class="signature"><strong>.new</strong>(level = <span class="n">nil</span>, after_cluster_time = <span class="n">nil</span>)</a>
+        <a href="#new%28level%3AString%3F%3Dnil%2Cafter_cluster_time%3ABSON%3A%3ATimestamp%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(level : String? = <span class="n">nil</span>, after_cluster_time : BSON::Timestamp? = <span class="n">nil</span>)</a>
         
           <div class="summary"><p>Create a ReadConcern instance.</p></div>
         
@@ -1061,9 +1064,9 @@ such as waiting for stronger consistency guarantees, or loosening consistency re
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#from_bson(bson:BSON)-class-method" class="signature"><strong>.from_bson</strong>(bson : BSON)</a>
+        <a href="#from_bson%28bson%3ABSON%29-class-method" class="signature"><strong>.from_bson</strong>(bson : BSON)</a>
         
-          <div class="summary"><p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/ReadConcern.html#new(bson:BSON)-class-method">.new</a></code>.</p></div>
+          <div class="summary"><p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/ReadConcern.html#new%28bson%3ABSON%29-class-method">.new</a></code>.</p></div>
         
       </li>
     
@@ -1082,21 +1085,21 @@ such as waiting for stronger consistency guarantees, or loosening consistency re
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#level:String?-instance-method" class="signature"><strong>#level</strong> : String?</a>
+        <a href="#level%3AString%3F-instance-method" class="signature"><strong>#level</strong> : String?</a>
         
           <div class="summary"><p>The read concern level.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#level=(level:String?)-instance-method" class="signature"><strong>#level=</strong>(level : String?)</a>
+        <a href="#level%3D%28level%3AString%3F%29-instance-method" class="signature"><strong>#level=</strong>(level : String?)</a>
         
           <div class="summary"><p>The read concern level.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_bson(bson=BSON.new)-instance-method" class="signature"><strong>#to_bson</strong>(bson = <span class="t">BSON</span>.<span class="k">new</span>)</a>
+        <a href="#to_bson%28bson%3DBSON.new%29-instance-method" class="signature"><strong>#to_bson</strong>(bson = <span class="t">BSON</span>.new)</a>
         
           <div class="summary"><p>Converts to a BSON representation.</p></div>
         
@@ -1167,21 +1170,20 @@ such as waiting for stronger consistency guarantees, or loosening consistency re
         
         def self.<strong>new</strong>(bson : BSON)
 
-        <a class="method-permalink" href="#new(bson:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#new%28bson%3ABSON%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Allocate an instance and copies data from a BSON struct.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">User</span>
   <span class="k">include</span> <span class="t">BSON</span><span class="t">::</span><span class="t">Serializable</span>
   property name : <span class="t">String</span>
 <span class="k">end</span>
 
-data <span class="o">=</span> <span class="t">BSON</span>.<span class="k">new</span>
+data <span class="o">=</span> <span class="t">BSON</span>.new
 data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span class="s">&quot;John&quot;</span>
-<span class="t">User</span>.<span class="k">new</span>(data)</code></pre>
+<span class="t">User</span>.new(data)</code></pre>
         </div>
       
       <br/>
@@ -1190,12 +1192,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="new(level=nil,after_cluster_time=nil)-class-method">
+    <div class="entry-detail" id="new(level:String?=nil,after_cluster_time:BSON::Timestamp?=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(level = <span class="n">nil</span>, after_cluster_time = <span class="n">nil</span>)
+        def self.<strong>new</strong>(level : String? = <span class="n">nil</span>, after_cluster_time : BSON::Timestamp? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new(level=nil,after_cluster_time=nil)-class-method">#</a>
+        <a class="method-permalink" href="#new%28level%3AString%3F%3Dnil%2Cafter_cluster_time%3ABSON%3A%3ATimestamp%3F%3Dnil%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1226,12 +1228,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def self.<strong>from_bson</strong>(bson : BSON)
 
-        <a class="method-permalink" href="#from_bson(bson:BSON)-class-method">#</a>
+        <a class="method-permalink" href="#from_bson%28bson%3ABSON%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/ReadConcern.html#new(bson:BSON)-class-method">.new</a></code>.</p>
+          <p><span class="flag purple">NOTE</span>  See <code>self<a href="../Mongo/ReadConcern.html#new%28bson%3ABSON%29-class-method">.new</a></code>.</p>
         </div>
       
       <br/>
@@ -1257,7 +1259,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>level</strong> : String?
 
-        <a class="method-permalink" href="#level:String?-instance-method">#</a>
+        <a class="method-permalink" href="#level%3AString%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1276,7 +1278,7 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
         
         def <strong>level=</strong>(level : String?)
 
-        <a class="method-permalink" href="#level=(level:String?)-instance-method">#</a>
+        <a class="method-permalink" href="#level%3D%28level%3AString%3F%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1293,16 +1295,15 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
     <div class="entry-detail" id="to_bson(bson=BSON.new)-instance-method">
       <div class="signature">
         
-        def <strong>to_bson</strong>(bson = <span class="t">BSON</span>.<span class="k">new</span>)
+        def <strong>to_bson</strong>(bson = <span class="t">BSON</span>.new)
 
-        <a class="method-permalink" href="#to_bson(bson=BSON.new)-instance-method">#</a>
+        <a class="method-permalink" href="#to_bson%28bson%3DBSON.new%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Converts to a BSON representation.</p>
-
-<pre><code class="language-crystal">user <span class="o">=</span> <span class="t">User</span>.<span class="k">new</span> name: <span class="s">&quot;John&quot;</span>
+<pre><code class="language-crystal">user <span class="o">=</span> <span class="t">User</span>.new name: <span class="s">&quot;John&quot;</span>
 bson <span class="o">=</span> user.to_bson</code></pre>
         </div>
       

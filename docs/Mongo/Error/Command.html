@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -756,6 +756,11 @@
       
     </li>
   
+  <li class=" " data-id="cryomongo/Mongo/Error/Connection" data-name="mongo::error::connection">
+      <a href="../../Mongo/Error/Connection.html">Connection</a>
+      
+    </li>
+  
   <li class=" " data-id="cryomongo/Mongo/Error/Network" data-name="mongo::error::network">
       <a href="../../Mongo/Error/Network.html">Network</a>
       
@@ -1089,7 +1094,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(code,code_name,message,*,error_labels=Set(String).new)-class-method" class="signature"><strong>.new</strong>(code, code_name, message, *, error_labels = <span class="t">Set</span>(<span class="t">String</span>).<span class="k">new</span>)</a>
+        <a href="#new%28code%2Ccode_name%3AString%3F%2Cmessage%2Cdetails%3ABSON%3F%2C%2A%2Cerror_labels%3DSet%28String%29.new%29-class-method" class="signature"><strong>.new</strong>(code, code_name : String?, message, details : BSON?, *, error_labels = <span class="t">Set</span>(<span class="t">String</span>).new)</a>
         
       </li>
     
@@ -1110,52 +1115,57 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#code:Int32-instance-method" class="signature"><strong>#code</strong> : Int32</a>
+        <a href="#code%3AInt32-instance-method" class="signature"><strong>#code</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#code_name:String?-instance-method" class="signature"><strong>#code_name</strong> : String?</a>
+        <a href="#code_name%3AString%3F-instance-method" class="signature"><strong>#code_name</strong> : String?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#max_time_ms_expired?-instance-method" class="signature"><strong>#max_time_ms_expired?</strong></a>
+        <a href="#details%3ABSON%3F-instance-method" class="signature"><strong>#details</strong> : BSON?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#not_master?-instance-method" class="signature"><strong>#not_master?</strong></a>
+        <a href="#max_time_ms_expired%3F-instance-method" class="signature"><strong>#max_time_ms_expired?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#recovering?-instance-method" class="signature"><strong>#recovering?</strong></a>
+        <a href="#not_master%3F-instance-method" class="signature"><strong>#not_master?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#resumable?-instance-method" class="signature"><strong>#resumable?</strong></a>
+        <a href="#recovering%3F-instance-method" class="signature"><strong>#recovering?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#retryable_code?-instance-method" class="signature"><strong>#retryable_code?</strong></a>
+        <a href="#resumable%3F-instance-method" class="signature"><strong>#resumable?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#shutdown?-instance-method" class="signature"><strong>#shutdown?</strong></a>
+        <a href="#retryable_code%3F-instance-method" class="signature"><strong>#retryable_code?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#state_change?-instance-method" class="signature"><strong>#state_change?</strong></a>
+        <a href="#shutdown%3F-instance-method" class="signature"><strong>#shutdown?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_s(io:IO)-instance-method" class="signature"><strong>#to_s</strong>(io : IO)</a>
+        <a href="#state_change%3F-instance-method" class="signature"><strong>#state_change?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_s%28io%3AIO%29-instance-method" class="signature"><strong>#to_s</strong>(io : IO)</a>
         
           <div class="summary"><p>Appends a short String representation of this object which includes its class name and its object address.</p></div>
         
@@ -1184,12 +1194,12 @@
   <h3>Instance methods inherited from class <code><a href="../../Mongo/Error.html">Mongo::Error</a></code></h3>
   
   
-    <a href="../../Mongo/Error.html#add_error_label(label:String):Nil-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#add_error_label%28label%3AString%29%3ANil-instance-method" class="tooltip">
       <span>add_error_label(label : String) : Nil</span>
     add_error_label</a>, 
     
   
-    <a href="../../Mongo/Error.html#add_retryable_label(wire_version:Int32)-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#add_retryable_label%28wire_version%3AInt32%29-instance-method" class="tooltip">
       <span>add_retryable_label(wire_version : Int32)</span>
     add_retryable_label</a>, 
     
@@ -1204,32 +1214,32 @@
     add_unknown_transaction_label</a>, 
     
   
-    <a href="../../Mongo/Error.html#error_labels:Set(String)-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#error_labels%3ASet%28String%29-instance-method" class="tooltip">
       <span>error_labels : Set(String)</span>
     error_labels</a>, 
     
   
-    <a href="../../Mongo/Error.html#has_error_label?(label:String):Bool-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#has_error_label%3F%28label%3AString%29%3ABool-instance-method" class="tooltip">
       <span>has_error_label?(label : String) : Bool</span>
     has_error_label?</a>, 
     
   
-    <a href="../../Mongo/Error.html#retryable_read?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#retryable_read%3F-instance-method" class="tooltip">
       <span>retryable_read?</span>
     retryable_read?</a>, 
     
   
-    <a href="../../Mongo/Error.html#retryable_write?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#retryable_write%3F-instance-method" class="tooltip">
       <span>retryable_write?</span>
     retryable_write?</a>, 
     
   
-    <a href="../../Mongo/Error.html#transient_transaction?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#transient_transaction%3F-instance-method" class="tooltip">
       <span>transient_transaction?</span>
     transient_transaction?</a>, 
     
   
-    <a href="../../Mongo/Error.html#unknown_transaction?-instance-method" class="tooltip">
+    <a href="../../Mongo/Error.html#unknown_transaction%3F-instance-method" class="tooltip">
       <span>unknown_transaction?</span>
     unknown_transaction?</a>
     
@@ -1285,12 +1295,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(code,code_name,message,*,error_labels=Set(String).new)-class-method">
+    <div class="entry-detail" id="new(code,code_name:String?,message,details:BSON?,*,error_labels=Set(String).new)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(code, code_name, message, *, error_labels = <span class="t">Set</span>(<span class="t">String</span>).<span class="k">new</span>)
+        def self.<strong>new</strong>(code, code_name : String?, message, details : BSON?, *, error_labels = <span class="t">Set</span>(<span class="t">String</span>).new)
 
-        <a class="method-permalink" href="#new(code,code_name,message,*,error_labels=Set(String).new)-class-method">#</a>
+        <a class="method-permalink" href="#new%28code%2Ccode_name%3AString%3F%2Cmessage%2Cdetails%3ABSON%3F%2C%2A%2Cerror_labels%3DSet%28String%29.new%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1318,7 +1328,7 @@
         
         def <strong>code</strong> : Int32
 
-        <a class="method-permalink" href="#code:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#code%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
@@ -1332,7 +1342,21 @@
         
         def <strong>code_name</strong> : String?
 
-        <a class="method-permalink" href="#code_name:String?-instance-method">#</a>
+        <a class="method-permalink" href="#code_name%3AString%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="details:BSON?-instance-method">
+      <div class="signature">
+        
+        def <strong>details</strong> : BSON?
+
+        <a class="method-permalink" href="#details%3ABSON%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1346,7 +1370,7 @@
         
         def <strong>max_time_ms_expired?</strong>
 
-        <a class="method-permalink" href="#max_time_ms_expired?-instance-method">#</a>
+        <a class="method-permalink" href="#max_time_ms_expired%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1360,7 +1384,7 @@
         
         def <strong>not_master?</strong>
 
-        <a class="method-permalink" href="#not_master?-instance-method">#</a>
+        <a class="method-permalink" href="#not_master%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1374,7 +1398,7 @@
         
         def <strong>recovering?</strong>
 
-        <a class="method-permalink" href="#recovering?-instance-method">#</a>
+        <a class="method-permalink" href="#recovering%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1388,7 +1412,7 @@
         
         def <strong>resumable?</strong>
 
-        <a class="method-permalink" href="#resumable?-instance-method">#</a>
+        <a class="method-permalink" href="#resumable%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1402,7 +1426,7 @@
         
         def <strong>retryable_code?</strong>
 
-        <a class="method-permalink" href="#retryable_code?-instance-method">#</a>
+        <a class="method-permalink" href="#retryable_code%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1416,7 +1440,7 @@
         
         def <strong>shutdown?</strong>
 
-        <a class="method-permalink" href="#shutdown?-instance-method">#</a>
+        <a class="method-permalink" href="#shutdown%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1430,7 +1454,7 @@
         
         def <strong>state_change?</strong>
 
-        <a class="method-permalink" href="#state_change?-instance-method">#</a>
+        <a class="method-permalink" href="#state_change%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1444,7 +1468,7 @@
         
         def <strong>to_s</strong>(io : IO)
 
-        <a class="method-permalink" href="#to_s(io:IO)-instance-method">#</a>
+        <a class="method-permalink" href="#to_s%28io%3AIO%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1455,13 +1479,12 @@
           
           <p>Appends a short String representation of this object
 which includes its class name and its object address.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
   <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
   <span class="k">end</span>
 <span class="k">end</span>
 
-<span class="t">Person</span>.<span class="k">new</span>(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).to_s <span class="c"># =&gt; #&lt;Person:0x10a199f20&gt;</span></code></pre>
+<span class="t">Person</span>.new(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).to_s <span class="c"># =&gt; #&lt;Person:0x10a199f20&gt;</span></code></pre>
         </div>
       
       <br/>
