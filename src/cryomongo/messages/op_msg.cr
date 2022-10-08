@@ -144,7 +144,8 @@ struct Mongo::Messages::OpMsg < Mongo::Messages::Part
       err_code_name = self.body["codeName"]?.try &.as(String)
       err_code = self.body["code"]?
       err_labels = self.body["errorLabels"]?.try { |labels| Array(String).from_bson(labels) } || [] of String
-      Mongo::Error::Command.new(err_code, err_code_name, err_msg, error_labels: Set(String).new(err_labels))
+      details = self.body["errInfo"]?.try &.as(BSON)
+      Mongo::Error::Command.new(err_code, err_code_name, err_msg, details, error_labels: Set(String).new(err_labels))
     end
   end
 

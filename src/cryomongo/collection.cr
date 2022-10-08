@@ -537,7 +537,8 @@ class Mongo::Collection
       labels = last_error_object["errorLabels"]?.try { |l|
         Array(String).from_bson(l)
       } || [] of String
-      raise Mongo::Error::Command.new(code, code_name, msg, error_labels: Set(String).new(labels))
+      details = last_error_object["errInfo"]?.try &.as(BSON)
+      raise Mongo::Error::Command.new(code, code_name, msg, details, error_labels: Set(String).new(labels))
     end
 
     result["value"]?.try &.as(BSON)

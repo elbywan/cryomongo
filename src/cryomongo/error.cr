@@ -98,6 +98,7 @@ module Mongo
   class Error::Command < Error::Server
     getter code : Int32
     getter code_name : String?
+    getter details : BSON?
 
     # See: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-discovery-and-monitoring.rst#not-master-and-node-is-recovering
     RECOVERING_CODES    = {11600, 11602, 13436, 189, 91}
@@ -110,7 +111,7 @@ module Mongo
     # See: https://github.com/mongodb/specifications/blob/f1fcb6aa9751e5ed7eb8e64c0f08f1edf10a859a/source/change-streams/change-streams.rst#resumable-error
     RESUMABLE_CODES = {63, 133, 150, 234, 13388, 133} + RETRYABLE_CODES
 
-    def initialize(code, @code_name, message, *, @error_labels = Set(String).new)
+    def initialize(code, @code_name, message, @details, *, @error_labels = Set(String).new)
       @code = code.try &.as(Int32) || 0
       @message = message.try(&.as(String)) || ""
     end
@@ -162,7 +163,8 @@ module Mongo
         err_code_name = error["codeName"]?.try &.as(String)
         err_msg = error["errmsg"]?.try &.as(String)
         err_labels = error["errorLabels"]?.try { |labels| Array(String).from_bson(labels) } || [] of String
-        @errors << Error::Command.new(err_code, err_code_name, err_msg, error_labels: Set(String).new(err_labels))
+        details = error["errInfo"]?.try &.as(BSON)
+        @errors << Error::Command.new(err_code, err_code_name, err_msg, details, error_labels: Set(String).new(err_labels))
       }
     end
 
@@ -178,7 +180,7 @@ module Mongo
     def initialize(error : BSON)
       @code = error["code"]?.try(&.as(Int).to_i32) || 0
       @message = error["errmsg"]?.try(&.as(String)) || ""
-      @details = error["err_info"]?.try &.as(BSON)
+      @details = error["errInfo"]?.try &.as(BSON)
     end
 
     def failed_or_timeout?
