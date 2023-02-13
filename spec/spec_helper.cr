@@ -80,7 +80,7 @@ def with_mongo(topologies = nil, &block : (Proc(Mongo::Client), MongoLaunchTopol
         `rm -Rf ./data`
         start_mongo(topology)
 
-        client = Mongo::Client.new
+        client = Mongo::Client.new(uri)
       }
 
       after_all {
