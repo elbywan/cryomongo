@@ -55,10 +55,12 @@ module Mongo::URI
             query_params[key] = txt_options[key]
           end
         }
+        # See: https://github.com/mongodb/specifications/blob/31bbf60c4f3008d77fc5ca5287b165e5ea97a4a6/source/initial-dns-seedlist-discovery/initial-dns-seedlist-discovery.rst#default-connection-string-options
         txt_options.each { |option, _|
           case option
           when "authSource"
           when "replicaSet"
+          when "loadBalanced"
             # ok
           else
             raise Mongo::Error.new("Invalid TXT record option: #{option}")

@@ -60,6 +60,7 @@ module Mongo::SDAM
         end
       rescue e
         Mongo::Log.error { "Monitoring error: #{e}" }
+        Mongo::Log.debug { e.backtrace.join("\n") }
         # Monitoring error
       end
       close_connection(@server_description)
@@ -82,6 +83,7 @@ module Mongo::SDAM
       ServerDescription.new(server_description.address, result, new_rtt)
     rescue error : Exception
       Mongo::Log.error { "Monitoring handshake error: #{error}" }
+      Mongo::Log.debug { error.backtrace.join("\n") }
       # see: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-monitoring.rst#network-or-command-error-during-server-check
       known_state = !server_description.type.unknown?
       description = ServerDescription.new(server_description.address)
