@@ -41,7 +41,10 @@ module Mongo::URI
       if parsed_uri.port
         raise Mongo::Error.new "Cannot specify a port in a connection string with the mongodb+srv protocol."
       end
-      srv = Mongo::SRV.new(options.dns_resolver, parsed_uri.host.not_nil!)
+      if resolver = options.dns_resolver
+        DNS.default_resolver = resolver
+      end
+      srv = Mongo::SRV.new(parsed_uri.host.not_nil!)
       srv_records, txt_record = srv.resolve
       seeds = srv_records.map { |srv_record|
         "#{srv_record.target}:#{srv_record.port}"
@@ -49,7 +52,7 @@ module Mongo::URI
 
       query_params["ssl"] = "true" unless query_params.has_key? "ssl"
       txt_record.try { |txt|
-        txt_options = ::URI::Params.parse(txt.txt)
+        txt_options = ::URI::Params.parse(txt.text_data.join(" "))
         {"authSource", "replicaSet"}.each { |key|
           if txt_options.has_key?(key) && !query_params.has_key?(key)
             query_params[key] = txt_options[key]
