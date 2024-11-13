@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.1">
-<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.10.1">
+<meta name="crystal_docs.project_version" content="dns-refactor-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
 
@@ -13,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="cryomongo">
-  <title>Mongo::Bulk::UpdateOne - cryomongo master-dev</title>
+  <title>Mongo::Bulk::UpdateOne - cryomongo dns-refactor-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -22,9 +23,14 @@
 
 <svg class="hidden">
   <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
   </symbol>
 </svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -39,7 +45,7 @@
       </h1>
 
       <span class="project-version">
-        master-dev
+        dns-refactor-dev
       </span>
     </div>
   </div>
@@ -955,7 +961,7 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">struct</span> Mongo::Bulk::UpdateOne
+  <span class="kind">struct</span> Mongo::<wbr>Bulk::<wbr>UpdateOne
 
 </h1>
 
@@ -1019,11 +1025,13 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28filter%2Cupdate%3AArray%28BSON%29%7CBSON%2Carray_filters%3AArray%28BSON%29%3F%3Dnil%2Ccollation%3AMongo%3A%3ACollation%3F%3Dnil%2Chint%3ABSON%7CString%7CNil%3Dnil%2Cupsert%3ABool%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(filter, update : Array(BSON) | BSON, array_filters : Array(BSON)? = <span class="n">nil</span>, collation : Mongo::Collation? = <span class="n">nil</span>, hint : BSON | String | Nil = <span class="n">nil</span>, upsert : Bool? = <span class="n">nil</span>)</a>
+        <a href="#new%28filter%2Cupdate%3AArray%28BSON%29%7CBSON%2Carray_filters%3ANil%7CArray%28BSON%29%3Dnil%2Ccollation%3AMongo%3A%3ACollation%7CNil%3Dnil%2Chint%3ABSON%7CString%7CNil%3Dnil%2Cupsert%3ABool%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(filter, update : Array(BSON) | BSON, array_filters : Nil | Array(BSON) = <span class="n">nil</span>, collation : Mongo::Collation | Nil = <span class="n">nil</span>, hint : BSON | String | Nil = <span class="n">nil</span>, upsert : Bool | Nil = <span class="n">nil</span>)</a>
         
       </li>
     
   </ul>
+
+
 
 
 
@@ -1040,12 +1048,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#array_filters%3AArray%28BSON%29%3F-instance-method" class="signature"><strong>#array_filters</strong> : Array(BSON)?</a>
+        <a href="#array_filters%3AArray%28BSON%29%7CNil-instance-method" class="signature"><strong>#array_filters</strong> : Array(BSON) | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#collation%3ACollation%3F-instance-method" class="signature"><strong>#collation</strong> : Collation?</a>
+        <a href="#collation%3ACollation%7CNil-instance-method" class="signature"><strong>#collation</strong> : Collation | Nil</a>
         
       </li>
     
@@ -1065,13 +1073,11 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#upsert%3ABool%3F-instance-method" class="signature"><strong>#upsert</strong> : Bool?</a>
+        <a href="#upsert%3ABool%7CNil-instance-method" class="signature"><strong>#upsert</strong> : Bool | Nil</a>
         
       </li>
     
   </ul>
-
-
 
 
 
@@ -1109,13 +1115,6 @@
     
 
 
-  
-    
-
-
-    
-
-
     
 
 
@@ -1129,7 +1128,26 @@
     
 
 
+    
+
+
   
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
     
 
 
@@ -1152,12 +1170,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(filter,update:Array(BSON)|BSON,array_filters:Array(BSON)?=nil,collation:Mongo::Collation?=nil,hint:BSON|String|Nil=nil,upsert:Bool?=nil)-class-method">
+    <div class="entry-detail" id="new(filter,update:Array(BSON)|BSON,array_filters:Nil|Array(BSON)=nil,collation:Mongo::Collation|Nil=nil,hint:BSON|String|Nil=nil,upsert:Bool|Nil=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(filter, update : Array(BSON) | BSON, array_filters : Array(BSON)? = <span class="n">nil</span>, collation : <a href="../../Mongo/Collation.html">Mongo::Collation</a>? = <span class="n">nil</span>, hint : BSON | String | Nil = <span class="n">nil</span>, upsert : Bool? = <span class="n">nil</span>)
+        def self.<strong>new</strong>(filter, update : Array(BSON) | BSON, array_filters : Nil | Array(BSON) = <span class="n">nil</span>, collation : <a href="../../Mongo/Collation.html">Mongo::Collation</a> | Nil = <span class="n">nil</span>, hint : BSON | String | Nil = <span class="n">nil</span>, upsert : Bool | Nil = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28filter%2Cupdate%3AArray%28BSON%29%7CBSON%2Carray_filters%3AArray%28BSON%29%3F%3Dnil%2Ccollation%3AMongo%3A%3ACollation%3F%3Dnil%2Chint%3ABSON%7CString%7CNil%3Dnil%2Cupsert%3ABool%3F%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28filter%2Cupdate%3AArray%28BSON%29%7CBSON%2Carray_filters%3ANil%7CArray%28BSON%29%3Dnil%2Ccollation%3AMongo%3A%3ACollation%7CNil%3Dnil%2Chint%3ABSON%7CString%7CNil%3Dnil%2Cupsert%3ABool%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1166,6 +1184,8 @@
       </div>
     </div>
   
+
+
 
 
 
@@ -1180,12 +1200,12 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="array_filters:Array(BSON)?-instance-method">
+    <div class="entry-detail" id="array_filters:Array(BSON)|Nil-instance-method">
       <div class="signature">
         
-        def <strong>array_filters</strong> : Array(BSON)?
+        def <strong>array_filters</strong> : Array(BSON) | Nil
 
-        <a class="method-permalink" href="#array_filters%3AArray%28BSON%29%3F-instance-method">#</a>
+        <a class="method-permalink" href="#array_filters%3AArray%28BSON%29%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1194,12 +1214,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="collation:Collation?-instance-method">
+    <div class="entry-detail" id="collation:Collation|Nil-instance-method">
       <div class="signature">
         
-        def <strong>collation</strong> : <a href="../../Mongo/Collation.html">Collation</a>?
+        def <strong>collation</strong> : <a href="../../Mongo/Collation.html">Collation</a> | Nil
 
-        <a class="method-permalink" href="#collation%3ACollation%3F-instance-method">#</a>
+        <a class="method-permalink" href="#collation%3ACollation%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1250,12 +1270,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="upsert:Bool?-instance-method">
+    <div class="entry-detail" id="upsert:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>upsert</strong> : Bool?
+        def <strong>upsert</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#upsert%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#upsert%3ABool%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1264,8 +1284,6 @@
       </div>
     </div>
   
-
-
 
 
 </div>

@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.1">
-<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.10.1">
+<meta name="crystal_docs.project_version" content="dns-refactor-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
 
@@ -13,7 +14,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="cryomongo">
-  <title>Mongo::Options - cryomongo master-dev</title>
+  <title>Mongo::Options - cryomongo dns-refactor-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -22,9 +23,14 @@
 
 <svg class="hidden">
   <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
   </symbol>
 </svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -39,7 +45,7 @@
       </h1>
 
       <span class="project-version">
-        master-dev
+        dns-refactor-dev
       </span>
     </div>
   </div>
@@ -955,7 +961,7 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">struct</span> Mongo::Options
+  <span class="kind">struct</span> Mongo::<wbr>Options
 
 </h1>
 
@@ -1044,6 +1050,8 @@
 
 
 
+
+
   <h2>
     <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
   <svg class="octicon-link" aria-hidden="true">
@@ -1055,63 +1063,63 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#appname%3AString%3F-instance-method" class="signature"><strong>#appname</strong> : String?</a>
+        <a href="#appname%3AString%7CNil-instance-method" class="signature"><strong>#appname</strong> : String | Nil</a>
         
           <div class="summary"><p>Passed into the server in the client metadata as part of the connection handshake</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#auth_mechanism%3AString%3F-instance-method" class="signature"><strong>#auth_mechanism</strong> : String?</a>
+        <a href="#auth_mechanism%3AString%7CNil-instance-method" class="signature"><strong>#auth_mechanism</strong> : String | Nil</a>
         
           <div class="summary"><p>The authentication mechanism method to use for connection to the server</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#auth_mechanism_properties%3AString%3F-instance-method" class="signature"><strong>#auth_mechanism_properties</strong> : String?</a>
+        <a href="#auth_mechanism_properties%3AString%7CNil-instance-method" class="signature"><strong>#auth_mechanism_properties</strong> : String | Nil</a>
         
           <div class="summary"><p>Additional options provided for authentication (e.g.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#auth_source%3AString%3F-instance-method" class="signature"><strong>#auth_source</strong> : String?</a>
+        <a href="#auth_source%3AString%7CNil-instance-method" class="signature"><strong>#auth_source</strong> : String | Nil</a>
         
           <div class="summary"><p>The database that connections should authenticate against</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#auth_source%3D%28auth_source%3AString%3F%29-instance-method" class="signature"><strong>#auth_source=</strong>(auth_source : String?)</a>
+        <a href="#auth_source%3D%28auth_source%3AString%7CNil%29-instance-method" class="signature"><strong>#auth_source=</strong>(auth_source : String | Nil)</a>
         
           <div class="summary"><p>The database that connections should authenticate against</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#compressors%3AString%3F-instance-method" class="signature"><strong>#compressors</strong> : String?</a>
+        <a href="#compressors%3AString%7CNil-instance-method" class="signature"><strong>#compressors</strong> : String | Nil</a>
         
           <div class="summary"><p>The list of allowed compression types for wire protocol messages sent or received from the server</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#connect_timeout%3ATime%3A%3ASpan%3F-instance-method" class="signature"><strong>#connect_timeout</strong> : Time::Span?</a>
+        <a href="#connect_timeout%3ATime%3A%3ASpan%7CNil-instance-method" class="signature"><strong>#connect_timeout</strong> : Time::Span | Nil</a>
         
           <div class="summary"><p>Amount of time to wait for a single TCP socket connection to the server to be established before erroring; note that this applies to SDAM isMaster operations</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#direct_connection%3ABool%3F-instance-method" class="signature"><strong>#direct_connection</strong> : Bool?</a>
+        <a href="#direct_connection%3ABool%7CNil-instance-method" class="signature"><strong>#direct_connection</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Whether to connect to the deployment in Single topology.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#dns_resolver%3ADurian%3A%3AResolver-instance-method" class="signature"><strong>#dns_resolver</strong> : Durian::Resolver</a>
+        <a href="#dns_resolver%3ADNS%3A%3AResolver%7CNil-instance-method" class="signature"><strong>#dns_resolver</strong> : DNS::Resolver | Nil</a>
         
           <div class="summary"><p>Use custom dns resolver.</p></div>
         
@@ -1132,7 +1140,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#journal%3ABool%3F-instance-method" class="signature"><strong>#journal</strong> : Bool?</a>
+        <a href="#journal%3ABool%7CNil-instance-method" class="signature"><strong>#journal</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Default write concern &quot;j&quot; field for the client</p></div>
         
@@ -1146,7 +1154,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#max_idle_time%3ATime%3A%3ASpan%3F-instance-method" class="signature"><strong>#max_idle_time</strong> : Time::Span?</a>
+        <a href="#max_idle_time%3ATime%3A%3ASpan%7CNil-instance-method" class="signature"><strong>#max_idle_time</strong> : Time::Span | Nil</a>
         
           <div class="summary"><p>The amount of time a connection can be idle before it's closed</p></div>
         
@@ -1160,7 +1168,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#max_staleness_seconds%3AInt32%3F-instance-method" class="signature"><strong>#max_staleness_seconds</strong> : Int32?</a>
+        <a href="#max_staleness_seconds%3AInt32%7CNil-instance-method" class="signature"><strong>#max_staleness_seconds</strong> : Int32 | Nil</a>
         
           <div class="summary"><p>The maximum replication lag, in wall clock time, that a secondary can suffer and still be eligible for server selection</p></div>
         
@@ -1184,19 +1192,19 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#raw%3F%3AHTTP%3A%3AParams%3F-instance-method" class="signature"><strong>#raw?</strong> : HTTP::Params?</a>
+        <a href="#raw%3F%3AHTTP%3A%3AParams%7CNil-instance-method" class="signature"><strong>#raw?</strong> : HTTP::Params | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read_concern_level%3AString%3F-instance-method" class="signature"><strong>#read_concern_level</strong> : String?</a>
+        <a href="#read_concern_level%3AString%7CNil-instance-method" class="signature"><strong>#read_concern_level</strong> : String | Nil</a>
         
           <div class="summary"><p>Default read concern for the client</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read_preference%3AString%3F-instance-method" class="signature"><strong>#read_preference</strong> : String?</a>
+        <a href="#read_preference%3AString%7CNil-instance-method" class="signature"><strong>#read_preference</strong> : String | Nil</a>
         
           <div class="summary"><p>Default read preference for the client (excluding tags)</p></div>
         
@@ -1210,28 +1218,28 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#replica_set%3AString%3F-instance-method" class="signature"><strong>#replica_set</strong> : String?</a>
+        <a href="#replica_set%3AString%7CNil-instance-method" class="signature"><strong>#replica_set</strong> : String | Nil</a>
         
           <div class="summary"><p>The name of the replica set to connect to</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#replica_set%3D%28replica_set%3AString%3F%29-instance-method" class="signature"><strong>#replica_set=</strong>(replica_set : String?)</a>
+        <a href="#replica_set%3D%28replica_set%3AString%7CNil%29-instance-method" class="signature"><strong>#replica_set=</strong>(replica_set : String | Nil)</a>
         
           <div class="summary"><p>The name of the replica set to connect to</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#retry_reads%3ABool%3F-instance-method" class="signature"><strong>#retry_reads</strong> : Bool?</a>
+        <a href="#retry_reads%3ABool%7CNil-instance-method" class="signature"><strong>#retry_reads</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Enables retryable reads on server 3.6+</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#retry_writes%3ABool%3F-instance-method" class="signature"><strong>#retry_writes</strong> : Bool?</a>
+        <a href="#retry_writes%3ABool%7CNil-instance-method" class="signature"><strong>#retry_writes</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Enables retryable writes on server 3.6+</p></div>
         
@@ -1266,84 +1274,84 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#socket_timeout%3ATime%3A%3ASpan%3F-instance-method" class="signature"><strong>#socket_timeout</strong> : Time::Span?</a>
+        <a href="#socket_timeout%3ATime%3A%3ASpan%7CNil-instance-method" class="signature"><strong>#socket_timeout</strong> : Time::Span | Nil</a>
         
           <div class="summary"><p>Amount of time spent attempting to send or receive on a socket before timing out; note that this only applies to application operations, not SDAM</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#ssl%3ABool%3F-instance-method" class="signature"><strong>#ssl</strong> : Bool?</a>
+        <a href="#ssl%3ABool%7CNil-instance-method" class="signature"><strong>#ssl</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Alias of &quot;tls&quot;; required to ensure that Atlas connection strings continue to work</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#ssl%3D%28ssl%3ABool%3F%29-instance-method" class="signature"><strong>#ssl=</strong>(ssl : Bool?)</a>
+        <a href="#ssl%3D%28ssl%3ABool%7CNil%29-instance-method" class="signature"><strong>#ssl=</strong>(ssl : Bool | Nil)</a>
         
           <div class="summary"><p>Alias of &quot;tls&quot;; required to ensure that Atlas connection strings continue to work</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#tls%3ABool%3F-instance-method" class="signature"><strong>#tls</strong> : Bool?</a>
+        <a href="#tls%3ABool%7CNil-instance-method" class="signature"><strong>#tls</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Whether or not to require TLS for connections to the server</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#tls_allow_invalid_certificates%3ABool%3F-instance-method" class="signature"><strong>#tls_allow_invalid_certificates</strong> : Bool?</a>
+        <a href="#tls_allow_invalid_certificates%3ABool%7CNil-instance-method" class="signature"><strong>#tls_allow_invalid_certificates</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Specifies whether or not the driver should error when the server’s TLS certificate is invalid</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#tls_allow_invalid_hostnames%3ABool%3F-instance-method" class="signature"><strong>#tls_allow_invalid_hostnames</strong> : Bool?</a>
+        <a href="#tls_allow_invalid_hostnames%3ABool%7CNil-instance-method" class="signature"><strong>#tls_allow_invalid_hostnames</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Specifies whether or not the driver should error when there is a mismatch between the server’s hostname and the hostname specified by the TLS certificate</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#tls_ca_file%3AString%3F-instance-method" class="signature"><strong>#tls_ca_file</strong> : String?</a>
+        <a href="#tls_ca_file%3AString%7CNil-instance-method" class="signature"><strong>#tls_ca_file</strong> : String | Nil</a>
         
           <div class="summary"><p>Path to file with either a single or bundle of certificate authorities to be considered trusted when making a TLS connection</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#tls_certificate_key_file%3AString%3F-instance-method" class="signature"><strong>#tls_certificate_key_file</strong> : String?</a>
+        <a href="#tls_certificate_key_file%3AString%7CNil-instance-method" class="signature"><strong>#tls_certificate_key_file</strong> : String | Nil</a>
         
           <div class="summary"><p>Path to the client certificate file or the client private key file; in the case that they both are needed, the files should be concatenated</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#tls_certificate_key_file_password%3AString%3F-instance-method" class="signature"><strong>#tls_certificate_key_file_password</strong> : String?</a>
+        <a href="#tls_certificate_key_file_password%3AString%7CNil-instance-method" class="signature"><strong>#tls_certificate_key_file_password</strong> : String | Nil</a>
         
           <div class="summary"><p>Password to decrypt the client private key to be used for TLS connections</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#tls_disable_certificate_revocation_check%3ABool%3F-instance-method" class="signature"><strong>#tls_disable_certificate_revocation_check</strong> : Bool?</a>
+        <a href="#tls_disable_certificate_revocation_check%3ABool%7CNil-instance-method" class="signature"><strong>#tls_disable_certificate_revocation_check</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Controls whether or not the driver will check a certificate's revocation status via CRLs or OCSP.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#tls_disable_ocsp_endpoint_check%3ABool%3F-instance-method" class="signature"><strong>#tls_disable_ocsp_endpoint_check</strong> : Bool?</a>
+        <a href="#tls_disable_ocsp_endpoint_check%3ABool%7CNil-instance-method" class="signature"><strong>#tls_disable_ocsp_endpoint_check</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Controls whether or not the driver will reach out to OCSP endpoints if needed.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#tls_insecure%3ABool%3F-instance-method" class="signature"><strong>#tls_insecure</strong> : Bool?</a>
+        <a href="#tls_insecure%3ABool%7CNil-instance-method" class="signature"><strong>#tls_insecure</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Relax TLS constraints as much as possible (e.g.</p></div>
         
@@ -1362,29 +1370,27 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#w_timeout%3ATime%3A%3ASpan%3F-instance-method" class="signature"><strong>#w_timeout</strong> : Time::Span?</a>
+        <a href="#w_timeout%3ATime%3A%3ASpan%7CNil-instance-method" class="signature"><strong>#w_timeout</strong> : Time::Span | Nil</a>
         
           <div class="summary"><p>Default write concern &quot;wtimeout&quot; field for the client</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#wait_queue_timeout%3ATime%3A%3ASpan%3F-instance-method" class="signature"><strong>#wait_queue_timeout</strong> : Time::Span?</a>
+        <a href="#wait_queue_timeout%3ATime%3A%3ASpan%7CNil-instance-method" class="signature"><strong>#wait_queue_timeout</strong> : Time::Span | Nil</a>
         
           <div class="summary"><p>The maximum amount of time a fiber can wait for a connection to become available</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#zlib_compression_level%3AInt32%3F-instance-method" class="signature"><strong>#zlib_compression_level</strong> : Int32?</a>
+        <a href="#zlib_compression_level%3AInt32%7CNil-instance-method" class="signature"><strong>#zlib_compression_level</strong> : Int32 | Nil</a>
         
           <div class="summary"><p>Specifies the level of compression when using zlib to compress wire protocol messages; -1 signifies the default level, 0 signifies no compression, 1 signifies the fastest speed, and 9 signifies the best compression</p></div>
         
       </li>
     
   </ul>
-
-
 
 
 
@@ -1399,13 +1405,6 @@
     
 
 
-  
-    
-
-
-    
-
-
     
 
 
@@ -1419,7 +1418,26 @@
     
 
 
+    
+
+
   
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
     
 
 
@@ -1461,6 +1479,8 @@
 
 
 
+
+
   <h2>
     <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
   <svg class="octicon-link" aria-hidden="true">
@@ -1470,12 +1490,12 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="appname:String?-instance-method">
+    <div class="entry-detail" id="appname:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>appname</strong> : String?
+        def <strong>appname</strong> : String | Nil
 
-        <a class="method-permalink" href="#appname%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#appname%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1489,12 +1509,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="auth_mechanism:String?-instance-method">
+    <div class="entry-detail" id="auth_mechanism:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>auth_mechanism</strong> : String?
+        def <strong>auth_mechanism</strong> : String | Nil
 
-        <a class="method-permalink" href="#auth_mechanism%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#auth_mechanism%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1508,12 +1528,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="auth_mechanism_properties:String?-instance-method">
+    <div class="entry-detail" id="auth_mechanism_properties:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>auth_mechanism_properties</strong> : String?
+        def <strong>auth_mechanism_properties</strong> : String | Nil
 
-        <a class="method-permalink" href="#auth_mechanism_properties%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#auth_mechanism_properties%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1527,12 +1547,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="auth_source:String?-instance-method">
+    <div class="entry-detail" id="auth_source:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>auth_source</strong> : String?
+        def <strong>auth_source</strong> : String | Nil
 
-        <a class="method-permalink" href="#auth_source%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#auth_source%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1546,12 +1566,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="auth_source=(auth_source:String?)-instance-method">
+    <div class="entry-detail" id="auth_source=(auth_source:String|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>auth_source=</strong>(auth_source : String?)
+        def <strong>auth_source=</strong>(auth_source : String | Nil)
 
-        <a class="method-permalink" href="#auth_source%3D%28auth_source%3AString%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#auth_source%3D%28auth_source%3AString%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1565,12 +1585,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="compressors:String?-instance-method">
+    <div class="entry-detail" id="compressors:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>compressors</strong> : String?
+        def <strong>compressors</strong> : String | Nil
 
-        <a class="method-permalink" href="#compressors%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#compressors%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1584,12 +1604,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="connect_timeout:Time::Span?-instance-method">
+    <div class="entry-detail" id="connect_timeout:Time::Span|Nil-instance-method">
       <div class="signature">
         
-        def <strong>connect_timeout</strong> : Time::Span?
+        def <strong>connect_timeout</strong> : Time::Span | Nil
 
-        <a class="method-permalink" href="#connect_timeout%3ATime%3A%3ASpan%3F-instance-method">#</a>
+        <a class="method-permalink" href="#connect_timeout%3ATime%3A%3ASpan%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1603,12 +1623,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="direct_connection:Bool?-instance-method">
+    <div class="entry-detail" id="direct_connection:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>direct_connection</strong> : Bool?
+        def <strong>direct_connection</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#direct_connection%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#direct_connection%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1622,12 +1642,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="dns_resolver:Durian::Resolver-instance-method">
+    <div class="entry-detail" id="dns_resolver:DNS::Resolver|Nil-instance-method">
       <div class="signature">
         
-        def <strong>dns_resolver</strong> : Durian::Resolver
+        def <strong>dns_resolver</strong> : DNS::Resolver | Nil
 
-        <a class="method-permalink" href="#dns_resolver%3ADurian%3A%3AResolver-instance-method">#</a>
+        <a class="method-permalink" href="#dns_resolver%3ADNS%3A%3AResolver%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1681,12 +1701,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="journal:Bool?-instance-method">
+    <div class="entry-detail" id="journal:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>journal</strong> : Bool?
+        def <strong>journal</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#journal%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#journal%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1719,12 +1739,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="max_idle_time:Time::Span?-instance-method">
+    <div class="entry-detail" id="max_idle_time:Time::Span|Nil-instance-method">
       <div class="signature">
         
-        def <strong>max_idle_time</strong> : Time::Span?
+        def <strong>max_idle_time</strong> : Time::Span | Nil
 
-        <a class="method-permalink" href="#max_idle_time%3ATime%3A%3ASpan%3F-instance-method">#</a>
+        <a class="method-permalink" href="#max_idle_time%3ATime%3A%3ASpan%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1757,12 +1777,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="max_staleness_seconds:Int32?-instance-method">
+    <div class="entry-detail" id="max_staleness_seconds:Int32|Nil-instance-method">
       <div class="signature">
         
-        def <strong>max_staleness_seconds</strong> : Int32?
+        def <strong>max_staleness_seconds</strong> : Int32 | Nil
 
-        <a class="method-permalink" href="#max_staleness_seconds%3AInt32%3F-instance-method">#</a>
+        <a class="method-permalink" href="#max_staleness_seconds%3AInt32%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1823,12 +1843,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="raw?:HTTP::Params?-instance-method">
+    <div class="entry-detail" id="raw?:HTTP::Params|Nil-instance-method">
       <div class="signature">
         
-        def <strong>raw?</strong> : HTTP::Params?
+        def <strong>raw?</strong> : HTTP::Params | Nil
 
-        <a class="method-permalink" href="#raw%3F%3AHTTP%3A%3AParams%3F-instance-method">#</a>
+        <a class="method-permalink" href="#raw%3F%3AHTTP%3A%3AParams%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1837,12 +1857,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="read_concern_level:String?-instance-method">
+    <div class="entry-detail" id="read_concern_level:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>read_concern_level</strong> : String?
+        def <strong>read_concern_level</strong> : String | Nil
 
-        <a class="method-permalink" href="#read_concern_level%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#read_concern_level%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1856,12 +1876,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="read_preference:String?-instance-method">
+    <div class="entry-detail" id="read_preference:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>read_preference</strong> : String?
+        def <strong>read_preference</strong> : String | Nil
 
-        <a class="method-permalink" href="#read_preference%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#read_preference%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1894,12 +1914,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="replica_set:String?-instance-method">
+    <div class="entry-detail" id="replica_set:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>replica_set</strong> : String?
+        def <strong>replica_set</strong> : String | Nil
 
-        <a class="method-permalink" href="#replica_set%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#replica_set%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1913,12 +1933,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="replica_set=(replica_set:String?)-instance-method">
+    <div class="entry-detail" id="replica_set=(replica_set:String|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>replica_set=</strong>(replica_set : String?)
+        def <strong>replica_set=</strong>(replica_set : String | Nil)
 
-        <a class="method-permalink" href="#replica_set%3D%28replica_set%3AString%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#replica_set%3D%28replica_set%3AString%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1932,12 +1952,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="retry_reads:Bool?-instance-method">
+    <div class="entry-detail" id="retry_reads:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>retry_reads</strong> : Bool?
+        def <strong>retry_reads</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#retry_reads%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#retry_reads%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1951,12 +1971,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="retry_writes:Bool?-instance-method">
+    <div class="entry-detail" id="retry_writes:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>retry_writes</strong> : Bool?
+        def <strong>retry_writes</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#retry_writes%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#retry_writes%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2046,12 +2066,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="socket_timeout:Time::Span?-instance-method">
+    <div class="entry-detail" id="socket_timeout:Time::Span|Nil-instance-method">
       <div class="signature">
         
-        def <strong>socket_timeout</strong> : Time::Span?
+        def <strong>socket_timeout</strong> : Time::Span | Nil
 
-        <a class="method-permalink" href="#socket_timeout%3ATime%3A%3ASpan%3F-instance-method">#</a>
+        <a class="method-permalink" href="#socket_timeout%3ATime%3A%3ASpan%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2065,12 +2085,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="ssl:Bool?-instance-method">
+    <div class="entry-detail" id="ssl:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>ssl</strong> : Bool?
+        def <strong>ssl</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#ssl%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#ssl%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2084,12 +2104,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="ssl=(ssl:Bool?)-instance-method">
+    <div class="entry-detail" id="ssl=(ssl:Bool|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>ssl=</strong>(ssl : Bool?)
+        def <strong>ssl=</strong>(ssl : Bool | Nil)
 
-        <a class="method-permalink" href="#ssl%3D%28ssl%3ABool%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#ssl%3D%28ssl%3ABool%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2103,12 +2123,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="tls:Bool?-instance-method">
+    <div class="entry-detail" id="tls:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>tls</strong> : Bool?
+        def <strong>tls</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#tls%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#tls%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2122,12 +2142,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="tls_allow_invalid_certificates:Bool?-instance-method">
+    <div class="entry-detail" id="tls_allow_invalid_certificates:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>tls_allow_invalid_certificates</strong> : Bool?
+        def <strong>tls_allow_invalid_certificates</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#tls_allow_invalid_certificates%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#tls_allow_invalid_certificates%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2141,12 +2161,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="tls_allow_invalid_hostnames:Bool?-instance-method">
+    <div class="entry-detail" id="tls_allow_invalid_hostnames:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>tls_allow_invalid_hostnames</strong> : Bool?
+        def <strong>tls_allow_invalid_hostnames</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#tls_allow_invalid_hostnames%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#tls_allow_invalid_hostnames%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2160,12 +2180,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="tls_ca_file:String?-instance-method">
+    <div class="entry-detail" id="tls_ca_file:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>tls_ca_file</strong> : String?
+        def <strong>tls_ca_file</strong> : String | Nil
 
-        <a class="method-permalink" href="#tls_ca_file%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#tls_ca_file%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2179,12 +2199,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="tls_certificate_key_file:String?-instance-method">
+    <div class="entry-detail" id="tls_certificate_key_file:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>tls_certificate_key_file</strong> : String?
+        def <strong>tls_certificate_key_file</strong> : String | Nil
 
-        <a class="method-permalink" href="#tls_certificate_key_file%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#tls_certificate_key_file%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2198,12 +2218,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="tls_certificate_key_file_password:String?-instance-method">
+    <div class="entry-detail" id="tls_certificate_key_file_password:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>tls_certificate_key_file_password</strong> : String?
+        def <strong>tls_certificate_key_file_password</strong> : String | Nil
 
-        <a class="method-permalink" href="#tls_certificate_key_file_password%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#tls_certificate_key_file_password%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2217,12 +2237,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="tls_disable_certificate_revocation_check:Bool?-instance-method">
+    <div class="entry-detail" id="tls_disable_certificate_revocation_check:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>tls_disable_certificate_revocation_check</strong> : Bool?
+        def <strong>tls_disable_certificate_revocation_check</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#tls_disable_certificate_revocation_check%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#tls_disable_certificate_revocation_check%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2236,12 +2256,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="tls_disable_ocsp_endpoint_check:Bool?-instance-method">
+    <div class="entry-detail" id="tls_disable_ocsp_endpoint_check:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>tls_disable_ocsp_endpoint_check</strong> : Bool?
+        def <strong>tls_disable_ocsp_endpoint_check</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#tls_disable_ocsp_endpoint_check%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#tls_disable_ocsp_endpoint_check%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2255,12 +2275,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="tls_insecure:Bool?-instance-method">
+    <div class="entry-detail" id="tls_insecure:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>tls_insecure</strong> : Bool?
+        def <strong>tls_insecure</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#tls_insecure%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#tls_insecure%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2307,12 +2327,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="w_timeout:Time::Span?-instance-method">
+    <div class="entry-detail" id="w_timeout:Time::Span|Nil-instance-method">
       <div class="signature">
         
-        def <strong>w_timeout</strong> : Time::Span?
+        def <strong>w_timeout</strong> : Time::Span | Nil
 
-        <a class="method-permalink" href="#w_timeout%3ATime%3A%3ASpan%3F-instance-method">#</a>
+        <a class="method-permalink" href="#w_timeout%3ATime%3A%3ASpan%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2326,12 +2346,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="wait_queue_timeout:Time::Span?-instance-method">
+    <div class="entry-detail" id="wait_queue_timeout:Time::Span|Nil-instance-method">
       <div class="signature">
         
-        def <strong>wait_queue_timeout</strong> : Time::Span?
+        def <strong>wait_queue_timeout</strong> : Time::Span | Nil
 
-        <a class="method-permalink" href="#wait_queue_timeout%3ATime%3A%3ASpan%3F-instance-method">#</a>
+        <a class="method-permalink" href="#wait_queue_timeout%3ATime%3A%3ASpan%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2345,12 +2365,12 @@ Non-standard.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="zlib_compression_level:Int32?-instance-method">
+    <div class="entry-detail" id="zlib_compression_level:Int32|Nil-instance-method">
       <div class="signature">
         
-        def <strong>zlib_compression_level</strong> : Int32?
+        def <strong>zlib_compression_level</strong> : Int32 | Nil
 
-        <a class="method-permalink" href="#zlib_compression_level%3AInt32%3F-instance-method">#</a>
+        <a class="method-permalink" href="#zlib_compression_level%3AInt32%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2364,8 +2384,6 @@ Non-standard.</p>
       </div>
     </div>
   
-
-
 
 
 </div>
