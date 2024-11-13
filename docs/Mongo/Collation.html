@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.10.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -22,9 +23,14 @@
 
 <svg class="hidden">
   <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
   </symbol>
 </svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -955,7 +961,7 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">struct</span> Mongo::Collation
+  <span class="kind">struct</span> Mongo::<wbr>Collation
 
 </h1>
 
@@ -1041,7 +1047,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28locale%3AString%2Ccase_level%3ABool%3F%3Dnil%2Ccase_first%3AString%3F%3Dnil%2Cstrength%3AInt32%3F%3Dnil%2Cnumeric_ordering%3Dnil%2Calternate%3Dnil%2Cmax_variable%3Dnil%2Cbackwards%3Dnil%2Cnormalization%3Dnil%29-class-method" class="signature"><strong>.new</strong>(locale : String, case_level : Bool? = <span class="n">nil</span>, case_first : String? = <span class="n">nil</span>, strength : Int32? = <span class="n">nil</span>, numeric_ordering = <span class="n">nil</span>, alternate = <span class="n">nil</span>, max_variable = <span class="n">nil</span>, backwards = <span class="n">nil</span>, normalization = <span class="n">nil</span>)</a>
+        <a href="#new%28locale%3AString%2Ccase_level%3ABool%7CNil%3Dnil%2Ccase_first%3ANil%7CString%3Dnil%2Cstrength%3AInt32%7CNil%3Dnil%2Cnumeric_ordering%3Dnil%2Calternate%3Dnil%2Cmax_variable%3Dnil%2Cbackwards%3Dnil%2Cnormalization%3Dnil%29-class-method" class="signature"><strong>.new</strong>(locale : String, case_level : Bool | Nil = <span class="n">nil</span>, case_first : Nil | String = <span class="n">nil</span>, strength : Int32 | Nil = <span class="n">nil</span>, numeric_ordering = <span class="n">nil</span>, alternate = <span class="n">nil</span>, max_variable = <span class="n">nil</span>, backwards = <span class="n">nil</span>, normalization = <span class="n">nil</span>)</a>
         
           <div class="summary"><p>Create a new <code><a href="../Mongo/Collation.html">Collation</a></code> instance.</p></div>
         
@@ -1072,6 +1078,8 @@
 
 
 
+
+
   <h2>
     <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
   <svg class="octicon-link" aria-hidden="true">
@@ -1083,56 +1091,56 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#alternate%3AString%3F-instance-method" class="signature"><strong>#alternate</strong> : String?</a>
+        <a href="#alternate%3AString%7CNil-instance-method" class="signature"><strong>#alternate</strong> : String | Nil</a>
         
           <div class="summary"><p>Field that determines whether collation should consider whitespace and punctuation as base characters for purposes of comparison.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#alternate%3D%28alternate%3AString%3F%29-instance-method" class="signature"><strong>#alternate=</strong>(alternate : String?)</a>
+        <a href="#alternate%3D%28alternate%3AString%7CNil%29-instance-method" class="signature"><strong>#alternate=</strong>(alternate : String | Nil)</a>
         
           <div class="summary"><p>Field that determines whether collation should consider whitespace and punctuation as base characters for purposes of comparison.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#backwards%3ABool%3F-instance-method" class="signature"><strong>#backwards</strong> : Bool?</a>
+        <a href="#backwards%3ABool%7CNil-instance-method" class="signature"><strong>#backwards</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Flag that determines whether strings with diacritics sort from back of the string, such as with some French dictionary ordering.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#backwards%3D%28backwards%3ABool%3F%29-instance-method" class="signature"><strong>#backwards=</strong>(backwards : Bool?)</a>
+        <a href="#backwards%3D%28backwards%3ABool%7CNil%29-instance-method" class="signature"><strong>#backwards=</strong>(backwards : Bool | Nil)</a>
         
           <div class="summary"><p>Flag that determines whether strings with diacritics sort from back of the string, such as with some French dictionary ordering.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#case_first%3AString%3F-instance-method" class="signature"><strong>#case_first</strong> : String?</a>
+        <a href="#case_first%3AString%7CNil-instance-method" class="signature"><strong>#case_first</strong> : String | Nil</a>
         
           <div class="summary"><p>A field that determines sort order of case differences during tertiary level comparisons.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#case_first%3D%28case_first%3AString%3F%29-instance-method" class="signature"><strong>#case_first=</strong>(case_first : String?)</a>
+        <a href="#case_first%3D%28case_first%3AString%7CNil%29-instance-method" class="signature"><strong>#case_first=</strong>(case_first : String | Nil)</a>
         
           <div class="summary"><p>A field that determines sort order of case differences during tertiary level comparisons.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#case_level%3ABool%3F-instance-method" class="signature"><strong>#case_level</strong> : Bool?</a>
+        <a href="#case_level%3ABool%7CNil-instance-method" class="signature"><strong>#case_level</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Flag that determines whether to include case comparison at strength level 1 or 2.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#case_level%3D%28case_level%3ABool%3F%29-instance-method" class="signature"><strong>#case_level=</strong>(case_level : Bool?)</a>
+        <a href="#case_level%3D%28case_level%3ABool%7CNil%29-instance-method" class="signature"><strong>#case_level=</strong>(case_level : Bool | Nil)</a>
         
           <div class="summary"><p>Flag that determines whether to include case comparison at strength level 1 or 2.</p></div>
         
@@ -1153,56 +1161,56 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#max_variable%3AString%3F-instance-method" class="signature"><strong>#max_variable</strong> : String?</a>
+        <a href="#max_variable%3AString%7CNil-instance-method" class="signature"><strong>#max_variable</strong> : String | Nil</a>
         
           <div class="summary"><p>Field that determines up to which characters are considered ignorable when <code>alternate: &quot;shifted&quot;</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#max_variable%3D%28max_variable%3AString%3F%29-instance-method" class="signature"><strong>#max_variable=</strong>(max_variable : String?)</a>
+        <a href="#max_variable%3D%28max_variable%3AString%7CNil%29-instance-method" class="signature"><strong>#max_variable=</strong>(max_variable : String | Nil)</a>
         
           <div class="summary"><p>Field that determines up to which characters are considered ignorable when <code>alternate: &quot;shifted&quot;</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#normalization%3ABool%3F-instance-method" class="signature"><strong>#normalization</strong> : Bool?</a>
+        <a href="#normalization%3ABool%7CNil-instance-method" class="signature"><strong>#normalization</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Flag that determines whether to check if text require normalization and to perform normalization.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#normalization%3D%28normalization%3ABool%3F%29-instance-method" class="signature"><strong>#normalization=</strong>(normalization : Bool?)</a>
+        <a href="#normalization%3D%28normalization%3ABool%7CNil%29-instance-method" class="signature"><strong>#normalization=</strong>(normalization : Bool | Nil)</a>
         
           <div class="summary"><p>Flag that determines whether to check if text require normalization and to perform normalization.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#numeric_ordering%3ABool%3F-instance-method" class="signature"><strong>#numeric_ordering</strong> : Bool?</a>
+        <a href="#numeric_ordering%3ABool%7CNil-instance-method" class="signature"><strong>#numeric_ordering</strong> : Bool | Nil</a>
         
           <div class="summary"><p>Flag that determines whether to compare numeric strings as numbers or as strings.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#numeric_ordering%3D%28numeric_ordering%3ABool%3F%29-instance-method" class="signature"><strong>#numeric_ordering=</strong>(numeric_ordering : Bool?)</a>
+        <a href="#numeric_ordering%3D%28numeric_ordering%3ABool%7CNil%29-instance-method" class="signature"><strong>#numeric_ordering=</strong>(numeric_ordering : Bool | Nil)</a>
         
           <div class="summary"><p>Flag that determines whether to compare numeric strings as numbers or as strings.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#strength%3AInt32%3F-instance-method" class="signature"><strong>#strength</strong> : Int32?</a>
+        <a href="#strength%3AInt32%7CNil-instance-method" class="signature"><strong>#strength</strong> : Int32 | Nil</a>
         
           <div class="summary"><p>The level of comparison to perform.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#strength%3D%28strength%3AInt32%3F%29-instance-method" class="signature"><strong>#strength=</strong>(strength : Int32?)</a>
+        <a href="#strength%3D%28strength%3AInt32%7CNil%29-instance-method" class="signature"><strong>#strength=</strong>(strength : Int32 | Nil)</a>
         
           <div class="summary"><p>The level of comparison to perform.</p></div>
         
@@ -1219,8 +1227,6 @@
 
 
 
-
-
 <div class="methods-inherited">
   
     
@@ -1232,13 +1238,6 @@
     
 
 
-  
-    
-
-
-    
-
-
     
 
 
@@ -1252,7 +1251,26 @@
     
 
 
+    
+
+
   
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
     
 
 
@@ -1302,12 +1320,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="new(locale:String,case_level:Bool?=nil,case_first:String?=nil,strength:Int32?=nil,numeric_ordering=nil,alternate=nil,max_variable=nil,backwards=nil,normalization=nil)-class-method">
+    <div class="entry-detail" id="new(locale:String,case_level:Bool|Nil=nil,case_first:Nil|String=nil,strength:Int32|Nil=nil,numeric_ordering=nil,alternate=nil,max_variable=nil,backwards=nil,normalization=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(locale : String, case_level : Bool? = <span class="n">nil</span>, case_first : String? = <span class="n">nil</span>, strength : Int32? = <span class="n">nil</span>, numeric_ordering = <span class="n">nil</span>, alternate = <span class="n">nil</span>, max_variable = <span class="n">nil</span>, backwards = <span class="n">nil</span>, normalization = <span class="n">nil</span>)
+        def self.<strong>new</strong>(locale : String, case_level : Bool | Nil = <span class="n">nil</span>, case_first : Nil | String = <span class="n">nil</span>, strength : Int32 | Nil = <span class="n">nil</span>, numeric_ordering = <span class="n">nil</span>, alternate = <span class="n">nil</span>, max_variable = <span class="n">nil</span>, backwards = <span class="n">nil</span>, normalization = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28locale%3AString%2Ccase_level%3ABool%3F%3Dnil%2Ccase_first%3AString%3F%3Dnil%2Cstrength%3AInt32%3F%3Dnil%2Cnumeric_ordering%3Dnil%2Calternate%3Dnil%2Cmax_variable%3Dnil%2Cbackwards%3Dnil%2Cnormalization%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28locale%3AString%2Ccase_level%3ABool%7CNil%3Dnil%2Ccase_first%3ANil%7CString%3Dnil%2Cstrength%3AInt32%7CNil%3Dnil%2Cnumeric_ordering%3Dnil%2Calternate%3Dnil%2Cmax_variable%3Dnil%2Cbackwards%3Dnil%2Cnormalization%3Dnil%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1356,6 +1374,8 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
 
 
 
+
+
   <h2>
     <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
   <svg class="octicon-link" aria-hidden="true">
@@ -1365,12 +1385,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="alternate:String?-instance-method">
+    <div class="entry-detail" id="alternate:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>alternate</strong> : String?
+        def <strong>alternate</strong> : String | Nil
 
-        <a class="method-permalink" href="#alternate%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#alternate%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1384,12 +1404,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="alternate=(alternate:String?)-instance-method">
+    <div class="entry-detail" id="alternate=(alternate:String|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>alternate=</strong>(alternate : String?)
+        def <strong>alternate=</strong>(alternate : String | Nil)
 
-        <a class="method-permalink" href="#alternate%3D%28alternate%3AString%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#alternate%3D%28alternate%3AString%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1403,12 +1423,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="backwards:Bool?-instance-method">
+    <div class="entry-detail" id="backwards:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>backwards</strong> : Bool?
+        def <strong>backwards</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#backwards%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#backwards%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1422,12 +1442,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="backwards=(backwards:Bool?)-instance-method">
+    <div class="entry-detail" id="backwards=(backwards:Bool|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>backwards=</strong>(backwards : Bool?)
+        def <strong>backwards=</strong>(backwards : Bool | Nil)
 
-        <a class="method-permalink" href="#backwards%3D%28backwards%3ABool%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#backwards%3D%28backwards%3ABool%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1441,12 +1461,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="case_first:String?-instance-method">
+    <div class="entry-detail" id="case_first:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>case_first</strong> : String?
+        def <strong>case_first</strong> : String | Nil
 
-        <a class="method-permalink" href="#case_first%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#case_first%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1460,12 +1480,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="case_first=(case_first:String?)-instance-method">
+    <div class="entry-detail" id="case_first=(case_first:String|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>case_first=</strong>(case_first : String?)
+        def <strong>case_first=</strong>(case_first : String | Nil)
 
-        <a class="method-permalink" href="#case_first%3D%28case_first%3AString%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#case_first%3D%28case_first%3AString%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1479,12 +1499,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="case_level:Bool?-instance-method">
+    <div class="entry-detail" id="case_level:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>case_level</strong> : Bool?
+        def <strong>case_level</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#case_level%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#case_level%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1498,12 +1518,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="case_level=(case_level:Bool?)-instance-method">
+    <div class="entry-detail" id="case_level=(case_level:Bool|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>case_level=</strong>(case_level : Bool?)
+        def <strong>case_level=</strong>(case_level : Bool | Nil)
 
-        <a class="method-permalink" href="#case_level%3D%28case_level%3ABool%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#case_level%3D%28case_level%3ABool%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1555,12 +1575,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="max_variable:String?-instance-method">
+    <div class="entry-detail" id="max_variable:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>max_variable</strong> : String?
+        def <strong>max_variable</strong> : String | Nil
 
-        <a class="method-permalink" href="#max_variable%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#max_variable%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1574,12 +1594,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="max_variable=(max_variable:String?)-instance-method">
+    <div class="entry-detail" id="max_variable=(max_variable:String|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>max_variable=</strong>(max_variable : String?)
+        def <strong>max_variable=</strong>(max_variable : String | Nil)
 
-        <a class="method-permalink" href="#max_variable%3D%28max_variable%3AString%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#max_variable%3D%28max_variable%3AString%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1593,12 +1613,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="normalization:Bool?-instance-method">
+    <div class="entry-detail" id="normalization:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>normalization</strong> : Bool?
+        def <strong>normalization</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#normalization%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#normalization%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1613,12 +1633,12 @@ Generally, majority of text does not require this normalization processing.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="normalization=(normalization:Bool?)-instance-method">
+    <div class="entry-detail" id="normalization=(normalization:Bool|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>normalization=</strong>(normalization : Bool?)
+        def <strong>normalization=</strong>(normalization : Bool | Nil)
 
-        <a class="method-permalink" href="#normalization%3D%28normalization%3ABool%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#normalization%3D%28normalization%3ABool%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1633,12 +1653,12 @@ Generally, majority of text does not require this normalization processing.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="numeric_ordering:Bool?-instance-method">
+    <div class="entry-detail" id="numeric_ordering:Bool|Nil-instance-method">
       <div class="signature">
         
-        def <strong>numeric_ordering</strong> : Bool?
+        def <strong>numeric_ordering</strong> : Bool | Nil
 
-        <a class="method-permalink" href="#numeric_ordering%3ABool%3F-instance-method">#</a>
+        <a class="method-permalink" href="#numeric_ordering%3ABool%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1652,12 +1672,12 @@ Generally, majority of text does not require this normalization processing.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="numeric_ordering=(numeric_ordering:Bool?)-instance-method">
+    <div class="entry-detail" id="numeric_ordering=(numeric_ordering:Bool|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>numeric_ordering=</strong>(numeric_ordering : Bool?)
+        def <strong>numeric_ordering=</strong>(numeric_ordering : Bool | Nil)
 
-        <a class="method-permalink" href="#numeric_ordering%3D%28numeric_ordering%3ABool%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#numeric_ordering%3D%28numeric_ordering%3ABool%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1671,12 +1691,12 @@ Generally, majority of text does not require this normalization processing.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="strength:Int32?-instance-method">
+    <div class="entry-detail" id="strength:Int32|Nil-instance-method">
       <div class="signature">
         
-        def <strong>strength</strong> : Int32?
+        def <strong>strength</strong> : Int32 | Nil
 
-        <a class="method-permalink" href="#strength%3AInt32%3F-instance-method">#</a>
+        <a class="method-permalink" href="#strength%3AInt32%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1690,12 +1710,12 @@ Generally, majority of text does not require this normalization processing.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="strength=(strength:Int32?)-instance-method">
+    <div class="entry-detail" id="strength=(strength:Int32|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>strength=</strong>(strength : Int32?)
+        def <strong>strength=</strong>(strength : Int32 | Nil)
 
-        <a class="method-permalink" href="#strength%3D%28strength%3AInt32%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#strength%3D%28strength%3AInt32%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1730,8 +1750,6 @@ bson <span class="o">=</span> user.to_bson</code></pre>
       </div>
     </div>
   
-
-
 
 
 </div>

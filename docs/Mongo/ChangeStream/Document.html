@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.10.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -22,9 +23,14 @@
 
 <svg class="hidden">
   <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
   </symbol>
 </svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -955,7 +961,7 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">struct</span> Mongo::ChangeStream::Document(T)
+  <span class="kind">struct</span> Mongo::<wbr>ChangeStream::<wbr>Document(T)
 
 </h1>
 
@@ -1053,6 +1059,8 @@
 
 
 
+
+
   <h2>
     <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
   <svg class="octicon-link" aria-hidden="true">
@@ -1071,14 +1079,14 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#document_key%3ABSON%3F-instance-method" class="signature"><strong>#document_key</strong> : BSON?</a>
+        <a href="#document_key%3ABSON%7CNil-instance-method" class="signature"><strong>#document_key</strong> : BSON | Nil</a>
         
           <div class="summary"><p>Only present for ops of type ‘insert’, ‘update’, ‘replace’, and ‘delete’.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#full_document%3AT%3F-instance-method" class="signature"><strong>#full_document</strong> : T?</a>
+        <a href="#full_document%3AT%7CNil-instance-method" class="signature"><strong>#full_document</strong> : T | Nil</a>
         
           <div class="summary"><p>Always present for operations of type ‘insert’ and ‘replace’.</p></div>
         
@@ -1106,15 +1114,13 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#update_description%3AUpdateDescription%3F-instance-method" class="signature"><strong>#update_description</strong> : UpdateDescription?</a>
+        <a href="#update_description%3AUpdateDescription%7CNil-instance-method" class="signature"><strong>#update_description</strong> : UpdateDescription | Nil</a>
         
           <div class="summary"><p>Only present for ops of type ‘update’.</p></div>
         
       </li>
     
   </ul>
-
-
 
 
 
@@ -1129,13 +1135,6 @@
     
 
 
-  
-    
-
-
-    
-
-
     
 
 
@@ -1149,7 +1148,26 @@
     
 
 
+    
+
+
   
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
     
 
 
@@ -1233,6 +1251,8 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
 
 
 
+
+
   <h2>
     <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
   <svg class="octicon-link" aria-hidden="true">
@@ -1262,12 +1282,12 @@ change stream.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="document_key:BSON?-instance-method">
+    <div class="entry-detail" id="document_key:BSON|Nil-instance-method">
       <div class="signature">
         
-        def <strong>document_key</strong> : BSON?
+        def <strong>document_key</strong> : BSON | Nil
 
-        <a class="method-permalink" href="#document_key%3ABSON%3F-instance-method">#</a>
+        <a class="method-permalink" href="#document_key%3ABSON%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1286,12 +1306,12 @@ followed by the _id if the _id isn’t part of the shard key.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="full_document:T?-instance-method">
+    <div class="entry-detail" id="full_document:T|Nil-instance-method">
       <div class="signature">
         
-        def <strong>full_document</strong> : T?
+        def <strong>full_document</strong> : T | Nil
 
-        <a class="method-permalink" href="#full_document%3AT%3F-instance-method">#</a>
+        <a class="method-permalink" href="#full_document%3AT%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1374,12 +1394,12 @@ bson <span class="o">=</span> user.to_bson</code></pre>
       </div>
     </div>
   
-    <div class="entry-detail" id="update_description:UpdateDescription?-instance-method">
+    <div class="entry-detail" id="update_description:UpdateDescription|Nil-instance-method">
       <div class="signature">
         
-        def <strong>update_description</strong> : <a href="../../Mongo/ChangeStream/Document/UpdateDescription.html">UpdateDescription</a>?
+        def <strong>update_description</strong> : <a href="../../Mongo/ChangeStream/Document/UpdateDescription.html">UpdateDescription</a> | Nil
 
-        <a class="method-permalink" href="#update_description%3AUpdateDescription%3F-instance-method">#</a>
+        <a class="method-permalink" href="#update_description%3AUpdateDescription%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1395,8 +1415,6 @@ operation.</p>
       </div>
     </div>
   
-
-
 
 
 </div>

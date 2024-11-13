@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.10.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -22,9 +23,14 @@
 
 <svg class="hidden">
   <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
   </symbol>
 </svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -955,7 +961,7 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Mongo::Collection
+  <span class="kind">class</span> Mongo::<wbr>Collection
 
 </h1>
 
@@ -1031,6 +1037,8 @@
 
 
 
+
+
   <h2>
     <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
   <svg class="octicon-link" aria-hidden="true">
@@ -1042,56 +1050,56 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#aggregate%28pipeline%3AArray%2C%2A%2Callow_disk_use%3ABool%3F%3Dnil%2Cbatch_size%3AInt32%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Ccomment%3AString%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AMongo%3A%3ACursor%3FforallH-instance-method" class="signature"><strong>#aggregate</strong>(pipeline : Array, *, allow_disk_use : Bool? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, comment : String? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Mongo::Cursor? forall H</a>
+        <a href="#aggregate%28pipeline%3AArray%2C%2A%2Callow_disk_use%3ABool%7CNil%3Dnil%2Cbatch_size%3AInt32%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Ccomment%3AString%7CNil%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AMongo%3A%3ACursor%7CNilforallH-instance-method" class="signature"><strong>#aggregate</strong>(pipeline : Array, *, allow_disk_use : Bool | Nil = <span class="n">nil</span>, batch_size : Int32 | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, collation : Collation | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, comment : String | Nil = <span class="n">nil</span>, read_concern : ReadConcern | Nil = <span class="n">nil</span>, write_concern : WriteConcern | Nil = <span class="n">nil</span>, read_preference : ReadPreference | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Mongo::Cursor | Nil forall H</a>
         
           <div class="summary"><p>Runs an aggregation framework pipeline.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bulk%28ordered%3ABool%3Dtrue%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29-instance-method" class="signature"><strong>#bulk</strong>(ordered : Bool = <span class="n">true</span>, session : Session::ClientSession? = <span class="n">nil</span>)</a>
+        <a href="#bulk%28ordered%3ABool%3Dtrue%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29-instance-method" class="signature"><strong>#bulk</strong>(ordered : Bool = <span class="n">true</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>)</a>
         
           <div class="summary"><p>Create a <code><a href="../Mongo/Bulk.html">Mongo::Bulk</a></code> instance.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bulk_write%28requests%3AArray%28Bulk%3A%3AWriteModel%29%2C%2A%2Cordered%3ABool%2Cbypass_document_validation%3ABool%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ABulk%3A%3AWriteResult-instance-method" class="signature"><strong>#bulk_write</strong>(requests : Array(Bulk::WriteModel), *, ordered : Bool, bypass_document_validation : Bool? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Bulk::WriteResult</a>
+        <a href="#bulk_write%28requests%3AArray%28Bulk%3A%3AWriteModel%29%2C%2A%2Cordered%3ABool%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ABulk%3A%3AWriteResult-instance-method" class="signature"><strong>#bulk_write</strong>(requests : Array(Bulk::WriteModel), *, ordered : Bool, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Bulk::WriteResult</a>
         
           <div class="summary"><p>Executes multiple write operations.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#command%28operation%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%2C%2A%2Aargs%2C%26%29-instance-method" class="signature"><strong>#command</strong>(operation, write_concern : WriteConcern? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>, **args, &)</a>
+        <a href="#command%28operation%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%2C%2A%2Aargs%2C%26%29-instance-method" class="signature"><strong>#command</strong>(operation, write_concern : WriteConcern | Nil = <span class="n">nil</span>, read_concern : ReadConcern | Nil = <span class="n">nil</span>, read_preference : ReadPreference | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>, **args, &)</a>
         
           <div class="summary"><p>Execute a command on the server targeting the collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#command%28operation%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%2C%2A%2Aargs%29-instance-method" class="signature"><strong>#command</strong>(operation, write_concern : WriteConcern? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>, **args)</a>
+        <a href="#command%28operation%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%2C%2A%2Aargs%29-instance-method" class="signature"><strong>#command</strong>(operation, write_concern : WriteConcern | Nil = <span class="n">nil</span>, read_concern : ReadConcern | Nil = <span class="n">nil</span>, read_preference : ReadPreference | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>, **args)</a>
         
           <div class="summary"><p>Execute a command on the server targeting the collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#count_documents%28filter%3DBSON.new%2C%2A%2Cskip%3AInt32%3F%3Dnil%2Climit%3AInt32%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AInt32forallH-instance-method" class="signature"><strong>#count_documents</strong>(filter = <span class="t">BSON</span>.new, *, skip : Int32? = <span class="n">nil</span>, limit : Int32? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Int32 forall H</a>
+        <a href="#count_documents%28filter%3DBSON.new%2C%2A%2Cskip%3AInt32%7CNil%3Dnil%2Climit%3AInt32%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AInt32forallH-instance-method" class="signature"><strong>#count_documents</strong>(filter = <span class="t">BSON</span>.new, *, skip : Int32 | Nil = <span class="n">nil</span>, limit : Int32 | Nil = <span class="n">nil</span>, collation : Collation | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, read_preference : ReadPreference | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Int32 forall H</a>
         
           <div class="summary"><p>Count the number of documents in a collection that match the given filter.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#create_index%28keys%2C%2A%2Coptions%3DNamedTuple.new%2Ccommit_quorum%3AInt32%7CString%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACreateIndexes%3A%3AResult%3F-instance-method" class="signature"><strong>#create_index</strong>(keys, *, options = <span class="t">NamedTuple</span>.new, commit_quorum : Int32 | String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Commands::CreateIndexes::Result?</a>
+        <a href="#create_index%28keys%2C%2A%2Coptions%3DNamedTuple.new%2Ccommit_quorum%3AInt32%7CString%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACreateIndexes%3A%3AResult%7CNil-instance-method" class="signature"><strong>#create_index</strong>(keys, *, options = <span class="t">NamedTuple</span>.new, commit_quorum : Int32 | String | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, write_concern : WriteConcern | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Commands::CreateIndexes::Result | Nil</a>
         
           <div class="summary"><p>This is a convenience method for creating a single index.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#create_indexes%28models%3AArray%2C%2A%2Ccommit_quorum%3AInt32%7CString%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACreateIndexes%3A%3AResult%3F-instance-method" class="signature"><strong>#create_indexes</strong>(models : Array, *, commit_quorum : Int32 | String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Commands::CreateIndexes::Result?</a>
+        <a href="#create_indexes%28models%3AArray%2C%2A%2Ccommit_quorum%3AInt32%7CString%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACreateIndexes%3A%3AResult%7CNil-instance-method" class="signature"><strong>#create_indexes</strong>(models : Array, *, commit_quorum : Int32 | String | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, write_concern : WriteConcern | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Commands::CreateIndexes::Result | Nil</a>
         
           <div class="summary"><p>Creates multiple indexes in the collection.</p></div>
         
@@ -1105,98 +1113,98 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#delete_many%28filter%2C%2A%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cordered%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3ADeleteResult%3FforallH-instance-method" class="signature"><strong>#delete_many</strong>(filter, *, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Commands::Common::DeleteResult? forall H</a>
+        <a href="#delete_many%28filter%2C%2A%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cordered%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3ADeleteResult%7CNilforallH-instance-method" class="signature"><strong>#delete_many</strong>(filter, *, collation : Collation | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, ordered : Bool | Nil = <span class="n">nil</span>, write_concern : WriteConcern | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Commands::Common::DeleteResult | Nil forall H</a>
         
           <div class="summary"><p>Deletes multiple documents.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#delete_one%28filter%2C%2A%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cordered%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3ADeleteResult%3FforallH-instance-method" class="signature"><strong>#delete_one</strong>(filter, *, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Commands::Common::DeleteResult? forall H</a>
+        <a href="#delete_one%28filter%2C%2A%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cordered%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3ADeleteResult%7CNilforallH-instance-method" class="signature"><strong>#delete_one</strong>(filter, *, collation : Collation | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, ordered : Bool | Nil = <span class="n">nil</span>, write_concern : WriteConcern | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Commands::Common::DeleteResult | Nil forall H</a>
         
           <div class="summary"><p>Deletes one document.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#distinct%28key%3AString%2C%2A%2Cfilter%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AArray-instance-method" class="signature"><strong>#distinct</strong>(key : String, *, filter = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Array</a>
+        <a href="#distinct%28key%3AString%2C%2A%2Cfilter%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AArray-instance-method" class="signature"><strong>#distinct</strong>(key : String, *, filter = <span class="n">nil</span>, read_concern : ReadConcern | Nil = <span class="n">nil</span>, collation : Collation | Nil = <span class="n">nil</span>, read_preference : ReadPreference | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Array</a>
         
           <div class="summary"><p>Finds the distinct values for a specified field across a single collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#drop_index%28name%3AString%2C%2A%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3ABaseResult%3F-instance-method" class="signature"><strong>#drop_index</strong>(name : String, *, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Commands::Common::BaseResult?</a>
+        <a href="#drop_index%28name%3AString%2C%2A%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3ABaseResult%7CNil-instance-method" class="signature"><strong>#drop_index</strong>(name : String, *, max_time_ms : Int64 | Nil = <span class="n">nil</span>, write_concern : WriteConcern | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Commands::Common::BaseResult | Nil</a>
         
           <div class="summary"><p>Drops a single index from the collection by the index name.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#drop_indexes%28%2A%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3ABaseResult%3F-instance-method" class="signature"><strong>#drop_indexes</strong>(*, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Commands::Common::BaseResult?</a>
+        <a href="#drop_indexes%28%2A%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3ABaseResult%7CNil-instance-method" class="signature"><strong>#drop_indexes</strong>(*, max_time_ms : Int64 | Nil = <span class="n">nil</span>, write_concern : WriteConcern | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Commands::Common::BaseResult | Nil</a>
         
           <div class="summary"><p>Drops all indexes in the collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#estimated_document_count%28%2A%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AInt32-instance-method" class="signature"><strong>#estimated_document_count</strong>(*, max_time_ms : Int64? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Int32</a>
+        <a href="#estimated_document_count%28%2A%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AInt32-instance-method" class="signature"><strong>#estimated_document_count</strong>(*, max_time_ms : Int64 | Nil = <span class="n">nil</span>, read_preference : ReadPreference | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Int32</a>
         
           <div class="summary"><p>Gets an estimate of the count of documents in a collection using collection metadata.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#find%28filter%3DBSON.new%2C%2A%2Csort%3Dnil%2Cprojection%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cskip%3AInt32%3F%3Dnil%2Climit%3AInt32%3F%3Dnil%2Cbatch_size%3AInt32%3F%3Dnil%2Csingle_batch%3ABool%3F%3Dnil%2Ccomment%3AString%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cmax%3Dnil%2Cmin%3Dnil%2Creturn_key%3ABool%3F%3Dnil%2Cshow_record_id%3ABool%3F%3Dnil%2Ctailable%3ABool%3F%3Dnil%2Coplog_replay%3ABool%3F%3Dnil%2Cno_cursor_timeout%3ABool%3F%3Dnil%2Cawait_data%3ABool%3F%3Dnil%2Callow_partial_results%3ABool%3F%3Dnil%2Callow_disk_use%3ABool%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AMongo%3A%3ACursorforallH-instance-method" class="signature"><strong>#find</strong>(filter = <span class="t">BSON</span>.new, *, sort = <span class="n">nil</span>, projection = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, skip : Int32? = <span class="n">nil</span>, limit : Int32? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, single_batch : Bool? = <span class="n">nil</span>, comment : String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, max = <span class="n">nil</span>, min = <span class="n">nil</span>, return_key : Bool? = <span class="n">nil</span>, show_record_id : Bool? = <span class="n">nil</span>, tailable : Bool? = <span class="n">nil</span>, oplog_replay : Bool? = <span class="n">nil</span>, no_cursor_timeout : Bool? = <span class="n">nil</span>, await_data : Bool? = <span class="n">nil</span>, allow_partial_results : Bool? = <span class="n">nil</span>, allow_disk_use : Bool? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Mongo::Cursor forall H</a>
+        <a href="#find%28filter%3DBSON.new%2C%2A%2Csort%3Dnil%2Cprojection%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cskip%3AInt32%7CNil%3Dnil%2Climit%3AInt32%7CNil%3Dnil%2Cbatch_size%3AInt32%7CNil%3Dnil%2Csingle_batch%3ABool%7CNil%3Dnil%2Ccomment%3AString%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Cmax%3Dnil%2Cmin%3Dnil%2Creturn_key%3ABool%7CNil%3Dnil%2Cshow_record_id%3ABool%7CNil%3Dnil%2Ctailable%3ABool%7CNil%3Dnil%2Coplog_replay%3ABool%7CNil%3Dnil%2Cno_cursor_timeout%3ABool%7CNil%3Dnil%2Cawait_data%3ABool%7CNil%3Dnil%2Callow_partial_results%3ABool%7CNil%3Dnil%2Callow_disk_use%3ABool%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AMongo%3A%3ACursorforallH-instance-method" class="signature"><strong>#find</strong>(filter = <span class="t">BSON</span>.new, *, sort = <span class="n">nil</span>, projection = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, skip : Int32 | Nil = <span class="n">nil</span>, limit : Int32 | Nil = <span class="n">nil</span>, batch_size : Int32 | Nil = <span class="n">nil</span>, single_batch : Bool | Nil = <span class="n">nil</span>, comment : String | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, read_concern : ReadConcern | Nil = <span class="n">nil</span>, max = <span class="n">nil</span>, min = <span class="n">nil</span>, return_key : Bool | Nil = <span class="n">nil</span>, show_record_id : Bool | Nil = <span class="n">nil</span>, tailable : Bool | Nil = <span class="n">nil</span>, oplog_replay : Bool | Nil = <span class="n">nil</span>, no_cursor_timeout : Bool | Nil = <span class="n">nil</span>, await_data : Bool | Nil = <span class="n">nil</span>, allow_partial_results : Bool | Nil = <span class="n">nil</span>, allow_disk_use : Bool | Nil = <span class="n">nil</span>, collation : Collation | Nil = <span class="n">nil</span>, read_preference : ReadPreference | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Mongo::Cursor forall H</a>
         
           <div class="summary"><p>Finds the documents matching the model.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#find_one%28filter%3DBSON.new%2C%2A%2Csort%3Dnil%2Cprojection%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cskip%3AInt32%3F%3Dnil%2Ccomment%3AString%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cmax%3Dnil%2Cmin%3Dnil%2Creturn_key%3ABool%3F%3Dnil%2Cshow_record_id%3ABool%3F%3Dnil%2Coplog_replay%3ABool%3F%3Dnil%2Cno_cursor_timeout%3ABool%3F%3Dnil%2Callow_partial_results%3ABool%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ABSON%3FforallH-instance-method" class="signature"><strong>#find_one</strong>(filter = <span class="t">BSON</span>.new, *, sort = <span class="n">nil</span>, projection = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, skip : Int32? = <span class="n">nil</span>, comment : String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, max = <span class="n">nil</span>, min = <span class="n">nil</span>, return_key : Bool? = <span class="n">nil</span>, show_record_id : Bool? = <span class="n">nil</span>, oplog_replay : Bool? = <span class="n">nil</span>, no_cursor_timeout : Bool? = <span class="n">nil</span>, allow_partial_results : Bool? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : BSON? forall H</a>
+        <a href="#find_one%28filter%3DBSON.new%2C%2A%2Csort%3Dnil%2Cprojection%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cskip%3AInt32%7CNil%3Dnil%2Ccomment%3AString%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Cmax%3Dnil%2Cmin%3Dnil%2Creturn_key%3ABool%7CNil%3Dnil%2Cshow_record_id%3ABool%7CNil%3Dnil%2Coplog_replay%3ABool%7CNil%3Dnil%2Cno_cursor_timeout%3ABool%7CNil%3Dnil%2Callow_partial_results%3ABool%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ABSON%7CNilforallH-instance-method" class="signature"><strong>#find_one</strong>(filter = <span class="t">BSON</span>.new, *, sort = <span class="n">nil</span>, projection = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, skip : Int32 | Nil = <span class="n">nil</span>, comment : String | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, read_concern : ReadConcern | Nil = <span class="n">nil</span>, max = <span class="n">nil</span>, min = <span class="n">nil</span>, return_key : Bool | Nil = <span class="n">nil</span>, show_record_id : Bool | Nil = <span class="n">nil</span>, oplog_replay : Bool | Nil = <span class="n">nil</span>, no_cursor_timeout : Bool | Nil = <span class="n">nil</span>, allow_partial_results : Bool | Nil = <span class="n">nil</span>, collation : Collation | Nil = <span class="n">nil</span>, read_preference : ReadPreference | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : BSON | Nil forall H</a>
         
           <div class="summary"><p>Finds the document matching the model.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#find_one_and_delete%28filter%2C%2A%2Csort%3Dnil%2Cfields%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ABSON%3FforallH-instance-method" class="signature"><strong>#find_one_and_delete</strong>(filter, *, sort = <span class="n">nil</span>, fields = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : BSON? forall H</a>
+        <a href="#find_one_and_delete%28filter%2C%2A%2Csort%3Dnil%2Cfields%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ABSON%7CNilforallH-instance-method" class="signature"><strong>#find_one_and_delete</strong>(filter, *, sort = <span class="n">nil</span>, fields = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, write_concern : WriteConcern | Nil = <span class="n">nil</span>, collation : Collation | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : BSON | Nil forall H</a>
         
           <div class="summary"><p>Finds a single document and deletes it, returning the original.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#find_one_and_replace%28filter%2Creplacement%2C%2A%2Csort%3Dnil%2Cnew%3ABool%3F%3Dnil%2Cfields%3Dnil%2Cupsert%3ABool%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Carray_filters%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ABSON%3FforallH-instance-method" class="signature"><strong>#find_one_and_replace</strong>(filter, replacement, *, sort = <span class="n">nil</span>, new : Bool? = <span class="n">nil</span>, fields = <span class="n">nil</span>, upsert : Bool? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, array_filters = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : BSON? forall H</a>
+        <a href="#find_one_and_replace%28filter%2Creplacement%2C%2A%2Csort%3Dnil%2Cnew%3ABool%7CNil%3Dnil%2Cfields%3Dnil%2Cupsert%3ABool%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Carray_filters%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ABSON%7CNilforallH-instance-method" class="signature"><strong>#find_one_and_replace</strong>(filter, replacement, *, sort = <span class="n">nil</span>, new : Bool | Nil = <span class="n">nil</span>, fields = <span class="n">nil</span>, upsert : Bool | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, write_concern : WriteConcern | Nil = <span class="n">nil</span>, collation : Collation | Nil = <span class="n">nil</span>, array_filters = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : BSON | Nil forall H</a>
         
           <div class="summary"><p>Finds a single document and replaces it, returning either the original or the replaced document.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#find_one_and_update%28filter%2Cupdate%2C%2A%2Csort%3Dnil%2Cnew%3ABool%3F%3Dnil%2Cfields%3Dnil%2Cupsert%3ABool%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Carray_filters%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ABSON%3FforallH-instance-method" class="signature"><strong>#find_one_and_update</strong>(filter, update, *, sort = <span class="n">nil</span>, new : Bool? = <span class="n">nil</span>, fields = <span class="n">nil</span>, upsert : Bool? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, array_filters = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : BSON? forall H</a>
+        <a href="#find_one_and_update%28filter%2Cupdate%2C%2A%2Csort%3Dnil%2Cnew%3ABool%7CNil%3Dnil%2Cfields%3Dnil%2Cupsert%3ABool%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Carray_filters%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ABSON%7CNilforallH-instance-method" class="signature"><strong>#find_one_and_update</strong>(filter, update, *, sort = <span class="n">nil</span>, new : Bool | Nil = <span class="n">nil</span>, fields = <span class="n">nil</span>, upsert : Bool | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, write_concern : WriteConcern | Nil = <span class="n">nil</span>, collation : Collation | Nil = <span class="n">nil</span>, array_filters = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : BSON | Nil forall H</a>
         
           <div class="summary"><p>Finds a single document and updates it, returning either the original or the updated document.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#insert_many%28documents%3AArray%2C%2A%2Cordered%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3AInsertResult%3F-instance-method" class="signature"><strong>#insert_many</strong>(documents : Array, *, ordered : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Commands::Common::InsertResult?</a>
+        <a href="#insert_many%28documents%3AArray%2C%2A%2Cordered%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3AInsertResult%7CNil-instance-method" class="signature"><strong>#insert_many</strong>(documents : Array, *, ordered : Bool | Nil = <span class="n">nil</span>, write_concern : WriteConcern | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Commands::Common::InsertResult | Nil</a>
         
           <div class="summary"><p>Inserts the provided document.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#insert_one%28document%2C%2A%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3AInsertResult%3F-instance-method" class="signature"><strong>#insert_one</strong>(document, *, write_concern : WriteConcern? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Commands::Common::InsertResult?</a>
+        <a href="#insert_one%28document%2C%2A%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3AInsertResult%7CNil-instance-method" class="signature"><strong>#insert_one</strong>(document, *, write_concern : WriteConcern | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Commands::Common::InsertResult | Nil</a>
         
           <div class="summary"><p>Inserts the provided document.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#list_indexes%28session%3ASession%3A%3AClientSession%3F%3Dnil%29%3AMongo%3A%3ACursor%3F-instance-method" class="signature"><strong>#list_indexes</strong>(session : Session::ClientSession? = <span class="n">nil</span>) : Mongo::Cursor?</a>
+        <a href="#list_indexes%28session%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AMongo%3A%3ACursor%7CNil-instance-method" class="signature"><strong>#list_indexes</strong>(session : Session::ClientSession | Nil = <span class="n">nil</span>) : Mongo::Cursor | Nil</a>
         
           <div class="summary"><p>Gets index information for all indexes in the collection.</p></div>
         
@@ -1210,63 +1218,63 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#read_concern%3AReadConcern%3F-instance-method" class="signature"><strong>#read_concern</strong> : ReadConcern?</a>
+        <a href="#read_concern%3AReadConcern%7CNil-instance-method" class="signature"><strong>#read_concern</strong> : ReadConcern | Nil</a>
         
           <div class="summary"><p>Read concern accessor.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read_concern%3D%28read_concern%3AReadConcern%3F%29-instance-method" class="signature"><strong>#read_concern=</strong>(read_concern : ReadConcern?)</a>
+        <a href="#read_concern%3D%28read_concern%3AReadConcern%7CNil%29-instance-method" class="signature"><strong>#read_concern=</strong>(read_concern : ReadConcern | Nil)</a>
         
           <div class="summary"><p>Read concern accessor.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read_preference%3AReadPreference%3F-instance-method" class="signature"><strong>#read_preference</strong> : ReadPreference?</a>
+        <a href="#read_preference%3AReadPreference%7CNil-instance-method" class="signature"><strong>#read_preference</strong> : ReadPreference | Nil</a>
         
           <div class="summary"><p>ReadPreference accessor.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read_preference%3D%28read_preference%3AReadPreference%3F%29-instance-method" class="signature"><strong>#read_preference=</strong>(read_preference : ReadPreference?)</a>
+        <a href="#read_preference%3D%28read_preference%3AReadPreference%7CNil%29-instance-method" class="signature"><strong>#read_preference=</strong>(read_preference : ReadPreference | Nil)</a>
         
           <div class="summary"><p>ReadPreference accessor.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#replace_one%28filter%2Creplacement%2C%2A%2Cupsert%3ABool%3Dfalse%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cordered%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3AUpdateResult%3FforallH-instance-method" class="signature"><strong>#replace_one</strong>(filter, replacement, *, upsert : Bool = <span class="n">false</span>, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Commands::Common::UpdateResult? forall H</a>
+        <a href="#replace_one%28filter%2Creplacement%2C%2A%2Cupsert%3ABool%3Dfalse%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cordered%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3AUpdateResult%7CNilforallH-instance-method" class="signature"><strong>#replace_one</strong>(filter, replacement, *, upsert : Bool = <span class="n">false</span>, collation : Collation | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, ordered : Bool | Nil = <span class="n">nil</span>, write_concern : WriteConcern | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Commands::Common::UpdateResult | Nil forall H</a>
         
           <div class="summary"><p>Replaces a single document.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#stats%28%2A%2Cscale%3AInt32%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ABSON%3F-instance-method" class="signature"><strong>#stats</strong>(*, scale : Int32? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : BSON?</a>
+        <a href="#stats%28%2A%2Cscale%3AInt32%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ABSON%7CNil-instance-method" class="signature"><strong>#stats</strong>(*, scale : Int32 | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : BSON | Nil</a>
         
           <div class="summary"><p>Returns a variety of storage statistics for the collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#update_many%28filter%2Cupdate%2C%2A%2Cupsert%3ABool%3Dfalse%2Carray_filters%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cordered%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3AUpdateResult%3FforallH-instance-method" class="signature"><strong>#update_many</strong>(filter, update, *, upsert : Bool = <span class="n">false</span>, array_filters = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Commands::Common::UpdateResult? forall H</a>
+        <a href="#update_many%28filter%2Cupdate%2C%2A%2Cupsert%3ABool%3Dfalse%2Carray_filters%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cordered%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3AUpdateResult%7CNilforallH-instance-method" class="signature"><strong>#update_many</strong>(filter, update, *, upsert : Bool = <span class="n">false</span>, array_filters = <span class="n">nil</span>, collation : Collation | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, ordered : Bool | Nil = <span class="n">nil</span>, write_concern : WriteConcern | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Commands::Common::UpdateResult | Nil forall H</a>
         
           <div class="summary"><p>Updates multiple documents.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#update_one%28filter%2Cupdate%2C%2A%2Cupsert%3ABool%3Dfalse%2Carray_filters%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cordered%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3AUpdateResult%3FforallH-instance-method" class="signature"><strong>#update_one</strong>(filter, update, *, upsert : Bool = <span class="n">false</span>, array_filters = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : WriteConcern? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Commands::Common::UpdateResult? forall H</a>
+        <a href="#update_one%28filter%2Cupdate%2C%2A%2Cupsert%3ABool%3Dfalse%2Carray_filters%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cordered%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3AUpdateResult%7CNilforallH-instance-method" class="signature"><strong>#update_one</strong>(filter, update, *, upsert : Bool = <span class="n">false</span>, array_filters = <span class="n">nil</span>, collation : Collation | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, ordered : Bool | Nil = <span class="n">nil</span>, write_concern : WriteConcern | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Commands::Common::UpdateResult | Nil forall H</a>
         
           <div class="summary"><p>Updates one document.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#watch%28pipeline%3AArray%3D%5B%5DofBSON%2C%2A%2Cfull_document%3AString%3F%3Dnil%2Cstart_at_operation_time%3ATime%3F%3Dnil%2Cresume_after%3ABSON%3F%3Dnil%2Cstart_after%3ABSON%3F%3Dnil%2Cmax_await_time_ms%3AInt64%3F%3Dnil%2Cbatch_size%3AInt32%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AMongo%3A%3AChangeStream%3A%3ACursor-instance-method" class="signature"><strong>#watch</strong>(pipeline : Array = <span class="o">[]</span> <span class="k">of</span> <span class="t">BSON</span>, *, full_document : String? = <span class="n">nil</span>, start_at_operation_time : Time? = <span class="n">nil</span>, resume_after : BSON? = <span class="n">nil</span>, start_after : BSON? = <span class="n">nil</span>, max_await_time_ms : Int64? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, collation : Collation? = <span class="n">nil</span>, read_concern : ReadConcern? = <span class="n">nil</span>, read_preference : ReadPreference? = <span class="n">nil</span>, session : Session::ClientSession? = <span class="n">nil</span>) : Mongo::ChangeStream::Cursor</a>
+        <a href="#watch%28pipeline%3AArray%3D%5B%5DofBSON%2C%2A%2Cfull_document%3AString%7CNil%3Dnil%2Cstart_at_operation_time%3ATime%7CNil%3Dnil%2Cresume_after%3ABSON%7CNil%3Dnil%2Cstart_after%3ABSON%7CNil%3Dnil%2Cmax_await_time_ms%3AInt64%7CNil%3Dnil%2Cbatch_size%3AInt32%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AMongo%3A%3AChangeStream%3A%3ACursor-instance-method" class="signature"><strong>#watch</strong>(pipeline : Array = <span class="o">[]</span> <span class="k">of</span> <span class="t">BSON</span>, *, full_document : String | Nil = <span class="n">nil</span>, start_at_operation_time : Time | Nil = <span class="n">nil</span>, resume_after : BSON | Nil = <span class="n">nil</span>, start_after : BSON | Nil = <span class="n">nil</span>, max_await_time_ms : Int64 | Nil = <span class="n">nil</span>, batch_size : Int32 | Nil = <span class="n">nil</span>, collation : Collation | Nil = <span class="n">nil</span>, read_concern : ReadConcern | Nil = <span class="n">nil</span>, read_preference : ReadPreference | Nil = <span class="n">nil</span>, session : Session::ClientSession | Nil = <span class="n">nil</span>) : Mongo::ChangeStream::Cursor</a>
         
           <div class="summary"><p>Returns a <code><a href="../Mongo/ChangeStream/Cursor.html">ChangeStream::Cursor</a></code> watching a specific collection.</p></div>
         
@@ -1280,22 +1288,20 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#write_concern%3AWriteConcern%3F-instance-method" class="signature"><strong>#write_concern</strong> : WriteConcern?</a>
+        <a href="#write_concern%3AWriteConcern%7CNil-instance-method" class="signature"><strong>#write_concern</strong> : WriteConcern | Nil</a>
         
           <div class="summary"><p>Write concern accessor.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#write_concern%3D%28write_concern%3AWriteConcern%3F%29-instance-method" class="signature"><strong>#write_concern=</strong>(write_concern : WriteConcern?)</a>
+        <a href="#write_concern%3D%28write_concern%3AWriteConcern%7CNil%29-instance-method" class="signature"><strong>#write_concern=</strong>(write_concern : WriteConcern | Nil)</a>
         
           <div class="summary"><p>Write concern accessor.</p></div>
         
       </li>
     
   </ul>
-
-
 
 
 
@@ -1310,13 +1316,6 @@
     
 
 
-  
-    
-
-
-    
-
-
     
 
 
@@ -1330,6 +1329,22 @@
     
 
 
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+    
+
+
   
     
 
@@ -1340,7 +1355,13 @@
     
 
 
+    
+
+
   
+    
+
+
     
 
 
@@ -1358,6 +1379,8 @@
 
 
 
+
+
   <h2>
     <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
   <svg class="octicon-link" aria-hidden="true">
@@ -1367,12 +1390,12 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="aggregate(pipeline:Array,*,allow_disk_use:Bool?=nil,batch_size:Int32?=nil,max_time_ms:Int64?=nil,bypass_document_validation:Bool?=nil,collation:Collation?=nil,hint:String|H?=nil,comment:String?=nil,read_concern:ReadConcern?=nil,write_concern:WriteConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil):Mongo::Cursor?forallH-instance-method">
+    <div class="entry-detail" id="aggregate(pipeline:Array,*,allow_disk_use:Bool|Nil=nil,batch_size:Int32|Nil=nil,max_time_ms:Int64|Nil=nil,bypass_document_validation:Bool|Nil=nil,collation:Collation|Nil=nil,hint:String|H|Nil=nil,comment:String|Nil=nil,read_concern:ReadConcern|Nil=nil,write_concern:WriteConcern|Nil=nil,read_preference:ReadPreference|Nil=nil,session:Session::ClientSession|Nil=nil):Mongo::Cursor|NilforallH-instance-method">
       <div class="signature">
         
-        def <strong>aggregate</strong>(pipeline : Array, *, allow_disk_use : Bool? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, comment : String? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Cursor.html">Mongo::Cursor</a>? forall H
+        def <strong>aggregate</strong>(pipeline : Array, *, allow_disk_use : Bool | Nil = <span class="n">nil</span>, batch_size : Int32 | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a> | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, comment : String | Nil = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a> | Nil = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Cursor.html">Mongo::Cursor</a> | Nil forall H
 
-        <a class="method-permalink" href="#aggregate%28pipeline%3AArray%2C%2A%2Callow_disk_use%3ABool%3F%3Dnil%2Cbatch_size%3AInt32%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Ccomment%3AString%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AMongo%3A%3ACursor%3FforallH-instance-method">#</a>
+        <a class="method-permalink" href="#aggregate%28pipeline%3AArray%2C%2A%2Callow_disk_use%3ABool%7CNil%3Dnil%2Cbatch_size%3AInt32%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Ccomment%3AString%7CNil%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AMongo%3A%3ACursor%7CNilforallH-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1387,12 +1410,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="bulk(ordered:Bool=true,session:Session::ClientSession?=nil)-instance-method">
+    <div class="entry-detail" id="bulk(ordered:Bool=true,session:Session::ClientSession|Nil=nil)-instance-method">
       <div class="signature">
         
-        def <strong>bulk</strong>(ordered : Bool = <span class="n">true</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>)
+        def <strong>bulk</strong>(ordered : Bool = <span class="n">true</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#bulk%28ordered%3ABool%3Dtrue%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29-instance-method">#</a>
+        <a class="method-permalink" href="#bulk%28ordered%3ABool%3Dtrue%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1406,12 +1429,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="bulk_write(requests:Array(Bulk::WriteModel),*,ordered:Bool,bypass_document_validation:Bool?=nil,session:Session::ClientSession?=nil):Bulk::WriteResult-instance-method">
+    <div class="entry-detail" id="bulk_write(requests:Array(Bulk::WriteModel),*,ordered:Bool,bypass_document_validation:Bool|Nil=nil,session:Session::ClientSession|Nil=nil):Bulk::WriteResult-instance-method">
       <div class="signature">
         
-        def <strong>bulk_write</strong>(requests : Array(<a href="../Mongo/Bulk/WriteModel.html">Bulk::WriteModel</a>), *, ordered : Bool, bypass_document_validation : Bool? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Bulk/WriteResult.html">Bulk::WriteResult</a>
+        def <strong>bulk_write</strong>(requests : Array(<a href="../Mongo/Bulk/WriteModel.html">Bulk::WriteModel</a>), *, ordered : Bool, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Bulk/WriteResult.html">Bulk::WriteResult</a>
 
-        <a class="method-permalink" href="#bulk_write%28requests%3AArray%28Bulk%3A%3AWriteModel%29%2C%2A%2Cordered%3ABool%2Cbypass_document_validation%3ABool%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ABulk%3A%3AWriteResult-instance-method">#</a>
+        <a class="method-permalink" href="#bulk_write%28requests%3AArray%28Bulk%3A%3AWriteModel%29%2C%2A%2Cordered%3ABool%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ABulk%3A%3AWriteResult-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1427,19 +1450,19 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil,**args,&amp;)-instance-method">
+    <div class="entry-detail" id="command(operation,write_concern:WriteConcern|Nil=nil,read_concern:ReadConcern|Nil=nil,read_preference:ReadPreference|Nil=nil,session:Session::ClientSession|Nil=nil,**args,&amp;)-instance-method">
       <div class="signature">
         
-        def <strong>command</strong>(operation, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>, **args, &)
+        def <strong>command</strong>(operation, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a> | Nil = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>, **args, &)
 
-        <a class="method-permalink" href="#command%28operation%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%2C%2A%2Aargs%2C%26%29-instance-method">#</a>
+        <a class="method-permalink" href="#command%28operation%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%2C%2A%2Aargs%2C%26%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Execute a command on the server targeting the collection.</p>
 <p>Will automatically set the <em>collection</em> and <em>database</em> arguments.</p>
-<p>See: <code><a href="../Mongo/Client.html#command%28command%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Cserver_description%3ASDAM%3A%3AServerDescription%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%2Coperation_id%3AInt64%3F%3Dnil%2C%2A%2Aargs%2C%26%29-instance-method">Mongo::Client.command</a></code></p>
+<p>See: <code><a href="../Mongo/Client.html#command%28command%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Cserver_description%3ASDAM%3A%3AServerDescription%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%2Coperation_id%3AInt64%7CNil%3Dnil%2C%2A%2Aargs%2C%26%29-instance-method">Mongo::Client.command</a></code></p>
         </div>
       
       <br/>
@@ -1448,19 +1471,19 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="command(operation,write_concern:WriteConcern?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil,**args)-instance-method">
+    <div class="entry-detail" id="command(operation,write_concern:WriteConcern|Nil=nil,read_concern:ReadConcern|Nil=nil,read_preference:ReadPreference|Nil=nil,session:Session::ClientSession|Nil=nil,**args)-instance-method">
       <div class="signature">
         
-        def <strong>command</strong>(operation, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>, **args)
+        def <strong>command</strong>(operation, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a> | Nil = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>, **args)
 
-        <a class="method-permalink" href="#command%28operation%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%2C%2A%2Aargs%29-instance-method">#</a>
+        <a class="method-permalink" href="#command%28operation%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%2C%2A%2Aargs%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Execute a command on the server targeting the collection.</p>
 <p>Will automatically set the <em>collection</em> and <em>database</em> arguments.</p>
-<p>See: <code><a href="../Mongo/Client.html#command%28command%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Cserver_description%3ASDAM%3A%3AServerDescription%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%2Coperation_id%3AInt64%3F%3Dnil%2C%2A%2Aargs%2C%26%29-instance-method">Mongo::Client.command</a></code></p>
+<p>See: <code><a href="../Mongo/Client.html#command%28command%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Cserver_description%3ASDAM%3A%3AServerDescription%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%2Coperation_id%3AInt64%7CNil%3Dnil%2C%2A%2Aargs%2C%26%29-instance-method">Mongo::Client.command</a></code></p>
         </div>
       
       <br/>
@@ -1469,19 +1492,19 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="count_documents(filter=BSON.new,*,skip:Int32?=nil,limit:Int32?=nil,collation:Collation?=nil,hint:String|H?=nil,max_time_ms:Int64?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil):Int32forallH-instance-method">
+    <div class="entry-detail" id="count_documents(filter=BSON.new,*,skip:Int32|Nil=nil,limit:Int32|Nil=nil,collation:Collation|Nil=nil,hint:String|H|Nil=nil,max_time_ms:Int64|Nil=nil,read_preference:ReadPreference|Nil=nil,session:Session::ClientSession|Nil=nil):Int32forallH-instance-method">
       <div class="signature">
         
-        def <strong>count_documents</strong>(filter = <span class="t">BSON</span>.new, *, skip : Int32? = <span class="n">nil</span>, limit : Int32? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : Int32 forall H
+        def <strong>count_documents</strong>(filter = <span class="t">BSON</span>.new, *, skip : Int32 | Nil = <span class="n">nil</span>, limit : Int32 | Nil = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a> | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : Int32 forall H
 
-        <a class="method-permalink" href="#count_documents%28filter%3DBSON.new%2C%2A%2Cskip%3AInt32%3F%3Dnil%2Climit%3AInt32%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AInt32forallH-instance-method">#</a>
+        <a class="method-permalink" href="#count_documents%28filter%3DBSON.new%2C%2A%2Cskip%3AInt32%7CNil%3Dnil%2Climit%3AInt32%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AInt32forallH-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Count the number of documents in a collection that match the given filter.
 Note that an empty filter will force a scan of the entire collection.
-For a fast count of the total documents in a collection see <code><a href="../Mongo/Collection.html#estimated_document_count%28%2A%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AInt32-instance-method">#estimated_document_count</a></code>.</p>
+For a fast count of the total documents in a collection see <code><a href="../Mongo/Collection.html#estimated_document_count%28%2A%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AInt32-instance-method">#estimated_document_count</a></code>.</p>
 <p>See: <a href="https://github.com/mongodb/specifications/blob/master/source/crud/crud.rst#count-api-details">the specification document</a>.</p>
         </div>
       
@@ -1491,18 +1514,18 @@ For a fast count of the total documents in a collection see <code><a href="../Mo
       </div>
     </div>
   
-    <div class="entry-detail" id="create_index(keys,*,options=NamedTuple.new,commit_quorum:Int32|String?=nil,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil,session:Session::ClientSession?=nil):Commands::CreateIndexes::Result?-instance-method">
+    <div class="entry-detail" id="create_index(keys,*,options=NamedTuple.new,commit_quorum:Int32|String|Nil=nil,max_time_ms:Int64|Nil=nil,write_concern:WriteConcern|Nil=nil,session:Session::ClientSession|Nil=nil):Commands::CreateIndexes::Result|Nil-instance-method">
       <div class="signature">
         
-        def <strong>create_index</strong>(keys, *, options = <span class="t">NamedTuple</span>.new, commit_quorum : Int32 | String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/CreateIndexes/Result.html">Commands::CreateIndexes::Result</a>?
+        def <strong>create_index</strong>(keys, *, options = <span class="t">NamedTuple</span>.new, commit_quorum : Int32 | String | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Commands/CreateIndexes/Result.html">Commands::CreateIndexes::Result</a> | Nil
 
-        <a class="method-permalink" href="#create_index%28keys%2C%2A%2Coptions%3DNamedTuple.new%2Ccommit_quorum%3AInt32%7CString%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACreateIndexes%3A%3AResult%3F-instance-method">#</a>
+        <a class="method-permalink" href="#create_index%28keys%2C%2A%2Coptions%3DNamedTuple.new%2Ccommit_quorum%3AInt32%7CString%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACreateIndexes%3A%3AResult%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>This is a convenience method for creating a single index.</p>
-<p>See: <code><a href="../Mongo/Collection.html#create_indexes%28models%3AArray%2C%2A%2Ccommit_quorum%3AInt32%7CString%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACreateIndexes%3A%3AResult%3F-instance-method">#create_indexes</a></code></p>
+<p>See: <code><a href="../Mongo/Collection.html#create_indexes%28models%3AArray%2C%2A%2Ccommit_quorum%3AInt32%7CString%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACreateIndexes%3A%3AResult%7CNil-instance-method">#create_indexes</a></code></p>
         </div>
       
       <br/>
@@ -1511,12 +1534,12 @@ For a fast count of the total documents in a collection see <code><a href="../Mo
       </div>
     </div>
   
-    <div class="entry-detail" id="create_indexes(models:Array,*,commit_quorum:Int32|String?=nil,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil,session:Session::ClientSession?=nil):Commands::CreateIndexes::Result?-instance-method">
+    <div class="entry-detail" id="create_indexes(models:Array,*,commit_quorum:Int32|String|Nil=nil,max_time_ms:Int64|Nil=nil,write_concern:WriteConcern|Nil=nil,session:Session::ClientSession|Nil=nil):Commands::CreateIndexes::Result|Nil-instance-method">
       <div class="signature">
         
-        def <strong>create_indexes</strong>(models : Array, *, commit_quorum : Int32 | String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/CreateIndexes/Result.html">Commands::CreateIndexes::Result</a>?
+        def <strong>create_indexes</strong>(models : Array, *, commit_quorum : Int32 | String | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Commands/CreateIndexes/Result.html">Commands::CreateIndexes::Result</a> | Nil
 
-        <a class="method-permalink" href="#create_indexes%28models%3AArray%2C%2A%2Ccommit_quorum%3AInt32%7CString%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACreateIndexes%3A%3AResult%3F-instance-method">#</a>
+        <a class="method-permalink" href="#create_indexes%28models%3AArray%2C%2A%2Ccommit_quorum%3AInt32%7CString%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACreateIndexes%3A%3AResult%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1550,12 +1573,12 @@ For a fast count of the total documents in a collection see <code><a href="../Mo
       </div>
     </div>
   
-    <div class="entry-detail" id="delete_many(filter,*,collation:Collation?=nil,hint:String|H?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil,session:Session::ClientSession?=nil):Commands::Common::DeleteResult?forallH-instance-method">
+    <div class="entry-detail" id="delete_many(filter,*,collation:Collation|Nil=nil,hint:String|H|Nil=nil,ordered:Bool|Nil=nil,write_concern:WriteConcern|Nil=nil,session:Session::ClientSession|Nil=nil):Commands::Common::DeleteResult|NilforallH-instance-method">
       <div class="signature">
         
-        def <strong>delete_many</strong>(filter, *, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/DeleteResult.html">Commands::Common::DeleteResult</a>? forall H
+        def <strong>delete_many</strong>(filter, *, collation : <a href="../Mongo/Collation.html">Collation</a> | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, ordered : Bool | Nil = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/DeleteResult.html">Commands::Common::DeleteResult</a> | Nil forall H
 
-        <a class="method-permalink" href="#delete_many%28filter%2C%2A%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cordered%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3ADeleteResult%3FforallH-instance-method">#</a>
+        <a class="method-permalink" href="#delete_many%28filter%2C%2A%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cordered%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3ADeleteResult%7CNilforallH-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1570,12 +1593,12 @@ For a fast count of the total documents in a collection see <code><a href="../Mo
       </div>
     </div>
   
-    <div class="entry-detail" id="delete_one(filter,*,collation:Collation?=nil,hint:String|H?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil,session:Session::ClientSession?=nil):Commands::Common::DeleteResult?forallH-instance-method">
+    <div class="entry-detail" id="delete_one(filter,*,collation:Collation|Nil=nil,hint:String|H|Nil=nil,ordered:Bool|Nil=nil,write_concern:WriteConcern|Nil=nil,session:Session::ClientSession|Nil=nil):Commands::Common::DeleteResult|NilforallH-instance-method">
       <div class="signature">
         
-        def <strong>delete_one</strong>(filter, *, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/DeleteResult.html">Commands::Common::DeleteResult</a>? forall H
+        def <strong>delete_one</strong>(filter, *, collation : <a href="../Mongo/Collation.html">Collation</a> | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, ordered : Bool | Nil = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/DeleteResult.html">Commands::Common::DeleteResult</a> | Nil forall H
 
-        <a class="method-permalink" href="#delete_one%28filter%2C%2A%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cordered%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3ADeleteResult%3FforallH-instance-method">#</a>
+        <a class="method-permalink" href="#delete_one%28filter%2C%2A%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cordered%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3ADeleteResult%7CNilforallH-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1590,12 +1613,12 @@ For a fast count of the total documents in a collection see <code><a href="../Mo
       </div>
     </div>
   
-    <div class="entry-detail" id="distinct(key:String,*,filter=nil,read_concern:ReadConcern?=nil,collation:Collation?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil):Array-instance-method">
+    <div class="entry-detail" id="distinct(key:String,*,filter=nil,read_concern:ReadConcern|Nil=nil,collation:Collation|Nil=nil,read_preference:ReadPreference|Nil=nil,session:Session::ClientSession|Nil=nil):Array-instance-method">
       <div class="signature">
         
-        def <strong>distinct</strong>(key : String, *, filter = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : Array
+        def <strong>distinct</strong>(key : String, *, filter = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a> | Nil = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a> | Nil = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : Array
 
-        <a class="method-permalink" href="#distinct%28key%3AString%2C%2A%2Cfilter%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AArray-instance-method">#</a>
+        <a class="method-permalink" href="#distinct%28key%3AString%2C%2A%2Cfilter%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AArray-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1612,18 +1635,18 @@ document. This differs from aggregate and find, where results are backed by a cu
       </div>
     </div>
   
-    <div class="entry-detail" id="drop_index(name:String,*,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil,session:Session::ClientSession?=nil):Commands::Common::BaseResult?-instance-method">
+    <div class="entry-detail" id="drop_index(name:String,*,max_time_ms:Int64|Nil=nil,write_concern:WriteConcern|Nil=nil,session:Session::ClientSession|Nil=nil):Commands::Common::BaseResult|Nil-instance-method">
       <div class="signature">
         
-        def <strong>drop_index</strong>(name : String, *, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/BaseResult.html">Commands::Common::BaseResult</a>?
+        def <strong>drop_index</strong>(name : String, *, max_time_ms : Int64 | Nil = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/BaseResult.html">Commands::Common::BaseResult</a> | Nil
 
-        <a class="method-permalink" href="#drop_index%28name%3AString%2C%2A%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3ABaseResult%3F-instance-method">#</a>
+        <a class="method-permalink" href="#drop_index%28name%3AString%2C%2A%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3ABaseResult%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Drops a single index from the collection by the index name.</p>
-<p>See: <code><a href="../Mongo/Collection.html#drop_indexes%28%2A%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3ABaseResult%3F-instance-method">#drop_indexes</a></code></p>
+<p>See: <code><a href="../Mongo/Collection.html#drop_indexes%28%2A%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3ABaseResult%7CNil-instance-method">#drop_indexes</a></code></p>
         </div>
       
       <br/>
@@ -1632,12 +1655,12 @@ document. This differs from aggregate and find, where results are backed by a cu
       </div>
     </div>
   
-    <div class="entry-detail" id="drop_indexes(*,max_time_ms:Int64?=nil,write_concern:WriteConcern?=nil,session:Session::ClientSession?=nil):Commands::Common::BaseResult?-instance-method">
+    <div class="entry-detail" id="drop_indexes(*,max_time_ms:Int64|Nil=nil,write_concern:WriteConcern|Nil=nil,session:Session::ClientSession|Nil=nil):Commands::Common::BaseResult|Nil-instance-method">
       <div class="signature">
         
-        def <strong>drop_indexes</strong>(*, max_time_ms : Int64? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/BaseResult.html">Commands::Common::BaseResult</a>?
+        def <strong>drop_indexes</strong>(*, max_time_ms : Int64 | Nil = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/BaseResult.html">Commands::Common::BaseResult</a> | Nil
 
-        <a class="method-permalink" href="#drop_indexes%28%2A%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3ABaseResult%3F-instance-method">#</a>
+        <a class="method-permalink" href="#drop_indexes%28%2A%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3ABaseResult%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1652,12 +1675,12 @@ document. This differs from aggregate and find, where results are backed by a cu
       </div>
     </div>
   
-    <div class="entry-detail" id="estimated_document_count(*,max_time_ms:Int64?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil):Int32-instance-method">
+    <div class="entry-detail" id="estimated_document_count(*,max_time_ms:Int64|Nil=nil,read_preference:ReadPreference|Nil=nil,session:Session::ClientSession|Nil=nil):Int32-instance-method">
       <div class="signature">
         
-        def <strong>estimated_document_count</strong>(*, max_time_ms : Int64? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : Int32
+        def <strong>estimated_document_count</strong>(*, max_time_ms : Int64 | Nil = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : Int32
 
-        <a class="method-permalink" href="#estimated_document_count%28%2A%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AInt32-instance-method">#</a>
+        <a class="method-permalink" href="#estimated_document_count%28%2A%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AInt32-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1672,12 +1695,12 @@ document. This differs from aggregate and find, where results are backed by a cu
       </div>
     </div>
   
-    <div class="entry-detail" id="find(filter=BSON.new,*,sort=nil,projection=nil,hint:String|H?=nil,skip:Int32?=nil,limit:Int32?=nil,batch_size:Int32?=nil,single_batch:Bool?=nil,comment:String?=nil,max_time_ms:Int64?=nil,read_concern:ReadConcern?=nil,max=nil,min=nil,return_key:Bool?=nil,show_record_id:Bool?=nil,tailable:Bool?=nil,oplog_replay:Bool?=nil,no_cursor_timeout:Bool?=nil,await_data:Bool?=nil,allow_partial_results:Bool?=nil,allow_disk_use:Bool?=nil,collation:Collation?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil):Mongo::CursorforallH-instance-method">
+    <div class="entry-detail" id="find(filter=BSON.new,*,sort=nil,projection=nil,hint:String|H|Nil=nil,skip:Int32|Nil=nil,limit:Int32|Nil=nil,batch_size:Int32|Nil=nil,single_batch:Bool|Nil=nil,comment:String|Nil=nil,max_time_ms:Int64|Nil=nil,read_concern:ReadConcern|Nil=nil,max=nil,min=nil,return_key:Bool|Nil=nil,show_record_id:Bool|Nil=nil,tailable:Bool|Nil=nil,oplog_replay:Bool|Nil=nil,no_cursor_timeout:Bool|Nil=nil,await_data:Bool|Nil=nil,allow_partial_results:Bool|Nil=nil,allow_disk_use:Bool|Nil=nil,collation:Collation|Nil=nil,read_preference:ReadPreference|Nil=nil,session:Session::ClientSession|Nil=nil):Mongo::CursorforallH-instance-method">
       <div class="signature">
         
-        def <strong>find</strong>(filter = <span class="t">BSON</span>.new, *, sort = <span class="n">nil</span>, projection = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, skip : Int32? = <span class="n">nil</span>, limit : Int32? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, single_batch : Bool? = <span class="n">nil</span>, comment : String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, max = <span class="n">nil</span>, min = <span class="n">nil</span>, return_key : Bool? = <span class="n">nil</span>, show_record_id : Bool? = <span class="n">nil</span>, tailable : Bool? = <span class="n">nil</span>, oplog_replay : Bool? = <span class="n">nil</span>, no_cursor_timeout : Bool? = <span class="n">nil</span>, await_data : Bool? = <span class="n">nil</span>, allow_partial_results : Bool? = <span class="n">nil</span>, allow_disk_use : Bool? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Cursor.html">Mongo::Cursor</a> forall H
+        def <strong>find</strong>(filter = <span class="t">BSON</span>.new, *, sort = <span class="n">nil</span>, projection = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, skip : Int32 | Nil = <span class="n">nil</span>, limit : Int32 | Nil = <span class="n">nil</span>, batch_size : Int32 | Nil = <span class="n">nil</span>, single_batch : Bool | Nil = <span class="n">nil</span>, comment : String | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a> | Nil = <span class="n">nil</span>, max = <span class="n">nil</span>, min = <span class="n">nil</span>, return_key : Bool | Nil = <span class="n">nil</span>, show_record_id : Bool | Nil = <span class="n">nil</span>, tailable : Bool | Nil = <span class="n">nil</span>, oplog_replay : Bool | Nil = <span class="n">nil</span>, no_cursor_timeout : Bool | Nil = <span class="n">nil</span>, await_data : Bool | Nil = <span class="n">nil</span>, allow_partial_results : Bool | Nil = <span class="n">nil</span>, allow_disk_use : Bool | Nil = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a> | Nil = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Cursor.html">Mongo::Cursor</a> forall H
 
-        <a class="method-permalink" href="#find%28filter%3DBSON.new%2C%2A%2Csort%3Dnil%2Cprojection%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cskip%3AInt32%3F%3Dnil%2Climit%3AInt32%3F%3Dnil%2Cbatch_size%3AInt32%3F%3Dnil%2Csingle_batch%3ABool%3F%3Dnil%2Ccomment%3AString%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cmax%3Dnil%2Cmin%3Dnil%2Creturn_key%3ABool%3F%3Dnil%2Cshow_record_id%3ABool%3F%3Dnil%2Ctailable%3ABool%3F%3Dnil%2Coplog_replay%3ABool%3F%3Dnil%2Cno_cursor_timeout%3ABool%3F%3Dnil%2Cawait_data%3ABool%3F%3Dnil%2Callow_partial_results%3ABool%3F%3Dnil%2Callow_disk_use%3ABool%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AMongo%3A%3ACursorforallH-instance-method">#</a>
+        <a class="method-permalink" href="#find%28filter%3DBSON.new%2C%2A%2Csort%3Dnil%2Cprojection%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cskip%3AInt32%7CNil%3Dnil%2Climit%3AInt32%7CNil%3Dnil%2Cbatch_size%3AInt32%7CNil%3Dnil%2Csingle_batch%3ABool%7CNil%3Dnil%2Ccomment%3AString%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Cmax%3Dnil%2Cmin%3Dnil%2Creturn_key%3ABool%7CNil%3Dnil%2Cshow_record_id%3ABool%7CNil%3Dnil%2Ctailable%3ABool%7CNil%3Dnil%2Coplog_replay%3ABool%7CNil%3Dnil%2Cno_cursor_timeout%3ABool%7CNil%3Dnil%2Cawait_data%3ABool%7CNil%3Dnil%2Callow_partial_results%3ABool%7CNil%3Dnil%2Callow_disk_use%3ABool%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AMongo%3A%3ACursorforallH-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1693,12 +1716,12 @@ document. This differs from aggregate and find, where results are backed by a cu
       </div>
     </div>
   
-    <div class="entry-detail" id="find_one(filter=BSON.new,*,sort=nil,projection=nil,hint:String|H?=nil,skip:Int32?=nil,comment:String?=nil,max_time_ms:Int64?=nil,read_concern:ReadConcern?=nil,max=nil,min=nil,return_key:Bool?=nil,show_record_id:Bool?=nil,oplog_replay:Bool?=nil,no_cursor_timeout:Bool?=nil,allow_partial_results:Bool?=nil,collation:Collation?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil):BSON?forallH-instance-method">
+    <div class="entry-detail" id="find_one(filter=BSON.new,*,sort=nil,projection=nil,hint:String|H|Nil=nil,skip:Int32|Nil=nil,comment:String|Nil=nil,max_time_ms:Int64|Nil=nil,read_concern:ReadConcern|Nil=nil,max=nil,min=nil,return_key:Bool|Nil=nil,show_record_id:Bool|Nil=nil,oplog_replay:Bool|Nil=nil,no_cursor_timeout:Bool|Nil=nil,allow_partial_results:Bool|Nil=nil,collation:Collation|Nil=nil,read_preference:ReadPreference|Nil=nil,session:Session::ClientSession|Nil=nil):BSON|NilforallH-instance-method">
       <div class="signature">
         
-        def <strong>find_one</strong>(filter = <span class="t">BSON</span>.new, *, sort = <span class="n">nil</span>, projection = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, skip : Int32? = <span class="n">nil</span>, comment : String? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, max = <span class="n">nil</span>, min = <span class="n">nil</span>, return_key : Bool? = <span class="n">nil</span>, show_record_id : Bool? = <span class="n">nil</span>, oplog_replay : Bool? = <span class="n">nil</span>, no_cursor_timeout : Bool? = <span class="n">nil</span>, allow_partial_results : Bool? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : BSON? forall H
+        def <strong>find_one</strong>(filter = <span class="t">BSON</span>.new, *, sort = <span class="n">nil</span>, projection = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, skip : Int32 | Nil = <span class="n">nil</span>, comment : String | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a> | Nil = <span class="n">nil</span>, max = <span class="n">nil</span>, min = <span class="n">nil</span>, return_key : Bool | Nil = <span class="n">nil</span>, show_record_id : Bool | Nil = <span class="n">nil</span>, oplog_replay : Bool | Nil = <span class="n">nil</span>, no_cursor_timeout : Bool | Nil = <span class="n">nil</span>, allow_partial_results : Bool | Nil = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a> | Nil = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : BSON | Nil forall H
 
-        <a class="method-permalink" href="#find_one%28filter%3DBSON.new%2C%2A%2Csort%3Dnil%2Cprojection%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cskip%3AInt32%3F%3Dnil%2Ccomment%3AString%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cmax%3Dnil%2Cmin%3Dnil%2Creturn_key%3ABool%3F%3Dnil%2Cshow_record_id%3ABool%3F%3Dnil%2Coplog_replay%3ABool%3F%3Dnil%2Cno_cursor_timeout%3ABool%3F%3Dnil%2Callow_partial_results%3ABool%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ABSON%3FforallH-instance-method">#</a>
+        <a class="method-permalink" href="#find_one%28filter%3DBSON.new%2C%2A%2Csort%3Dnil%2Cprojection%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cskip%3AInt32%7CNil%3Dnil%2Ccomment%3AString%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Cmax%3Dnil%2Cmin%3Dnil%2Creturn_key%3ABool%7CNil%3Dnil%2Cshow_record_id%3ABool%7CNil%3Dnil%2Coplog_replay%3ABool%7CNil%3Dnil%2Cno_cursor_timeout%3ABool%7CNil%3Dnil%2Callow_partial_results%3ABool%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ABSON%7CNilforallH-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1713,12 +1736,12 @@ document. This differs from aggregate and find, where results are backed by a cu
       </div>
     </div>
   
-    <div class="entry-detail" id="find_one_and_delete(filter,*,sort=nil,fields=nil,bypass_document_validation:Bool?=nil,write_concern:WriteConcern?=nil,collation:Collation?=nil,hint:String|H?=nil,max_time_ms:Int64?=nil,session:Session::ClientSession?=nil):BSON?forallH-instance-method">
+    <div class="entry-detail" id="find_one_and_delete(filter,*,sort=nil,fields=nil,bypass_document_validation:Bool|Nil=nil,write_concern:WriteConcern|Nil=nil,collation:Collation|Nil=nil,hint:String|H|Nil=nil,max_time_ms:Int64|Nil=nil,session:Session::ClientSession|Nil=nil):BSON|NilforallH-instance-method">
       <div class="signature">
         
-        def <strong>find_one_and_delete</strong>(filter, *, sort = <span class="n">nil</span>, fields = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : BSON? forall H
+        def <strong>find_one_and_delete</strong>(filter, *, sort = <span class="n">nil</span>, fields = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a> | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : BSON | Nil forall H
 
-        <a class="method-permalink" href="#find_one_and_delete%28filter%2C%2A%2Csort%3Dnil%2Cfields%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ABSON%3FforallH-instance-method">#</a>
+        <a class="method-permalink" href="#find_one_and_delete%28filter%2C%2A%2Csort%3Dnil%2Cfields%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ABSON%7CNilforallH-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1733,12 +1756,12 @@ document. This differs from aggregate and find, where results are backed by a cu
       </div>
     </div>
   
-    <div class="entry-detail" id="find_one_and_replace(filter,replacement,*,sort=nil,new:Bool?=nil,fields=nil,upsert:Bool?=nil,bypass_document_validation:Bool?=nil,write_concern:WriteConcern?=nil,collation:Collation?=nil,array_filters=nil,hint:String|H?=nil,max_time_ms:Int64?=nil,session:Session::ClientSession?=nil):BSON?forallH-instance-method">
+    <div class="entry-detail" id="find_one_and_replace(filter,replacement,*,sort=nil,new:Bool|Nil=nil,fields=nil,upsert:Bool|Nil=nil,bypass_document_validation:Bool|Nil=nil,write_concern:WriteConcern|Nil=nil,collation:Collation|Nil=nil,array_filters=nil,hint:String|H|Nil=nil,max_time_ms:Int64|Nil=nil,session:Session::ClientSession|Nil=nil):BSON|NilforallH-instance-method">
       <div class="signature">
         
-        def <strong>find_one_and_replace</strong>(filter, replacement, *, sort = <span class="n">nil</span>, new : Bool? = <span class="n">nil</span>, fields = <span class="n">nil</span>, upsert : Bool? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, array_filters = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : BSON? forall H
+        def <strong>find_one_and_replace</strong>(filter, replacement, *, sort = <span class="n">nil</span>, new : Bool | Nil = <span class="n">nil</span>, fields = <span class="n">nil</span>, upsert : Bool | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a> | Nil = <span class="n">nil</span>, array_filters = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : BSON | Nil forall H
 
-        <a class="method-permalink" href="#find_one_and_replace%28filter%2Creplacement%2C%2A%2Csort%3Dnil%2Cnew%3ABool%3F%3Dnil%2Cfields%3Dnil%2Cupsert%3ABool%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Carray_filters%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ABSON%3FforallH-instance-method">#</a>
+        <a class="method-permalink" href="#find_one_and_replace%28filter%2Creplacement%2C%2A%2Csort%3Dnil%2Cnew%3ABool%7CNil%3Dnil%2Cfields%3Dnil%2Cupsert%3ABool%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Carray_filters%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ABSON%7CNilforallH-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1754,12 +1777,12 @@ document. The document to return may be nil.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="find_one_and_update(filter,update,*,sort=nil,new:Bool?=nil,fields=nil,upsert:Bool?=nil,bypass_document_validation:Bool?=nil,write_concern:WriteConcern?=nil,collation:Collation?=nil,array_filters=nil,hint:String|H?=nil,max_time_ms:Int64?=nil,session:Session::ClientSession?=nil):BSON?forallH-instance-method">
+    <div class="entry-detail" id="find_one_and_update(filter,update,*,sort=nil,new:Bool|Nil=nil,fields=nil,upsert:Bool|Nil=nil,bypass_document_validation:Bool|Nil=nil,write_concern:WriteConcern|Nil=nil,collation:Collation|Nil=nil,array_filters=nil,hint:String|H|Nil=nil,max_time_ms:Int64|Nil=nil,session:Session::ClientSession|Nil=nil):BSON|NilforallH-instance-method">
       <div class="signature">
         
-        def <strong>find_one_and_update</strong>(filter, update, *, sort = <span class="n">nil</span>, new : Bool? = <span class="n">nil</span>, fields = <span class="n">nil</span>, upsert : Bool? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, array_filters = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, max_time_ms : Int64? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : BSON? forall H
+        def <strong>find_one_and_update</strong>(filter, update, *, sort = <span class="n">nil</span>, new : Bool | Nil = <span class="n">nil</span>, fields = <span class="n">nil</span>, upsert : Bool | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a> | Nil = <span class="n">nil</span>, array_filters = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, max_time_ms : Int64 | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : BSON | Nil forall H
 
-        <a class="method-permalink" href="#find_one_and_update%28filter%2Cupdate%2C%2A%2Csort%3Dnil%2Cnew%3ABool%3F%3Dnil%2Cfields%3Dnil%2Cupsert%3ABool%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Carray_filters%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cmax_time_ms%3AInt64%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ABSON%3FforallH-instance-method">#</a>
+        <a class="method-permalink" href="#find_one_and_update%28filter%2Cupdate%2C%2A%2Csort%3Dnil%2Cnew%3ABool%7CNil%3Dnil%2Cfields%3Dnil%2Cupsert%3ABool%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Carray_filters%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cmax_time_ms%3AInt64%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ABSON%7CNilforallH-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1775,12 +1798,12 @@ document. The document to return may be nil.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="insert_many(documents:Array,*,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil,session:Session::ClientSession?=nil):Commands::Common::InsertResult?-instance-method">
+    <div class="entry-detail" id="insert_many(documents:Array,*,ordered:Bool|Nil=nil,write_concern:WriteConcern|Nil=nil,bypass_document_validation:Bool|Nil=nil,session:Session::ClientSession|Nil=nil):Commands::Common::InsertResult|Nil-instance-method">
       <div class="signature">
         
-        def <strong>insert_many</strong>(documents : Array, *, ordered : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/InsertResult.html">Commands::Common::InsertResult</a>?
+        def <strong>insert_many</strong>(documents : Array, *, ordered : Bool | Nil = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/InsertResult.html">Commands::Common::InsertResult</a> | Nil
 
-        <a class="method-permalink" href="#insert_many%28documents%3AArray%2C%2A%2Cordered%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3AInsertResult%3F-instance-method">#</a>
+        <a class="method-permalink" href="#insert_many%28documents%3AArray%2C%2A%2Cordered%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3AInsertResult%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1795,12 +1818,12 @@ document. The document to return may be nil.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="insert_one(document,*,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil,session:Session::ClientSession?=nil):Commands::Common::InsertResult?-instance-method">
+    <div class="entry-detail" id="insert_one(document,*,write_concern:WriteConcern|Nil=nil,bypass_document_validation:Bool|Nil=nil,session:Session::ClientSession|Nil=nil):Commands::Common::InsertResult|Nil-instance-method">
       <div class="signature">
         
-        def <strong>insert_one</strong>(document, *, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/InsertResult.html">Commands::Common::InsertResult</a>?
+        def <strong>insert_one</strong>(document, *, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/InsertResult.html">Commands::Common::InsertResult</a> | Nil
 
-        <a class="method-permalink" href="#insert_one%28document%2C%2A%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3AInsertResult%3F-instance-method">#</a>
+        <a class="method-permalink" href="#insert_one%28document%2C%2A%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3AInsertResult%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1815,12 +1838,12 @@ document. The document to return may be nil.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="list_indexes(session:Session::ClientSession?=nil):Mongo::Cursor?-instance-method">
+    <div class="entry-detail" id="list_indexes(session:Session::ClientSession|Nil=nil):Mongo::Cursor|Nil-instance-method">
       <div class="signature">
         
-        def <strong>list_indexes</strong>(session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Cursor.html">Mongo::Cursor</a>?
+        def <strong>list_indexes</strong>(session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Cursor.html">Mongo::Cursor</a> | Nil
 
-        <a class="method-permalink" href="#list_indexes%28session%3ASession%3A%3AClientSession%3F%3Dnil%29%3AMongo%3A%3ACursor%3F-instance-method">#</a>
+        <a class="method-permalink" href="#list_indexes%28session%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AMongo%3A%3ACursor%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1854,12 +1877,12 @@ document. The document to return may be nil.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="read_concern:ReadConcern?-instance-method">
+    <div class="entry-detail" id="read_concern:ReadConcern|Nil-instance-method">
       <div class="signature">
         
-        def <strong>read_concern</strong> : <a href="../Mongo/ReadConcern.html">ReadConcern</a>?
+        def <strong>read_concern</strong> : <a href="../Mongo/ReadConcern.html">ReadConcern</a> | Nil
 
-        <a class="method-permalink" href="#read_concern%3AReadConcern%3F-instance-method">#</a>
+        <a class="method-permalink" href="#read_concern%3AReadConcern%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1874,12 +1897,12 @@ document. The document to return may be nil.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="read_concern=(read_concern:ReadConcern?)-instance-method">
+    <div class="entry-detail" id="read_concern=(read_concern:ReadConcern|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>read_concern=</strong>(read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>?)
+        def <strong>read_concern=</strong>(read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a> | Nil)
 
-        <a class="method-permalink" href="#read_concern%3D%28read_concern%3AReadConcern%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#read_concern%3D%28read_concern%3AReadConcern%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1894,12 +1917,12 @@ document. The document to return may be nil.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="read_preference:ReadPreference?-instance-method">
+    <div class="entry-detail" id="read_preference:ReadPreference|Nil-instance-method">
       <div class="signature">
         
-        def <strong>read_preference</strong> : <a href="../Mongo/ReadPreference.html">ReadPreference</a>?
+        def <strong>read_preference</strong> : <a href="../Mongo/ReadPreference.html">ReadPreference</a> | Nil
 
-        <a class="method-permalink" href="#read_preference%3AReadPreference%3F-instance-method">#</a>
+        <a class="method-permalink" href="#read_preference%3AReadPreference%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1914,12 +1937,12 @@ document. The document to return may be nil.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="read_preference=(read_preference:ReadPreference?)-instance-method">
+    <div class="entry-detail" id="read_preference=(read_preference:ReadPreference|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>read_preference=</strong>(read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>?)
+        def <strong>read_preference=</strong>(read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a> | Nil)
 
-        <a class="method-permalink" href="#read_preference%3D%28read_preference%3AReadPreference%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#read_preference%3D%28read_preference%3AReadPreference%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1934,12 +1957,12 @@ document. The document to return may be nil.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="replace_one(filter,replacement,*,upsert:Bool=false,collation:Collation?=nil,hint:String|H?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil,session:Session::ClientSession?=nil):Commands::Common::UpdateResult?forallH-instance-method">
+    <div class="entry-detail" id="replace_one(filter,replacement,*,upsert:Bool=false,collation:Collation|Nil=nil,hint:String|H|Nil=nil,ordered:Bool|Nil=nil,write_concern:WriteConcern|Nil=nil,bypass_document_validation:Bool|Nil=nil,session:Session::ClientSession|Nil=nil):Commands::Common::UpdateResult|NilforallH-instance-method">
       <div class="signature">
         
-        def <strong>replace_one</strong>(filter, replacement, *, upsert : Bool = <span class="n">false</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/UpdateResult.html">Commands::Common::UpdateResult</a>? forall H
+        def <strong>replace_one</strong>(filter, replacement, *, upsert : Bool = <span class="n">false</span>, collation : <a href="../Mongo/Collation.html">Collation</a> | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, ordered : Bool | Nil = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/UpdateResult.html">Commands::Common::UpdateResult</a> | Nil forall H
 
-        <a class="method-permalink" href="#replace_one%28filter%2Creplacement%2C%2A%2Cupsert%3ABool%3Dfalse%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cordered%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3AUpdateResult%3FforallH-instance-method">#</a>
+        <a class="method-permalink" href="#replace_one%28filter%2Creplacement%2C%2A%2Cupsert%3ABool%3Dfalse%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cordered%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3AUpdateResult%7CNilforallH-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1954,12 +1977,12 @@ document. The document to return may be nil.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="stats(*,scale:Int32?=nil,session:Session::ClientSession?=nil):BSON?-instance-method">
+    <div class="entry-detail" id="stats(*,scale:Int32|Nil=nil,session:Session::ClientSession|Nil=nil):BSON|Nil-instance-method">
       <div class="signature">
         
-        def <strong>stats</strong>(*, scale : Int32? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : BSON?
+        def <strong>stats</strong>(*, scale : Int32 | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : BSON | Nil
 
-        <a class="method-permalink" href="#stats%28%2A%2Cscale%3AInt32%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ABSON%3F-instance-method">#</a>
+        <a class="method-permalink" href="#stats%28%2A%2Cscale%3AInt32%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ABSON%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1974,12 +1997,12 @@ document. The document to return may be nil.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="update_many(filter,update,*,upsert:Bool=false,array_filters=nil,collation:Collation?=nil,hint:String|H?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil,session:Session::ClientSession?=nil):Commands::Common::UpdateResult?forallH-instance-method">
+    <div class="entry-detail" id="update_many(filter,update,*,upsert:Bool=false,array_filters=nil,collation:Collation|Nil=nil,hint:String|H|Nil=nil,ordered:Bool|Nil=nil,write_concern:WriteConcern|Nil=nil,bypass_document_validation:Bool|Nil=nil,session:Session::ClientSession|Nil=nil):Commands::Common::UpdateResult|NilforallH-instance-method">
       <div class="signature">
         
-        def <strong>update_many</strong>(filter, update, *, upsert : Bool = <span class="n">false</span>, array_filters = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/UpdateResult.html">Commands::Common::UpdateResult</a>? forall H
+        def <strong>update_many</strong>(filter, update, *, upsert : Bool = <span class="n">false</span>, array_filters = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a> | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, ordered : Bool | Nil = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/UpdateResult.html">Commands::Common::UpdateResult</a> | Nil forall H
 
-        <a class="method-permalink" href="#update_many%28filter%2Cupdate%2C%2A%2Cupsert%3ABool%3Dfalse%2Carray_filters%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cordered%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3AUpdateResult%3FforallH-instance-method">#</a>
+        <a class="method-permalink" href="#update_many%28filter%2Cupdate%2C%2A%2Cupsert%3ABool%3Dfalse%2Carray_filters%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cordered%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3AUpdateResult%7CNilforallH-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1994,12 +2017,12 @@ document. The document to return may be nil.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="update_one(filter,update,*,upsert:Bool=false,array_filters=nil,collation:Collation?=nil,hint:String|H?=nil,ordered:Bool?=nil,write_concern:WriteConcern?=nil,bypass_document_validation:Bool?=nil,session:Session::ClientSession?=nil):Commands::Common::UpdateResult?forallH-instance-method">
+    <div class="entry-detail" id="update_one(filter,update,*,upsert:Bool=false,array_filters=nil,collation:Collation|Nil=nil,hint:String|H|Nil=nil,ordered:Bool|Nil=nil,write_concern:WriteConcern|Nil=nil,bypass_document_validation:Bool|Nil=nil,session:Session::ClientSession|Nil=nil):Commands::Common::UpdateResult|NilforallH-instance-method">
       <div class="signature">
         
-        def <strong>update_one</strong>(filter, update, *, upsert : Bool = <span class="n">false</span>, array_filters = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, hint : String | H? = <span class="n">nil</span>, ordered : Bool? = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>? = <span class="n">nil</span>, bypass_document_validation : Bool? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/UpdateResult.html">Commands::Common::UpdateResult</a>? forall H
+        def <strong>update_one</strong>(filter, update, *, upsert : Bool = <span class="n">false</span>, array_filters = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a> | Nil = <span class="n">nil</span>, hint : String | H | Nil = <span class="n">nil</span>, ordered : Bool | Nil = <span class="n">nil</span>, write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil = <span class="n">nil</span>, bypass_document_validation : Bool | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/Commands/Common/UpdateResult.html">Commands::Common::UpdateResult</a> | Nil forall H
 
-        <a class="method-permalink" href="#update_one%28filter%2Cupdate%2C%2A%2Cupsert%3ABool%3Dfalse%2Carray_filters%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Chint%3AString%7CH%3F%3Dnil%2Cordered%3ABool%3F%3Dnil%2Cwrite_concern%3AWriteConcern%3F%3Dnil%2Cbypass_document_validation%3ABool%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3ACommands%3A%3ACommon%3A%3AUpdateResult%3FforallH-instance-method">#</a>
+        <a class="method-permalink" href="#update_one%28filter%2Cupdate%2C%2A%2Cupsert%3ABool%3Dfalse%2Carray_filters%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Chint%3AString%7CH%7CNil%3Dnil%2Cordered%3ABool%7CNil%3Dnil%2Cwrite_concern%3AWriteConcern%7CNil%3Dnil%2Cbypass_document_validation%3ABool%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3ACommands%3A%3ACommon%3A%3AUpdateResult%7CNilforallH-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2014,12 +2037,12 @@ document. The document to return may be nil.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="watch(pipeline:Array=[]ofBSON,*,full_document:String?=nil,start_at_operation_time:Time?=nil,resume_after:BSON?=nil,start_after:BSON?=nil,max_await_time_ms:Int64?=nil,batch_size:Int32?=nil,collation:Collation?=nil,read_concern:ReadConcern?=nil,read_preference:ReadPreference?=nil,session:Session::ClientSession?=nil):Mongo::ChangeStream::Cursor-instance-method">
+    <div class="entry-detail" id="watch(pipeline:Array=[]ofBSON,*,full_document:String|Nil=nil,start_at_operation_time:Time|Nil=nil,resume_after:BSON|Nil=nil,start_after:BSON|Nil=nil,max_await_time_ms:Int64|Nil=nil,batch_size:Int32|Nil=nil,collation:Collation|Nil=nil,read_concern:ReadConcern|Nil=nil,read_preference:ReadPreference|Nil=nil,session:Session::ClientSession|Nil=nil):Mongo::ChangeStream::Cursor-instance-method">
       <div class="signature">
         
-        def <strong>watch</strong>(pipeline : Array = <span class="o">[]</span> <span class="k">of</span> <span class="t">BSON</span>, *, full_document : String? = <span class="n">nil</span>, start_at_operation_time : Time? = <span class="n">nil</span>, resume_after : BSON? = <span class="n">nil</span>, start_after : BSON? = <span class="n">nil</span>, max_await_time_ms : Int64? = <span class="n">nil</span>, batch_size : Int32? = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a>? = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a>? = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a>? = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a>? = <span class="n">nil</span>) : <a href="../Mongo/ChangeStream/Cursor.html">Mongo::ChangeStream::Cursor</a>
+        def <strong>watch</strong>(pipeline : Array = <span class="o">[]</span> <span class="k">of</span> <span class="t">BSON</span>, *, full_document : String | Nil = <span class="n">nil</span>, start_at_operation_time : Time | Nil = <span class="n">nil</span>, resume_after : BSON | Nil = <span class="n">nil</span>, start_after : BSON | Nil = <span class="n">nil</span>, max_await_time_ms : Int64 | Nil = <span class="n">nil</span>, batch_size : Int32 | Nil = <span class="n">nil</span>, collation : <a href="../Mongo/Collation.html">Collation</a> | Nil = <span class="n">nil</span>, read_concern : <a href="../Mongo/ReadConcern.html">ReadConcern</a> | Nil = <span class="n">nil</span>, read_preference : <a href="../Mongo/ReadPreference.html">ReadPreference</a> | Nil = <span class="n">nil</span>, session : <a href="../Mongo/Session/ClientSession.html">Session::ClientSession</a> | Nil = <span class="n">nil</span>) : <a href="../Mongo/ChangeStream/Cursor.html">Mongo::ChangeStream::Cursor</a>
 
-        <a class="method-permalink" href="#watch%28pipeline%3AArray%3D%5B%5DofBSON%2C%2A%2Cfull_document%3AString%3F%3Dnil%2Cstart_at_operation_time%3ATime%3F%3Dnil%2Cresume_after%3ABSON%3F%3Dnil%2Cstart_after%3ABSON%3F%3Dnil%2Cmax_await_time_ms%3AInt64%3F%3Dnil%2Cbatch_size%3AInt32%3F%3Dnil%2Ccollation%3ACollation%3F%3Dnil%2Cread_concern%3AReadConcern%3F%3Dnil%2Cread_preference%3AReadPreference%3F%3Dnil%2Csession%3ASession%3A%3AClientSession%3F%3Dnil%29%3AMongo%3A%3AChangeStream%3A%3ACursor-instance-method">#</a>
+        <a class="method-permalink" href="#watch%28pipeline%3AArray%3D%5B%5DofBSON%2C%2A%2Cfull_document%3AString%7CNil%3Dnil%2Cstart_at_operation_time%3ATime%7CNil%3Dnil%2Cresume_after%3ABSON%7CNil%3Dnil%2Cstart_after%3ABSON%7CNil%3Dnil%2Cmax_await_time_ms%3AInt64%7CNil%3Dnil%2Cbatch_size%3AInt32%7CNil%3Dnil%2Ccollation%3ACollation%7CNil%3Dnil%2Cread_concern%3AReadConcern%7CNil%3Dnil%2Cread_preference%3AReadPreference%7CNil%3Dnil%2Csession%3ASession%3A%3AClientSession%7CNil%3Dnil%29%3AMongo%3A%3AChangeStream%3A%3ACursor-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2088,12 +2111,12 @@ collection.with_session(causal_consistency: <span class="n">true</span>) <span c
       </div>
     </div>
   
-    <div class="entry-detail" id="write_concern:WriteConcern?-instance-method">
+    <div class="entry-detail" id="write_concern:WriteConcern|Nil-instance-method">
       <div class="signature">
         
-        def <strong>write_concern</strong> : <a href="../Mongo/WriteConcern.html">WriteConcern</a>?
+        def <strong>write_concern</strong> : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil
 
-        <a class="method-permalink" href="#write_concern%3AWriteConcern%3F-instance-method">#</a>
+        <a class="method-permalink" href="#write_concern%3AWriteConcern%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2108,12 +2131,12 @@ collection.with_session(causal_consistency: <span class="n">true</span>) <span c
       </div>
     </div>
   
-    <div class="entry-detail" id="write_concern=(write_concern:WriteConcern?)-instance-method">
+    <div class="entry-detail" id="write_concern=(write_concern:WriteConcern|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>write_concern=</strong>(write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a>?)
+        def <strong>write_concern=</strong>(write_concern : <a href="../Mongo/WriteConcern.html">WriteConcern</a> | Nil)
 
-        <a class="method-permalink" href="#write_concern%3D%28write_concern%3AWriteConcern%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#write_concern%3D%28write_concern%3AWriteConcern%7CNil%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2128,8 +2151,6 @@ collection.with_session(causal_consistency: <span class="n">true</span>) <span c
       </div>
     </div>
   
-
-
 
 
 </div>

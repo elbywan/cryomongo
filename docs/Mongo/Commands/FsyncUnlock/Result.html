@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.10.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="cryomongo">
 
@@ -22,9 +23,14 @@
 
 <svg class="hidden">
   <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
   </symbol>
 </svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -955,7 +961,7 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">struct</span> Mongo::Commands::FsyncUnlock::Result
+  <span class="kind">struct</span> Mongo::<wbr>Commands::<wbr>FsyncUnlock::<wbr>Result
 
 </h1>
 
@@ -1055,6 +1061,8 @@
 
 
 
+
+
   <h2>
     <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
   <svg class="octicon-link" aria-hidden="true">
@@ -1066,12 +1074,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#cluster_time%3ASession%3A%3AClusterTime%3F-instance-method" class="signature"><strong>#cluster_time</strong> : Session::ClusterTime?</a>
+        <a href="#cluster_time%3ASession%3A%3AClusterTime%7CNil-instance-method" class="signature"><strong>#cluster_time</strong> : Session::ClusterTime | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#cluster_time%3D%28cluster_time%3ASession%3A%3AClusterTime%3F%29-instance-method" class="signature"><strong>#cluster_time=</strong>(cluster_time : Session::ClusterTime?)</a>
+        <a href="#cluster_time%3D%28cluster_time%3ASession%3A%3AClusterTime%7CNil%29-instance-method" class="signature"><strong>#cluster_time=</strong>(cluster_time : Session::ClusterTime | Nil)</a>
         
       </li>
     
@@ -1106,22 +1114,22 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#operation_time%3ABSON%3A%3ATimestamp%3F-instance-method" class="signature"><strong>#operation_time</strong> : BSON::Timestamp?</a>
+        <a href="#operation_time%3ABSON%3A%3ATimestamp%7CNil-instance-method" class="signature"><strong>#operation_time</strong> : BSON::Timestamp | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#operation_time%3D%28operation_time%3ABSON%3A%3ATimestamp%3F%29-instance-method" class="signature"><strong>#operation_time=</strong>(operation_time : BSON::Timestamp?)</a>
+        <a href="#operation_time%3D%28operation_time%3ABSON%3A%3ATimestamp%7CNil%29-instance-method" class="signature"><strong>#operation_time=</strong>(operation_time : BSON::Timestamp | Nil)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#recovery_token%3ABSON%3F-instance-method" class="signature"><strong>#recovery_token</strong> : BSON?</a>
+        <a href="#recovery_token%3ABSON%7CNil-instance-method" class="signature"><strong>#recovery_token</strong> : BSON | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#recovery_token%3D%28recovery_token%3ABSON%3F%29-instance-method" class="signature"><strong>#recovery_token=</strong>(recovery_token : BSON?)</a>
+        <a href="#recovery_token%3D%28recovery_token%3ABSON%7CNil%29-instance-method" class="signature"><strong>#recovery_token=</strong>(recovery_token : BSON | Nil)</a>
         
       </li>
     
@@ -1136,8 +1144,6 @@
 
 
 
-
-
 <div class="methods-inherited">
   
     
@@ -1149,13 +1155,6 @@
     
 
 
-  
-    
-
-
-    
-
-
     
 
 
@@ -1169,6 +1168,22 @@
     
 
 
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+    
+
+
   
     
 
@@ -1179,7 +1194,13 @@
     
 
 
+    
+
+
   
+    
+
+
     
 
 
@@ -1263,6 +1284,8 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
 
 
 
+
+
   <h2>
     <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
   <svg class="octicon-link" aria-hidden="true">
@@ -1272,12 +1295,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="cluster_time:Session::ClusterTime?-instance-method">
+    <div class="entry-detail" id="cluster_time:Session::ClusterTime|Nil-instance-method">
       <div class="signature">
         
-        def <strong>cluster_time</strong> : <a href="../../../Mongo/Session/ClusterTime.html">Session::ClusterTime</a>?
+        def <strong>cluster_time</strong> : <a href="../../../Mongo/Session/ClusterTime.html">Session::ClusterTime</a> | Nil
 
-        <a class="method-permalink" href="#cluster_time%3ASession%3A%3AClusterTime%3F-instance-method">#</a>
+        <a class="method-permalink" href="#cluster_time%3ASession%3A%3AClusterTime%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1286,12 +1309,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="cluster_time=(cluster_time:Session::ClusterTime?)-instance-method">
+    <div class="entry-detail" id="cluster_time=(cluster_time:Session::ClusterTime|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>cluster_time=</strong>(cluster_time : <a href="../../../Mongo/Session/ClusterTime.html">Session::ClusterTime</a>?)
+        def <strong>cluster_time=</strong>(cluster_time : <a href="../../../Mongo/Session/ClusterTime.html">Session::ClusterTime</a> | Nil)
 
-        <a class="method-permalink" href="#cluster_time%3D%28cluster_time%3ASession%3A%3AClusterTime%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#cluster_time%3D%28cluster_time%3ASession%3A%3AClusterTime%7CNil%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1384,12 +1407,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="operation_time:BSON::Timestamp?-instance-method">
+    <div class="entry-detail" id="operation_time:BSON::Timestamp|Nil-instance-method">
       <div class="signature">
         
-        def <strong>operation_time</strong> : BSON::Timestamp?
+        def <strong>operation_time</strong> : BSON::Timestamp | Nil
 
-        <a class="method-permalink" href="#operation_time%3ABSON%3A%3ATimestamp%3F-instance-method">#</a>
+        <a class="method-permalink" href="#operation_time%3ABSON%3A%3ATimestamp%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1398,12 +1421,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="operation_time=(operation_time:BSON::Timestamp?)-instance-method">
+    <div class="entry-detail" id="operation_time=(operation_time:BSON::Timestamp|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>operation_time=</strong>(operation_time : BSON::Timestamp?)
+        def <strong>operation_time=</strong>(operation_time : BSON::Timestamp | Nil)
 
-        <a class="method-permalink" href="#operation_time%3D%28operation_time%3ABSON%3A%3ATimestamp%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#operation_time%3D%28operation_time%3ABSON%3A%3ATimestamp%7CNil%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1412,12 +1435,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="recovery_token:BSON?-instance-method">
+    <div class="entry-detail" id="recovery_token:BSON|Nil-instance-method">
       <div class="signature">
         
-        def <strong>recovery_token</strong> : BSON?
+        def <strong>recovery_token</strong> : BSON | Nil
 
-        <a class="method-permalink" href="#recovery_token%3ABSON%3F-instance-method">#</a>
+        <a class="method-permalink" href="#recovery_token%3ABSON%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1426,12 +1449,12 @@ data[<span class="s">&quot;name&quot;</span>] <span class="o">=</span> <span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="recovery_token=(recovery_token:BSON?)-instance-method">
+    <div class="entry-detail" id="recovery_token=(recovery_token:BSON|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>recovery_token=</strong>(recovery_token : BSON?)
+        def <strong>recovery_token=</strong>(recovery_token : BSON | Nil)
 
-        <a class="method-permalink" href="#recovery_token%3D%28recovery_token%3ABSON%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#recovery_token%3D%28recovery_token%3ABSON%7CNil%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1461,8 +1484,6 @@ bson <span class="o">=</span> user.to_bson</code></pre>
       </div>
     </div>
   
-
-
 
 
 </div>
