@@ -1,4 +1,4 @@
-require "durian"
+require "http"
 
 # A set of options used to configure the driver.
 #
@@ -85,14 +85,7 @@ struct Mongo::Options
   # Non-standard.
   #
   # By default, the Cloudflare public DNS is used. (`1.1.1.1`)
-  getter dns_resolver : Durian::Resolver = begin
-    Durian::Resolver.new.tap { |resolver|
-      resolver.dnsServers = [
-        Durian::Resolver::Server.new ipAddress: Socket::IPAddress.new("1.1.1.1", 53_i32),
-      ]
-      resolver.record_cache = Durian::Cache::Record.new
-    }
-  end
+  getter dns_resolver : DNS::Resolver? = nil
 
   getter! raw : HTTP::Params
 
